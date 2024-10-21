@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 
-import { Menu,Text, Input } from '@mantine/core';
-import { Divider } from '@mantine/core';
+import { Menu,Text, Input,Divider } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import {Icons} from '../../../icons/icons';
 
+import { Popover, PopoverContent, PopoverTrigger} from "@nextui-org/react";
+
+import {Icons} from '../../../icons/icons';
 import { updateTagInfo } from '../../../../DataManagement/Tags/updateTag';
-import { MantineDropdown } from '../../../models/ModelDropdown2/mantineDropdown';
 
 import "./tagOptionsDropdown.css";
 
@@ -24,15 +24,9 @@ const tagColors = [
 ];
 
 export const TagOptionsDropdown = (props) => {
-    const { tagItems, allTagData, handleAddTag,childDropdownOpened,setChildDropdownOpened,
-        setTagDeleteItemClicked,setTagToDelete
+    const { tagItems, allTagData, handleAddTag,setOpenTagDeletionModal,setTagToDelete,setOpenParentTagDropdown,
+        activeChildDropdownIndex,setActiveChildDropdownIndex,enableScroll
     } = props;
-
-    const [activeChildDropdownIndex, setActiveChildDropdownIndex] = useState(null);
-
-    const handleCloseChildDropdown = () => {
-        setChildDropdownOpened(false);
-    };
 
     const handleTagRename = (event,tagItem) => {
         if (event.key === 'Enter') {
@@ -48,11 +42,10 @@ export const TagOptionsDropdown = (props) => {
         }
     }
 
-    const handleOpenTagsOptionsMenu = (event, index) => {
-        event.stopPropagation();
-        event.preventDefault();
-        setActiveChildDropdownIndex(index);
-        setChildDropdownOpened(true);
+    const handleOpenTagsOptionsMenu = (open) => {
+        if (!open) {
+            setActiveChildDropdownIndex(null);
+        }
     };
 
     const handleTagColorChange = (tagItem,colorItem) => {
@@ -68,76 +61,77 @@ export const TagOptionsDropdown = (props) => {
 
     const handleOpenTagDeletionModal = (tagItem) => {
         setTagToDelete(tagItem);
-        setChildDropdownOpened(false);
-        setTagDeleteItemClicked(true);
+        setActiveChildDropdownIndex(null);
+        setOpenParentTagDropdown(false);
+        enableScroll();
+        setTimeout(() => {
+            setOpenTagDeletionModal(true);
+        }, 300);
     }
 
     return (
         <>
-            <div className='model-dropdown-items my-1'>
-
-            {tagItems.map((tagItem, index) => (
-                
-                <Menu.Item
-                    c='#f2f4f7'
-                    w='90%'
-                    bg='#232426'
-                    ff='Lato'
-                    key={index}
-                    className='task-card-content-dropdown-item'
-                    onClick={() => handleAddTag(tagItem)}
-                    rightSection={
-                        <MantineDropdown 
-                            target={
-                                <div className='tag-options-button-div' onClick={(event) => handleOpenTagsOptionsMenu(event, index)}>
-                                        {Icons('IconDots',17,24,'#fafafa')}
-                                </div>
-                            }
-                            width={240} 
-                            dropdown={
-                                <div>
-                                    <div className='px-1 pt-1'>
-                                        <Input 
-                                            placeholder="Name" 
-                                            defaultValue={tagItems[index] && tagItems[index].name} 
-                                            onKeyDown={(event) => handleTagRename(event,tagItem)}
-                                            className='tag-options-input'
-                                        />
-                                    </div>
-                                    <div className='px-1 py-1'>
-                                        <div style={{ display: 'flex', flexWrap: 'wrap'}}>
-                                            {tagColors.map((colorItem, index) => (
-                                                <div key={index} style={{ width: '48%' }}>
-                                                <Menu.Item w='75%' onClick={() => handleTagColorChange(tagItem, colorItem)}>
-                                                    <div className='d-flex gap-3 align-items-center'>
-                                                    <div style={{ backgroundColor: colorItem.color, width: '20px', height: '20px', borderRadius: '3px' }} />
-                                                    <span className='fafafa-color'>{colorItem.name}</span>
+            <div className='model-dropdown-items my-1' >
+                <Menu >
+                    {tagItems.map((tagItem, index) => (
+                        <Menu.Item
+                            c='#f2f4f7'
+                            w='90%'
+                            bg='#232426'
+                            ff='Lato'
+                            key={index}
+                            className='task-card-content-dropdown-item'
+                            onClick={() => handleAddTag(tagItem)}
+                            rightSection={
+                                <Popover placement="right-end" isOpen={index===activeChildDropdownIndex} onOpenChange={(open) => {handleOpenTagsOptionsMenu(open)}}>
+                                    <PopoverTrigger className='tags-dropdown-popover-trigger' onClick={(e) => {e.stopPropagation(); setActiveChildDropdownIndex(index)}}>
+                                        <div className='tag-options-button-div' >
+                                                {Icons('IconDots',17,24,'#fafafa')}
+                                        </div>
+                                    </PopoverTrigger>
+                                    <PopoverContent className='tags-dropdown-popover-parent py-2' onClick={(e) => e.stopPropagation()}>
+                                        <div style={{width: "250px",pointerEvents: `${activeChildDropdownIndex !== null ? 'auto' : 'none'}`}}>
+                                            <div className='px-1 pt-1'>
+                                                <Input 
+                                                    w='97.5%'
+                                                    placeholder="Name" 
+                                                    defaultValue={tagItems[index] && tagItems[index].name} 
+                                                    onKeyDown={(event) => handleTagRename(event,tagItem)}
+                                                    className='tag-options-input'
+                                                />
+                                            </div>
+                                            <div className='px-1 py-1'>
+                                                <div style={{ display: 'flex', flexWrap: 'wrap'}}>
+                                                    {tagColors.map((colorItem, index) => (
+                                                        <div key={index} style={{ width: '50%' }}>
+                                                            <Menu.Item w='75%' bg='transparent' className='tag-options-menu-item' onClick={() => handleTagColorChange(tagItem, colorItem)}>
+                                                                <div className='d-flex gap-3 align-items-center'>
+                                                                    <div style={{ backgroundColor: colorItem.color, width: '20px', height: '20px', borderRadius: '3px' }} />
+                                                                    <span className='fafafa-color'>{colorItem.name}</span>
+                                                                </div>
+                                                            </Menu.Item>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                            <Divider />
+                                            <div className="px-1 mt-1">
+                                                <Menu.Item w='87%' c='#fafafa' bg='transparent' className='tag-options-menu-item' onClick={() => handleOpenTagDeletionModal(tagItem)}>
+                                                    <div className='d-flex align-items-center gap-3'>
+                                                        {Icons('IconTrash',20,24)}
+                                                        <span>Delete</span>
                                                     </div>
                                                 </Menu.Item>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
-                                    <Divider />
-                                    <div className="px-1">
-                                        <Menu.Item w='84%' c='#fafafa' onClick={() => handleOpenTagDeletionModal(tagItem)}>
-                                            <div className='d-flex align-items-center gap-3'>
-                                                {Icons('IconTrash',20,24)}
-                                                <span>Delete</span>
                                             </div>
-                                        </Menu.Item>
-                                    </div>
-                                </div>
-                                
+                                        </div>
+                                    </PopoverContent>
+                                </Popover>
                             }
-                            background={'#232426'} childDropdownOpened={childDropdownOpened && activeChildDropdownIndex === index}
-                            isChild={true} isParent={false} handleCloseChildDropdown={handleCloseChildDropdown} position='top-start'
-                        />
-                    }
-                >
-                    <Text w='fit-content' className='user-home-task-details-modal-head-text-dropdown-value' bg={`${tagItem.color}`}>{tagItem.name}</Text>
-                </Menu.Item>
-            ))}
+                        >
+                            <Text w='fit-content' className='user-home-task-details-modal-head-text-dropdown-value' bg={`${tagItem.color}`}>{tagItem.name}</Text>
+                        </Menu.Item>
+                    ))}
+                </Menu>
             </div>
         </>
     );

@@ -5,18 +5,15 @@ import { Modal } from "antd";
 import { Text,Textarea,Button,Box,Flex,Divider } from '@mantine/core';
 import { Popover, PopoverContent, PopoverTrigger} from "@nextui-org/react";
 
+import { useScrollLock } from '../../../utils/useScrollLock';
 import {Icons} from '../../icons/icons';
-
 import getPriorityProperty from '../../../utils/getPriorityProperty';
-
 import { MantineDropdown } from '../../models/ModelDropdown2/mantineDropdown';
 import PriorityDropdownContent from '../DropdownContent/priorityDropdownContent';
 import StatusDropdownContent from '../DropdownContent/statusDropdownContent';
 import NextUICalendar from '../../models/NextUICalendar/nextUICalendar';
 import { createTaskInfo } from '../../../DataManagement/Tasks/createTaskv2';
 import TaskDescriptionTipTap from '../TaskDetailsModal/TaskDescriptionTipTap/taskDescriptionTipTap';
-
-// import {parseDate, getLocalTimeZone} from "@internationalized/date";
 
 import './taskCreationModal.css';
 import dayjs from 'dayjs';
@@ -51,8 +48,6 @@ const TaskCreationModal = (props) => {
                 newTaskPriority,
                 selectedDate,
                 selectedDateTime
-                // selectedDateTime !== undefined ? dayjs(selectedDateTime) : selectedDate !== undefined ? dayjs(selectedDate) : null,
-                // selectedDateTime !== undefined ? dayjs(selectedDateTime) : selectedDate !== undefined ? dayjs(selectedDate) : null
             );
     
             setTaskData([...taskData, newTask]);
@@ -61,6 +56,8 @@ const TaskCreationModal = (props) => {
             console.error("Error creating task:", error);
         }
     };
+
+    const {enableScroll, disableScroll} = useScrollLock();
 
 
     return (
@@ -81,21 +78,6 @@ const TaskCreationModal = (props) => {
                             setNewTaskName(event.currentTarget.value);
                         }}
                     />
-                    {/* <Textarea
-                        className='mt-1 mb-5 description'
-                        radius={0}
-                        p={0}
-                        bg='transparent'
-                        m={0}
-                        w='100%'
-                        minRows={2}
-                        autosize
-                        placeholder='Description'
-                        value={newTaskDescription}
-                        onChange={(event) => {
-                            setNewTaskDescription(event.currentTarget.value);
-                        }}
-                    /> */}
                     <Box className='task-creation-tiptap' mt={20} mb={40}>
                         <TaskDescriptionTipTap 
                             setNewTaskDescription={setNewTaskDescription}
@@ -109,10 +91,6 @@ const TaskCreationModal = (props) => {
                                     {Icons('IconUser',14,14,'#e0e2e6')}
                                     <Text ms='8' ff='Inter' fz='12.5' c='#e0e2e6'>Assignee</Text>
                                 </Button>
-                                {/* <Button radius={5} h='30' p='0 8px' bg='transparent' bd='.1px solid #048369'>
-                                    <IconLoader width={14} color='#e0e2e6' />
-                                    <Text ms='8' ff='Inter' fz='12.5' c='#e0e2e6'>Status</Text>
-                                </Button> */}
 
                                 <MantineDropdown 
                                     target={
@@ -143,7 +121,6 @@ const TaskCreationModal = (props) => {
                                         >
                                             {Icons('IconCalendarMonth',14,14,'#e0e2e6')} 
                                             <Text ms='8' ff='Inter' fz='12.5' >
-                                                {/* {selectedDate && selectedDate.isValid() ? `${selectedDate.format('MMM D')} ` : 'Due Date'} */}
                                                 {selectedDateTime && selectedDateTime.isValid() 
                                                     ? selectedDateTime.format(`MMM D, h${selectedDateTime.minute() !== 0 ? ':mm' : ''}a`)
                                                     : selectedDate && dayjs(selectedDate).isValid() ? `${dayjs(selectedDate).format('MMM D')} ` : 'Due Date'
@@ -176,7 +153,6 @@ const TaskCreationModal = (props) => {
                                     <span>Create</span>
                                 </div>
                             </Button>
-                            {/* disabled={!newTaskName && newTaskName.length !== '' && newTaskName.trim() !== ''} */}
                         </Flex>
                     </Box>
                 </div>

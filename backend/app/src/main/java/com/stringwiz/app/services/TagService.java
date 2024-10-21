@@ -128,9 +128,7 @@ public class TagService {
         // Remove the tag from all tasks
         for (Task task : tag.getTasks()) {
             task.getTags().remove(tag);
-//            if (task.getTags().contains(tag)) {
-//                System.out.println(task.getName());
-//            }
+            taskRepository.save(task);
         }
         tagRepository.deleteById(tag_id);
     }

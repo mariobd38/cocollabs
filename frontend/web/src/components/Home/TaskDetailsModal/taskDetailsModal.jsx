@@ -5,8 +5,10 @@ import dayjs from 'dayjs';
 
 import { Modal } from 'antd';
 import { Text, Button,Textarea } from '@mantine/core';
-import {Icons} from '../../icons/icons';
+import { Popover, PopoverContent, PopoverTrigger} from "@nextui-org/react";
 
+import { useScrollLock } from '../../../utils/useScrollLock';
+import {Icons} from '../../icons/icons';
 import UserAvatar from '../UserAvatar/userAvatar';
 import { ProfileCard } from './ProfileCard/profileCard';
 import { MantineDropdown } from '../../models/ModelDropdown2/mantineDropdown';
@@ -56,10 +58,12 @@ const TaskDetailsModal = (props) => {
     }, [show, currentTaskName, originalTaskName]);
 
     const handleTaskDetailsModalClose = () => {
-        setOriginalTaskName(null);
-        setCurrentTaskDescriptionHtml(null);
-        onHide();
-        navigate(-1);
+        if (!modalDropdownIsOpen) {
+            setOriginalTaskName(null);
+            setCurrentTaskDescriptionHtml(null);
+            onHide();
+            navigate(-1);
+        }
     };
  
     useEffect(() => {
@@ -86,7 +90,6 @@ const TaskDetailsModal = (props) => {
     const handleDueDatePopoverClose = (event) => {
         setCurrentTaskDueDate(taskType[currentIndex].dueDate);
         setCurrentTaskDueDateTime(taskType[currentIndex].dueDateTime);
-
     };
  
  
@@ -125,22 +128,9 @@ const TaskDetailsModal = (props) => {
         calculateFirstRow(updatedTaskTags);
     }
  
-     //tag dropdown logic
-    const [childDropdownOpened, setChildDropdownOpened] = useState(false);
      //tag delete logic
     const [tagToDelete, setTagToDelete] = useState(null);
-    const [tagDeleteItemClicked, setTagDeleteItemClicked] = useState(false);
     const [openTagDeletionModal,setOpenTagDeletionModal] = useState(false);
-     
-    const handleConfirmDeleteTagButtonClick = () => {
-        deleteTagInfo(tagToDelete);
-        setTagDeleteItemClicked(false);
-        setOpenTagDeletionModal(false);
-    }
-        
-    const onTagDeleteDropdownHide = () => {
-        setOpenTagDeletionModal(false);
-    };
 
     const handleUpdateTaskName = (e) => {
         if (e.currentTarget.value === '') {
@@ -201,28 +191,25 @@ const TaskDetailsModal = (props) => {
         setTimeout(() => calculateFirstRow(currentTaskTags), 0);
     },[currentTaskTags, calculateFirstRow]);
 
-    // const TagButton = ({ tag, index, buttonRef, handleTagRemoval }) => (
-    //     <Button ref={buttonRef} key={index} bg={tag.color} className='user-home-task-details-modal-tags-button' fw={400} h='22' ff='Lato' fz={16}>
-    //         <span className='d-flex'>
-    //             <span className='align-middle user-home-task-details-modal-tags-button-text'>
-    //                 {tag.name}
-    //             </span>
-    //         </span>
-    
-    //         <span className='align-middle user-home-task-details-modal-tags-button-close' 
-    //             onClick={(event) => handleTagRemoval(event, index)}>
-    //             <IconX style={{ width: '1.2rem' }}/>
-    //         </span>
-    //     </Button>
-    // );
-    // console.log(dueDatePopoverIsOpen);
     const [openPopoverId, setOpenPopoverId] = useState(null);
+    const [openParentTagDropdown, setOpenParentTagDropdown] = useState(false);
+    const [activeChildDropdownIndex, setActiveChildDropdownIndex] = useState(null);
+
+    const {enableScroll, disableScroll} = useScrollLock();
+    // useEffect(() => {
+    //     if (openParentTagDropdown || activeChildDropdownIndex)
+    //         disableScroll();
+    //     else
+    //         enableScroll();
+    // },[openParentTagDropdown])
+
+    const [modalDropdownIsOpen, setModalDropdownIsOpen] = useState(false);
+
     return (
-        
         <Modal
             centered
             open={show}
-            onCancel={() => {handleTaskDetailsModalClose(); console.log("closed!"); }}
+            onCancel={() => handleTaskDetailsModalClose()} //escape key
             width={1000}
             className='task-details-modal-parent'
             closeIcon
@@ -290,6 +277,7 @@ const TaskDetailsModal = (props) => {
                                         openPopoverId={openPopoverId} // Pass the current open popover ID
                                         setOpenPopoverId={setOpenPopoverId}
                                         handleDueDatePopoverClose={handleDueDatePopoverClose} handleTaskUpdateNew={(element,value, attribute, taskType,setTaskType,index) => handleTaskUpdateNew(element,value, attribute, taskType,setTaskType,index)}
+                                        enableScroll={enableScroll} disableScroll={disableScroll}
                                     />
                             </div>
 
@@ -297,7 +285,7 @@ const TaskDetailsModal = (props) => {
                                 <Text className='user-home-task-details-modal-property-lefttext'>Status</Text>
                                 <MantineDropdown 
                                     target={
-                                        <div className='user-home-task-details-modal-head-property-value'>
+                                        <div className='user-home-task-details-modal-head-property-value' onClick={() => setModalDropdownIsOpen(true)}>
                                             <div className='user-home-task-details-modal-head-text-dropdown-value' style={{color: '#e7e7e7', background: currentTaskStatus && getStatusProperty(currentTaskStatus).background }}>
                                                 <div className='d-flex'>
                                                     <span className='d-flex align-items-center me-2'>{currentTaskStatus && getStatusProperty(currentTaskStatus).icon}</span>
@@ -308,7 +296,7 @@ const TaskDetailsModal = (props) => {
                                     }
                                     background={'#232426'} width={190} dropdown={<StatusDropdownContent element={taskType && taskType[currentIndex]} handleTaskUpdateNew={handleTaskUpdateNew} taskType={taskType} 
                                     setTaskType={setTaskType} idx={currentIndex} setCurrentTaskStatus={setCurrentTaskStatus}  existingTask={true} /> }
-                                    position='bottom-start'
+                                    position='bottom-start' setModalDropdownIsOpen={setModalDropdownIsOpen}
                                 />
                             </div>
 
@@ -316,7 +304,7 @@ const TaskDetailsModal = (props) => {
                                 <Text className='user-home-task-details-modal-property-lefttext'>Priority</Text>
                                 <MantineDropdown 
                                     target={
-                                        <div className='user-home-task-details-modal-head-property-value'>
+                                        <div className='user-home-task-details-modal-head-property-value' onClick={() => setModalDropdownIsOpen(true)}>
                                             {currentTaskPriority ?
                                             <div className='user-home-task-details-modal-head-text-dropdown-value' style={{background: currentTaskPriority && getPriorityProperty(currentTaskPriority).color}}>
                                                 <div className='d-flex'>
@@ -328,16 +316,17 @@ const TaskDetailsModal = (props) => {
                                     }
                                     background={'#232426'} width={210} dropdown={<PriorityDropdownContent element={taskType && taskType[currentIndex]} handleTaskUpdateNew={handleTaskUpdateNew} taskType={taskType} 
                                     setTaskType={setTaskType} idx={currentIndex} setCurrentTaskPriority={setCurrentTaskPriority} existingTask={true} /> }
-                                    position='bottom-start'
+                                    position='bottom-start' setModalDropdownIsOpen={setModalDropdownIsOpen}
                                 />
                             </div>
 
 
                             <div className='d-flex user-home-task-details-modal-head-property-group' style={{ fontSize: "1.06rem" }}>
                                 <Text className='user-home-task-details-modal-property-lefttext'>Tags</Text>
-                                <MantineDropdown 
-                                    target={
-                                        <div className='user-home-task-details-modal-head-property-value' ref={tagButtonContainerRef}>
+                                <Popover placement="bottom-start" isOpen={openParentTagDropdown} onOpenChange={(open) => {setOpenParentTagDropdown(open); if (!open) enableScroll();}}
+                                >
+                                    <PopoverTrigger className='tags-dropdown-popover-trigger' onClick={() => disableScroll()}>
+                                    <div className='user-home-task-details-modal-head-property-value' ref={tagButtonContainerRef}>
                                             <div className="d-flex flex-wrap" ref={tagButtonsRef}>
                                                 {rowOverflow && firstRowTags.length < currentTaskTags.length ?  
                                                     <span>
@@ -371,13 +360,18 @@ const TaskDetailsModal = (props) => {
                                                 ))}
                                             </div>
                                         </div>
-                                    }
-                                    background={'#232426'} width={260} 
-                                    dropdown={<TagsDropdownContent task={taskType && taskType[currentIndex]} taskType={taskType} setTaskType={setTaskType}
-                                    idx={currentIndex} setCurrentTaskTags={setCurrentTaskTags} currentTaskTags={currentTaskTags} childDropdownOpened={childDropdownOpened} 
-                                    setChildDropdownOpened={setChildDropdownOpened} setTagDeleteItemClicked={setTagDeleteItemClicked} setTagToDelete={setTagToDelete} /> } tagDeleteItemClicked={tagDeleteItemClicked} setTagDeleteItemClicked={setTagDeleteItemClicked}
-                                    isParent={true} childDropdownOpened={childDropdownOpened} position='bottom-start' setOpenTagDeletionModal={setOpenTagDeletionModal}
-                                />
+                                    </PopoverTrigger>
+                                    <PopoverContent style={{background: "green !important"}} className='tags-dropdown-popover-parent'>
+                                        <TagsDropdownContent task={taskType && taskType[currentIndex]} taskType={taskType} setTaskType={setTaskType}
+                                        idx={currentIndex} setCurrentTaskTags={setCurrentTaskTags} currentTaskTags={currentTaskTags}
+                                        setTagToDelete={setTagToDelete} setOpenTagDeletionModal={setOpenTagDeletionModal} 
+                                        openParentTagDropdown={openParentTagDropdown} setOpenParentTagDropdown={setOpenParentTagDropdown}
+                                        activeChildDropdownIndex={activeChildDropdownIndex} setActiveChildDropdownIndex={setActiveChildDropdownIndex}
+                                        enableScroll={enableScroll}
+                                        /> 
+
+                                    </PopoverContent>
+                                </Popover>
                             </div>
                             </div>
                         
@@ -396,8 +390,8 @@ const TaskDetailsModal = (props) => {
 
                     {tagToDelete && <TagDeletionModal 
                         show={openTagDeletionModal}
-                        handleClose={onTagDeleteDropdownHide}
-                        handleConfirmDeleteTagButtonClick={handleConfirmDeleteTagButtonClick}
+                        handleClose={() => setOpenTagDeletionModal(false)}
+                        handleConfirmDeleteTagButtonClick={() => deleteTagInfo(tagToDelete)}
                         tagName={tagToDelete.name}
                     />}
                                         

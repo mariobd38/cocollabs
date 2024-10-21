@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
 import { Input,Button, Divider } from '@mantine/core';
-
 import { getAllTagsInfo } from '../../../DataManagement/Tags/getAllTags';
 import { addExistingTagInfo } from '../../../DataManagement/Tags/addExistingTag';
 import { createTagInfo } from '../../../DataManagement/Tags/createTag';
@@ -10,8 +9,8 @@ import { TagOptionsDropdown } from '../TaskDetailsModal/TagOptionsDropdown/tagOp
 import './dropdownContent.css';
     
 const TagsDropdownContent = (props) => {
-    const {task, taskType,setTaskType,idx,setCurrentTaskTags,currentTaskTags,childDropdownOpened,setChildDropdownOpened,
-        setTagDeleteItemClicked, setTagToDelete
+    const {task, taskType,setTaskType,idx,setCurrentTaskTags,currentTaskTags, setTagToDelete,setOpenTagDeletionModal,
+        openParentTagDropdown, setOpenParentTagDropdown,activeChildDropdownIndex,setActiveChildDropdownIndex,enableScroll
      } = props;
 
     const [allTagData, setAllTagData] = useState([]);
@@ -108,10 +107,10 @@ const TagsDropdownContent = (props) => {
             console.error('Error creating tag:', error);
         }
     }
-
-
+    // console.log(openParentTagDropdown && activeChildDropdownIndex === null);
+    // console.log(openParentTagDropdown);
     return (
-        <>
+        <div style={{width: "240px", pointerEvents: `${openParentTagDropdown && activeChildDropdownIndex === null ? 'auto' : 'none'}`}}>
             {currentTaskTags.length > 0 &&
             <><div className='py-2 px-1 d-flex flex-wrap user-home-task-details-modal-tags-button-parent'>
                 {currentTaskTags.map((item, index) => (
@@ -140,12 +139,14 @@ const TagsDropdownContent = (props) => {
                 tagItems = {tagItems}
                 allTagData={allTagData}
                 handleAddTag={handleAddTag}
-                childDropdownOpened={childDropdownOpened}
-                setChildDropdownOpened={setChildDropdownOpened}
-                setTagDeleteItemClicked={setTagDeleteItemClicked}
+                setOpenTagDeletionModal={setOpenTagDeletionModal}
                 setTagToDelete={setTagToDelete}
+                setOpenParentTagDropdown={setOpenParentTagDropdown}
+                activeChildDropdownIndex={activeChildDropdownIndex}
+                setActiveChildDropdownIndex={setActiveChildDropdownIndex}
+                enableScroll={enableScroll}
             />
-        </>
+        </div>
     );
 };
 

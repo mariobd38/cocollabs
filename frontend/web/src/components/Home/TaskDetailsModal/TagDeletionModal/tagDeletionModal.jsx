@@ -29,7 +29,7 @@ const TagDeletionModal = (props) => {
 
                 <Flex justify='end' pt='20' gap={25}>
                     <Button w={80} ff='Inter' bg='#353738' c='#fafafa' bd='.1px solid #959799' onClick={handleClose}>Cancel</Button>
-                    <Button w={80} ff='Inter' bg='#d63434' c='#fafafa' bd='.1px solid #ef4444' onClick={handleConfirmDeleteTagButtonClick} >Delete</Button>
+                    <Button w={80} ff='Inter' bg='#d63434' c='#fafafa' bd='.1px solid #ef4444' onClick={() => {handleConfirmDeleteTagButtonClick(); handleClose();}} >Delete</Button>
                 </Flex>
             </div>
         </Modal>

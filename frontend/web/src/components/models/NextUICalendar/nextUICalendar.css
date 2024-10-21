@@ -22,6 +22,7 @@
 }
 .nextui-calendar-parent {
     border: 1px solid #434446;
+    pointer-events: auto;
     /* width: 70% !important; */
     box-shadow: 0 14px 28px rgba(0, 0, 0, 0.20) !important;
     .bg-content1 {

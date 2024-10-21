@@ -13,7 +13,7 @@ import './newHomeDueDatePopover.css';
 const NewHomeDueDatePopover = (props) => {
 
     const {popoverTarget, currentTaskDueDate, setCurrentTaskDueDate, currentTaskDueDateTime, setCurrentTaskDueDateTime,
-        currentIndex,taskType,setTaskType,handleTaskUpdateNew,popoverId,openPopoverId,setOpenPopoverId} = props;
+        currentIndex,taskType,setTaskType,handleTaskUpdateNew,popoverId,openPopoverId,setOpenPopoverId,enableScroll,disableScroll} = props;
 
     dayjs.extend(customParseFormat);
     const dateFormatList = ['YYYY-MM-DD', 'M-D-YY', 'M-D-YYYY', 'MM-DD-YY', 'MM-DD-YYYY'];
@@ -34,8 +34,10 @@ const NewHomeDueDatePopover = (props) => {
     const handleOpenChange = (isOpen) => {
         if (isOpen) {
             setOpenPopoverId(popoverId);
+            disableScroll();
         } else {
             setOpenPopoverId(null);
+            enableScroll();
         }
     };
     
