@@ -7,5 +7,5 @@
     color: #fafafa;
 }
 .user-avatar img {
-    border-radius: 50%;
+    border-radius: 20% !important;
 }

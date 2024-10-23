@@ -1,6 +1,7 @@
 
 .user-home-task-details-modal-head-property-group {
     height:45px;
+    width: 461px;
 }
 .user-home-task-details-modal-property-lefttext {
     cursor: pointer;
@@ -19,9 +20,13 @@
     display: flex;
     align-items: center;
 }
-.user-home-task-details-modal-property-lefttext:hover,
-.user-home-task-details-modal-head-property-value:hover {
+.user-home-task-details-modal-property-lefttext.dark:hover,
+.user-home-task-details-modal-head-property-value.dark:hover {
     background-color: #2c2d2f;
+}
+.user-home-task-details-modal-property-lefttext.light:hover,
+.user-home-task-details-modal-head-property-value.light:hover {
+    background-color: #dcdddf !important;
 }
  .user-home-task-details-modal-due-date-div {
     background-color: red;
@@ -157,12 +162,13 @@
 .task-details-modal-parent .ant-modal-content {
     background-color: #1e1f21;
     padding:0;
-    border-radius: 8px;
+    /* border-radius: 8px; */
 }
 .task-details-modal-parent .ant-modal-close {
     display: none;
 }
 .task-details-modal-parent .ant-modal-body {
+    border-radius: 8px;
     color: #fafafa;
 }
 .user-home-task-details-modal-body {
@@ -180,14 +186,24 @@
 .user-home-task-details-modal-name .mantine-Input-input {
     border: none;
     background-color: transparent !important;
-    color: #fafafa;
+    /* color: #fafafa; */
     font-size: 40px;
     font-family: 'Nunito Sans' !important;
     padding: 5px 0px !important;
 }
-.user-home-task-details-modal-name:hover,
-.user-home-task-details-modal-name:focus {
-    border-color: #b7b7b7;
+.user-home-task-details-modal-name.light .mantine-Input-input {
+    color: #222222;
+}
+.user-home-task-details-modal-name.dark .mantine-Input-input {
+    color: #fafafa;
+}
+.user-home-task-details-modal-name.dark:hover,
+.user-home-task-details-modal-name.dark:focus {
+    border-color: #424242;
+}
+.user-home-task-details-modal-name.light:hover,
+.user-home-task-details-modal-name.light:focus {
+    border-color: #d4d4d4;
 }
 
 .user-home-task-details-modal-tags-button, .user-home-task-details-modal-head-text-dropdown-value {

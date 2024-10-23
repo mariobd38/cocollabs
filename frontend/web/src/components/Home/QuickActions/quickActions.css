@@ -2,16 +2,15 @@
     display: flex !important;
     justify-content: flex-start !important;
     width:100% !important;
-    border: 1px solid #898989 !important;
     border-radius: 12px !important;
     background-color: transparent !important;
     padding: 15px 25px !important;
     font-weight: 400 !important;
     font-size: 16px !important;
-    transition: all .33s ease-in-out !important;
+    transition: transform .33s ease-in-out, box-shadow .33s ease-in-out !important;
 }
 .quick-actions-button:hover {
-    transform: scale(1.027) !important;
+    transform: translateY(-4px) !important;
     /* box-shadow: 0 10px 34px rgba(0, 0, 0, 0.35) !important; */
     box-shadow: 0 5px 28px #04636636 !important;
 }

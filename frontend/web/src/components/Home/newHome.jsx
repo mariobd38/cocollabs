@@ -1,34 +1,31 @@
 import React, { useState, useEffect,useCallback } from 'react';
-// import SockJS from 'sockjs-client';
-// import { Stomp } from '@stomp/stompjs';
-
 import { useLocation } from 'react-router-dom';
+
+import { useMantineTheme,useMantineColorScheme} from '@mantine/core';
 
 import HomeHeader from '../Home/HomeHeader/homeHeader';
 import HomeNavbar from './HomeNavbar/homeNavbar';
 import TaskCard from './TaskCard/taskCard';
-// import ProjectCard from './ProjectCard/projectCard';
 import QuickActions from './QuickActions/quickActions';
 import HomeSidebar from './HomeSidebar/homeSidebar';
-// import CalendarBlock from './CalendarBlock/calendarBlock';
-// import MilestoneBlock from './MilestoneBlock/milestoneBlock';
-
-// import StatBlocks from './HomeHeader/StatBlocks/statBlocks';
 
 import { getUserInfo } from '../../DataManagement/Users/getUserInfo';
 // import { getTaskInfo } from './../../DataManagement/Tasks/getTasks';
 import { getPersonalSpaceInfo } from '../../DataManagement/Spaces/getPersonalSpaceInfo';
 import { getTaskInfoBySpace } from '../../DataManagement/Tasks/getTasksBySpace';
 // import { getGoogleTaskInfo } from '../../DataManagement/Tasks/getGoogleTasks';
+
+import { getThemeColor } from '../Themes/getThemeColor';
+import { getTextColor } from '../Themes/getTextColor';
+
 import './newHome.css';
-// import { linkTasksToPersonalSpace } from '../../DataManagement/Spaces/linkTasksToPersonalSpace';
 
 const NewHome = () => {
     const dayjs = require('dayjs');
+    const theme = useMantineTheme();
+    const { colorScheme, setColorScheme } = useMantineColorScheme();
+
     const [taskData, setTaskData] = useState([]);
-    // const [upcomingTasks, setUpcomingTasks] = useState([]);
-    // const [todaysTasks, setTodaysTasks] = useState([]);
-    // const [unscheduledTasks, setUnscheduledTasks] = useState([]);
     const [overdueTasks, setOverdueTasks] = useState([]);
     const [completedTasks, setCompletedTasks] = useState([]);
     const [ongoingTasks, setOngoingTasks] = useState([]);
@@ -53,8 +50,6 @@ const NewHome = () => {
         fetchSpaceData();
     }, []);
 
-    // console.log(spaceData);
-
     useEffect(() => {
         const intervalId = setInterval(() => {
             const newDate = dayjs();
@@ -64,7 +59,6 @@ const NewHome = () => {
             }
         }, 1000 * 5); // Check every 5 seconds
 
-        // Clean up the interval when the component unmounts
         return () => clearInterval(intervalId);
     }, [today,dayjs]);
 
@@ -83,30 +77,6 @@ const NewHome = () => {
         };
         fetchData();
     }, [passedUserInfo]);
-
-    // const client = Stomp.client(import.meta.env.VITE_SERVER_BASE_URI + '/ws');
-    //this works
-    // client.connect({}, (frame) => {
-    //     console.log('Connected: ' + frame);
-    //     client.subscribe('/topic/messages', (message) => {
-    //         console.log('Received message:', message.body);
-    //         setMessages((prevMessages) => [...prevMessages, message.body]);
-    //     });
-    // }, (error) => {
-    //     console.error('Error connecting to WebSocket:', error);
-    // });
-    
-    // // Function to send a message
-    // const sendMessage = () => {
-    //     console.log('Client connected:', client.connected);
-    //     if (client && client.connected) {
-    //         client.send('/app/message', {}, JSON.stringify({ message: 'Hello!' }));
-    //         setMessageToSend('');
-    //     } else {
-    //         console.error('Client is not connected.');
-    //     }
-    // };
-    
 
     const processTaskData = useCallback(() => {
         const now = dayjs();
@@ -131,44 +101,6 @@ const NewHome = () => {
         setCompletedTasks(completed);
     },[dayjs,taskData]);
 
-
-    //this works for my use case
-    //client.debug = () => {};
-    // useEffect(() => {
-
-    //     client.connect({}, () => {
-    //     client.subscribe('/topic/tasks', (message) => {
-    //         try {
-    //             const tasks = JSON.parse(message.body);
-    //             setTaskData(tasks);
-    //             // processTaskData(tasks);
-    //         } catch (e) {
-    //             console.error('Error parsing message:', e);
-    //         }
-    //     });
-        
-    //     // if (client.connected) {
-    //         client.send('/app/tasks', {}, {});
-    //     // } else {
-    //         // console.error('Client is not connected.');
-    //     // }
-    // }, (error) => {
-    //     console.error('Error connecting to WebSocket:', error);
-    // })
-    // return () => {
-    //     // Clean up the connection when the component is unmounted
-    //     if (client.connected) {
-    //         client.disconnect(() => {
-    //             console.log('Disconnected from WebSocket');
-    //         });
-    //     }
-    // };
-    // },[client]);
-
-    // useEffect(() => {
-    //     processTaskData(taskData);
-    //   }, [taskData, processTaskData]);
-
     
     useEffect(() => {
         // getTaskInfo(setTaskData);
@@ -176,11 +108,13 @@ const NewHome = () => {
         processTaskData();
     }, [processTaskData]);
 
-    // const getUserSpace = () => {
-    //     getPersonalSpaceInfo();
-    // }
-
     const [openSidebarToggle, setOpenSidebarToggle] = useState(false);
+
+    const themeColors = {
+        bg: Array.from({ length: 13 }, (_, index) => getThemeColor(colorScheme, theme, index)),
+        text: Array.from({ length: 13 }, (_, index) => getTextColor(colorScheme, theme, index))
+
+    };
 
     // const getGoogleTasks = () => {
     //     getGoogleTaskInfo();
@@ -190,6 +124,9 @@ const NewHome = () => {
         <>
             {userFullName && 
             <HomeNavbar 
+                themeColors={themeColors}
+                colorScheme={colorScheme}
+                setColorScheme={setColorScheme}
                 userFullName={userFullName}
                 initials={initials}
                 userEmail={userEmail}
@@ -201,6 +138,9 @@ const NewHome = () => {
             <div className='container m-0 p-0'>
                 {userFullName &&
                 <HomeSidebar className='user-home-sidebar p-0'
+                    userFullName={userFullName}
+                    themeColors={themeColors}
+                    colorScheme={colorScheme}
                     userEmail={userEmail}
                     openSidebarToggle={openSidebarToggle}
                     setOpenSidebarToggle={setOpenSidebarToggle}
@@ -213,6 +153,8 @@ const NewHome = () => {
                 {}
                 <HomeHeader 
                     spaceName={spaceData.name}
+                    themeColors={themeColors}
+                    colorScheme={colorScheme}
                 />
 
                 <div  style={{width: "100%"}}>
@@ -221,7 +163,10 @@ const NewHome = () => {
 
 
                     <div className='row mb-5'>
-                        <QuickActions />
+                        <QuickActions 
+                            themeColors={themeColors}
+                            colorScheme={colorScheme}
+                        />
 
                         <div className="task-card-parent">
                             
@@ -231,17 +176,19 @@ const NewHome = () => {
                                 <div className=''>
                                     {userFullName &&
                                     <TaskCard 
-                                    userFullName={userFullName}
-                                    initials={initials}
-                                    userEmail={userEmail}
-                                    taskData={taskData} 
-                                    setTaskData={setTaskData} 
-                                    today={today} 
-                                    ongoingTasks={ongoingTasks}
-                                    overdueTasks={overdueTasks}
-                                    completedTasks={completedTasks}
-                                    userProfileDto={userProfileDto}
-                                    userProfilePicture={userProfilePicture}
+                                        colorScheme={colorScheme}
+                                        themeColors={themeColors}
+                                        userFullName={userFullName}
+                                        initials={initials}
+                                        userEmail={userEmail}
+                                        taskData={taskData} 
+                                        setTaskData={setTaskData} 
+                                        today={today} 
+                                        ongoingTasks={ongoingTasks}
+                                        overdueTasks={overdueTasks}
+                                        completedTasks={completedTasks}
+                                        userProfileDto={userProfileDto}
+                                        userProfilePicture={userProfilePicture}
                                     />}
                                     
                                 </div>

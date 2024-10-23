@@ -5,7 +5,6 @@ import { Modal } from "antd";
 import { Text,Textarea,Button,Box,Flex,Divider } from '@mantine/core';
 import { Popover, PopoverContent, PopoverTrigger} from "@nextui-org/react";
 
-import { useScrollLock } from '../../../utils/useScrollLock';
 import {Icons} from '../../icons/icons';
 import getPriorityProperty from '../../../utils/getPriorityProperty';
 import { MantineDropdown } from '../../models/ModelDropdown2/mantineDropdown';
@@ -19,7 +18,7 @@ import './taskCreationModal.css';
 import dayjs from 'dayjs';
 
 const TaskCreationModal = (props) => {
-    const {openTaskCreateModal,setOpenTaskCreateModal, taskData, setTaskData} = props;
+    const {openTaskCreateModal,setOpenTaskCreateModal, taskData, setTaskData,colorScheme,themeColors} = props;
     
     const [newTaskName, setNewTaskName] = useState('');
     const [newTaskDescription, setNewTaskDescription] = useState('');
@@ -57,16 +56,17 @@ const TaskCreationModal = (props) => {
         }
     };
 
-    const {enableScroll, disableScroll} = useScrollLock();
-
+    const buttonColor = colorScheme==='dark' ? '#e0e2e6' : '#121212';
+    const buttonBg = colorScheme==='dark' ? '#242629' : '#d9dcdf';
 
     return (
-        <Modal open={openTaskCreateModal} onCancel={() => {setOpenTaskCreateModal(false) }} className='task-creation-modal' width={650} >
+        <Modal styles={{ body: { backgroundColor: themeColors.bg[1], border: `1px solid ${colorScheme==='dark' ? '#57585a' : '#c7c7c7'}`} }} 
+        open={openTaskCreateModal} onCancel={() => {setOpenTaskCreateModal(false) }} className='task-creation-modal' width={650} >
             <div style={{margin: "auto",width: "100%"}}>
                 <Box p='15px 20px' w='100%'>
                     <Textarea
                         ref={textareaRef}
-                        className='title'
+                        className={`title ${colorScheme}`}
                         p='8px 0'
                         m='4px 0px'
                         w='100%'
@@ -81,21 +81,23 @@ const TaskCreationModal = (props) => {
                     <Box className='task-creation-tiptap' mt={20} mb={40}>
                         <TaskDescriptionTipTap 
                             setNewTaskDescription={setNewTaskDescription}
+                            colorScheme={colorScheme}
+                            themeColors={themeColors}
                         />
                     </Box>
     
                     <Box>
                         <Flex justify='space-between' align='center' >
                             <Flex gap='10'>
-                                <Button radius={5} h='30' p='0 8px' bg='transparent' bd='.1px solid #048369'>
-                                    {Icons('IconUser',14,14,'#e0e2e6')}
-                                    <Text ms='8' ff='Inter' fz='12.5' c='#e0e2e6'>Assignee</Text>
+                                <Button radius={5} h='30' p='0 8px' bg={buttonBg} bd='.1px solid #048369'>
+                                    {Icons('IconUser',14,14,buttonColor)}
+                                    <Text ms='8' ff='Inter' fz='12.5' c={buttonColor}>Assignee</Text>
                                 </Button>
 
                                 <MantineDropdown 
                                     target={
-                                        <Button c='#e0e2e6' radius={5} h='30' p='0 8px' bg='transparent' bd='.1px solid #048369'>
-                                            {Icons('IconLoader',14,14,'#e0e2e6')}
+                                        <Button c={buttonColor} radius={5} h='30' p='0 8px' bg={buttonBg} bd='.1px solid #048369'>
+                                            {Icons('IconLoader',14,14,buttonColor)}
                                             <Text ms='8' ff='Inter' fz='12.5' >{newTaskStatus ? newTaskStatus : 'Status'}</Text>
                                         </Button>
                                     }
@@ -106,8 +108,8 @@ const TaskCreationModal = (props) => {
 
                                 <MantineDropdown 
                                     target={
-                                        <Button c='#e0e2e6' radius={5} h='30' p='0 8px' bg='transparent' bd='.1px solid #048369'>
-                                            {Icons('IconFlag3',14,14,newTaskPriority ? getPriorityProperty(newTaskPriority).icon.props.fill : '#e0e2e6')}
+                                        <Button c={buttonColor} radius={5} h='30' p='0 8px' bg={buttonBg} bd='.1px solid #048369'>
+                                            {Icons('IconFlag3',14,14,newTaskPriority ? getPriorityProperty(newTaskPriority).icon.props.fill : buttonColor)}
                                             <Text ms='8' ff='Inter' fz='12.5' >{newTaskPriority ? newTaskPriority : 'Priority'}</Text>
                                         </Button>
                                     }
@@ -117,9 +119,9 @@ const TaskCreationModal = (props) => {
                                 />
                                 <Popover placement="bottom" isOpen={dueDatePopoverOpened} onOpenChange={(open) => setDueDatePopoverOpened(open)}>
                                     <PopoverTrigger onClick={() => setDueDatePopoverOpened}>
-                                        <Button fw={300} c='#e0e2e6' className='nextui-calendar-popover-trigger-button' radius={5} h='30' p='0 8px' bg='transparent' bd='.1px solid #048369' 
+                                        <Button fw={300} c={buttonColor} className='nextui-calendar-popover-trigger-button' radius={5} h='30' p='0 8px' bg={buttonBg} bd='.1px solid #048369' 
                                         >
-                                            {Icons('IconCalendarMonth',14,14,'#e0e2e6')} 
+                                            {Icons('IconCalendarMonth',14,14,buttonColor)} 
                                             <Text ms='8' ff='Inter' fz='12.5' >
                                                 {selectedDateTime && selectedDateTime.isValid() 
                                                     ? selectedDateTime.format(`MMM D, h${selectedDateTime.minute() !== 0 ? ':mm' : ''}a`)
@@ -141,11 +143,15 @@ const TaskCreationModal = (props) => {
                         </Flex>
                     </Box>
                 </Box>
-                <Divider size={1} color='#57585a'/>
+                <Divider size={1} color={`${colorScheme==='dark' ? '#57585a' : '#c7c7c7'}`}/>
                 <div style={{margin: "auto",width: "100%"}}>
                     <Box p='13px 20px' w='100%'>
                         <Flex justify='end' align='center'>
-                            <Button disabled={newTaskNameDisabled} bd={`1px solid ${newTaskNameDisabled ? '#434446 ' : '#048369'}`} className={`${newTaskName && 'task-card-create-task-button'}`} radius={8} p='0px 12px' c={newTaskNameDisabled ? '#838486 ' : '#fafafa'} bg={newTaskNameDisabled ? '#434446 ' : '#048369'} onClick={handleTaskCreation}>
+                            <Button disabled={newTaskNameDisabled} 
+                            // bd={`1px solid ${newTaskNameDisabled ? '#434446 ' : `${colorScheme==='dark' ? '#048369' : '#24b689e3'}`}`} 
+                            className={`${newTaskName && 'task-card-create-task-button'}`} radius={8} p='0px 12px' 
+                            c={newTaskNameDisabled ? `${colorScheme==='dark' ? '#838486' : '#757575d8'}` : '#fafafa'} 
+                            bg={newTaskNameDisabled ? `${colorScheme==='dark' ? '#434446' : '#c5c5c5'}` : `${colorScheme==='dark' ? '#048369' : '#24b689e3'}`} onClick={handleTaskCreation}>
                                 <div className='d-flex align-items-center'>
                                     <div style={{marginRight: "5px"}}>
                                         {Icons('IconPlus',14,14)}

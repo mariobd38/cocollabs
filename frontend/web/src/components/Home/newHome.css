@@ -98,10 +98,37 @@
     }
 }
 
-
 .user-home-tooltip {
     border: .1px solid #898989;
     padding: 5px 12px !important;
     font-family: 'Inter' !important;
     border-radius: 6px !important;
+}
+
+.home-button.light:hover {
+    background-color: #e2e0de !important;
+}
+.home-button.dark:hover {
+    background-color: #2d2f31 !important;
+}
+.home-search.light {
+    .mantine-Input-input {
+        background-color: #e1e4e7;
+        border: 1.5px solid #898b8d;
+        color: #222222;
+    }
+    .mantine-Input-input::placeholder {
+        color: #626467 !important;
+    }
+}
+.home-search.dark {
+    .mantine-Input-input {
+        background-color: #393b3d;
+        border: 1.5px solid #4b4d4f;
+        color: #fafafa;
+    }
+
+    .mantine-Input-input::placeholder {
+        color: #e1e1e1 !important;
+    }
 }

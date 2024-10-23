@@ -29,3 +29,9 @@
 .home-header-button:hover {
     background-color: #2b2c2e !important;
 }
+.home-header-customize-button {
+    transition: all .8s ease !important;
+}
+.home-header-customize-button:hover {
+    background-color: #048369 !important;
+}

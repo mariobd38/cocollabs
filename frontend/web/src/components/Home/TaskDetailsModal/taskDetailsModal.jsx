@@ -31,7 +31,7 @@ const TaskDetailsModal = (props) => {
         userFullName, initials,userEmail, currentIndex, currentTaskName, currentTaskPriority, currentTaskDueDate, currentTaskStatus, currentTaskCreationDate, currentTaskLastUpdatedOn,
         setCurrentTaskName, setCurrentTaskDueDate, setCurrentIndex, setCurrentTaskPriority, currentTaskTags, setCurrentTaskTags,setCurrentTaskDescriptionHtml,
         taskType, setTaskType, currentTaskDueDateTime, setCurrentTaskDueDateTime,
-        onHide, show,setCurrentTaskStatus, currentTaskDescriptionHtml,
+        onHide, show,setCurrentTaskStatus, currentTaskDescriptionHtml,themeColors, colorScheme,
         userProfileDto,userProfilePicture,handleTaskUpdateNew
     } = props;
 
@@ -51,21 +51,22 @@ const TaskDetailsModal = (props) => {
         }
     }
     useEffect(() => {
-        
+
         if (show && !originalTaskName) {
             setOriginalTaskName(currentTaskName);
-        } 
+        }
     }, [show, currentTaskName, originalTaskName]);
 
     const handleTaskDetailsModalClose = () => {
         if (!modalDropdownIsOpen) {
+            setTiptapExpanded(false);
             setOriginalTaskName(null);
             setCurrentTaskDescriptionHtml(null);
             onHide();
             navigate(-1);
         }
     };
- 
+
     useEffect(() => {
         if (location.pathname === '/home/modal' && !show) {
 
@@ -78,25 +79,26 @@ const TaskDetailsModal = (props) => {
                 // navigate('/home');
         }
     }, [location.pathname, show, navigate]);
-     
- 
+
+
     //task due date
     const handleDueDatePopoverClick = (event, index) => {
         setCurrentIndex(index);
         setCurrentTaskDueDate(taskType[index].dueDate);
         setCurrentTaskDueDateTime(taskType[index].dueDateTime);
     };
- 
+
     const handleDueDatePopoverClose = (event) => {
         setCurrentTaskDueDate(taskType[currentIndex].dueDate);
         setCurrentTaskDueDateTime(taskType[currentIndex].dueDateTime);
     };
- 
- 
+
+
+    const modalTextColor = colorScheme === 'dark' ? '#fafafa' : '#3a3a3a';
     const assigneeContent = (
         <div className='d-flex align-items-center user-home-task-details-modal-assignee-div'>
              <div className='me-2'>
-                <UserAvatar 
+                <UserAvatar
                     userProfileDto={userProfileDto}
                     userProfilePicture={userProfilePicture}
                     initials={initials}
@@ -104,18 +106,18 @@ const TaskDetailsModal = (props) => {
                     fontSize={1.1}
                 />
              </div>
-             <Text ff='Lato'>
+             <Text ff='Lato' c={modalTextColor}>
                  {userFullName}
              </Text>
          </div>
     );
- 
+
     const handleTagRemoval = (event,currentTagIndex) => {
         event.stopPropagation();
         removeTagInfo(
             currentTaskTags[currentTagIndex].id,
             taskType[currentIndex].id,
-            currentTaskTags, 
+            currentTaskTags,
             setCurrentTaskTags
         );
         const updatedTaskTags = [...currentTaskTags];
@@ -127,7 +129,7 @@ const TaskDetailsModal = (props) => {
         // Recalculate rowOverflow state if needed
         calculateFirstRow(updatedTaskTags);
     }
- 
+
      //tag delete logic
     const [tagToDelete, setTagToDelete] = useState(null);
     const [openTagDeletionModal,setOpenTagDeletionModal] = useState(false);
@@ -145,33 +147,33 @@ const TaskDetailsModal = (props) => {
     const tagButtonsRef = useRef(null);
     const [firstRowTags, setFirstRowTags] = useState([]);
     const [rowOverflow, setRowOverflow] = useState(false);
- 
+
     const calculateFirstRow = useCallback((tags) => {
         // Ensure buttonRefs are correctly initialized
         buttonRefs.current = tags.map((_, i) => buttonRefs.current[i] || React.createRef());
-    
+
         // Check if all refs are ready
         if (!buttonRefs.current.every(ref => ref.current)) {
             setTimeout(() => calculateFirstRow(tags), 0);
             return;
         }
-    
+
         if (!tagButtonContainerRef.current || !tagButtonsRef.current) {
             return;
         }
-    
+
         // Cache container width and initial variables
         const containerWidth = tagButtonContainerRef.current.offsetWidth;
         const containerHeight = tagButtonContainerRef.current.offsetHeight;
         const buttonsHeight = tagButtonsRef.current.offsetHeight;
-    
+
         const tagsInFirstRow = [];
         let totalWidth = 0;
-    
+
         // Determine if there is overflow
         const hasOverflow = buttonsHeight > containerHeight;
         setRowOverflow(hasOverflow);
-    
+
         // Calculate tags that fit in the first row
         buttonRefs.current.every((ref, index) => {
             const buttonWidth = ref.current.offsetWidth + 21; // Adjust for margin/padding if needed
@@ -183,7 +185,7 @@ const TaskDetailsModal = (props) => {
                 return false; // Stop looping, row is full
             }
         });
-    
+
         setFirstRowTags(tagsInFirstRow);
     }, []);
 
@@ -196,6 +198,7 @@ const TaskDetailsModal = (props) => {
     const [activeChildDropdownIndex, setActiveChildDropdownIndex] = useState(null);
 
     const {enableScroll, disableScroll} = useScrollLock();
+    const [tiptapExpanded, setTiptapExpanded] = useState(false);
     // useEffect(() => {
     //     if (openParentTagDropdown || activeChildDropdownIndex)
     //         disableScroll();
@@ -204,26 +207,60 @@ const TaskDetailsModal = (props) => {
     // },[openParentTagDropdown])
 
     const [modalDropdownIsOpen, setModalDropdownIsOpen] = useState(false);
+    const modalRef = useRef(null);
+    useEffect(() => {
+        let resizeObserver;
+    
+        if (show && modalRef.current) {
+            // Capture the initial scroll height
+            const handleResize = () => {
+                const scrollHeight = modalRef.current.scrollTop;
+                console.log("Modal Scroll Height:", scrollHeight);
+            };
+    
+            // Create a ResizeObserver to observe size changes in the modal
+            resizeObserver = new ResizeObserver(() => {
+                handleResize();  // Handle resize to capture scroll height
+            });
+    
+            // Start observing the modal for changes
+            resizeObserver.observe(modalRef.current);
+    
+            // Capture the initial height
+            handleResize();
+        }
+    
+        // Cleanup: disconnect the observer when the modal closes or component unmounts
+        return () => {
+            if (resizeObserver && modalRef.current) {
+                resizeObserver.unobserve(modalRef.current);
+            }
+        };
+    }, [show]);
 
     return (
         <Modal
+        styles={{ body: { backgroundColor: themeColors.bg[1], border: `1px solid ${colorScheme==='dark' ? '#57585a' : '#c7c7c7'}`} }} 
             centered
             open={show}
-            onCancel={() => handleTaskDetailsModalClose()} //escape key
+            onCancel={() => {handleTaskDetailsModalClose(); setTiptapExpanded(false); }}
             width={1000}
             className='task-details-modal-parent'
             closeIcon
+            // ref={modalRef}
         >
             <TaskDetailsModalHeader
                 userFullName={userFullName}
                 handleTaskDetailsModalClose={handleTaskDetailsModalClose}
+                colorScheme={colorScheme}
+                themeColors={themeColors}
             />
 
             <div className='user-home-task-details-modal-body'>
                 <div className='d-flex justify-content-between pb-4' style={{height: "auto"}}>
                     <div className='w-100'>
                         <Textarea
-                            className='mt-2 mb-3 py-2 user-home-task-details-modal-name'
+                            className={`mt-2 mb-3 py-2 user-home-task-details-modal-name ${colorScheme}`}
                             minRows={1}
                             value={currentTaskName}
                             onChange={(event) => {
@@ -233,11 +270,11 @@ const TaskDetailsModal = (props) => {
                             autosize
                         />
 
-                        <div className='d-flex flex-column flex-wrap row-gap-3 lato-font'>
+                        <div className='d-flex flex-column flex-lg-row   flex-wrap row-gap-3 lato-font'>
                             <div className='d-flex user-home-task-details-modal-head-property-group' style={{ fontSize: "1.06rem"}} >
-                                <Text className='user-home-task-details-modal-property-lefttext'>Assignee</Text>
+                                <Text className={`user-home-task-details-modal-property-lefttext ${colorScheme}`} c={modalTextColor}>Assignee</Text>
                                 <div
-                                className='user-home-task-details-modal-head-property-value'
+                                className={`user-home-task-details-modal-head-property-value ${colorScheme}`}
                                 >
                                     <ProfileCard
                                         userFullName={userFullName}
@@ -253,15 +290,15 @@ const TaskDetailsModal = (props) => {
                             </div>
 
                             <div className='d-flex user-home-task-details-modal-head-property-group' style={{ fontSize: "1.06rem"}}>
-                                    <Text className='user-home-task-details-modal-property-lefttext'>Due Date</Text>
-                                    <NewHomeDueDatePopover 
+                                    <Text className={`user-home-task-details-modal-property-lefttext ${colorScheme}`} c={modalTextColor}>Due Date</Text>
+                                    <NewHomeDueDatePopover
                                         popoverTarget={
-                                            <div className='d-flex align-items-center justify-content-between user-home-task-details-modal-head-property-value' onClick={(event) => handleDueDatePopoverClick(event, currentIndex)}>
-                                                <Text ff='Lato' fz='16.5'>
+                                            <div className={`justify-content-between user-home-task-details-modal-head-property-value ${colorScheme}`} onClick={(event) => handleDueDatePopoverClick(event, currentIndex)}>
+                                                <Text ff='Lato' fz='16.5' c={modalTextColor}>
                                                     {currentTaskDateFormatter(currentTaskDueDate)}
                                                 </Text>
                                                 {currentTaskDateFormatter(currentTaskDueDate) !== 'None' &&
-                                                <span className='user-home-task-details-modal-due-date-remove' 
+                                                <span className='user-home-task-details-modal-due-date-remove'
                                                 onClick={(e) => { e.stopPropagation(); handleTaskUpdateNew(taskType[currentIndex], null, "clear due date", taskType, setTaskType, currentIndex);
                                                     setCurrentTaskDueDate(null); setCurrentTaskDueDateTime(null); }}>
                                                     <div className='user-home-task-details-modal-due-date-remove-icon d-flex align-items-center'>
@@ -269,9 +306,9 @@ const TaskDetailsModal = (props) => {
                                                     </div>
                                                 </span>}
                                         </div>
-                                        } 
+                                        }
                                         currentIndex={currentIndex} taskType={taskType} setTaskType={setTaskType}
-                                        currentTaskDueDate={currentTaskDueDate} setCurrentTaskDueDate={setCurrentTaskDueDate} 
+                                        currentTaskDueDate={currentTaskDueDate} setCurrentTaskDueDate={setCurrentTaskDueDate}
                                         currentTaskDueDateTime={currentTaskDueDateTime} setCurrentTaskDueDateTime={setCurrentTaskDueDateTime}
                                         popoverId={currentIndex}
                                         openPopoverId={openPopoverId} // Pass the current open popover ID
@@ -282,10 +319,10 @@ const TaskDetailsModal = (props) => {
                             </div>
 
                             <div className='d-flex user-home-task-details-modal-head-property-group' style={{ fontSize: "1.06rem" }}>
-                                <Text className='user-home-task-details-modal-property-lefttext'>Status</Text>
-                                <MantineDropdown 
+                                <Text className={`user-home-task-details-modal-property-lefttext ${colorScheme}`} c={modalTextColor}>Status</Text>
+                                <MantineDropdown
                                     target={
-                                        <div className='user-home-task-details-modal-head-property-value' onClick={() => setModalDropdownIsOpen(true)}>
+                                        <div className={`user-home-task-details-modal-head-property-value ${colorScheme}`} onClick={() => setModalDropdownIsOpen(true)}>
                                             <div className='user-home-task-details-modal-head-text-dropdown-value' style={{color: '#e7e7e7', background: currentTaskStatus && getStatusProperty(currentTaskStatus).background }}>
                                                 <div className='d-flex'>
                                                     <span className='d-flex align-items-center me-2'>{currentTaskStatus && getStatusProperty(currentTaskStatus).icon}</span>
@@ -294,17 +331,17 @@ const TaskDetailsModal = (props) => {
                                             </div>
                                         </div>
                                     }
-                                    background={'#232426'} width={190} dropdown={<StatusDropdownContent element={taskType && taskType[currentIndex]} handleTaskUpdateNew={handleTaskUpdateNew} taskType={taskType} 
+                                    background={'#232426'} width={190} dropdown={<StatusDropdownContent element={taskType && taskType[currentIndex]} handleTaskUpdateNew={handleTaskUpdateNew} taskType={taskType}
                                     setTaskType={setTaskType} idx={currentIndex} setCurrentTaskStatus={setCurrentTaskStatus}  existingTask={true} /> }
                                     position='bottom-start' setModalDropdownIsOpen={setModalDropdownIsOpen}
                                 />
                             </div>
 
                             <div className='d-flex user-home-task-details-modal-head-property-group' style={{ fontSize: "1.06rem" }}>
-                                <Text className='user-home-task-details-modal-property-lefttext'>Priority</Text>
-                                <MantineDropdown 
+                                <Text className={`user-home-task-details-modal-property-lefttext ${colorScheme}`} c={modalTextColor}>Priority</Text>
+                                <MantineDropdown
                                     target={
-                                        <div className='user-home-task-details-modal-head-property-value' onClick={() => setModalDropdownIsOpen(true)}>
+                                        <div className={`user-home-task-details-modal-head-property-value ${colorScheme}`} onClick={() => setModalDropdownIsOpen(true)}>
                                             {currentTaskPriority ?
                                             <div className='user-home-task-details-modal-head-text-dropdown-value' style={{background: currentTaskPriority && getPriorityProperty(currentTaskPriority).color}}>
                                                 <div className='d-flex'>
@@ -314,7 +351,7 @@ const TaskDetailsModal = (props) => {
                                             </div> : <Text c='#babbbe'>Empty</Text>}
                                         </div>
                                     }
-                                    background={'#232426'} width={210} dropdown={<PriorityDropdownContent element={taskType && taskType[currentIndex]} handleTaskUpdateNew={handleTaskUpdateNew} taskType={taskType} 
+                                    background={'#232426'} width={210} dropdown={<PriorityDropdownContent element={taskType && taskType[currentIndex]} handleTaskUpdateNew={handleTaskUpdateNew} taskType={taskType}
                                     setTaskType={setTaskType} idx={currentIndex} setCurrentTaskPriority={setCurrentTaskPriority} existingTask={true} /> }
                                     position='bottom-start' setModalDropdownIsOpen={setModalDropdownIsOpen}
                                 />
@@ -322,13 +359,13 @@ const TaskDetailsModal = (props) => {
 
 
                             <div className='d-flex user-home-task-details-modal-head-property-group' style={{ fontSize: "1.06rem" }}>
-                                <Text className='user-home-task-details-modal-property-lefttext'>Tags</Text>
+                                <Text className={`user-home-task-details-modal-property-lefttext ${colorScheme}`} c={modalTextColor}>Tags</Text>
                                 <Popover placement="bottom-start" isOpen={openParentTagDropdown} onOpenChange={(open) => {setOpenParentTagDropdown(open); if (!open) enableScroll();}}
                                 >
                                     <PopoverTrigger className='tags-dropdown-popover-trigger' onClick={() => disableScroll()}>
-                                    <div className='user-home-task-details-modal-head-property-value' ref={tagButtonContainerRef}>
+                                    <div className={`user-home-task-details-modal-head-property-value ${colorScheme}`} ref={tagButtonContainerRef}>
                                             <div className="d-flex flex-wrap" ref={tagButtonsRef}>
-                                                {rowOverflow && firstRowTags.length < currentTaskTags.length ?  
+                                                {rowOverflow && firstRowTags.length < currentTaskTags.length ?
                                                     <span>
                                                 {firstRowTags.map((tag, index) => (
                                                     <Button ref={buttonRefs.current[index]} key={index} bg={tag.color} className='user-home-task-details-modal-tags-button' fw={400} h='22' ff='Lato' fz={16}>
@@ -338,7 +375,7 @@ const TaskDetailsModal = (props) => {
                                                             </span>
                                                         </span>
 
-                                                        <span className='align-middle user-home-task-details-modal-tags-button-close' 
+                                                        <span className='align-middle user-home-task-details-modal-tags-button-close'
                                                         onClick={(event) => handleTagRemoval(event,index)}>
                                                             {Icons('IconX',18,18)}
                                                         </span>
@@ -352,7 +389,7 @@ const TaskDetailsModal = (props) => {
                                                             </span>
                                                         </span>
 
-                                                        <span className='align-middle user-home-task-details-modal-tags-button-close' 
+                                                        <span className='align-middle user-home-task-details-modal-tags-button-close'
                                                         onClick={(event) => handleTagRemoval(event,index)}>
                                                             {Icons('IconX',18,18)}
                                                         </span>
@@ -364,37 +401,42 @@ const TaskDetailsModal = (props) => {
                                     <PopoverContent style={{background: "green !important"}} className='tags-dropdown-popover-parent'>
                                         <TagsDropdownContent task={taskType && taskType[currentIndex]} taskType={taskType} setTaskType={setTaskType}
                                         idx={currentIndex} setCurrentTaskTags={setCurrentTaskTags} currentTaskTags={currentTaskTags}
-                                        setTagToDelete={setTagToDelete} setOpenTagDeletionModal={setOpenTagDeletionModal} 
+                                        setTagToDelete={setTagToDelete} setOpenTagDeletionModal={setOpenTagDeletionModal}
                                         openParentTagDropdown={openParentTagDropdown} setOpenParentTagDropdown={setOpenParentTagDropdown}
                                         activeChildDropdownIndex={activeChildDropdownIndex} setActiveChildDropdownIndex={setActiveChildDropdownIndex}
                                         enableScroll={enableScroll}
-                                        /> 
+                                        />
 
                                     </PopoverContent>
                                 </Popover>
                             </div>
                             </div>
-                        
+
                         </div>
-                    </div> 
+                    </div>
 
                     <div className='mt-3 mb-5'>
-                        <TaskDescriptionTipTap 
+                        <TaskDescriptionTipTap
+                            modalRef={modalRef}
+                            colorScheme={colorScheme}
+                            themeColors={themeColors}
                             content={content}
                             currentIndex={currentIndex}
                             taskType={taskType}
                             setTaskType={setTaskType}
                             handleTaskUpdateNew={(element,value, attribute, taskType,setTaskType,index) => handleTaskUpdateNew(element,value, attribute, taskType,setTaskType,index)}
+                            expanded={tiptapExpanded}
+                            setExpanded={setTiptapExpanded}
                         />
                     </div>
 
-                    {tagToDelete && <TagDeletionModal 
+                    {tagToDelete && <TagDeletionModal
                         show={openTagDeletionModal}
                         handleClose={() => setOpenTagDeletionModal(false)}
                         handleConfirmDeleteTagButtonClick={() => deleteTagInfo(tagToDelete)}
                         tagName={tagToDelete.name}
                     />}
-                                        
+
                 </div>
       </Modal>
     );

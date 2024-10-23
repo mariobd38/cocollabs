@@ -11,9 +11,6 @@
     /* display: flex !important;
     visibility:visible; */
 }
-.table-cell:hover .user-home-new-task-input{
-    background-color: #2f3032 !important;
-}
 .table-cell {
     font-family: 'Lato', serif !important;
     font-size: 15px;
@@ -28,8 +25,12 @@
     height: 60px !important;
     transition: all .4s ease;
 }
-.table-cell:hover {
+.table-cell.dark:hover {
     background-color: #2f3032 !important;
+}
+.table-cell.light:hover {
+    /* background-color: #e6eaf2 !important; */
+    background-color: #d0d3d4 !important;
 }
 .user-home-task-check-icon {
     width: 1.15rem !important;
@@ -61,18 +62,8 @@
     border: none !important;
     font-family: 'Poppins', serif;
     color: #fafafa;
-    
-    /* overflow: hidden !important;
-    text-overflow: ellipsis !important;
-    white-space: nowrap !important; */
-    /* width: 280px; */
 }
 .table-cell:hover .task-name-text {
-    /* padding:0 !important; */
-    /* white-space: nowrap;
-    overflow:clip;
-    text-overflow: ellipsis;
-    width: calc(100% - 292px) !important; */
     margin:0 !important;
 }
 .task-name-text.strikethrough {
@@ -80,7 +71,7 @@
 }
 .user-home-calendar-icon-div {
     color: #e7e7e7 !important;
-    border: .1px solid #969696 !important;
+    /* border: .1px solid #969696 !important; */
     padding: 6.8px 0.3rem;
     cursor: pointer !important;
     border-radius: 6px;
@@ -88,8 +79,11 @@
     display: flex;
     align-items: center;
 }
-.user-home-calendar-icon-div:hover {
+.user-home-calendar-icon-div.dark:hover {
     background-color: #414243 !important;
+}
+.user-home-calendar-icon-div.light:hover {
+    background-color: #c0c1c3 !important;
 }
 .user-home-calendar-icon {
     color: #e7e7e7;

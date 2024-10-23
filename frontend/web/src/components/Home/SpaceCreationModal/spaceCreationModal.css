@@ -11,6 +11,7 @@
         display: none;
     }
     .ant-modal-body {
+        border-radius: 8px;
         color: #fafafa;
     }
     button { background-color: #048a66; }
@@ -38,7 +39,7 @@
 }
 .space-creation-input-field label, .space-creation-input-field-label {
     font-size: 15px;
-    color: #f1f1f1;
+    /* color: #f1f1f1; */
     font-weight: 500 !important;
     padding-bottom: 5px;
 }
@@ -47,7 +48,7 @@
         font-size: 14.7px;
         font-family: 'Lato';
         background-color: transparent;
-        color: #fafafa;
+        /* color: #fafafa; */
         border-color: #8d858d;
     }
     .mantine-Textarea-input {
@@ -63,6 +64,12 @@
         color: #adb5bd !important;
         --input-color: #222222 !important;
     }
+}
+.space-creation-input-field.dark .mantine-Input-input {
+    color: #fafafa;
+}
+.space-creation-input-field.light .mantine-Input-input {
+    color: #121212;
 }
 .space-creation-icon-button:hover {
     background-color: #404143 !important;

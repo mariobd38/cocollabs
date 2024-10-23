@@ -18,8 +18,8 @@ import {Icons} from '../../icons/icons';
 
 const TaskCard = (props) => {
 
-    const {userFullName, initials, userEmail, taskData, setTaskData, ongoingTasks, today, overdueTasks,
-        completedTasks,userProfileDto,userProfilePicture} = props; 
+    const { userFullName, initials, userEmail, taskData, setTaskData, ongoingTasks, today, overdueTasks,
+        completedTasks,userProfileDto,userProfilePicture,colorScheme,themeColors } = props; 
     const [currentIndex, setCurrentIndex] = useState(null);
 
     //task attributes
@@ -50,26 +50,21 @@ const TaskCard = (props) => {
             index
         );
     }
-
     
     const [activeSegment, setActiveSegment] = useState('1');
-
-    const segments = [
-        { value: '1', label: <> {
-            <Text className='d-flex align-items-center task-card-segment' c='#f5f6f9' ff='Nunito Sans' fz='15'>Upcoming<Text className='d-flex align-items-center text' ms={10}>{ongoingTasks.length}</Text></Text>
-            }
-        </> },
-        { value: '2', label: <> {
-            <Text className='d-flex align-items-center task-card-segment' c='#f5f6f9' ff='Nunito Sans' fz='15'>Overdue<Text className='d-flex align-items-center text' ms={10}>{overdueTasks.length}</Text></Text>
-            }
-        </> },
-        // { value: '3', label: `Completed (${completedTasks.length})` },
-        { value: '3', label: <> {
-            <Text className='d-flex align-items-center task-card-segment' c='#f5f6f9' ff='Nunito Sans' fz='15'>Done<Text className='d-flex align-items-center text' ms={10}>{completedTasks.length}</Text></Text>
-            }
-        </> },
-
+    const seg = [
+        {value: '1', text: 'Upcoming', taskType: ongoingTasks},
+        {value: '2', text: 'Overdue', taskType: overdueTasks},
+        {value: '3', text: 'Completed', taskType: completedTasks},
     ];
+
+    const segments = seg.map((item,index) => (
+        { value: item.value, label: <> {
+            <Text key={index} className={`d-flex align-items-center task-card-segment ${colorScheme}`} c='#f5f6f9' ff='Nunito Sans' fz='15'>{item.text}<Text className='d-flex align-items-center text' ms={10}>{item.taskType.length}</Text></Text>
+            }
+        </> }
+    ));
+
     const renderTaskContent = (taskType,isCompleted) => (
         <TaskCardContent 
           today={today}
@@ -92,27 +87,27 @@ const TaskCard = (props) => {
           setTaskType={setTaskType}
           isTaskTabCompleted={isCompleted}
           handleTaskUpdateNew={handleTaskUpdateNew}
+          colorScheme={colorScheme}
+          themeColors={themeColors}
         />
       );
     const [openTaskCreateModal, setOpenTaskCreateModal] = useState(false);
 
     return (
 
-        <Box py={20} px={20} bg='#222529' style={{borderRadius: "10px"}}>
+        <Box py={20} px={20} bg={themeColors.bg[4]} bd={`1px solid ${colorScheme === 'dark' ? '#323539' : '#b9b9b9'}`}
+            style={{borderRadius: "10px", boxShadow: `0 2px 10px ${colorScheme==='dark' ? '#30314447' : '#70718457'}` }}>
             <div className='d-flex align-items-center justify-content-between pb-2'>
-                <div style={{ color: '#fafafa' }}>
-                    <Text fz='18'  c='#e8eaed' ff='Lato'>My Tasks</Text>
-                </div>
-
-                <div>
-                    {Icons('IconDots',24,24,'#fafafa')}
-                </div> 
+                <Text fz='18'  c={themeColors.text[3]} ff='Lato'>My Tasks</Text>
+                {Icons('IconDots',24,24,themeColors.text[3])}
             </div>
 
-            <Flex align='center' mt={5} mb={15} justify='space-between'>
+            <Flex align='center' mt={10} mb={15} justify='space-between'>
                 <SegmentedControl
-                    className='task-card-segmented-control' 
-                    color="#048369"
+                    className={`task-card-segmented-control ${colorScheme}`}
+                    bg={themeColors.bg[7]}
+                    color={`${colorScheme==='dark' ? '#048369' : '#24b689e3'}`}
+
                     withItemsBorders={false}
                     data={segments}
                     value={activeSegment}
@@ -120,7 +115,9 @@ const TaskCard = (props) => {
                     radius={6}
                 />
 
-                <Button bd='1px solid #048369'  className='task-card-create-task-button' radius={8} p='0px 12px' bg='transparent' onClick={() => setOpenTaskCreateModal(true)}>
+                <Button bd={`.1px solid ${colorScheme==='dark' ? '#048369' : '#24b689e3'}`}
+                className='task-card-create-task-button' c='#fafafa' radius={8} p='0px 12px' 
+                bg={`${colorScheme==='dark' ? '#048369' : '#24b689e3'}`} onClick={() => setOpenTaskCreateModal(true)}>
                     <div className='d-flex align-items-center'>
                         <div style={{marginRight: "7px"}}>
                         {Icons('IconPlus',15,15,'#fafafa')}
@@ -130,9 +127,9 @@ const TaskCard = (props) => {
                 </Button>
                 
             </Flex>
-            <Card className='task-card-card' >
+            <Card className='task-card-card'  bd={`1.7px solid ${colorScheme === 'dark' ? '#323539' : '#c6c6c6'}`} >
                 
-                <div className='user-home-card-body'>
+                <Box bg={themeColors.bg[4]}>
                     <div>
                         {activeSegment === '1' && (
                             <div className='table-container-wrapper mx-3 py-3'>
@@ -173,13 +170,15 @@ const TaskCard = (props) => {
                             </div>
                         )}
                     </div>
-                </div>
+                </Box>
 
                 
             </Card>
 
             <TaskDetailsModal
                 userFullName={userFullName}
+                colorScheme={colorScheme}
+                themeColors={themeColors}
                 initials={initials}
                 userEmail={userEmail}
                 show={modalShow}
@@ -214,6 +213,8 @@ const TaskCard = (props) => {
                 setOpenTaskCreateModal={setOpenTaskCreateModal}
                 taskData={taskData}
                 setTaskData={setTaskData}
+                colorScheme={colorScheme}
+                themeColors={themeColors}
             />
         </Box>
     );

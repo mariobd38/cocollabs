@@ -57,3 +57,16 @@ code {
 .shadow-small {
   --tw-shadow: none;
 }
+
+:root[data-mantine-color-scheme="light"] body {
+  /* --mantine-color-body: var(--mantine-color-gray-1); */
+  /* background-color: var(--mantine-color-gray-1); */
+  background-color: #fafafa;
+}
+
+/* For dark mode */
+:root[data-mantine-color-scheme="dark"] body {
+  background-color: #1e1f21;
+}
+
+

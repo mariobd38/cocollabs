@@ -1,21 +1,22 @@
-import React, { useState, useRef } from 'react';
-import {Avatar,UnstyledButton,Badge,Tooltip,rem,Box,Flex} from '@mantine/core';
+import React, { useState, useRef,useEffect } from 'react';
+import {Avatar,UnstyledButton,Badge,Tooltip,rem,Flex} from '@mantine/core';
 
 import {Icons} from '../../icons/icons';
 
 import classes from './navbarSearch.module.css';
 
 import HomeSidebarSpaceOptions from './HomeSideBarSpaceOptions/homeSideBarSpaceOptions';
+import SpaceCreationModal from '../SpaceCreationModal/spaceCreationModal';
 import { MantineDropdown } from '../../models/ModelDropdown2/mantineDropdown';
 import './homeSidebar.css';
 
 const HomeSidebar = (props) => {
-    const { userEmail, openSidebarToggle, setOpenSidebarToggle,spaceName,spaceIcon } = props;
+    const { userEmail, userFullName, openSidebarToggle, setOpenSidebarToggle,spaceName,spaceIcon,themeColors,colorScheme } = props;
 
     const links = [
         { icon: 'IconHome', label: 'Home' },
-        { icon: 'IconInbox', label: 'Inbox', notifications: 4 },
-        { icon: 'IconFolder', label: 'Projects', notifications: 4 },
+        { icon: 'IconInbox', label: 'Inbox' },
+        { icon: 'IconFolder', label: 'Projects' },
         { icon: 'IconFile', label: 'Docs' },
         { icon: 'IconCalendar', label: 'Calendar' },
         { icon: 'IconDotsCircleHorizontal', label: 'More' },
@@ -37,8 +38,10 @@ const HomeSidebar = (props) => {
                             overflow: 'hidden', 
                             textOverflow: 'ellipsis',
                             maxWidth: '165px',
-                            color: "#f1f1f1",
-                            fontWeight: "600",
+                            // color: "#f1f1f1",
+                            paddingLeft: "3px",
+                            color: themeColors.text[3],
+                            fontWeight: "550",
                             fontFamily: 'Lato'
                         }}
                     >
@@ -53,13 +56,13 @@ const HomeSidebar = (props) => {
   const mainLinks = links.map((link,index) => (
         <>
             {openSidebarToggle ? 
-                <UnstyledButton key={index} className={`${classes.mainLink} ${classes.active}`}>
+                <UnstyledButton key={index} className={`${classes.mainLink} ${classes.active}`} data-theme={colorScheme}>
                     <div className={classes.mainLinkInner}>
                         <div className={`${classes.mainLinkIcon} ${classes.active}`}>
-                            {Icons(link.icon, 25, 25, '#868e96')}
+                            {Icons(link.icon, 25, 25, themeColors.text[10])}
                             {/* <link.icon color='#868e96' size={25}  stroke={2} /> */}
                         </div>
-                        <span style={{fontFamily: 'Lato', fontWeight: "500", fontSize: "15px", color: "#d0d2d4"}}>{link.label}</span>
+                        <span style={{fontFamily: 'Lato', fontWeight: "500", fontSize: "15px", color: themeColors.text[5]}}>{link.label}</span>
                     </div>
                     {link.notifications && (
                         <Badge size="sm" variant="filled" className={classes.mainLinkBadge}>
@@ -69,11 +72,11 @@ const HomeSidebar = (props) => {
                 </UnstyledButton>
             
             : 
-            <Tooltip label={link.label} position="right" withArrow arrowOffset={10} arrowSize={4} bg='#121212' openDelay={500} offset={{ mainAxis: 10 }}>
-                <UnstyledButton key={link.label} className={classes.mainLink}>
+            <Tooltip label={link.label} position="right" withArrow arrowOffset={10} arrowSize={4} bg={`${colorScheme==='dark' ? '#121212' : '#272727'}`} c='#f0f0f0' openDelay={500} offset={{ mainAxis: 10 }}>
+                <UnstyledButton key={link.label} className={classes.mainLink} data-theme={colorScheme}>
                     <div className={`${classes.mainLinkInner} d-flex justify-content-center`}>
                         <div className={classes.iconWrapper}>
-                            {Icons(link.icon, 25, 25, '#868e96')}
+                            {Icons(link.icon, 25, 25, themeColors.text[10])}
                             {link.notifications &&
                             <Badge circle size="xs" color="blue" className={classes.badge}>
                                 {link.notifications}
@@ -88,13 +91,21 @@ const HomeSidebar = (props) => {
         </>
         
     ));
-
-    const [sidebarColor, setSidebarColor] = useState('#222529');
+    
+    
+    const [sidebarColor, setSidebarColor] = useState(themeColors.bg[4]);
     const isResizing = useRef(false);
+
+
+    useEffect(() => {
+        setTimeout(() => {
+            setSidebarColor(themeColors.bg[4]);
+        },0)
+    }, [colorScheme, themeColors]);
 
     const handleMouseMove = (e) => {
         if (!isResizing.current) return;
-        setSidebarColor('#525559');
+
         let newWidth = e.clientX;
         if (newWidth < 200) {
             newWidth = 80;
@@ -108,7 +119,7 @@ const HomeSidebar = (props) => {
     };
 
     const handleMouseUp = () => {
-        setSidebarColor('#222529');
+        setSidebarColor(themeColors.bg[4]);
 
         isResizing.current = false;
         document.removeEventListener('mousemove', handleMouseMove);
@@ -123,26 +134,45 @@ const HomeSidebar = (props) => {
         document.addEventListener('mouseup', handleMouseUp);
     };
 
+    const [openSpaceCreateModal, setOpenSpaceCreateModal] = useState(false);
+
     return (
         <nav className={`${classes.navbar} ${openSidebarToggle ? 'active' : ''}`} 
             style={{
                 width: openSidebarToggle ? rem(260) : rem(80),
+                background: themeColors.bg[4],
+                borderRight: `1px solid ${colorScheme === 'dark' ? '#323539' : '#b9b9b9'}`
             }}
             >
 
-                <Box className={classes.section}>
+                <div className={classes.section} data-theme={colorScheme}>
                     <MantineDropdown 
                         target={<div className={classes.profile}>{profileLink}</div>}
                         width={240}
-                        dropdown={<HomeSidebarSpaceOptions spaceName={spaceName} spaceIcon={spaceIcon} />}
-                        background={'#222222'} position='right-start' dmt={6}
+                        dropdown={
+                            <HomeSidebarSpaceOptions 
+                                spaceName={spaceName} 
+                                setOpenSpaceCreateModal={setOpenSpaceCreateModal}
+                                themeColors={themeColors}
+                                colorScheme={colorScheme}
+                            />
+                        }
+                        background={themeColors.bg[2]} position='right-start' dmt={6}
                     />
-                </Box>
-                <div className={classes.section}>
+                </div>
+                <div className={classes.section} data-theme={colorScheme}>
                     <div className={classes.mainLinks}>{mainLinks}</div>
                 </div>
-
-                <div className="resize-handle" onMouseDown={handleMouseDown} style={{background: sidebarColor}}></div>
+                {(themeColors.bg[4] === sidebarColor || isResizing.current) &&
+                <div className="resize-handle" onMouseDown={handleMouseDown} style={{background: sidebarColor}}></div>}
+        
+                <SpaceCreationModal 
+                    openSpaceCreateModal={openSpaceCreateModal}
+                    setOpenSpaceCreateModal={setOpenSpaceCreateModal}
+                    userFullName={userFullName}
+                    themeColors={themeColors}
+                    colorScheme={colorScheme}
+                />
         </nav>
     );
 };

@@ -5,7 +5,7 @@ import { Modal } from "antd";
  
 import dayjs from 'dayjs';
 
-import { Tooltip, Table, Text,Button,Textarea } from '@mantine/core';
+import { Tooltip, Table, Text,Button,Textarea,Box } from '@mantine/core';
 import { useClickOutside } from '@mantine/hooks';
 
 import {Icons} from '../../../icons/icons';
@@ -22,7 +22,8 @@ import './taskCardContent.css';
 const TaskCardContent = (props) => {
     const {today,taskType,currentTaskDueDate, currentTaskDueDateTime, currentIndex, setCurrentIndex,setCurrentTaskDueDate,
         setCurrentTaskDueDateTime, getTagInfo,setCurrentTaskTags,setModalShow,setCurrentTaskName,setCurrentTaskCreationDate,
-        setCurrentTaskLastUpdatedOn,setCurrentTaskStatus,setCurrentTaskPriority,setTaskType,isTaskTabCompleted, setCurrentTaskDescriptionHtml,handleTaskUpdateNew
+        setCurrentTaskLastUpdatedOn,setCurrentTaskStatus,setCurrentTaskPriority,setTaskType,isTaskTabCompleted, setCurrentTaskDescriptionHtml,handleTaskUpdateNew,
+        colorScheme,themeColors
     } = props;
 
     const location = useLocation();
@@ -136,15 +137,16 @@ const TaskCardContent = (props) => {
 
     const [openPopoverId, setOpenPopoverId] = useState(null);
 
+    const buttonBorderColor = `1px solid ${colorScheme === 'dark' ? '#969696' : '#b0b0b0'}`;
+
     const rows = (taskType) => {
         
         return taskType.map((element, index) => {
-            // console.log(dropdownRefs.current[index]);
             
-            return ( <Table.Tr key={index} className='table-row-dark table-cell' bd='none' style={{borderRadius: "18px"}} onContextMenu={(event) => handleTaskRowRightClick(event, index)}>
+            return ( <Table.Tr key={index} className={`table-row-dark table-cell ${colorScheme}`} bd='none' style={{borderRadius: "18px"}} onContextMenu={(event) => handleTaskRowRightClick(event, index)}>
                 <Table.Td className={`text-overflow-cell`}>
                     <div >
-                        <div className="d-flex" style={{ color: "#fafafa" }}>
+                        <div className="d-flex" style={{ color: themeColors.text[2] }}>
                             <div className='align-items-center d-flex'>
                                 {isTaskTabCompleted ?
                                     <div onClick={() => handleTaskComplete(index)} className='d-flex align-items-center user-home-task-check-icon user-home-task-set-complete'>
@@ -163,8 +165,8 @@ const TaskCardContent = (props) => {
                                 onClick={(e) => OpenTaskDetailsModal(e, taskType, index)} >
                                 <div className='d-flex flex-column w-100'>
                                     <button className='task-name-link' >
-                                        <div className={`task-name-text `} >
-                                            <Text className='text-overflow' fz={14}>{element.name}</Text>
+                                        <div className={`task-name-text`} >
+                                            <Text className='text-overflow' c={themeColors.text[2]} fz={14}>{element.name}</Text>
                                         </div>
                                     </button>
                                 </div>
@@ -251,11 +253,11 @@ const TaskCardContent = (props) => {
                             <>{element.priority &&
                                 <MantineDropdown 
                                     target={
-                                        <Button p='0 12px' size="xs" radius='6' fz={13} bg='transparent' className='user-home-calendar-icon-div'>
+                                        <Button p='0 12px' size="xs" radius='6' fz={13} bg='transparent' bd={buttonBorderColor} className={`user-home-calendar-icon-div ${colorScheme}`}>
                                             <span style={{ color: "#a7a7a7" }} className={`lato-font, user-home-chosen-due-date-text`} >
-                                                <span className='d-flex align-items-center' style={{color: "#e5e5e5"}} >
+                                                <span className='d-flex align-items-center' style={{color: colorScheme==='dark' ? "#e5e5e5" : '#414141'}} >
                                                     <div className='me-1'>
-                                                        {Icons('IconFlag3',18,18,'#e5e5e5')}
+                                                        {Icons('IconFlag3',18,18,colorScheme==='dark' ? "#e5e5e5" : '#414141')}
                                                     </div>
 
                                                     <span>{element.priority}</span>
@@ -272,14 +274,16 @@ const TaskCardContent = (props) => {
                                 popoverTarget={
 
                                 <>{element.dueDate ?
-                                    <Button fz='13' size="xs" p='0 12px' radius='6' bg='transparent' className='user-home-calendar-icon-div' onClick={(event) => handleDueDatePopoverClick(event, index,element)}>
+                                    <Button fz='13' size="xs" p='0 12px' radius='6' bg='transparent' bd={buttonBorderColor}
+                                    className={`user-home-calendar-icon-div ${colorScheme}`} onClick={(event) => handleDueDatePopoverClick(event, index,element)}>
                                         <span style={{ color: "#a7a7a7" }} className={`lato-font, user-home-chosen-due-date-text`} >
                                             <span className='d-flex align-items-center'
-                                                style={{ color: dayjs(element.dueDate).startOf('day').diff(dayjs(today).startOf('day'), 'day') < 0 && element.status !== 'Completed' ? "#e10845cf" : "#e5e5e5"
+                                                style={{ color: dayjs(element.dueDate).startOf('day').diff(dayjs(today).startOf('day'), 'day') < 0 && element.status !== 'Completed' ? "#e10845cf" : 
+                                                    colorScheme==='dark' ? "#e5e5e5" : '#414141'  
                                             }} >
                                                 <div className='d-flex align-items-center'>
                                                     <div className='me-2'>
-                                                        {Icons('IconCalendarDue',18,18,'#fafafa')}
+                                                        {Icons('IconCalendarDue',18,18,themeColors.text[1])}
                                                     </div>
                                                     <span>{formatDate(element.dueDateTime || element.dueDate)}</span>
                                                 </div>
@@ -289,9 +293,9 @@ const TaskCardContent = (props) => {
 
                                     <span className='table-cell-icon'>
                                         <Tooltip label="Add due date" position="top" offset={8} openDelay={400} className='user-home-tooltip' >
-                                            <div className='user-home-calendar-icon-div' onClick={(event) => handleDueDatePopoverClick(event, index,element)}>
-                                                {Icons('IconCalendarMonth',20.80,16,'#fafafa')}
-                                            </div>
+                                            <Box bd={buttonBorderColor} className={`user-home-calendar-icon-div ${colorScheme}`} onClick={(event) => handleDueDatePopoverClick(event, index,element)}>
+                                                {Icons('IconCalendarMonth',20.80,16,themeColors.text[1])}
+                                            </Box>
                                         </Tooltip>
                                     </span>}
                                 </>} 

@@ -8,7 +8,7 @@ import { Text,Button,Textarea,Box,Flex,Divider,TextInput,Grid,Radio, Group,Stack
 import { Modal } from "antd";
 import SpaceCreationIconsPopover from './spaceCreationIconsPopover';
 import { createSpaceInfo } from '../../../DataManagement/Spaces/createSpace';
-import { linkTasksToPersonalSpace } from '../../../DataManagement/Spaces/linkTasksToPersonalSpace';
+// import { linkTasksToPersonalSpace } from '../../../DataManagement/Spaces/linkTasksToPersonalSpace';
 
 import classes from './spaceCreationModal.module.css';
 import './spaceCreationModal.css';
@@ -20,7 +20,7 @@ const visibilityOptions = [
 ];
 
 const SpaceCreationModal = (props) => {
-    const {openSpaceCreateModal,setOpenSpaceCreateModal,userFullName} = props;
+    const {openSpaceCreateModal,setOpenSpaceCreateModal,userFullName,themeColors,colorScheme} = props;
 
     const [spaceName, setSpaceName] = useState('');
     const firstLetter = userFullName.substring(0, 1).toUpperCase(); 
@@ -45,8 +45,8 @@ const SpaceCreationModal = (props) => {
             <Group wrap="nowrap" align="flex-start">
                 <Radio.Indicator />
                 <div>
-                    <Text className={classes.label}>{item.name}</Text>
-                    <Text className={classes.description}>{item.description}</Text>
+                    <Text className={classes.label} c={colorScheme === 'dark' ? '#ececec' : '#3a3a3a'}>{item.name}</Text>
+                    <Text className={classes.description} c={colorScheme === 'dark' ? '#c3c3c3' : '#696969'}>{item.description}</Text>
                 </div>
             </Group>
         </Radio.Card>
@@ -103,13 +103,13 @@ const SpaceCreationModal = (props) => {
     // };
     
     return (
-        <Modal open={openSpaceCreateModal} onCancel={() => {setOpenSpaceCreateModal(false) }} className='space-creation-modal' width={650} >
+        <Modal styles={{ body: { backgroundColor: themeColors.bg[1]} }} open={openSpaceCreateModal} onCancel={() => {setOpenSpaceCreateModal(false) }} className='space-creation-modal' width={650} >
             
             <div style={{margin: "auto",width: "100%"}}>
                 
                 <Box p='30px 35px' w='100%'>
                     <Box mb={24}>
-                        <Text fw={600} c='#f12f5' fz='20'>Create a space</Text>
+                        <Text fw={600} c={themeColors.text[2]} fz='20'>Create a space</Text>
                     </Box>
                     {/* <Button onClick={personalSpaceCreation}>click</Button> */}
 
@@ -117,7 +117,7 @@ const SpaceCreationModal = (props) => {
 
                         <Grid grow>
                             <Grid.Col span={2}>
-                                <label className='space-creation-input-field-label'>Icon</label>
+                                <label className='space-creation-input-field-label' style={{color: themeColors.text[3]}}>Icon</label>
 
                                 <Flex align='flex-start' justify='center' h='50' direction='column' >
                                     <SpaceCreationIconsPopover 
@@ -132,13 +132,13 @@ const SpaceCreationModal = (props) => {
 
                             <Grid.Col span={10} >
                                 <Flex direction='column'>
-                                    <label className='space-creation-input-field-label'>Name</label>
+                                    <label className='space-creation-input-field-label' style={{color: themeColors.text[3]}}>Name</label>
                                     
                                     <TextInput
                                         placeholder='e.g. Development, Design, Machine Learning'
                                         type="text"
                                         autoComplete='off'
-                                        className='space-creation-input-field'
+                                        className={`space-creation-input-field ${colorScheme}`}
                                         bg='transparent'
                                         size="lg"
                                         radius="md"
@@ -156,12 +156,13 @@ const SpaceCreationModal = (props) => {
                         <Textarea
                             label={
                                 <span>
-                                    Description <span style={{ fontWeight: "400", fontSize: "12.8px", color: "#c1c2c5" }}>(Optional)</span>
+                                    Description <span style={{ fontWeight: "400", fontSize: "12.8px", color: `${colorScheme==='dark' ? '#c8c8c8' : '#686868'}` }}>(Optional)</span>
                                 </span>
                             }
                             placeholder=''
                             autoComplete='off'
-                            className='space-creation-input-field'
+                            className={`space-creation-input-field ${colorScheme}`}
+                            style={{color: themeColors.text[3]}}
                             type="text"
                             radius={0}
                             p={0}
@@ -182,7 +183,7 @@ const SpaceCreationModal = (props) => {
                                 <Radio.Group
                                     value={spaceVisibility}
                                     onChange={setSpaceVisibility}
-                                    label={ <label className='space-creation-input-field-label'>Visibility</label> }
+                                    label={ <label className='space-creation-input-field-label' style={{color: themeColors.text[3]}}>Visibility</label> }
                                     // description="Choose a package that you will need in your application"
                                 >
                                     <Stack gap={0} className='space-creation-visibility-radio-stack'>

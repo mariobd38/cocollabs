@@ -4,11 +4,11 @@ import { useScrollLock } from '../../../utils/useScrollLock';
 import { Menu } from '@mantine/core';
 
 const MantineDropdown = (props) => {
-    const { background,target,width,dropdown,childDropdownOpened,position,dmt,setModalDropdownIsOpen } = props;
+    const { background,target,width,dropdown,childDropdownOpened,position,dmt,setModalDropdownIsOpen,colorScheme } = props;
 
     const [menuOpened, setMenuOpened] = useState(false);
     const dropdownRef = useRef(null);
-    const { disableScroll, enableScroll } = useScrollLock(); 
+    const { disableScroll, enableScroll } = useScrollLock();
 
     const shouldEnablePointerEvents = () => {
         return menuOpened;
@@ -22,17 +22,16 @@ const MantineDropdown = (props) => {
         },200);
 
     }, [enableScroll,setModalDropdownIsOpen]);
-    
+
     return (
         <Menu shadow="md" width={width} position={position} offset={12} zIndex={1000000}
             closeOnEscape={true}
-            opened={menuOpened} 
+            opened={menuOpened}
             closeOnClickOutside
             closeOnItemClick={!childDropdownOpened}
             onOpen={() => {
                 setMenuOpened(true);
                 disableScroll();
-                console.log("hello");
             }}
             onClose={() => handleClose(true)}
         >
@@ -40,11 +39,11 @@ const MantineDropdown = (props) => {
                 {target}
             </Menu.Target>
 
-            <Menu.Dropdown 
+            <Menu.Dropdown
                 className={`mantine-dropdown-model`}
-                bd='0' 
+                bd='0'
                 bg={background}
-                ref={dropdownRef} 
+                ref={dropdownRef}
                 style={{
                     pointerEvents: shouldEnablePointerEvents() ? "auto" : "none",
                     boxShadow: "0 2px 16px #0006",

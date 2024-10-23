@@ -11,7 +11,7 @@ import UserAvatar from '../UserAvatar/userAvatar';
 import { MantineDropdown } from '../../models/ModelDropdown2/mantineDropdown';
 
 const HomeNavbarUserMenu = (props) => {
-    const {userProfileDto,userProfilePicture, userFullName, initials } = props;
+    const {userProfileDto,userProfilePicture, userFullName, initials,colorScheme,setColorScheme,themeColors } = props;
 
     const handleUserLogout = () => {
         localStorage.clear();
@@ -20,28 +20,29 @@ const HomeNavbarUserMenu = (props) => {
     };
 
     const menuItems = [
-        { name: 'Profile',icon: 'IconUser', marginTop: '20'},
-        { name: 'Settings',icon: 'IconSettings'},
-        { name: 'Notification Settings',icon: 'IconBell'},
-        { name: 'Archive',icon: 'IconArchive'},
-        { name: 'Trash',icon: 'IconTrash'},
-        { name: 'Help',icon: 'IconHelp'},
+        { name: 'Profile',icon: 'IconUser', marginTop: '20', action: () => console.log("profile")},
+        { name: 'Settings',icon: 'IconSettings', action: () => console.log("settings")},
+        { name: 'Notification Settings',icon: 'IconBell', action: () => console.log("notification settings")},
+        { name: 'Themes',icon: 'IconBrush', action: () => setColorScheme(colorScheme === 'dark' ? 'light' : 'dark')},
+        { name: 'Archive',icon: 'IconArchive', action: () => console.log("archive")},
+        { name: 'Trash',icon: 'IconTrash', action: () => console.log("trash")},
+        { name: 'Help',icon: 'IconHelp', action: () => console.log("help")},
     ];
 
     return (
         <>
             <MantineDropdown 
                 target={
-                    <div className='d-flex align-items-center user-home-avatar-menu-target' style={{borderRadius: "8px", cursor: "pointer", padding: "6px 8px"}}>
+                    <div className={`d-flex align-items-center home-button ${colorScheme}`} style={{borderRadius: "8px", cursor: "pointer", padding: "5.5px 8px"}}>
                         <UserAvatar 
                             userProfileDto={userProfileDto}
                             userProfilePicture={userProfilePicture}
                             initials={initials}
-                            multiplier={2.075}
+                            multiplier={2.275}
                             fontSize={1}
                         />
                         <span className='ps-1'>
-                            {Icons('IconChevronDown',15,15,'#fafafa')}
+                            {Icons('IconChevronDown',15,15,themeColors.text[1])}
                         </span>
                     </div>
                 }
@@ -60,24 +61,24 @@ const HomeNavbarUserMenu = (props) => {
                             />
 
                             <div className='d-flex flex-column'>
-                                <Text c='#d4d6d8' fz={17} fw={650} ff='Lato' className='home-navbar-menu-fullnamedesc'>{userFullName}</Text>
-                                <Text c='#b6b8ba' fz={14} fw={200} ff='Lato' className='home-navbar-menu-fullnamedesc'>Software Engineer</Text>
+                                <Text c={themeColors.text[2]} fz={17} fw={650} ff='Lato' className='home-navbar-menu-fullnamedesc'>{userFullName}</Text>
+                                <Text c={colorScheme === 'dark' ? '#cccccc' : '#616161'} fz={14} fw={200} ff='Lato' className='home-navbar-menu-fullnamedesc'>Software Engineer</Text>
                             </div>
                         </div>
                     </Menu.Label>
 
                     {menuItems.map((item) => (
-                        <Menu.Item key={item.name} bg='#222222' c='#d5d6d8' mt={item?.marginTop} w='91.5%' leftSection={Icons(item.icon,14,14,'#d5d6d8')}>
+                        <Menu.Item key={item.name} onClick={item.action} className={`home-button ${colorScheme}`} bg={themeColors.bg[2]} c={themeColors.text[4]} mt={item?.marginTop} w='91.5%' leftSection={Icons(item.icon,14,14,themeColors.text[4])}>
                             {item.name}
                         </Menu.Item>
                     ))}
                     <Menu.Divider size="xs" bd='.1px solid #676869' />
-                    <Menu.Item w='91.5%' bg='#222222' c='#d5d6d8' onClick={handleUserLogout} leftSection={Icons('IconLogout',14,14,'#d5d6d8')}>
+                    <Menu.Item w='91.5%' className={`home-button ${colorScheme}`} bg={themeColors.bg[2]} c={themeColors.text[4]} onClick={handleUserLogout} leftSection={Icons('IconLogout',14,14,themeColors.text[4])}>
                         Log out
                     </Menu.Item>
                     </div>
                 }
-            background={'#222222'} position='bottom-end'
+                background={themeColors.bg[2]} position='bottom-end' colorScheme={colorScheme}
             />
         </>
     );

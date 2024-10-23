@@ -1,5 +1,5 @@
 .user-home-task-details-modal-header-parent {
-    border-bottom: 1px solid #898989;
+    /* border-bottom: 1px solid #898989; */
     padding: 5px 10px;
 }
 .user-home-task-details-modal-header {
@@ -11,7 +11,7 @@
     margin-inline: 3px !important;
 }
 .user-home-task-details-modal-breadcrumbs {
-    color: #dedede !important;
+    /* color: #dedede !important; */
     font-size: 1rem !important;
 }
 .user-home-task-details-created-on {

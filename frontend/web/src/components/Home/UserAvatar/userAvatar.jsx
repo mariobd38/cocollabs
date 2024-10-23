@@ -17,7 +17,7 @@ const UserAvatar = (props) => {
             src={userProfileDto !== null &&
             userProfileDto.avatarType === 'image' ? constructImageSrc(userProfileDto.pfd.data, userProfileDto.avatarType) : 'none'}
             style={{backgroundImage: userProfilePicture !== null && userProfileDto == null ? `url(${userProfilePicture})` : 'none', overflow: "visible",
-            cursor: "pointer",backgroundSize: 'cover',borderRadius: "50%", 
+            cursor: "pointer",backgroundSize: 'cover',borderRadius: "20%", 
             width: size,minWidth: size,height: size, fontSize: `${fontSize}rem`
         }} 
             bg={`${userProfileDto !== null && userProfileDto.avatarType === 'color' ? userProfileDto.color : ''}`}

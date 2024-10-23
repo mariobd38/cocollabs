@@ -87,3 +87,13 @@ a {
 .profile-avatar:hover {
     filter: brightness(1.34); /* Adjusts the brightness by 20% */
 }
+
+.home-sidebar-space-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 165px;
+    color: #f1f1f1;
+    font-weight: 600;
+    font-family: Lato;
+}
