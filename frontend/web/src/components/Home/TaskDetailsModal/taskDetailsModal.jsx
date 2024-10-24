@@ -207,36 +207,6 @@ const TaskDetailsModal = (props) => {
     // },[openParentTagDropdown])
 
     const [modalDropdownIsOpen, setModalDropdownIsOpen] = useState(false);
-    const modalRef = useRef(null);
-    useEffect(() => {
-        let resizeObserver;
-    
-        if (show && modalRef.current) {
-            // Capture the initial scroll height
-            const handleResize = () => {
-                const scrollHeight = modalRef.current.scrollTop;
-                console.log("Modal Scroll Height:", scrollHeight);
-            };
-    
-            // Create a ResizeObserver to observe size changes in the modal
-            resizeObserver = new ResizeObserver(() => {
-                handleResize();  // Handle resize to capture scroll height
-            });
-    
-            // Start observing the modal for changes
-            resizeObserver.observe(modalRef.current);
-    
-            // Capture the initial height
-            handleResize();
-        }
-    
-        // Cleanup: disconnect the observer when the modal closes or component unmounts
-        return () => {
-            if (resizeObserver && modalRef.current) {
-                resizeObserver.unobserve(modalRef.current);
-            }
-        };
-    }, [show]);
 
     return (
         <Modal
@@ -247,7 +217,6 @@ const TaskDetailsModal = (props) => {
             width={1000}
             className='task-details-modal-parent'
             closeIcon
-            // ref={modalRef}
         >
             <TaskDetailsModalHeader
                 userFullName={userFullName}
@@ -417,7 +386,6 @@ const TaskDetailsModal = (props) => {
 
                     <div className='mt-3 mb-5'>
                         <TaskDescriptionTipTap
-                            modalRef={modalRef}
                             colorScheme={colorScheme}
                             themeColors={themeColors}
                             content={content}

@@ -78,7 +78,7 @@ const TaskCreationModal = (props) => {
                             setNewTaskName(event.currentTarget.value);
                         }}
                     />
-                    <Box className='task-creation-tiptap' mt={20} mb={40}>
+                    <Box className={`task-creation-tiptap ${colorScheme}`} mt={20} mb={40}>
                         <TaskDescriptionTipTap 
                             setNewTaskDescription={setNewTaskDescription}
                             colorScheme={colorScheme}

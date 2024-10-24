@@ -63,8 +63,15 @@
     }
     .tiptap p {
         font-size: 15px;
+
     }
     .tiptap p::before {
         color:#b0b2b7 !important;
     }
+}
+.task-creation-tiptap.light .tiptap p {
+    color: #222222;
+}
+.task-creation-tiptap.dark .tiptap p {
+    color: #fafafa;
 }

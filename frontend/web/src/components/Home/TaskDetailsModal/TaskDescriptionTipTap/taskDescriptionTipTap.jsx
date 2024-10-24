@@ -12,7 +12,7 @@ import './taskDescriptionTipTap.css'
 
 const TaskDescriptionTipTap = (props) => {
     const {content, currentIndex,taskType,setTaskType,handleTaskUpdateNew,setNewTaskDescription,expanded,setExpanded,
-        colorScheme,themeColors,modalRef
+        colorScheme,themeColors
     } = props;
 
     const taskTypeRef = useRef(taskType);
@@ -49,8 +49,6 @@ const TaskDescriptionTipTap = (props) => {
 
     const handleChange = (e) => {
         const currentLine = getCurrentLine();
-        // console.log(modalRef && modalRef.current.scrollHeight);
-        
         if (currentLine) {
             const textContent = currentLine.textContent.trim();
             if (textContent === "/") {
@@ -66,29 +64,30 @@ const TaskDescriptionTipTap = (props) => {
 
                 // const scrollHeight = contentRef.current.scrollHeight;
                 // const top = shouldPositionAbove ? rect.top - topInc : rect.top - (350 + topInc);
-                // console.log(shouldPositionAbove);
 
-
-            //new
-                const rect = currentLine.getBoundingClientRect();
-                const editorRect = editorRef.current.getBoundingClientRect();
-                const topInc = handleTaskUpdateNew ? 0 : 70;
-                // const topInc = handleTaskUpdateNew ? 140 : 70;
-                const leftInc = handleTaskUpdateNew ? 15 : 21.5;
-                
-                const left = (rect.left + leftInc) - editorRect.left;
-                
-                const shouldPositionAbove = rect.top > 480;
-                console.log(rect.top);
-
-                const scrollHeight = contentRef.current.scrollHeight;
-                const scrollTop = contentRef.current.scrollTop;
-
-                // Adjust the top position of the menu
-                const top = shouldPositionAbove
-                    ? rect.top - (700 + scrollHeight) + scrollTop
-                    : rect.top - (350 + topInc) + scrollTop;
-                    console.log(shouldPositionAbove);
+            //new TODO
+            const rect = currentLine.getBoundingClientRect();
+            const editorRect = editorRef.current.getBoundingClientRect();
+            const leftInc = 10;
+            
+            // Calculate left position relative to editor
+            const left = (rect.left + leftInc) - editorRect.left;
+            
+            // Get viewport height and cursor position relative to viewport
+            const viewportHeight = window.innerHeight;
+            const cursorPositionInViewport = rect.top - window.scrollY;
+            
+            // Get the editor's bounds
+            const editorBounds = contentRef.current.getBoundingClientRect();
+            const spaceBelow = viewportHeight - cursorPositionInViewport;
+            const spaceAbove = cursorPositionInViewport;
+            
+            const menuHeight = 300; // approximate height of your menu
+            const menuPadding = 15; // desired padding from cursor
+            
+            const shouldPositionAbove = spaceAbove > spaceBelow;
+            const top = shouldPositionAbove ? rect.top - editorBounds.top - menuHeight - menuPadding : 
+                rect.top - editorBounds.top + rect.height + menuPadding;
 
             setMenuPosition({
                 top,
@@ -197,10 +196,12 @@ const TaskDescriptionTipTap = (props) => {
                     style={{ 
                         borderRadius: "7px", 
                         position: 'absolute', 
-                        top: `${menuPosition.top}px`,
-                        left: `${menuPosition.left}px`,
+                        top: menuPosition.top,
+                        left: menuPosition.left,
                         zIndex: 1000,
                         pointerEvents: "auto",
+        //                 transform: menuPosition.placement === 'above' ? 'translateY(0)' : 'translateY(0)',
+        // transition: 'all 0.2s ease-out',
                     }}
                 >
                     <Menu
