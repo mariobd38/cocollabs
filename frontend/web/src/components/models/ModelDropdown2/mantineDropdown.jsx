@@ -40,7 +40,7 @@ const MantineDropdown = (props) => {
             </Menu.Target>
 
             <Menu.Dropdown
-                className={`mantine-dropdown-model`}
+                className={`mantine-dropdown-model ${colorScheme}`}
                 bd='0'
                 bg={background}
                 ref={dropdownRef}

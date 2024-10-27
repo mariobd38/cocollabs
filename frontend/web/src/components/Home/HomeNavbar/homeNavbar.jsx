@@ -57,12 +57,12 @@ const HomeNavbar = (props) => {
                     <div className="row w-100 m-0 mx-2">
                         <div className='col-1 col-lg-3 d-flex align-items-center p-0 '>
                             <div className={`navbar-menu-sidebar-icon home-button ${colorScheme}`} onClick={handleOpenSidebarToggle}>
-                                {Icons('IconMenu2',27,27,themeColors.text[1])}
+                                {Icons('IconMenu2',27,27,buttonColor)}
                             </div>
 
                             <div className='d-none d-lg-inline' style={{marginLeft: "20px"}}>
                                 <div style={{width: "11rem"}}>
-                                    <Logo2 strokeColor={themeColors.text[1]}/>
+                                    <Logo2 strokeColor={colorScheme === 'dark' ? '#f4fff6' : '#323335'}/>
                                 </div>
                             </div>
                         </div>

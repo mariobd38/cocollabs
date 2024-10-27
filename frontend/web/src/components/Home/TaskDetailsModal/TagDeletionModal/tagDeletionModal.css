@@ -1,7 +1,6 @@
 .tag-deletion-modal {
     .ant-modal-content {
         background-color: #1e1f21;
-        border: 1px solid #57585a;
         padding:0;
     }
     .ant-modal-footer {
@@ -12,6 +11,10 @@
     }
     .ant-modal-body {
         color: #fafafa;
+        border-radius: 8px;
+    }
+    .delete-tag-button.dark:hover {
+        background-color: #313336 !important;
     }
     .delete-tag-button:hover {
         background-color: #313336 !important;

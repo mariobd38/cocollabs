@@ -8,9 +8,10 @@ import { items } from './items';
 import './dropdownContent.css';
 
 const StatusDropdownContent = (props) => {
-    const {element,handleTaskUpdateNew, taskType,setTaskType,idx,setCurrentTaskStatus,existingTask } = props;
+    const {element,handleTaskUpdateNew, taskType,setTaskType,idx,setCurrentTaskStatus,existingTask,themeColors,colorScheme,
+        dropdownColor } = props;
     
-    const originalStatusItems = items("status");
+    const originalStatusItems = items("status",themeColors);
     const statusNames = originalStatusItems.map(item => item.name);
     const [statusItems, setStatusItems] = useState(statusNames);
     const [statusInputValue, setStatusInputValue] = useState('');
@@ -52,7 +53,7 @@ const StatusDropdownContent = (props) => {
             <div className='d-flex align-items-center' style={{borderBottom: "1px solid #898989", marginBottom: "6px"}}>
                 <form className="model-dropdown-search" role='search' onSubmit={(event) => {event.preventDefault(); return false;}}>
                     <Input
-                        className="model-dropdown-search-input"
+                        className={`model-dropdown-search-input ${colorScheme}`}
                         type="text"
                         placeholder={`Search`}                                               
                         onChange={handleStatusSearch}
@@ -70,9 +71,9 @@ const StatusDropdownContent = (props) => {
                     }
                     key={index}
                     w='87%'
-                    bg='#232426'
+                    bg={dropdownColor}
                     m='4px auto'
-                    c='#f3f5f8'
+                    c={themeColors.text[5]}
                     ff='Lato'
                     p='6px 10px'
                     className='task-card-content-dropdown-item'
@@ -82,7 +83,7 @@ const StatusDropdownContent = (props) => {
                     {item.name}
                 </Menu.Item>
             )) : 
-                <Text m='8px auto' fz='14.5' w='95%' c='#e3e5e8'>No results</Text>
+                <Text m='8px auto' fz='14.5' w='95%' c={themeColors.text[9]}>No results</Text>
             }
         </>
     );

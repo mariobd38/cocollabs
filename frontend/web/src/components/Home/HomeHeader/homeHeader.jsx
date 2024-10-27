@@ -6,8 +6,7 @@ import {Icons} from '../../icons/icons';
 
 import './homeHeader.css';
 
-const HomeHeader = ({spaceName,themeColors, colorScheme, setColorScheme}) => {
-    // console.log(spaceName);
+const HomeHeader = ({spaceName,themeColors, colorScheme}) => {
     const dayjs = require('dayjs');
 
     var now = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -17,32 +16,6 @@ const HomeHeader = ({spaceName,themeColors, colorScheme, setColorScheme}) => {
     const dayOfWeek = date.toLocaleDateString('en-US',{weekday: 'long'});
 
     document.body.style.overflowY = 'hidden';
-    // const [backgroundColor, setBackgroundColor] = useLocalState("#1e1f21", "backgroundColor");
-    // const [backgroundImage, setBackgroundImage] = useLocalState(null, "backgroundImage");
-
-    // const [currentColorMode, setCurrentColorMode] = useLocalState("dark", "colorMode");
-
-    // useEffect(() => {
-    //     const storedMode = currentColorMode;
-    //     setCurrentColorMode(storedMode);
-        
-    //     if (currentColorMode === 'dark')
-    //         setBackgroundImage(`linear-gradient(to right, #1e1f21, ${backgroundColor})`);
-
-    //     else if (currentColorMode === 'light')
-    //         setBackgroundImage(`linear-gradient(to right, ${backgroundColor}, ${backgroundColor})`);
-
-    //         document.body.style.backgroundColor = backgroundColor;
-    //         document.body.style.backgroundImage = backgroundImage;
-        
-        
-    //     const homeHeaderText = document.querySelectorAll('.home-header-text');
-    //     const textColor = backgroundColor === '#fafafa' ? '#4B26CE' : '#ffffff';
-
-    //     homeHeaderText.forEach(element => {
-    //         element.style.color = textColor;
-    //     });
-    // }, [backgroundColor, backgroundImage, setBackgroundColor, setBackgroundImage, currentColorMode, setCurrentColorMode]);
 
     const homeHeaderButtons = [
         {"icon": Icons('IconCirclePlus',23,23,'#05c099'), "label": "Create"},
@@ -50,6 +23,7 @@ const HomeHeader = ({spaceName,themeColors, colorScheme, setColorScheme}) => {
         {"icon": Icons('IconSparkles',23,23,'#05c099'), "label": "AI Assistant"},
         {"icon": Icons('IconSettings',23,23,'#05c099'), "label": "Settings"},
     ]
+    const homeHeaderBd = `1px solid ${colorScheme==='dark' ? '#898989' : '#b9b9b9'}`;
 
     return (
         <>
@@ -68,7 +42,7 @@ const HomeHeader = ({spaceName,themeColors, colorScheme, setColorScheme}) => {
                         {homeHeaderButtons.map((button, index) => (
                             <div key={index} >
                                 <Tooltip label={button.label} bg={`${colorScheme==='dark' ? '#121212' : '#d7d7d7'}`} c={`${colorScheme==='dark' ? '#fafafa' : '#121212'}`} className='user-home-tooltip' position="bottom" offset={8} openDelay={200} >
-                                    <Button radius='8' fw='400' c='#fafafa' p='0px 7px' bg='transparent' bd='1px solid #898989' className='home-header-button'>
+                                    <Button radius='8' fw='400' c='#fafafa' p='0px 7px' bg='transparent' bd={homeHeaderBd} className={`home-header-button ${colorScheme}`}>
                                         {button.icon}
                                     </Button>
                                 </Tooltip>

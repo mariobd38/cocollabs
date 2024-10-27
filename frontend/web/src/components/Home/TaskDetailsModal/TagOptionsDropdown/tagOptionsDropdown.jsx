@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { Menu,Text, Input,Divider } from '@mantine/core';
 import { useForm } from '@mantine/form';
@@ -25,7 +25,7 @@ const tagColors = [
 
 export const TagOptionsDropdown = (props) => {
     const { tagItems, allTagData, handleAddTag,setOpenTagDeletionModal,setTagToDelete,setOpenParentTagDropdown,
-        activeChildDropdownIndex,setActiveChildDropdownIndex,enableScroll
+        activeChildDropdownIndex,setActiveChildDropdownIndex,enableScroll,colorScheme,themeColors
     } = props;
 
     const handleTagRename = (event,tagItem) => {
@@ -72,54 +72,54 @@ export const TagOptionsDropdown = (props) => {
     return (
         <>
             <div className='model-dropdown-items my-1' >
-                <Menu >
+                <Menu>
                     {tagItems.map((tagItem, index) => (
                         <Menu.Item
                             c='#f2f4f7'
                             w='90%'
-                            bg='#232426'
+                            bg={`${colorScheme==='dark' ? '#232426' : '#f0f0f0'}`}
                             ff='Lato'
                             key={index}
-                            className='task-card-content-dropdown-item'
+                            className={`task-card-content-dropdown-item ${colorScheme}`}
                             onClick={() => handleAddTag(tagItem)}
                             rightSection={
                                 <Popover placement="right-end" isOpen={index===activeChildDropdownIndex} onOpenChange={(open) => {handleOpenTagsOptionsMenu(open)}}>
                                     <PopoverTrigger className='tags-dropdown-popover-trigger' onClick={(e) => {e.stopPropagation(); setActiveChildDropdownIndex(index)}}>
-                                        <div className='tag-options-button-div' >
-                                                {Icons('IconDots',17,24,'#fafafa')}
+                                        <div className={`tag-options-button-div ${colorScheme}`} >
+                                                {Icons('IconDots',17,24,themeColors.text[1])}
                                         </div>
                                     </PopoverTrigger>
-                                    <PopoverContent className='tags-dropdown-popover-parent py-2' onClick={(e) => e.stopPropagation()}>
-                                        <div style={{width: "250px",pointerEvents: `${activeChildDropdownIndex !== null ? 'auto' : 'none'}`}}>
+                                    <PopoverContent className={`p-0 tags-dropdown-popover-parent ${colorScheme}`} onClick={(e) => e.stopPropagation()}>
+                                        <div className=' p-2' style={{width: "250px",pointerEvents: `${activeChildDropdownIndex !== null ? 'auto' : 'none'}`}}>
                                             <div className='px-1 pt-1'>
                                                 <Input 
                                                     w='97.5%'
                                                     placeholder="Name" 
                                                     defaultValue={tagItems[index] && tagItems[index].name} 
                                                     onKeyDown={(event) => handleTagRename(event,tagItem)}
-                                                    className='tag-options-input'
+                                                    className={`tag-options-input ${colorScheme}`}
                                                 />
                                             </div>
                                             <div className='px-1 py-1'>
                                                 <div style={{ display: 'flex', flexWrap: 'wrap'}}>
                                                     {tagColors.map((colorItem, index) => (
                                                         <div key={index} style={{ width: '50%' }}>
-                                                            <Menu.Item w='75%' bg='transparent' className='tag-options-menu-item' onClick={() => handleTagColorChange(tagItem, colorItem)}>
+                                                            <Menu.Item w='75%' bg='transparent' className={`tag-options-menu-item ${colorScheme}`} onClick={() => handleTagColorChange(tagItem, colorItem)}>
                                                                 <div className='d-flex gap-3 align-items-center'>
                                                                     <div style={{ backgroundColor: colorItem.color, width: '20px', height: '20px', borderRadius: '3px' }} />
-                                                                    <span className='fafafa-color'>{colorItem.name}</span>
+                                                                    <Text c={themeColors.text[1]}>{colorItem.name}</Text>
                                                                 </div>
                                                             </Menu.Item>
                                                         </div>
                                                     ))}
                                                 </div>
                                             </div>
-                                            <Divider />
+                                            <Divider bd={`.1px solid ${themeColors.text[11]}`} />
                                             <div className="px-1 mt-1">
-                                                <Menu.Item w='87%' c='#fafafa' bg='transparent' className='tag-options-menu-item' onClick={() => handleOpenTagDeletionModal(tagItem)}>
+                                                <Menu.Item w='87%' c='#fafafa' bg='transparent' className={`tag-options-menu-item ${colorScheme}`} onClick={() => handleOpenTagDeletionModal(tagItem)}>
                                                     <div className='d-flex align-items-center gap-3'>
-                                                        {Icons('IconTrash',20,24)}
-                                                        <span>Delete</span>
+                                                        {Icons('IconTrash',20,24,themeColors.text[1])}
+                                                        <Text c={themeColors.text[1]}>Delete</Text>
                                                     </div>
                                                 </Menu.Item>
                                             </div>

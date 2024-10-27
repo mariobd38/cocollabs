@@ -11,14 +11,14 @@ import { constructImageSrc } from "../../../../utils/constructImageSrc";
 import "./profileCard.css";
 
 export const ProfileCard = (props) => {
-    const { userFullName, initials, userEmail,userProfileDto, userProfilePicture, target } = props;
+    const { userFullName, initials, userEmail,userProfileDto, userProfilePicture, target,themeColors,colorScheme } = props;
 
     const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     const currentTime = new Date().toLocaleTimeString('en-US', { timeZone: timeZone, hour: 'numeric', minute: '2-digit' });
 
     const [emailCopied, setEmailCopied] = useState(false);
 
-    const handleEmailCopyClick = (event) => {
+    const handleEmailCopyClick = () => {
         navigator.clipboard.writeText(userEmail);
         setEmailCopied(true);
         // const originalCurrentTaskIdNumber = event.target.innerText
@@ -33,11 +33,11 @@ export const ProfileCard = (props) => {
 
     return (       
         <>
-            <HoverCard width={320} shadow="md" openDelay={650} closeDelay={500} zIndex={10000} offset={12}>
+            <HoverCard width={320} radius={8} shadow="md" openDelay={650} closeDelay={500} zIndex={10000} offset={12}>
                 <HoverCard.Target>
                     {target}
                 </HoverCard.Target>
-                <HoverCard.Dropdown bg='#232426' c='#fafafa'>
+                <HoverCard.Dropdown bg={themeColors.bg[2]} c={themeColors.text[1]}>
 
                     <div className="d-flex justify-content-between">
                         <div className="me-2">
@@ -56,13 +56,15 @@ export const ProfileCard = (props) => {
 
                     <div>
                             <div className="mt-3 nunito-sans-font" style={{fontSize: "1.15rem"}}>
-                                <span className="nunito-sans-font-600">{userFullName} </span>(you)
+                                <span className="nunito-sans-font-600">{userFullName}</span>(you)
                             </div>
                             
-                            <div className="mt-2 ">
+                            <div className="mt-2 d-flex align-items-center">
                                 {/* <span><IconMail style={{width: "1.3rem"}}/></span> */}
                                 <span>{Icons('IconMail',20,20)}</span>
-                                <span className="ps-3 nunito-sans-font">{userEmail}</span>
+                                <span className="ps-3 nunito-sans-font" style={{maxWidth: "210px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap"}}>
+                                    {userEmail}
+                                </span>
                                 <span className="ps-2">
                                     { emailCopied ?
                                     Icons('IconClipboardCheck',20,20,"rgb(4, 156, 4)")

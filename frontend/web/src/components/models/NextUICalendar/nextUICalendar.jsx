@@ -29,7 +29,8 @@ const generateTimeIntervals = () => {
   };
 
 const NextUICalendar = (props) => {
-    const { selectedDate, setSelectedDate,selectedDateTime, setSelectedDateTime,handleTaskUpdateNew,taskType,currentIndex,setTaskType } = props;
+    const { selectedDate, setSelectedDate,selectedDateTime, setSelectedDateTime,handleTaskUpdateNew,taskType,currentIndex,setTaskType,
+        dropdownColor, colorScheme } = props;
 
     const timeOptions = generateTimeIntervals().map((time) => ({ value: time, label: time }));
 
@@ -219,7 +220,7 @@ const NextUICalendar = (props) => {
     ];
 
     return (
-        <Box bg='#232426' p='10px 5px' className='nextui-calendar-parent'>
+        <Box bg='#232426' p='10px 5px' className={`nextui-calendar-parent ${colorScheme}`}>
             <Box p='5px 15px'>
                 <Flex gap={15} justify='center'>
                     <AntDatePicker 
@@ -227,20 +228,20 @@ const NextUICalendar = (props) => {
                         //value={selectedDate !== undefined ? dayjs(selectedDate) : undefined}
                         value={!isTyping && (datePicker ? dayjs(datePicker) : selectedDateTime ? dayjs(selectedDateTime) : selectedDate ? dayjs(selectedDate) : undefined)}
                         placeholder={'Select date'} 
-                        className='user-home-calendar-date-input user-home-calendar-time-picker' 
+                        className={`user-home-calendar-date-input user-home-calendar-time-picker ${colorScheme}`}
+                        // className='user-home-calendar-date-input user-home-calendar-time-picker'
                         open={open}
                         variant="filled"
                         onClick={() => setOpen(false)} 
-                        style={{backgroundColor: "#323539"}} 
                         onKeyDown={datePickerEnter}
-                        format='M/D/YYYY' 
-                        suffixIcon={Icons('IconCalendarMonth',17,17,'#fafafa')} 
+                        format='M/D/YYYY'
+                        suffixIcon={Icons('IconCalendarMonth',17,17,`${colorScheme==='dark' ? '#fafafa' : '#323539'}`)} 
                         onChange={(date) => {setIsTyping(false); handleSelectedDateChange(date,false);}}
                     />
 
                     <Select
                         placeholder="Select time"
-                        className='date-time-picker-select' 
+                        className={`date-time-picker-select ${colorScheme}`}
                         data={timeOptions}
                         clearable
                         comboboxProps={{ withinPortal: false }}
@@ -263,19 +264,19 @@ const NextUICalendar = (props) => {
                     />
                 </Flex>
             </Box>
-            <Flex bg='#232426' justify='flex-end'>
+            <Flex bg={dropdownColor} justify='flex-end'>
                 <Flex gap={30} justify='center' direction='column'>
                     {presetOptions.map((preset) => (
-                        <Button radius={4} key={preset.name} className='preset-button' onClick={preset.handler}>
+                        <Button radius={4} key={preset.name} className={`preset-button ${colorScheme}`} onClick={preset.handler}>
                             {preset.name}
                         </Button>
                     ))}
                 </Flex>
 
                 <Calendar 
-                    style={{background: "#232426"}} 
+                    style={{background: dropdownColor}} 
                     disableAnimation
-                    className='calendar'
+                    className={`calendar ${colorScheme}`}
                     selected={selectedDate !== undefined ? dayjs(selectedDate) : undefined} 
                     onChange={(date) => handleSelectedDateChange(date,true)} 
                     value={selectedDate !== undefined && dayjs(selectedDate).isValid() && parseDate(`${dayjs(selectedDate).year()}-${String(dayjs(selectedDate).month() + 1).padStart(2, '0')}-${String(dayjs(selectedDate).date()).padStart(2, '0')}`)}

@@ -12,7 +12,7 @@
     align-items: center;
 }
 .user-home-task-details-modal-head-property-value {
-    height:inherit;
+    height:45px;
     cursor: pointer;
     border-radius: 6px;
     padding: 6px 10px !important;
@@ -223,8 +223,12 @@
 
 
 /* new */
-.tags-dropdown-popover-parent[data-slot='content'] {
+.tags-dropdown-popover-parent.dark[data-slot='content'] {
     background-color: #232426;
+    border-radius: 6px;
+}
+.tags-dropdown-popover-parent.light[data-slot='content'] {
+    background-color: #f0f0f0;
     border-radius: 6px;
 }
 .tags-dropdown-popover-trigger.aria-expanded\:scale-\[0\.97\][aria-expanded="true"] {

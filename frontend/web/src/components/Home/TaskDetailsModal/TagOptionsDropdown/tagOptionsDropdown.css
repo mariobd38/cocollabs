@@ -11,20 +11,31 @@
 }
 
 .tag-options-input .mantine-Input-input {
-    background-color: #323335 !important;
-    border: 1px solid #fafafa;
     /* border-bottom: 1.5px solid #898989 !important; */
     z-index: 1 !important;
-    color: #fafafa !important;
     border-radius: 5px !important;
     padding:0 5px;
     font-family: 'Lato';
     transition: border .4s ease;
 }
+.tag-options-input.dark .mantine-Input-input {
+    background-color: #2d2e30 !important;
+    border: 1px solid #424345;
+    color: #fafafa !important;
+}
+.tag-options-input.light .mantine-Input-input {
+    background-color: #d2d3d5 !important;
+    border: 1px solid #c2c3c5;
+    color: #222222;
+}
 .tag-options-input .mantine-Input-input:focus {
   border-color: rgb(48, 109, 188) !important;
 }
 
-.tag-options-menu-item:hover {
+
+.tag-options-menu-item.dark:hover {
     background-color: #353638 !important;
+}
+.tag-options-menu-item.light:hover {
+    background-color: #dadbdd !important;
 }

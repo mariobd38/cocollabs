@@ -10,7 +10,8 @@ import './dropdownContent.css';
     
 const TagsDropdownContent = (props) => {
     const {task, taskType,setTaskType,idx,setCurrentTaskTags,currentTaskTags, setTagToDelete,setOpenTagDeletionModal,
-        openParentTagDropdown, setOpenParentTagDropdown,activeChildDropdownIndex,setActiveChildDropdownIndex,enableScroll
+        openParentTagDropdown, setOpenParentTagDropdown,activeChildDropdownIndex,setActiveChildDropdownIndex,enableScroll,
+        colorScheme,themeColors
      } = props;
 
     const [allTagData, setAllTagData] = useState([]);
@@ -119,13 +120,13 @@ const TagsDropdownContent = (props) => {
                     </Button>
                 ))}
             </div>
-            <Divider color='#898989' />
+            <Divider color={`${colorScheme==='dark' ? '#595959' : '#a9a9a9'}`} />
             </>}
             <div className='model-dropdown-search-wrapper'>
-                <div className='d-flex align-items-center' style={{borderBottom: "1px solid #898989"}}>
+                <div className='d-flex align-items-center' style={{borderBottom: `1px solid ${colorScheme==='dark' ? '#595959' : '#a9a9a9'}`}}>
                     <form className="model-dropdown-search" role='search' onSubmit={(event) => {event.preventDefault(); return false;}}>
                         <Input
-                            className="form-control model-dropdown-search-input"
+                            className={`form-control model-dropdown-search-input ${colorScheme}`}
                             type="text"
                             placeholder={`Search or create a new tag`}                                               
                             onChange={handleTagSearch}
@@ -145,6 +146,8 @@ const TagsDropdownContent = (props) => {
                 activeChildDropdownIndex={activeChildDropdownIndex}
                 setActiveChildDropdownIndex={setActiveChildDropdownIndex}
                 enableScroll={enableScroll}
+                colorScheme={colorScheme}
+                themeColors={themeColors}
             />
         </div>
     );

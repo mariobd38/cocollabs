@@ -8,8 +8,9 @@ import { items } from './items';
 import './dropdownContent.css';
 
 const PriorityDropdownContent = (props) => {
-    const {element,handleTaskUpdateNew, taskType,setTaskType,idx,setCurrentTaskPriority,existingTask } = props;
-    const priorityItems = items("priority");
+    const {element,handleTaskUpdateNew, taskType,setTaskType,idx,setCurrentTaskPriority,existingTask,themeColors,
+        dropdownColor } = props;
+    const priorityItems = items("priority",themeColors);
     const itemsToRender = (existingTask ? element.priority : element)
         ? priorityItems 
         : priorityItems.slice(0, 4);
@@ -26,8 +27,8 @@ const PriorityDropdownContent = (props) => {
                         }}
                         w='87%'
                         m='4px auto'
-                        bg='#232426'
-                        c='#f3f5f8'
+                        bg={dropdownColor}
+                        c={themeColors.text[5]}
                         ff='Lato'
                         p='6px 10px'
                         className='task-card-content-dropdown-item'

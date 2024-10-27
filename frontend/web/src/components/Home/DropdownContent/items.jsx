@@ -1,6 +1,6 @@
 import {Icons} from '../../icons/icons';
 
-function items(property) {
+function items(property,themeColors) {
     let items = null;
     switch(property) {
         case "priority":
@@ -9,14 +9,14 @@ function items(property) {
                 {icon: Icons('IconFlag3Filled',14,14,'#26a9dc'), name: 'High'},
                 {icon: Icons('IconFlag3Filled',14,14,'yellow'), name: 'Medium'},
                 {icon: Icons('IconFlag3Filled',14,14,'gray'), name: 'Low'},
-                {icon: Icons('IconCancel',14,14,'#fafafa'), name: 'None'},
+                {icon: Icons('IconCancel',14,14,themeColors.text[1]), name: 'None'},
             ];
             break;
         case "status":
             items = [
-                {icon: Icons('IconCircle',14,14,'#fafafa'), name: 'To Do'},
-                {icon: Icons('IconProgress',14,14,'#fafafa'), name: 'In Progress'},
-                {icon: Icons('IconCircleCheckFilled',14,14,'#fafafa'), name: 'Completed'},
+                {icon: Icons('IconCircle',14,14,themeColors.text[2]), name: 'To Do'},
+                {icon: Icons('IconProgress',14,14,themeColors.text[2]), name: 'In Progress'},
+                {icon: Icons('IconCircleCheckFilled',14,14,themeColors.text[2]), name: 'Completed'},
             ];
             break;
         default:

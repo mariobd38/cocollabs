@@ -57,7 +57,8 @@ const TaskCreationModal = (props) => {
     };
 
     const buttonColor = colorScheme==='dark' ? '#e0e2e6' : '#121212';
-    const buttonBg = colorScheme==='dark' ? '#242629' : '#d9dcdf';
+    const buttonBg = colorScheme==='dark' ? '#242629' : '#e0e3e6';
+    const dropdownColor = colorScheme==='dark' ? '#232426' : '#f0f0f0';
 
     return (
         <Modal styles={{ body: { backgroundColor: themeColors.bg[1], border: `1px solid ${colorScheme==='dark' ? '#57585a' : '#c7c7c7'}`} }} 
@@ -101,9 +102,11 @@ const TaskCreationModal = (props) => {
                                             <Text ms='8' ff='Inter' fz='12.5' >{newTaskStatus ? newTaskStatus : 'Status'}</Text>
                                         </Button>
                                     }
-                                    background={'#232426'} width={190}
-                                    dropdown={<StatusDropdownContent element={newTaskStatus} setCurrentTaskStatus={setNewTaskStatus} existingTask={false} /> }
-                                    position='bottom-start'
+                                    background={dropdownColor} width={190}
+                                    // '#232426'
+                                    dropdown={<StatusDropdownContent element={newTaskStatus} setCurrentTaskStatus={setNewTaskStatus} existingTask={false} 
+                                        themeColors={themeColors} colorScheme={colorScheme} dropdownColor={dropdownColor} /> }
+                                    position='bottom-start' colorScheme={colorScheme}
                                 />
 
                                 <MantineDropdown 
@@ -113,9 +116,10 @@ const TaskCreationModal = (props) => {
                                             <Text ms='8' ff='Inter' fz='12.5' >{newTaskPriority ? newTaskPriority : 'Priority'}</Text>
                                         </Button>
                                     }
-                                    background={'#232426'} width={180} 
-                                    dropdown={<PriorityDropdownContent element={newTaskPriority} setCurrentTaskPriority={setNewTaskPriority} existingTask={false}/> }
-                                    position='bottom-start'
+                                    background={dropdownColor} width={180} 
+                                    dropdown={<PriorityDropdownContent element={newTaskPriority} setCurrentTaskPriority={setNewTaskPriority} existingTask={false}
+                                        themeColors={themeColors} dropdownColor={dropdownColor} /> }
+                                    position='bottom-start' colorScheme={colorScheme}
                                 />
                                 <Popover placement="bottom" isOpen={dueDatePopoverOpened} onOpenChange={(open) => setDueDatePopoverOpened(open)}>
                                     <PopoverTrigger onClick={() => setDueDatePopoverOpened}>
@@ -136,6 +140,8 @@ const TaskCreationModal = (props) => {
                                             setSelectedDate={setSelectedDate}
                                             selectedDateTime={selectedDateTime}
                                             setSelectedDateTime={setSelectedDateTime}
+                                            dropdownColor={dropdownColor}
+                                            colorScheme={colorScheme}
                                         />
                                     </PopoverContent>
                                 </Popover>

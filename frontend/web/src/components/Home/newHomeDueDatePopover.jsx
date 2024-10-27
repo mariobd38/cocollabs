@@ -13,10 +13,12 @@ import './newHomeDueDatePopover.css';
 const NewHomeDueDatePopover = (props) => {
 
     const {popoverTarget, currentTaskDueDate, setCurrentTaskDueDate, currentTaskDueDateTime, setCurrentTaskDueDateTime,
-        currentIndex,taskType,setTaskType,handleTaskUpdateNew,popoverId,openPopoverId,setOpenPopoverId,enableScroll,disableScroll} = props;
+        currentIndex,taskType,setTaskType,handleTaskUpdateNew,popoverId,openPopoverId,setOpenPopoverId,enableScroll,disableScroll,
+        colorScheme} = props;
 
     dayjs.extend(customParseFormat);
     const dateFormatList = ['YYYY-MM-DD', 'M-D-YY', 'M-D-YYYY', 'MM-DD-YY', 'MM-DD-YYYY'];
+    const dropdownColor = colorScheme==='dark' ? '#232426' : '#f0f0f0';
 
     const content = (
         <NextUICalendar 
@@ -28,6 +30,8 @@ const NewHomeDueDatePopover = (props) => {
             taskType={taskType}
             currentIndex={currentIndex}
             setTaskType={setTaskType}
+            dropdownColor={dropdownColor}
+            colorScheme={colorScheme}
         />
     );
 
