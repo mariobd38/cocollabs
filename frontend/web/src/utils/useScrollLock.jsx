@@ -1,10 +1,10 @@
 import { useState } from 'react';
 
-export function useScrollLock() {
+export function useScrollLock(modalName) {
   const [scrollY, setScrollY] = useState(0);
   
-  const modalBody = document.querySelector('.ant-modal-body');
-  const modalContent = document.querySelector('.ant-modal-content');
+  const modalBody = document.querySelector('.' + modalName + ' .ant-modal-body');
+  const modalContent = document.querySelector('.' + modalName + ' .ant-modal-content');
 
   const disableScroll = () => {
     const currentScrollY = window.scrollY;

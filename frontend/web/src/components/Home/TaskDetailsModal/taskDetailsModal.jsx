@@ -198,14 +198,8 @@ const TaskDetailsModal = (props) => {
     const [openParentTagDropdown, setOpenParentTagDropdown] = useState(false);
     const [activeChildDropdownIndex, setActiveChildDropdownIndex] = useState(null);
 
-    const {enableScroll, disableScroll} = useScrollLock();
+    const {enableScroll, disableScroll} = useScrollLock('task-details-modal-parent');
     const [tiptapExpanded, setTiptapExpanded] = useState(false);
-    // useEffect(() => {
-    //     if (openParentTagDropdown || activeChildDropdownIndex)
-    //         disableScroll();
-    //     else
-    //         enableScroll();
-    // },[openParentTagDropdown])
 
     const [modalDropdownIsOpen, setModalDropdownIsOpen] = useState(false);
     const fadedTextColor = `${colorScheme==='dark' ? '#aaabae' : '#808184'}`;
@@ -303,7 +297,7 @@ const TaskDetailsModal = (props) => {
                                     }
                                     background={dropdownColor} width={190} dropdown={<StatusDropdownContent element={taskType && taskType[currentIndex]} handleTaskUpdateNew={handleTaskUpdateNew} taskType={taskType}
                                     setTaskType={setTaskType} idx={currentIndex} setCurrentTaskStatus={setCurrentTaskStatus}  existingTask={true} themeColors={themeColors} colorScheme={colorScheme} dropdownColor={dropdownColor} /> }
-                                    position='bottom-start' setModalDropdownIsOpen={setModalDropdownIsOpen} colorScheme={colorScheme}
+                                    position='bottom-start' setModalDropdownIsOpen={setModalDropdownIsOpen} colorScheme={colorScheme} modalName='task-details-modal-parent'
                                 />
                             </div>
 
@@ -323,7 +317,7 @@ const TaskDetailsModal = (props) => {
                                     }
                                     background={dropdownColor} width={210} dropdown={<PriorityDropdownContent element={taskType && taskType[currentIndex]} handleTaskUpdateNew={handleTaskUpdateNew} taskType={taskType}
                                     setTaskType={setTaskType} idx={currentIndex} setCurrentTaskPriority={setCurrentTaskPriority} existingTask={true} themeColors={themeColors} dropdownColor={dropdownColor} /> }
-                                    position='bottom-start' setModalDropdownIsOpen={setModalDropdownIsOpen} colorScheme={colorScheme}
+                                    position='bottom-start' setModalDropdownIsOpen={setModalDropdownIsOpen} colorScheme={colorScheme} modalName='task-details-modal-parent'
                                 />
                             </div>
 
@@ -396,6 +390,7 @@ const TaskDetailsModal = (props) => {
                             handleTaskUpdateNew={(element,value, attribute, taskType,setTaskType,index) => handleTaskUpdateNew(element,value, attribute, taskType,setTaskType,index)}
                             expanded={tiptapExpanded}
                             setExpanded={setTiptapExpanded}
+                            modalName='task-details-modal-parent'
                         />
                     </div>
 

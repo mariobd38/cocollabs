@@ -12,7 +12,7 @@ import './taskDescriptionTipTap.css'
 
 const TaskDescriptionTipTap = (props) => {
     const {content, currentIndex,taskType,setTaskType,handleTaskUpdateNew,setNewTaskDescription,expanded,setExpanded,
-        colorScheme,themeColors
+        colorScheme,themeColors,modalName
     } = props;
 
     const taskTypeRef = useRef(taskType);
@@ -22,7 +22,7 @@ const TaskDescriptionTipTap = (props) => {
     const editorRef = useRef(null);
     const ref = useClickOutside(() => {enableScroll(); setMenuOpened(false);});
 
-    const { disableScroll, enableScroll } = useScrollLock(); 
+    const { disableScroll, enableScroll } = useScrollLock(modalName); 
 
     useEffect(() => {
         taskTypeRef.current = taskType;
@@ -106,17 +106,17 @@ const TaskDescriptionTipTap = (props) => {
 
     useEffect(() => {
         const checkSpoilerButton = () => {
-            const spoilerButton = document.querySelector('.rte-spoiler button');
-            setIsSpoilerButtonVisible(!!spoilerButton); // Set true if button exists
+            const spoilerButton = document.querySelector('.' + modalName + ' .rte-spoiler button');
+            setIsSpoilerButtonVisible(!!spoilerButton);
         };
 
         checkSpoilerButton();
 
         const observer = new MutationObserver(checkSpoilerButton);
-        observer.observe(document.querySelector('.rte'), { childList: true, subtree: true });
+        observer.observe(document.querySelector('.' + modalName + ' .rte'), { childList: true, subtree: true });
 
         return () => observer.disconnect();
-    }, []);
+    }, [modalName]);
     // console.log(isSpoilerButtonVisible);                                                                                         
 
 

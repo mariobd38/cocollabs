@@ -5,6 +5,7 @@ import { Modal } from "antd";
 import { Text,Textarea,Button,Box,Flex,Divider } from '@mantine/core';
 import { Popover, PopoverContent, PopoverTrigger} from "@nextui-org/react";
 
+import { useScrollLock } from '../../../utils/useScrollLock';
 import {Icons} from '../../icons/icons';
 import getPriorityProperty from '../../../utils/getPriorityProperty';
 import { MantineDropdown } from '../../models/ModelDropdown2/mantineDropdown';
@@ -56,10 +57,13 @@ const TaskCreationModal = (props) => {
         }
     };
 
+    const { disableScroll, enableScroll } = useScrollLock('task-creation-modal'); 
+
     const buttonColor = colorScheme==='dark' ? '#e0e2e6' : '#121212';
     const buttonBg = colorScheme==='dark' ? '#242629' : '#e0e3e6';
     const dropdownColor = colorScheme==='dark' ? '#232426' : '#f0f0f0';
 
+    // console.log(dueDatePopoverOpened)
     return (
         <Modal styles={{ body: { backgroundColor: themeColors.bg[1], border: `1px solid ${colorScheme==='dark' ? '#57585a' : '#c7c7c7'}`} }} 
         open={openTaskCreateModal} onCancel={() => {setOpenTaskCreateModal(false) }} className='task-creation-modal' width={650} >
@@ -84,6 +88,7 @@ const TaskCreationModal = (props) => {
                             setNewTaskDescription={setNewTaskDescription}
                             colorScheme={colorScheme}
                             themeColors={themeColors}
+                            modalName='task-creation-modal'
                         />
                     </Box>
     
@@ -103,10 +108,9 @@ const TaskCreationModal = (props) => {
                                         </Button>
                                     }
                                     background={dropdownColor} width={190}
-                                    // '#232426'
                                     dropdown={<StatusDropdownContent element={newTaskStatus} setCurrentTaskStatus={setNewTaskStatus} existingTask={false} 
                                         themeColors={themeColors} colorScheme={colorScheme} dropdownColor={dropdownColor} /> }
-                                    position='bottom-start' colorScheme={colorScheme}
+                                    position='bottom-start' colorScheme={colorScheme} modalName='task-creation-modal'
                                 />
 
                                 <MantineDropdown 
@@ -119,10 +123,10 @@ const TaskCreationModal = (props) => {
                                     background={dropdownColor} width={180} 
                                     dropdown={<PriorityDropdownContent element={newTaskPriority} setCurrentTaskPriority={setNewTaskPriority} existingTask={false}
                                         themeColors={themeColors} dropdownColor={dropdownColor} /> }
-                                    position='bottom-start' colorScheme={colorScheme}
+                                    position='bottom-start' colorScheme={colorScheme} modalName='task-creation-modal'
                                 />
-                                <Popover placement="bottom" isOpen={dueDatePopoverOpened} onOpenChange={(open) => setDueDatePopoverOpened(open)}>
-                                    <PopoverTrigger onClick={() => setDueDatePopoverOpened}>
+                                <Popover placement="bottom" isOpen={dueDatePopoverOpened} onOpenChange={(open) => {setDueDatePopoverOpened(open); if (!open) enableScroll(); else disableScroll();}}>
+                                <PopoverTrigger onClick={() => setDueDatePopoverOpened }>
                                         <Button fw={300} c={buttonColor} className='nextui-calendar-popover-trigger-button' radius={5} h='30' p='0 8px' bg={buttonBg} bd='.1px solid #048369' 
                                         >
                                             {Icons('IconCalendarMonth',14,14,buttonColor)} 

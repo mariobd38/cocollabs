@@ -4,11 +4,11 @@ import { useScrollLock } from '../../../utils/useScrollLock';
 import { Menu } from '@mantine/core';
 
 const MantineDropdown = (props) => {
-    const { background,target,width,dropdown,childDropdownOpened,position,dmt,setModalDropdownIsOpen,colorScheme } = props;
+    const { background,target,width,dropdown,childDropdownOpened,position,dmt,setModalDropdownIsOpen,colorScheme,modalName } = props;
 
     const [menuOpened, setMenuOpened] = useState(false);
     const dropdownRef = useRef(null);
-    const { disableScroll, enableScroll } = useScrollLock();
+    const { disableScroll, enableScroll } = useScrollLock(modalName);
 
     const shouldEnablePointerEvents = () => {
         return menuOpened;
