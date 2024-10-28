@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 
 import { useLocalStorage } from '@mantine/hooks';
 
-
 import { GOOGLE_AUTH_URL } from '../../../constants';
 
 import AuthHeader from './../authHeader';

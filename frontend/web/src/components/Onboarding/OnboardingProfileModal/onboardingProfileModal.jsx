@@ -133,7 +133,8 @@ const OnboardingProfileModal = (props) => {
     }
 
     return (
-        <Modal removeScrollProps={{ allowPinchZoom: true }} size='lg' opened={opened} onClose={close} className='onboarding-modal' title="Profile Picker" centered radius={12}>
+        <Modal  styles={{body: {backgroundColor: "#fafafa" }, header: {backgroundColor: "#fafafa"}}}
+        removeScrollProps={{ allowPinchZoom: true }} size='lg' opened={opened} onClose={close} className='onboarding-modal' title="Profile Picker" centered radius={12}>
             <div className='d-flex flex-column'>
                 <div className='d-flex justify-content-center pt-2 pb-4'>
                     <span className='onboarding-customize-profile' style={{background: customizedProfileColor ? customizedProfileColor : '' }}>

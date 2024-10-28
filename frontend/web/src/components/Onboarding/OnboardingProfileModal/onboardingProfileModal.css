@@ -1,3 +1,6 @@
+.onboarding-modal {
+    background-color: #fafafa !important;
+}
 .onboarding-modal .mantine-Modal-title {
     /* font-family: "Sora", sans-serif !important; */
     font-size: 20px !important;

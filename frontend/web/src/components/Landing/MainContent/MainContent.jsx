@@ -5,7 +5,7 @@ import team_work from '../../../assets/illustrations/landing/team_work.png';
 import archery_goals from '../../../assets/illustrations/landing/archery_goals.png';
 import shared_goals from '../../../assets/illustrations/landing/shared_goals.png';
 
-import {  Container,Title, SimpleGrid, Text, Button, ThemeIcon, Grid, Card, Image, Badge, Group } from '@mantine/core';
+import {  Box,Container,Title, SimpleGrid, Text, Button, ThemeIcon, Grid, Card, Image, Badge, Group } from '@mantine/core';
 import { Carousel } from '@mantine/carousel';
 
 import {Icons} from '../../icons/icons';
@@ -209,27 +209,27 @@ const MainContent = () => {
                           >
                            {useCases.map((item,index) => (
                                 <Carousel.Slide key={index} className='d-flex align-items-end'>
-                                <Card shadow="sm" padding="lg" radius="md" withBorder className='landing-main-content-use-cases-card'>
-                                    <Card.Section style={{backgroundColor: "#d4fffa"}}>
-                                        <Image
-                                        src={item.illustration}
-                                        className='m-auto'
-                                        height={170}
-                                        w={item.width}
-                                        alt={item.team}
-                                        />
-                                    </Card.Section>
-                                    <div style={{height: "105px"}}>
-                                    <Group justify="space-between" mt="md" mb="xs">
-                                        <Text fw={500}>{item.team}</Text>
-                                        <Badge color={item.badgeColor}>Learn More</Badge>
+                                    <Card bg='#fafafa' shadow="sm" padding="lg" radius="md" className='landing-main-content-use-cases-card'>
+                                        <Card.Section style={{backgroundColor: "#d4fffa"}}>
+                                            <Image
+                                            src={item.illustration}
+                                            className='m-auto'
+                                            height={170}
+                                            w={item.width}
+                                            alt={item.team}
+                                            />
+                                        </Card.Section>
+                                        <Box style={{height: "105px"}} >
+                                            <Group justify="space-between" mt="md" mb="xs">
+                                                <Text fw={500}>{item.team}</Text>
+                                                <Badge color={item.badgeColor}>Learn More</Badge>
 
-                                    </Group>
+                                            </Group>
 
-                                    <Text size="sm" c="dimmed">
-                                        {item.description}
-                                    </Text>
-                                    </div>
+                                            <Text size="sm" c="dimmed">
+                                                {item.description}
+                                            </Text>
+                                        </Box>
                                 </Card>
                             </Carousel.Slide >
                             ))}

@@ -2,8 +2,7 @@
     /* margin-top: rem(120px); */
     padding-top: calc(var(--mantine-spacing-xl) * 2) !important;
     padding-bottom: calc(var(--mantine-spacing-xl) * 2) !important;
-    background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6)) !important;
-    /* border-top: rem(1px) solid light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-5)); */
+    background-color: #fafafa !important;
   }
   
   .logo {
@@ -18,6 +17,7 @@
   
   .description {
     margin-top: rem(5px) !important;
+    font-family: 'Inter';
   
     @media (max-width: $mantine-breakpoint-sm) {
       margin-top: var(--mantine-spacing-xs) !important;
@@ -51,7 +51,7 @@
   
   .link {
     display: block !important;
-    color: light-dark(var(--mantine-color-gray-6), var(--mantine-color-dark-1)) !important;
+    color: #797979 !important;
     font-size: var(--mantine-font-size-sm) !important;
     padding-top: rem(3px) !important;
     padding-bottom: rem(3px) !important;
@@ -69,8 +69,7 @@
       Greycliff CF,
       var(--mantine-font-family) !important;
     margin-bottom: calc(var(--mantine-spacing-xs) / 2) !important;
-    color: light-dark(var(--mantine-color-black), var(--mantine-color-white)) !important;
-    /* color: red; */
+    color: #303030 !important;
   }
   
   .afterFooter {
@@ -80,7 +79,7 @@
     margin-top: var(--mantine-spacing-xl);
     padding-top: var(--mantine-spacing-xl);
     padding-bottom: var(--mantine-spacing-xl);
-    border-top: rem(1px) solid light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-4));
+    border-top: 1px solid #c1c1c4;
   
     @media (max-width: $mantine-breakpoint-sm) {
       flex-direction: column;

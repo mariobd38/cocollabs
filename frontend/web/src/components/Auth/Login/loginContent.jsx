@@ -166,7 +166,7 @@ const LoginContent = (props) => {
                                             autoComplete='off'
                                             placeholder=""
                                             // leftSection={<IconLock style={{ width: rem(18), height: rem(18) }} stroke={2.5}/>}
-                                            leftSection={Icons('IconLock',18,18,null,2.5)}
+                                            leftSection={Icons('IconLock',18,18,'#717171',2.5)}
                                             className='w-100 auth-user-input-field login'
                                             size="lg"
                                             radius="md"
@@ -199,7 +199,7 @@ const LoginContent = (props) => {
                                         label="Enter your email"
                                         type="text"
                                         placeholder=""
-                                        leftSection={Icons('IconMail',18,18,null,2.5)}
+                                        leftSection={Icons('IconMail',18,18,'#717171',2.5)}
                                         autoComplete='off'
                                         value={inputEmail}
                                         onChange={(e) => setInputEmail(e.target.value)}

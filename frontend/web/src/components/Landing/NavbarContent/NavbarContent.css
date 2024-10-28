@@ -78,6 +78,10 @@
 .navbar-content-burger.scrolled .mantine-Burger-burger::after {
   background-color:#0f5255 !important;
 }
-.random-ass:hover {
- color: red !important;
+
+.drawer-parent section,.drawer-parent header {
+  background-color: #fafafa;
+}
+.drawer-parent .mantine-Drawer-close:hover {
+  background-color: #e1e1e1;
 }

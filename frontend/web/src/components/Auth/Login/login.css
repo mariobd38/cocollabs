@@ -9,6 +9,9 @@
 .login-image, .login-illustration-block {
     transition: width 0.5s ease;
 }
+.login-illustration-block {
+    background-color: #f2f3f7;
+}
 
 @media(max-width: 1200px) {
     .login-illustration-block {
@@ -37,6 +40,10 @@
 }
 
 .login-oauth-button {
+    /* border: .1px solid #a7a7a7 !important; */
+    background-color: #fafafa !important;
+    border: .1px solid #acacac !important;
+    color: #252525 !important;
     width: 80% !important;
     transition: width 0.5s ease;
 }

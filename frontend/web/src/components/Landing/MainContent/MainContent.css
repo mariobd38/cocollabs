@@ -208,6 +208,8 @@ a {
 }
 .landing-main-content-use-cases-card {
     width: 100%;
+    border: 1px solid #d5d5d5;
+    box-shadow: rgba(150, 150, 150, 0.15) 0px 5px 15px !important;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 } 
 .landing-main-content-use-cases-card:hover {

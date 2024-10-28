@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
+import { Icons } from '../icons/icons';
 
 import {
     Text,
@@ -204,11 +205,8 @@ const Onboarding = () => {
                         <span className='d-flex align-items-center'>
                             <div className='d-flex flex-column align-items-center'>
                                 <span className='onboarding-add-new-profile-button' onClick={onOpen}>
-                                    <AddRoundedIcon style={{width: "3.2rem",height: "3.2rem"}}/>
+                                    {Icons('IconPlus', 40, 40)}
                                 </span>
-                            </div>
-
-                            <div className='d-flex flex-column align-items-center'>
                             </div>
                         </span>
                         }
@@ -270,7 +268,7 @@ const Onboarding = () => {
     };
 
     return (
-        <div className='w-100'>
+        <div className='w-100' style={{height: "100dvh", background: "#fafafa"}}>
             <AuthHeader />
 
             <div>
@@ -279,7 +277,7 @@ const Onboarding = () => {
                     <div className='onboarding-steps-inner-content' style={contentStyle}>{steps[current].content}</div>
                     <div className='d-flex gap-3 flex-column justify-content-center align-items-center w-100 pt-5'>
                         <Button className='onboarding-bottom-button' ff='Lato' fz={16} w={300} py={3} radius='md' bg='teal' bd='1.5px solid teal' onClick={handleContinueWithProfileAvatar}>Continue</Button>
-                        <Button className='onboarding-bottom-button' ff='Lato' fz={16} w={300} py={3} radius='md' c='teal' bg='white' bd='1.5px solid teal'>Skip for now</Button>
+                        <Button className='onboarding-bottom-button' ff='Lato' fz={16} w={300} py={3} radius='md' c='#0ca678' bg='#fafafa' bd='1.5px solid teal'>Skip for now</Button>
                     </div>
                     {/* <div
                         style={{

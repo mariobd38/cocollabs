@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { useNavigate } from "react-router-dom";
 
 import {Icons} from '../../icons/icons';
@@ -95,9 +95,11 @@ const NavbarContent = (props) => {
     const [platformOpened, { toggle: togglePlatform }] = useDisclosure(false);
     const theme = useMantineTheme();
 
-    const platformLinks = <NavbarLinkItem mockdata={platformMockdata} drawerOpened={drawerOpened}/>
-    const solutionsLinks = <NavbarLinkItem mockdata={solutionsMockdata} drawerOpened={drawerOpened}/>
+    const platformLinks = <NavbarLinkItem mockdata={platformMockdata} drawerOpened={drawerOpened} closeDrawer={closeDrawer} />
+    const solutionsLinks = <NavbarLinkItem mockdata={solutionsMockdata} drawerOpened={drawerOpened} closeDrawer={closeDrawer} />
     
+    
+
     return (
         <Box pb={0} className={"sticky-top"}>
             <header className={classes.header} style={{backgroundColor: scrollPosition > 40 ? navbarBackground : 'transparent',
@@ -129,7 +131,7 @@ const NavbarContent = (props) => {
                                 </a>
                             </HoverCard.Target>
 
-                            <HoverCard.Dropdown style={{ overflow: 'hidden', transform: scrollPosition > 40 ? 'translateY(15px)' : 'translateY(-2px)'  }}>
+                            <HoverCard.Dropdown bg='#fafafa' style={{ overflow: 'hidden', transform: scrollPosition > 40 ? 'translateY(15px)' : 'translateY(-2px)'  }}>
                                 <Group justify="space-between" mb="sm">
                                     <Text fw={600}>Products</Text>
                                 </Group>
@@ -160,7 +162,7 @@ const NavbarContent = (props) => {
                                 </a>
                             </HoverCard.Target>
 
-                            <HoverCard.Dropdown style={{ overflow: 'hidden',transform: scrollPosition > 40 ? 'translateY(15px)' : 'translateY(-2px)' }}>
+                            <HoverCard.Dropdown bg='#fafafa' style={{ overflow: 'hidden',transform: scrollPosition > 40 ? 'translateY(15px)' : 'translateY(-2px)' }}>
                                 <Group  mb="sm">
                                     <Text fw={600} style={{width: "50%"}}>Teams</Text>
                                     <Text fw={600}>Use Cases</Text>
@@ -206,23 +208,20 @@ const NavbarContent = (props) => {
                 onClose={closeDrawer}
                 size="100%"
                 padding="lg"
-                title=<button  style={{width: "12.5rem"}}>
+                className='drawer-parent'
+                title={<button  style={{width: "12.5rem"}}>
                         <Logo2 strokeColor={'#222222'}/>
-                    </button>
+                    </button>}
                 hiddenFrom="md"
                 zIndex={1000000}
             >
-                <ScrollArea h={`calc(100vh - ${rem(80)})`} mx="-md">
-                    <Divider mb="md" />
+                <ScrollArea h={`calc(100dvh - ${rem(80)})`} mx="-md" bg='#fafafa'>
+                    <Divider mb="md" bd='.1px solid #c5c5c5' />
                     <UnstyledButton className={classes.link + " w-100"} onClick={togglePlatform}>
                         <Center inline className='d-flex justify-content-between w-100'>
                             <Box component="span" className={classes.platformlink + " " + classes.link}>
                                 Platform
                             </Box>
-                            {/* <IconChevronRight
-                                style={{ width: rem(25), height: rem(25), marginRight: rem(30) }}
-                                color={theme.colors.blue[6]}
-                            /> */}
                             <Box style={{ marginRight: rem(30) }} >
                                 {Icons('IconChevronRight', 25,25,theme.colors.blue[6])}
                             </Box>
@@ -235,10 +234,6 @@ const NavbarContent = (props) => {
                             <Box component="span" className={classes.solutionslink + " " + classes.link}>
                                 Solutions
                             </Box>
-                            {/* <IconChevronRight
-                                style={{ width: rem(25), height: rem(25), marginRight: rem(30) }}
-                                color={theme.colors.blue[6]}
-                            /> */}
                             <Box style={{ marginRight: rem(30) }} >
                                 {Icons('IconChevronRight', 25,25,theme.colors.blue[6])}
                             </Box>
@@ -249,14 +244,12 @@ const NavbarContent = (props) => {
 
                     <a href={() => false} className={classes.link}>
                         Resources
-                        
-                        
                     </a>
                     <a href={() => false} className={classes.link}>
                         Enterprise
                     </a>
 
-                    <Divider my="md" />
+                    <Divider my="md" bd='.1px solid #c5c5c5' />
 
                     <Group className='m-auto' style={{width: "70%"}} justify="center" grow pb="xl" px="md">
                         <Button onClick={() => routeChange('/login')} 

@@ -65,7 +65,7 @@ export function FooterContent() {
             <Container className={classes.inner}>
                 <div className={classes.logo}>
                     <Logo2 strokeColor='#0f5255' />
-                    <Text size="xs" c="dimmed" className={classes.description}>
+                    <Text size="xs" c="#696969" className={classes.description}>
                         Collaborate and optimize your daily workflow
                     </Text>
                 </div>
@@ -74,7 +74,7 @@ export function FooterContent() {
 
             <Container className={classes.afterFooter}>
                 <Text c="dimmed" size="sm">
-                    © 2020 Cocollabs. All rights reserved.
+                    © 2024 Cocollabs. All rights reserved.
                 </Text>
 
                 <Group gap={0} className={classes.social} justify="flex-end" wrap="nowrap">

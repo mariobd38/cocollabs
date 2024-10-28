@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import achievement from '../../../assets/illustrations/signup/achievement.png';
 
 import { useFocusWithin } from '@mantine/hooks';
-import {TextInput,PasswordInput,Text,Paper,Group,Button,Divider,Anchor,Stack,List, Image,rem,Progress } from '@mantine/core';
+import {TextInput,PasswordInput,Text,Paper,Group,Button,Divider,Anchor,Stack,List, Image,Progress } from '@mantine/core';
 import {Icons} from '../../icons/icons';
 import { useForm } from '@mantine/form';
 
@@ -197,7 +197,7 @@ const SignupContent = (props) => {
                         {showOAuth2Buttons &&
                         <>
                             <Group mt="lg" className='d-flex flex-column' w='100%'>
-                                <GoogleButton size="md" onClick={handleGoogleLogin} radius="md" px="0" className='py-2 sign-up-oauth-button' fz={17} bg={"#fafafa"}>
+                                <GoogleButton bd='1px solid #acacac' c='#252525' size="md" onClick={handleGoogleLogin} radius="md" px="0" className='py-2 sign-up-oauth-button' fz={17} bg={"#fafafa"}>
                                     Continue with Google
                                 </GoogleButton>
                                 {/* <SlackButton size="md" radius="md" px="0" className='py-2 sign-up-oauth-button' style={{fontSize: "17px",background: "#fafafa"}}>Continue with Slack</SlackButton> */}
@@ -217,8 +217,8 @@ const SignupContent = (props) => {
                                     <div className='text-center' style={{ flex: 1 }}>
                                         <Button className='signup-user-info-block-email' radius="xl" fw={800}>
                                             <div className='d-flex'>
-                                                <div className='me-2'>
-                                                    {Icons('IconMail',18,18,null,2.5)}
+                                                <div className='me-3'>
+                                                    {Icons('IconMail',18,18,'#717171',2.5)}
                                                 </div>
                                                 <span>{inputEmail}</span>
                                             </div>
@@ -233,7 +233,7 @@ const SignupContent = (props) => {
                                             placeholder={isFullNameFocused ? '' : 'John Doe'}
                                             type="text"
                                             autoComplete='off'
-                                            leftSection={Icons('IconUser',18,18,null,'2.5')}
+                                            leftSection={Icons('IconUser',18,18,'#717171','2.5')}
                                             className='w-100 auth-user-input-field'
                                             size="lg"
                                             radius="md"
@@ -249,7 +249,7 @@ const SignupContent = (props) => {
                                             type="password"
                                             autoComplete='off'
                                             // leftSection={<IconLock style={{ width: rem(18), height: rem(18) }} stroke={2.5}/>}
-                                            leftSection={Icons('IconLock',18,18,null,'2.5')}
+                                            leftSection={Icons('IconLock',18,18,'#717171','2.5')}
                                             className='w-100 auth-user-input-field'
                                             size="lg"
                                             radius="md"
@@ -285,7 +285,7 @@ const SignupContent = (props) => {
                                         label="Enter your email"
                                         type="text"
                                         placeholder=""
-                                        leftSection={Icons('IconMail',18,18,null,2.5)}
+                                        leftSection={Icons('IconMail',18,18,'#717171',2.5)}
                                         autoComplete='off'
                                         value={inputEmail}
                                         onChange={(e) => setInputEmail(e.target.value)}

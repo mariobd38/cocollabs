@@ -88,6 +88,9 @@ public class User implements UserDetails {
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Profile profile;
 
+    @Column(name="is_onboarding_complete")
+    private boolean isOnboardingComplete = false;
+
     @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER, cascade= CascadeType.ALL)
     @JoinTable(
@@ -116,6 +119,7 @@ public class User implements UserDetails {
         Timestamp currentTime = new Timestamp(new Date().getTime());
         this.createdOn = currentTime;
         this.lastUpdatedOn = currentTime;
+        this.isOnboardingComplete = false;
     }
 
     @Override

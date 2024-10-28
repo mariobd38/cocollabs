@@ -10,15 +10,16 @@ import {Icons} from '../../../icons/icons';
 
 import classes from './../../NavbarContent/NavbarContent.module.css';
 
-const NavbarLinkItem = ({ mockdata, drawerOpened }) => {
+const NavbarLinkItem = ({ mockdata, drawerOpened,closeDrawer }) => {
     const [paddingStart, setPaddingStart] = useState(drawerOpened ? 22.5 : 0);
     const [alignment, setAlignment] = useState(drawerOpened ? 'start' : 'center');
   
     const updatePaddingAndAlignment = () => {
       const screenWidth = window.innerWidth;
       const isLargeScreen = screenWidth > 992;
-      
+
       if (isLargeScreen) {
+        closeDrawer();
         setPaddingStart(0);
         setAlignment('center');
       } else {
@@ -41,7 +42,7 @@ const NavbarLinkItem = ({ mockdata, drawerOpened }) => {
         mockdata.map((item,index) => (
             <UnstyledButton className={classes.subLink} key={index} mb={drawerOpened ? 5 : 0} py={5} >
                 <Group wrap="nowrap" mx={10} my={5} align={alignment} ps={paddingStart}>
-                    <ThemeIcon size={34} variant="default" radius="md" className="d-flex align-items-center">
+                    <ThemeIcon bd='1px solid #c6c8da' bg='#fafafa' size={34} variant="default" radius="md" className="d-flex align-items-center">
                         {Icons(item.icon, 22, 22, '#367179')}
                     </ThemeIcon>
                     <div>
