@@ -9,7 +9,8 @@ import './taskOptionsPortal.css';
 
 const TaskOptionsPortal = forwardRef((props, ref) => {
     const { contextMenuPosition, showContextMenu,setShowContextMenu,openMenuIndex,setOpenMenuIndex,
-        enableScroll,setShowInnerContextMenu,setOpenRenameModal,taskType, setTaskType, currentIndex
+        enableScroll,setShowInnerContextMenu,setOpenRenameModal,taskType, setTaskType, currentIndex,
+        setCurrentTask
      } = props;
 
     const menuItems = [
@@ -27,7 +28,7 @@ const TaskOptionsPortal = forwardRef((props, ref) => {
             }, action: () => console.log('test')
         },
         {label: 'Set due date', icon: Icons('IconCalendarPlus',17,17), cascade: false, action: () => console.log('test')},
-        {label: 'Delete', icon: Icons('IconTrash',17,17), cascade: false, action: () => deleteTaskInfo(currentIndex,taskType,setTaskType)}
+        {label: 'Delete', icon: Icons('IconTrash',17,17), cascade: false, action: () => {setCurrentTask(null); deleteTaskInfo(currentIndex,taskType,setTaskType)}}
     ]
 
     const handleRenameButtonClick = () => {

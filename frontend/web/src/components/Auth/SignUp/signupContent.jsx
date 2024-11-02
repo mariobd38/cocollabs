@@ -12,7 +12,7 @@ import { GoogleButton } from '../OAuthButtons/googleButton';
 // import { SlackButton } from './slackButton';
 import { VerifyEmailRegex } from '../../../utils/emailRegexFormat';
 import { userExists } from '../../../DataManagement/Users/userExists';
-import { useAuth } from '../../../AuthContext/authProvider';
+import { UseAuth } from '../../../AuthContext/authProvider';
 
 const requirements = [
     { re: /[0-9]/ },
@@ -58,7 +58,7 @@ const SignupContent = (props) => {
     
     const { handleGoogleLogin,setInputEmail,showOAuth2Buttons,inputEmail,nextSteps } = props;
 
-    const { setIsAuthenticated } = useAuth();
+    const { setIsAuthenticated, setIsOnboarded } = UseAuth();
 
     const [invalidEmailErrorText, setInvalidEmailErrorText] = useState('');
     const navigate = useNavigate(); 
@@ -113,6 +113,7 @@ const SignupContent = (props) => {
                 value={strength}
                 color={strength > 80 ? 'teal' : strength > 60 ? 'blue' : strength > 40 ? 'yellow' : strength > 20 ? 'orange' : 'red'}
                 key={index}
+                bg='#d7d9db'
                 size={15}
                 radius='xl'
             />
@@ -145,6 +146,7 @@ const SignupContent = (props) => {
 
             if (response.status === 200) {
                 setIsAuthenticated(true);
+                setIsOnboarded(false);
                 navigate('/onboarding');
             } else {
                 console.error("Unexpected error with user registration");
@@ -157,7 +159,7 @@ const SignupContent = (props) => {
     
 
     return (
-        <div className=' d-flex flex-column-reverse flex-lg-row'>
+        <div className='d-flex flex-column-reverse flex-lg-row'>
             <div className='w-100 py-4 signup-left-info-block' style={{background: "#fafafa"}}>
 
                 <div className='mx-5 pt-4'>
@@ -184,7 +186,7 @@ const SignupContent = (props) => {
             </div>
 
             <div className='w-100' style={{borderRadius: "7px"}}>
-                <Paper px="xl" pb="xl" className='py-4 signup-content-wrapper-paper' style={{minHeight: "94vh"}}>
+                <Paper px="xl" pb="xl" className='py-4 signup-content-wrapper-paper' style={{minHeight: "94.6dvh"}}>
                     <div className='pt-4'>
                         <Text fz={33} fw={600} ta="center" mb="xs" c='#fafafa' ff='Lato'>
                             Get started with Cocollabs

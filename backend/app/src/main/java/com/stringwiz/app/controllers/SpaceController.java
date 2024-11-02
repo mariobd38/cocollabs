@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,8 +31,7 @@ public class SpaceController {
     @GetMapping("/api/spaces/getPersonal")
     public ResponseEntity<?> getPersonalSpace(@AuthenticationPrincipal User user) {
         try {
-            Space newSpace = spaceService.getUserPersonalSpace(user);
-            return ResponseEntity.ok(newSpace);
+            return ResponseEntity.ok(spaceService.getUserPersonalSpace(user));
         } catch (Exception e) {
             return ResponseEntity.ok(new Space());
         }
@@ -42,8 +40,7 @@ public class SpaceController {
     @GetMapping("/api/spaces/getByName")
     public ResponseEntity<?> getSpaceByName(@AuthenticationPrincipal User user, @RequestParam("spaceName") String spaceName) {
         try {
-            Space newSpace = spaceService.getByUser(user, spaceName);
-            return ResponseEntity.ok(newSpace);
+            return ResponseEntity.ok(spaceService.getByUser(user, spaceName));
         } catch (Exception e) {
             return ResponseEntity.ok(new Space());
         }

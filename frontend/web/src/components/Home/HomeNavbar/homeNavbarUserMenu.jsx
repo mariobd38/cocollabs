@@ -38,7 +38,7 @@ const HomeNavbarUserMenu = (props) => {
                             userProfileDto={userProfileDto}
                             userProfilePicture={userProfilePicture}
                             initials={initials}
-                            multiplier={2.275}
+                            multiplier={2.075}
                             fontSize={1}
                         />
                         <span className='ps-1'>
@@ -72,7 +72,7 @@ const HomeNavbarUserMenu = (props) => {
                             {item.name}
                         </Menu.Item>
                     ))}
-                    <Menu.Divider size="xs" bd='.1px solid #676869' />
+                    <Menu.Divider size="xs" bd={`.1px solid ${colorScheme==='dark' ? '#484a4b' : '#d0d2d3'}`}/>
                     <Menu.Item w='91.5%' className={`home-button ${colorScheme}`} bg={themeColors.bg[2]} c={themeColors.text[4]} onClick={handleUserLogout} leftSection={Icons('IconLogout',14,14,themeColors.text[4])}>
                         Log out
                     </Menu.Item>

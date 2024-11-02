@@ -11,9 +11,9 @@ import Onboarding from "./components/Onboarding/onboarding";
 import PrivateRoute from "./PrivateRoute/privateRoute";
 import { AuthProvider } from "./AuthContext/authProvider";
 import OAuth2RedirectHandler from "./components/Auth/SignUp/oAuth2RedirectHandler";
+import LoginNextSteps from "./components/Auth/Login/LoginNextSteps/loginNextSteps";
 
 import './App.css';
-import LoginNextSteps from "./components/Auth/Login/LoginNextSteps/loginNextSteps";
 
   
 function App() {
@@ -28,7 +28,6 @@ function App() {
                         <PrivateRoute>
                         {/* <Suspense fallback={<LoadingFallback />}> */}
                             <NewHome />
-                            {/* <NewHomeWrapper /> */}
                         {/* </Suspense> */}
                         </PrivateRoute>
                     }
@@ -53,10 +52,11 @@ function App() {
 
                 <Route path="/oauth2/redirect" element={<OAuth2RedirectHandler />} />
 
-                <Route path="/onboarding" element={<PrivateRoute>
-                    <Onboarding />
-                    </PrivateRoute>} 
-                />
+                <Route path="/onboarding" element={
+                    // <PrivateRoute>
+                        <Onboarding />
+                    // </PrivateRoute>
+                }/>
 
 
                 <Route path="/signUp" element={<SignUp/> } />

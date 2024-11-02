@@ -46,6 +46,7 @@ public class SpaceService {
         Optional<User> optionalUser = userRepository.findById(user.getId());
         if (optionalUser.isPresent()) {
             User foundUser = optionalUser.get();
+            //System.out.println(spaceRepository.findByVisibilityAndUsers(Visibility.PERSONAL, foundUser));
             return spaceRepository.findByVisibilityAndUsers(Visibility.PERSONAL, foundUser);
         } else {
             throw new IllegalArgumentException("User not found with email: " + user.getEmail());

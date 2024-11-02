@@ -8,7 +8,9 @@ import { Text,Button,Textarea,Box,Flex,Divider,TextInput,Grid,Radio, Group,Stack
 import { Modal } from "antd";
 import SpaceCreationIconsPopover from './spaceCreationIconsPopover';
 import { createSpaceInfo } from '../../../DataManagement/Spaces/createSpace';
+import { generateSpaceIconJson } from '../../../utils/generateSpaceIconJson';
 // import { linkTasksToPersonalSpace } from '../../../DataManagement/Spaces/linkTasksToPersonalSpace';
+
 
 import classes from './spaceCreationModal.module.css';
 import './spaceCreationModal.css';
@@ -52,22 +54,9 @@ const SpaceCreationModal = (props) => {
         </Radio.Card>
     ));
 
-    const generateJsonSpaceIcon = () => {
-        const spaceIconProps = spaceIcon.props;
-        // console.log(spaceIcon);
-        return {
-            background: spaceIconProps.bg,
-            color: spaceIconProps.color,
-            radius: spaceIconProps.radius,
-            // width: spaceIconProps.w,
-            children: spaceIconProps.children.props || spaceIconProps.children
-        }
-    }
-
     const handleSpaceCreation = async () => {
         try {
-            const spaceIconJson = generateJsonSpaceIcon();
-            console.log(JSON.stringify(spaceIconJson,null, 2));
+            const spaceIconJson = generateSpaceIconJson(spaceIcon);
             const newSpace = createSpaceInfo(
                 spaceName,
                 spaceDescription,
@@ -126,6 +115,7 @@ const SpaceCreationModal = (props) => {
                                         spaceIcon={spaceIcon}
                                         setSpaceIcon={setSpaceIcon}
                                         firstLetter={firstLetter}
+                                        colorMode={colorScheme}
                                     />
                                 </Flex>
                             </Grid.Col>

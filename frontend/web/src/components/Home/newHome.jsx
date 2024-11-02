@@ -2,6 +2,7 @@ import React, { useState, useEffect,useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import { useMantineTheme,useMantineColorScheme} from '@mantine/core';
+import { useLocalStorage } from '@mantine/hooks';
 
 import HomeHeader from '../Home/HomeHeader/homeHeader';
 import HomeNavbar from './HomeNavbar/homeNavbar';
@@ -34,12 +35,13 @@ const NewHome = () => {
     const location = useLocation();
 
     const passedUserInfo = location.state?.userInfo;
+    const passedSpaceInfo = location.state?.spaceInfo;
     const [userFullName, setUserFullName] = useState(passedUserInfo?.fullName || '');
     const [userEmail, setUserEmail] = useState(passedUserInfo?.email || '');
     const [userProfilePicture, setUserProfilePicture] = useState('');
     const [userProfileDto, setUserProfileDto] = useState('');
     const [initials, setInitials] = useState(passedUserInfo?.fullName || '');
-    const [spaceData, setSpaceData] = useState([]);
+    const [spaceData, setSpaceData] = useState(passedSpaceInfo || []);
 
     useEffect(() => {
         async function fetchSpaceData() {
@@ -62,21 +64,52 @@ const NewHome = () => {
         return () => clearInterval(intervalId);
     }, [today,dayjs]);
 
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //             const data = await getUserInfo(passedUserInfo || null);
+    //             if (data) {
+    //                 setUserFullName(data.fullName);
+    //                 setInitials((data.fullName.split(' ')[0][0] + data.fullName.split(' ')[1][0]).toUpperCase());
+    //                 setUserEmail(data.email);
+    //                 setUserProfilePicture(data.picture);
+    //                 setUserProfileDto(data.profileDto);
+    //             }
+    //     };
+    //     fetchData();
+    // }, [userProfileDto, passedUserInfo]);
+
+    const [storedUserInfo, setStoredUserInfo] = useLocalStorage({
+        key: 'clientInfo', // localStorage key
+        defaultValue: null, // default value when localStorage is empty
+        getInitialValueInEffect: true, // fetch value lazily on first render
+      });
+
     useEffect(() => {
         const fetchData = async () => {
-            if (!passedUserInfo) {
-                const data = await getUserInfo(passedUserInfo || null);
-                if (data) {
-                    setUserFullName(data.fullName);
-                    setInitials((data.fullName.split(' ')[0][0] + data.fullName.split(' ')[1][0]).toUpperCase());
-                    setUserEmail(data.email);
-                    setUserProfilePicture(data.picture);
-                    setUserProfileDto(data.profileDto);
-                }
+          if (storedUserInfo) {
+            // Use the cached data if available
+            setUserFullName(storedUserInfo.fullName);
+            setInitials((storedUserInfo.fullName.split(' ')[0][0] + storedUserInfo.fullName.split(' ')[1][0]).toUpperCase());
+            setUserEmail(storedUserInfo.email);
+            setUserProfilePicture(storedUserInfo.picture);
+            setUserProfileDto(storedUserInfo.profileDto);
+          } else {
+            // Fetch data from API if no data in localStorage
+            const data = await getUserInfo(passedUserInfo || null);
+            if (data) {
+              setUserFullName(data.fullName);
+              setInitials((data.fullName.split(' ')[0][0] + data.fullName.split(' ')[1][0]).toUpperCase());
+              setUserEmail(data.email);
+              setUserProfilePicture(data.picture);
+              setUserProfileDto(data.profileDto);
+    
+              // Store the user info in localStorage
+              setStoredUserInfo(data);
             }
+          }
         };
         fetchData();
-    }, [passedUserInfo]);
+      }, [passedUserInfo, storedUserInfo, setStoredUserInfo]);
 
     const processTaskData = useCallback(() => {
         const now = dayjs();
@@ -101,12 +134,12 @@ const NewHome = () => {
         setCompletedTasks(completed);
     },[dayjs,taskData]);
 
-    
     useEffect(() => {
-        // getTaskInfo(setTaskData);
-        getTaskInfoBySpace(setTaskData,'Personal Space');
-        processTaskData();
-    }, [processTaskData]);
+        if (spaceData && spaceData.name) {
+            getTaskInfoBySpace(setTaskData, spaceData.name);
+            processTaskData();
+        }
+    }, [processTaskData, spaceData]);
 
     const [openSidebarToggle, setOpenSidebarToggle] = useState(false);
 
@@ -163,10 +196,10 @@ const NewHome = () => {
 
 
                     <div className='row mb-5'>
-                        <QuickActions 
+                        {/* <QuickActions 
                             themeColors={themeColors}
                             colorScheme={colorScheme}
-                        />
+                        /> */}
 
                         <div className="task-card-parent">
                             
@@ -189,6 +222,7 @@ const NewHome = () => {
                                         completedTasks={completedTasks}
                                         userProfileDto={userProfileDto}
                                         userProfilePicture={userProfilePicture}
+                                        spaceId={spaceData.id}
                                     />}
                                     
                                 </div>

@@ -28,8 +28,9 @@ const HomeHeader = ({spaceName,themeColors, colorScheme}) => {
     return (
         <>
             <div style={{position: "sticky", top: "1.8px", zIndex: "20"}}>
-                <div className='d-flex align-items-center justify-content-between user-home-all-content-left-spacing' style={{position: "sticky",top: "5rem",background: themeColors.bg[1], 
+                <div className='d-flex align-items-center justify-content-between user-home-all-content-left-spacing' style={{position: "sticky",top: ".13rem",background: themeColors.bg[1], 
                     borderBottom: `1px solid ${colorScheme === 'dark' ? '#323539' : '#b9b9b9'}`, zIndex: "2",height: "59.4px", 
+                    // if quick actions is active, make top = 5rem;
                 }}>
                     <span className='lato-font d-flex align-items-center'>
                         <div className='me-2 d-flex'>

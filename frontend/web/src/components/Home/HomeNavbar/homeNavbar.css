@@ -13,6 +13,12 @@ body.scroll-lock {
     border: 1px solid #797979;
     cursor: pointer;
 }
+.home-navbar-search-ss.dark {
+    background-color: #3c3e40;
+}
+.home-navbar-search-ss.light {
+    background-color: #e2e4e6;
+}
 @media(max-width: 340px) {
     .home-navbar-search-ss {
         display: none;

@@ -122,6 +122,7 @@ const TaskCardContent = (props) => {
             taskType={taskType}
             currentIndex={currentIndex}
             setTaskType={setTaskType}
+            setCurrentTask={setCurrentTask}
         />
         
     },[showContextMenu,contextMenuPosition,ref,openMenuIndex,enableScroll,currentIndex,setTaskType,taskType]);
@@ -236,7 +237,7 @@ const TaskCardContent = (props) => {
                                 openPopoverId={openPopoverId} // Pass the current open popover ID
                                 setOpenPopoverId={setOpenPopoverId}
                                 currentIndex={currentIndex} taskType={taskType} setTaskType={setTaskType} handleTaskUpdateNew={(element,value, attribute, taskType,setTaskType,index) => handleTaskUpdateNew(element,value, attribute, taskType,setTaskType,index)}
-                                colorScheme={colorScheme}
+                                colorScheme={colorScheme} enableScroll={enableScroll} disableScroll={disableScroll}
                             />
                     </div>
                 </Table.Td>

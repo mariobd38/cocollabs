@@ -128,3 +128,9 @@
     }
 
 }
+
+/* new */
+.onboarding-input .mantine-InputWrapper-label {
+    display: flex;
+    padding-bottom: 25px;
+}

@@ -22,7 +22,7 @@ import { useForm } from '@mantine/form';
 import { GoogleButton } from './../OAuthButtons/googleButton';
 import { VerifyEmailRegex } from '../../../utils/emailRegexFormat';
 import { userExists } from '../../../DataManagement/Users/userExists';
-import { useAuth } from '../../../AuthContext/authProvider';
+import { UseAuth } from '../../../AuthContext/authProvider';
 import { isOAuthUser } from '../../../DataManagement/Users/isOAuthUser';
 
 
@@ -37,7 +37,7 @@ const LoginContent = (props) => {
     
     const { handleGoogleLogin,setInputEmail,showOAuth2Buttons,inputEmail,nextSteps } = props;
 
-    const { setIsAuthenticated } = useAuth();
+    const { setIsAuthenticated, setIsOnboarded } = UseAuth();
 
     const [invalidEmailErrorText, setInvalidEmailErrorText] = useState('');
     const [invalidPasswordErrorText, setInvalidPasswordErrorText] = useState('');
@@ -80,41 +80,94 @@ const LoginContent = (props) => {
     });
 
 
-    const handleLoginWithEmailRequest = async (values) => {
+    // const handleLoginWithEmailRequest = async (values) => {
 
+    //     const password = values.password;
+    //     const reqBody = {
+    //         email: inputEmail,
+    //         password: password,
+    //     };
+    //     try {
+    //         const response = await fetch("/api/auth/login", {
+    //             headers: {
+    //                 "Content-Type": "application/json",
+    //             },
+    //             method: "post",
+    //             body: JSON.stringify(reqBody),
+    //         });
+
+    //         if (response.status === 200) {
+    //             const data = await response.json();
+    //             setIsAuthenticated(true);
+    //             navigate('/home', { state: { data }});
+    //         } else if (response.status === 401) {
+    //             setInvalidPasswordErrorText('Invalid Password');
+    //         } else {
+    //             throw new Error("Invalid login attempt");
+    //         }
+    //     } catch (error) {
+    //         //console.error(error);
+    //     }
+    // }
+    const handleLoginWithEmailRequest = async (values) => {
         const password = values.password;
         const reqBody = {
             email: inputEmail,
             password: password,
         };
+    
         try {
-            const response = await fetch("/api/auth/login", {
+            // First, make the login request
+            const loginResponse = await fetch("/api/auth/login", {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                method: "post",
+                method: "POST",
                 body: JSON.stringify(reqBody),
             });
-
-            if (response.status === 200) {
-                const data = await response.json();
+    
+            if (loginResponse.status === 200) {
+                const loginData = await loginResponse.json();
                 setIsAuthenticated(true);
-                navigate('/home', { state: { data }});
-            } else if (response.status === 401) {
+    
+                // After login, check if the user is onboarded
+                const onboardResponse = await fetch(`/api/user/isUserOnboarded?email=${inputEmail}`, {
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                });
+    
+                if (onboardResponse.status === 200) {
+                    const isOnboarded = await onboardResponse.json();
+                    if (isOnboarded) {
+                        setIsOnboarded(true);
+                        
+                        navigate('/home', { state: { loginData } });
+                    } else {
+                        setIsOnboarded(false);
+                        // navigate('/onboarding');
+                        navigate('/onboarding', { state: { loginData } });
+                    }
+                } else {
+                    throw new Error("Failed to check onboarding status");
+                }
+    
+            } else if (loginResponse.status === 401) {
                 setInvalidPasswordErrorText('Invalid Password');
             } else {
                 throw new Error("Invalid login attempt");
             }
         } catch (error) {
-            //console.error(error);
+            console.error("Login Error:", error);
         }
-    }
+    };
+    
 
     return (
 
         <div className='w-100'>
             <div className='d-flex flex-column flex-lg-row'>
-                <div className='w-100' style={{background: "#fff", minHeight: "94vh"}}>
+                <div className='w-100' style={{background: "#fff", minHeight: "94.6dvh"}}>
                     <Paper px="xl" py="xl" bg='#fff'>
                         <div className='pt-4'>
                             <Text fz={33} fw={600} ta="center" mb="xs" c='#121212' ff='Lato'>

@@ -19,7 +19,7 @@ import './taskCreationModal.css';
 import dayjs from 'dayjs';
 
 const TaskCreationModal = (props) => {
-    const {openTaskCreateModal,setOpenTaskCreateModal, taskData, setTaskData,colorScheme,themeColors} = props;
+    const {openTaskCreateModal,setOpenTaskCreateModal, taskData, setTaskData,colorScheme,themeColors,spaceId} = props;
     
     const [newTaskName, setNewTaskName] = useState('');
     const [newTaskDescription, setNewTaskDescription] = useState('');
@@ -47,7 +47,8 @@ const TaskCreationModal = (props) => {
                 newTaskStatus,
                 newTaskPriority,
                 selectedDate,
-                selectedDateTime
+                selectedDateTime,
+                spaceId
             );
     
             setTaskData([...taskData, newTask]);

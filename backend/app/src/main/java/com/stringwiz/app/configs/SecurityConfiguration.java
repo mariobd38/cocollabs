@@ -3,6 +3,7 @@ package com.stringwiz.app.configs;
 import com.stringwiz.app.filters.JwtFilter;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -29,6 +30,8 @@ public class SecurityConfiguration {
     @Autowired private UserDetailsService userDetailsService;
     @Autowired private JwtFilter jwtFilter;
     @Autowired private OAuth2AuthorizedClientService authorizedClientService;
+    @Value("${OAUTH2_DEFAULT_SUCCESSFUL_URI}")
+    private String OAUTH2_DEFAULT_SUCCESSFUL_URI;
 
     @Bean
     public static PasswordEncoder passwordEncoder() {
@@ -61,16 +64,13 @@ public class SecurityConfiguration {
                         .requestMatchers(new AntPathRequestMatcher("/google/**")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/api/user/exists")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/api/user/isOAuth")).permitAll()
+
                         .requestMatchers(new AntPathRequestMatcher("/api/**")).authenticated()
-                        .requestMatchers(new AntPathRequestMatcher("/api/tasks/**")).authenticated()
-                        .requestMatchers(new AntPathRequestMatcher("/api/tags/**")).authenticated()
-                        .requestMatchers(new AntPathRequestMatcher("/api/spaces/**")).authenticated()
-                        .requestMatchers(new AntPathRequestMatcher("/api/onboarding/**")).authenticated()
-                        .requestMatchers(new AntPathRequestMatcher("/api/user/logout")).authenticated()
                         .anyRequest().authenticated())
+
                         .oauth2Login(oauth2Login ->
                             oauth2Login
-                                .defaultSuccessUrl("/oauth2/redirect", true)
+                                .defaultSuccessUrl(OAUTH2_DEFAULT_SUCCESSFUL_URI, true)
                                 .failureUrl("/loginFailure")
                                 .authorizedClientService(authorizedClientService)
                         );

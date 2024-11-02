@@ -56,7 +56,7 @@ export const ProfileCard = (props) => {
 
                     <div>
                             <div className="mt-3 nunito-sans-font" style={{fontSize: "1.15rem"}}>
-                                <span className="nunito-sans-font-600">{userFullName}</span>(you)
+                                <span className="nunito-sans-font-600">{userFullName}</span> (you)
                             </div>
                             
                             <div className="mt-2 d-flex align-items-center">

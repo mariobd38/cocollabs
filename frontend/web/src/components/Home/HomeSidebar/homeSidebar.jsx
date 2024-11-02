@@ -53,16 +53,17 @@ const HomeSidebar = (props) => {
         </div>
     );
 
-  const mainLinks = links.map((link,index) => (
-        <>
+    const mainLinks = links.map((link, index) => (
+        <React.Fragment key={link.label}>
             {openSidebarToggle ? 
-                <UnstyledButton key={index} className={`${classes.mainLink} ${classes.active}`} data-theme={colorScheme}>
+                <UnstyledButton key={link.label} className={`${classes.mainLink} ${classes.active}`} data-theme={colorScheme}>
                     <div className={classes.mainLinkInner}>
                         <div className={`${classes.mainLinkIcon} ${classes.active}`}>
                             {Icons(link.icon, 25, 25, themeColors.text[10])}
-                            {/* <link.icon color='#868e96' size={25}  stroke={2} /> */}
                         </div>
-                        <span style={{fontFamily: 'Lato', fontWeight: "500", fontSize: "15px", color: themeColors.text[5]}}>{link.label}</span>
+                        <span style={{fontFamily: 'Lato', fontWeight: "500", fontSize: "15px", color: themeColors.text[5]}}>
+                            {link.label}
+                        </span>
                     </div>
                     {link.notifications && (
                         <Badge size="sm" variant="filled" className={classes.mainLinkBadge}>
@@ -70,28 +71,34 @@ const HomeSidebar = (props) => {
                         </Badge>
                     )}
                 </UnstyledButton>
-            
             : 
-            <Tooltip label={link.label} position="right" withArrow arrowOffset={10} arrowSize={4} bg={`${colorScheme==='dark' ? '#121212' : '#272727'}`} c='#f0f0f0' openDelay={500} offset={{ mainAxis: 10 }}>
+            <Tooltip 
+                label={link.label} 
+                position="right" 
+                withArrow 
+                arrowOffset={10} 
+                arrowSize={4} 
+                bg={`${colorScheme==='dark' ? '#121212' : '#272727'}`} 
+                c='#f0f0f0' 
+                openDelay={500} 
+                offset={{ mainAxis: 10 }}
+            >
                 <UnstyledButton key={link.label} className={classes.mainLink} data-theme={colorScheme}>
                     <div className={`${classes.mainLinkInner} d-flex justify-content-center`}>
                         <div className={classes.iconWrapper}>
                             {Icons(link.icon, 25, 25, themeColors.text[10])}
-                            {link.notifications &&
-                            <Badge circle size="xs" color="blue" className={classes.badge}>
-                                {link.notifications}
-                            </Badge>
-                            }
+                            {link.notifications && (
+                                <Badge circle size="xs" color="blue" className={classes.badge}>
+                                    {link.notifications}
+                                </Badge>
+                            )}
                         </div>
                     </div>
                 </UnstyledButton>
             </Tooltip>
             }
-        
-        </>
-        
+        </React.Fragment>
     ));
-    
     
     const [sidebarColor, setSidebarColor] = useState(themeColors.bg[4]);
     const isResizing = useRef(false);

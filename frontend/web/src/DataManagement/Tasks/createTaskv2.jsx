@@ -4,7 +4,8 @@ function createTaskInfo(
     taskStatus,
     taskPriority,
     taskDueDate,
-    taskDueDateTime
+    taskDueDateTime,
+    spaceId
     ) {
     const taskInfo = {
         name: taskName,
@@ -15,7 +16,7 @@ function createTaskInfo(
         dueDateTime: taskDueDateTime
     };
 
-    return fetch("/api/tasks/create", {
+    return fetch(`/api/tasks/create?spaceId=` + spaceId, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

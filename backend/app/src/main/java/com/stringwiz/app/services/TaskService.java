@@ -5,6 +5,7 @@ import com.stringwiz.app.models.Task;
 import com.stringwiz.app.models.User;
 import com.stringwiz.app.repositories.SpaceRepository;
 import com.stringwiz.app.repositories.TaskRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,7 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -21,10 +23,22 @@ public class TaskService {
     @Autowired private TaskRepository taskRepository;
     @Autowired private SpaceRepository spaceRepository;
 
-    public Task save(User user, Task task) {
-        Task taskDetails = new Task(task.getName(),task.getDescription(),task.getDescriptionHtml(), task.getStatus(),
-                task.getPriority(), user, task.getDueDate(), task.getDueDateTime());
-        return taskRepository.save(taskDetails);
+    public Task save(User user, Task task, Long space_id) {
+            Optional<Space> optionalSpace = spaceRepository.findById(space_id);
+            if (optionalSpace.isPresent()) {
+                Space currentSpace = optionalSpace.get();
+
+                Task taskDetails = new Task(task.getName(),task.getDescription(),task.getDescriptionHtml(), task.getStatus(),
+                        task.getPriority(), user, task.getDueDate(), task.getDueDateTime());
+                taskDetails.setSpace(currentSpace);
+
+                Task newTask = taskRepository.save(taskDetails);
+                currentSpace.getTasks().add(newTask);
+                spaceRepository.save(currentSpace);
+                return newTask;
+            }
+        // Handle case when space is not found
+        throw new EntityNotFoundException("Space with id " + space_id + " not found");
     }
 
     public List<Task> get(User user) {
@@ -33,10 +47,11 @@ public class TaskService {
         return taskList;
     }
 
-    public List<Task> getBySpace(User user, String spaceName) throws Exception {
-        Optional<Space> optionalSpace = spaceRepository.findByName(spaceName);
+    public List<Task> getBySpace(User user, String spaceName) throws NoSuchElementException {
+        Optional<Space> optionalSpace = spaceRepository.findByNameAndUsers(spaceName,user);
+
         if (!optionalSpace.isPresent()) {
-            throw new  Exception("Space not found with name: " + spaceName);
+            throw new NoSuchElementException("Space not found with name: " + spaceName);
         }
 
         List<Task> taskList = taskRepository.findBySpace(optionalSpace.get());

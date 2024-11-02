@@ -19,7 +19,7 @@ import {Icons} from '../../icons/icons';
 const TaskCard = (props) => {
 
     const { userFullName, initials, userEmail, taskData, setTaskData, ongoingTasks, today, overdueTasks,
-        completedTasks,userProfileDto,userProfilePicture,colorScheme,themeColors } = props; 
+        completedTasks,userProfileDto,userProfilePicture,colorScheme,themeColors,spaceId } = props; 
     const [currentIndex, setCurrentIndex] = useState(null);
 
     //task attributes
@@ -215,6 +215,7 @@ const TaskCard = (props) => {
                 setTaskData={setTaskData}
                 colorScheme={colorScheme}
                 themeColors={themeColors}
+                spaceId={spaceId}
             />
         </Box>
     );

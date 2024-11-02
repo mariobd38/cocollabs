@@ -88,4 +88,21 @@ public class Space {
         //this.users.add(user);
         user.getSpaces().add(this);
     }
+
+//    public void addTask(Task task) {
+//        tasks.add(task);
+//        task.getSpace().add(this);
+//    }
+//
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (!(o instanceof Task)) return false;
+//        return id != null && id.equals(((Space) o).getId());
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        return getClass().hashCode();
+//    }
 }

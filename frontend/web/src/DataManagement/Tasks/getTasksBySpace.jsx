@@ -1,5 +1,5 @@
 function getTaskInfoBySpace (setTaskData, spaceName) {
-    fetch(`/api/tasks/get?spaceName=${spaceName}`, {
+    fetch(`/api/tasks/getBySpace?spaceName=${spaceName}`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",

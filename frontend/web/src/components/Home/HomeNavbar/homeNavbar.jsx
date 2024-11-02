@@ -70,7 +70,7 @@ const HomeNavbar = (props) => {
                         <div className='col-1 col-sm-5 col-md-7 col-lg-5 d-flex justify-content-start align-items-center'>
                                 <div className='pe-5 pe-lg-3'>
                                     {isSmallScreen ? 
-                                            <div className='me-2 m-auto home-navbar-search-ss'>
+                                            <div className={`me-2 m-auto home-navbar-search-ss ${colorScheme}`}>
                                                 {Icons('IconSearch',17.1,17.1,themeColors.text[1])}
                                             </div>
                                             : 

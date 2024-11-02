@@ -29,9 +29,9 @@ public class TaskController {
     @Autowired JwtUtil jwtUtil;
 
     @PostMapping("/api/tasks/create")
-    public ResponseEntity<?> createTask(@AuthenticationPrincipal User user, @RequestBody Task task) {
+    public ResponseEntity<?> createTask(@AuthenticationPrincipal User user, @RequestBody Task task, @RequestParam("spaceId") Long spaceId) {
         try {
-            Task newTask = taskService.save(user, task);
+            Task newTask = taskService.save(user, task,spaceId);
             return ResponseEntity.ok(newTask);
         } catch (Exception e) {
             return ResponseEntity.ok(new Task());

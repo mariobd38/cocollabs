@@ -37,9 +37,9 @@ public class GoogleTaskService {
         List<TaskList> taskLists =  tasksService.tasklists().list().execute().getItems();
         for(TaskList list : taskLists) {
             String id = list.getId();
-//            System.out.println(list);
+            //System.out.println(list);
             List<Task> tasks = getTasksFromTaskList(HTTP_TRANSPORT,accessToken,id);
-//            System.out.println(tasks);
+            //System.out.println(tasks);
         }
     }
 

@@ -1,14 +1,11 @@
 package com.stringwiz.app.controllers;
 
-import com.stringwiz.app.models.Profile;
-import com.stringwiz.app.models.Task;
 import com.stringwiz.app.models.User;
 import com.stringwiz.app.models.UserToken;
 import com.stringwiz.app.repositories.UserRepository;
 import com.stringwiz.app.repositories.UserTokenRepository;
 import com.stringwiz.app.utils.JwtUtil;
 import com.stringwiz.app.utils.UserPlatformDtoConverter;
-import com.stringwiz.app.web.ProfileDto;
 import com.stringwiz.app.web.UserPlatformDto;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,7 +14,6 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -68,6 +64,16 @@ public class UserController {
         if (user.isPresent()) {
             User existing = user.get();
             return ResponseEntity.ok(existing.getPassword() == null || existing.getPassword().isEmpty());
+        }
+        return ResponseEntity.ok(false);
+    }
+
+    @GetMapping("/api/user/isUserOnboarded")
+    public ResponseEntity<Boolean> isUserOnboarded(@RequestParam("email") String email) {
+        Optional<User> user = userRepository.findByEmail(email);
+        if (user.isPresent()) {
+            User existing = user.get();
+            return ResponseEntity.ok(existing.isOnboardingComplete());
         }
         return ResponseEntity.ok(false);
     }

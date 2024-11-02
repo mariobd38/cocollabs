@@ -24,6 +24,11 @@
     background-color: #f6f6f6;
     border: .1px solid #acacac;
 }
+.auth-user-input-field .mantine-Input-wrapper .mantine-Input-input::placeholder,
+.auth-user-input-field .mantine-Input-wrapper .mantine-Input-input input::placeholder {
+    color: #a2a2a2;
+    font-family: 'Lato';
+}
 .auth-user-input-field .mantine-Input-wrapper[data-error] .mantine-Input-input input::placeholder,
 .auth-user-input-field .mantine-Input-wrapper[data-error] .mantine-Input-input::placeholder,
 .auth-user-input-field .mantine-Input-wrapper[data-error],
