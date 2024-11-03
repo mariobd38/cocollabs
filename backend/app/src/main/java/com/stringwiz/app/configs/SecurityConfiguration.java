@@ -16,7 +16,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
+//import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -29,9 +29,9 @@ import java.util.List;
 public class SecurityConfiguration {
     @Autowired private UserDetailsService userDetailsService;
     @Autowired private JwtFilter jwtFilter;
-    @Autowired private OAuth2AuthorizedClientService authorizedClientService;
-    @Value("${OAUTH2_DEFAULT_SUCCESSFUL_URI}")
-    private String OAUTH2_DEFAULT_SUCCESSFUL_URI;
+    //@Autowired private OAuth2AuthorizedClientService authorizedClientService;
+    //@Value("${OAUTH2_DEFAULT_SUCCESSFUL_URI}")
+    //private String OAUTH2_DEFAULT_SUCCESSFUL_URI;
 
     @Bean
     public static PasswordEncoder passwordEncoder() {
@@ -66,14 +66,14 @@ public class SecurityConfiguration {
                         .requestMatchers(new AntPathRequestMatcher("/api/user/isOAuth")).permitAll()
 
                         .requestMatchers(new AntPathRequestMatcher("/api/**")).authenticated()
-                        .anyRequest().authenticated())
+                        .anyRequest().authenticated());
 
-                        .oauth2Login(oauth2Login ->
-                            oauth2Login
-                                .defaultSuccessUrl(OAUTH2_DEFAULT_SUCCESSFUL_URI, true)
-                                .failureUrl("/loginFailure")
-                                .authorizedClientService(authorizedClientService)
-                        );
+                        //.oauth2Login(oauth2Login ->
+                        //    oauth2Login
+                        //        .defaultSuccessUrl(OAUTH2_DEFAULT_SUCCESSFUL_URI, true)
+                        //        .failureUrl("/loginFailure")
+                        //        .authorizedClientService(authorizedClientService)
+                        //);
         return http.build();
     }
 

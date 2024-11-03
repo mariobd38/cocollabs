@@ -1,6 +1,6 @@
 package com.stringwiz.app.utils;
 
-import com.stringwiz.app.services.GooglePublicKeysService;
+//import com.stringwiz.app.services.GooglePublicKeysService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -17,14 +17,13 @@ import java.util.function.Function;
 
 @Component
 public class JwtUtil {
-    // 30 days in seconds: 30 days * 24 hours * 60 minutes * 60 seconds
     private static final long JWT_TOKEN_VALIDITY = 30 * 24 * 60 * 60L;
 
     @Value("${JWT_SECRET_KEY}")
     private String SECRET_KEY;
 
-    @Autowired
-    private GooglePublicKeysService googlePublicKeysService;
+    //@Autowired
+    //private GooglePublicKeysService googlePublicKeysService;
 
     public String getUserEmailFromToken(String token) {
         return extractClaim(token, Claims::getSubject);

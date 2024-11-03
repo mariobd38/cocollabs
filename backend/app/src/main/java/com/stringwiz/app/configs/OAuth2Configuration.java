@@ -13,7 +13,7 @@ import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
 import org.springframework.security.oauth2.core.oidc.IdTokenClaimNames;
 import org.springframework.web.client.RestTemplate;
-
+/*
 @Configuration
 public class OAuth2Configuration {
 
@@ -67,3 +67,4 @@ public class OAuth2Configuration {
     }
 
 }
+*/

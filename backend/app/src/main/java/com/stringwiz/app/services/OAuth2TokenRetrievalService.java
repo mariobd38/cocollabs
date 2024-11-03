@@ -13,11 +13,13 @@ import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
+/*
 @Component
 public class OAuth2TokenRetrievalService {
     private final ClientRegistration clientRegistration;
     private final OAuth2AccessTokenResponseClient<OAuth2AuthorizationCodeGrantRequest> accessTokenResponseClient;
 
+    /*
     @Autowired
     public OAuth2TokenRetrievalService(ClientRegistrationRepository clientRegistrationRepository,
                                        OAuth2AccessTokenResponseClient<OAuth2AuthorizationCodeGrantRequest> accessTokenResponseClient) {
@@ -65,4 +67,4 @@ public class OAuth2TokenRetrievalService {
             .redirectUri(clientRegistration.getRedirectUri())
             .build();
     }
-}
+}*/

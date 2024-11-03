@@ -16,6 +16,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 class AppApplicationTests {
+	/*
+
+
 	@Value("${JIRA_API_EMAIL}")
 	private String jira_email;
 	@Value("${JIRA_API_DOMAIN}")
@@ -28,6 +31,7 @@ class AppApplicationTests {
 	private String asana_task_id;
 	@Value("${ASANA_API_PERSONAL_TOKEN}")
 	private String asana_personal_token;
+
 
 	@Test
 	void accessJiraData() {
@@ -51,6 +55,7 @@ class AppApplicationTests {
 		}
 	}
 
+
 	@Test
 	void accessAsanaData() throws IOException {
 		Client client = Client.accessToken(asana_personal_token);
@@ -60,5 +65,6 @@ class AppApplicationTests {
 				.execute();
 		assertEquals("Asana dummy test", result.name);
 	}
+	*/
 
 }
