@@ -1,5 +1,6 @@
 package com.stringwiz.app.services;
 
+/*
 import com.stringwiz.app.models.UserToken;
 import com.stringwiz.app.repositories.UserTokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,6 @@ public class UserTokenService {
     }
 
     public void deleteUserToken(Long id) {
-//        userTokenRepository.dele
     }
 }
+*/
