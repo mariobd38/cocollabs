@@ -4,6 +4,7 @@ import com.stringwiz.app.models.User;
 import com.stringwiz.app.models.UserToken;
 import com.stringwiz.app.repositories.UserRepository;
 import com.stringwiz.app.repositories.UserTokenRepository;
+import com.stringwiz.app.utils.CookieUtil;
 import com.stringwiz.app.utils.JwtUtil;
 import com.stringwiz.app.utils.UserPlatformDtoConverter;
 import com.stringwiz.app.web.UserPlatformDto;
@@ -92,15 +93,7 @@ public class UserController {
 
         request.getSession().invalidate();
 
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                cookie.setMaxAge(0);
-                cookie.setValue(null);
-                cookie.setPath("/");
-                response.addCookie(cookie);
-            }
-        }
+        CookieUtil.deleteAllCookies(request,response);
         return ResponseEntity.noContent().build();
     }
 }

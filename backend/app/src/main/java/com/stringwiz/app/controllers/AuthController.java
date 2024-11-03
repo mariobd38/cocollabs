@@ -45,7 +45,7 @@ public class AuthController {
 
             User user = (User) authenticate.getPrincipal();
             user.setPassword(null);
-            CookieUtil.addCookie(response, JWT_COOKIE_NAME, jwtUtil.generateToken(user));
+            CookieUtil.addCookie(response, JWT_COOKIE_NAME, jwtUtil.generateToken(user),jwtUtil.getTokenValidityInSeconds());
 
             //UserPlatformDto userDto = new UserPlatformDto(user.getFullName(), user.getEmail(), user.getPicture(), null);
             UserPlatformDto userDto = UserPlatformDtoConverter.convertToDto(user);
@@ -64,7 +64,7 @@ public class AuthController {
 
             customUserService.saveUser(user);
             CookieUtil.deleteCookie(request,response,JWT_COOKIE_NAME);
-            CookieUtil.addCookie(response, JWT_COOKIE_NAME, jwtUtil.generateToken(user));
+            CookieUtil.addCookie(response, JWT_COOKIE_NAME, jwtUtil.generateToken(user),jwtUtil.getTokenValidityInSeconds());
 
             return ResponseEntity.ok().build();
         } catch(Exception exception) {

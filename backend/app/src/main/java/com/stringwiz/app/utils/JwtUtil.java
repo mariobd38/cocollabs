@@ -17,13 +17,14 @@ import java.util.function.Function;
 
 @Component
 public class JwtUtil {
-    private static final long JWT_TOKEN_VALIDITY = 30*24*60*60*60*60L;
+    // 30 days in seconds: 30 days * 24 hours * 60 minutes * 60 seconds
+    private static final long JWT_TOKEN_VALIDITY = 30 * 24 * 60 * 60L;
 
     @Value("${JWT_SECRET_KEY}")
     private String SECRET_KEY;
+
     @Autowired
     private GooglePublicKeysService googlePublicKeysService;
-
 
     public String getUserEmailFromToken(String token) {
         return extractClaim(token, Claims::getSubject);
@@ -34,7 +35,7 @@ public class JwtUtil {
                 .claims(new HashMap<>())
                 .subject(userDetails.getUsername())
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY))
+                .expiration(new Date(System.currentTimeMillis() + (JWT_TOKEN_VALIDITY * 1000))) // Convert to milliseconds
                 .signWith(getSignInKey())
                 .compact();
     }
@@ -58,7 +59,7 @@ public class JwtUtil {
     }
 
     private Claims extractAllClaims(String token) {
-            return Jwts.parser()
+        return Jwts.parser()
                 .verifyWith(getSignInKey())
                 .build()
                 .parseSignedClaims(token)
@@ -77,4 +78,8 @@ public class JwtUtil {
         return extractClaim(token, Claims::getExpiration);
     }
 
+    // Add this method to get the token validity period
+    public long getTokenValidityInSeconds() {
+        return JWT_TOKEN_VALIDITY;
+    }
 }

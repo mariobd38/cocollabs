@@ -24,7 +24,7 @@ public class CookieUtil {
         return Optional.empty();
     }
 
-    public static void addCookie(HttpServletResponse response, String name, String value) {
+    public static void addCookie(HttpServletResponse response, String name, String value, long maxAge) {
         Cookie cookie = new Cookie(name, value);
         cookie.setHttpOnly(true);
         cookie.setPath("/");
@@ -42,6 +42,19 @@ public class CookieUtil {
                     cookie.setMaxAge(0);
                     response.addCookie(cookie);
                 }
+            }
+        }
+        //CookieUtil.deleteCookie(request,response,name);
+    }
+
+    public static void deleteAllCookies(HttpServletRequest request, HttpServletResponse response) {
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null && cookies.length > 0) {
+            for (Cookie cookie: cookies) {
+                cookie.setValue("");
+                cookie.setPath("/");
+                cookie.setMaxAge(0);
+                response.addCookie(cookie);
             }
         }
     }

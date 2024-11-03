@@ -70,7 +70,7 @@ public class OAuth2Controller {
             }
 
             String appJwt = jwtUtil.generateToken(userToSave);
-            CookieUtil.addCookie(response, JWT_COOKIE_NAME, appJwt);
+            CookieUtil.addCookie(response, JWT_COOKIE_NAME, appJwt,jwtUtil.getTokenValidityInSeconds());
             UserPlatformDto userDto = UserPlatformDtoConverter.convertToDto(userToSave);
             return ResponseEntity.ok().body(userDto);
             //return ResponseEntity.ok().body(user.orElse(newUser));

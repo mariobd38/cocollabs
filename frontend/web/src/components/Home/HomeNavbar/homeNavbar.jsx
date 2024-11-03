@@ -60,11 +60,11 @@ const HomeNavbar = (props) => {
                                 {Icons('IconMenu2',27,27,buttonColor)}
                             </div>
 
-                            <div className='d-none d-lg-inline' style={{marginLeft: "20px"}}>
+                            {/* <div className='d-none d-lg-inline' style={{marginLeft: "20px"}}>
                                 <div style={{width: "11rem"}}>
                                     <Logo2 strokeColor={colorScheme === 'dark' ? '#f4fff6' : '#323335'}/>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
 
                         <div className='col-1 col-sm-5 col-md-7 col-lg-5 d-flex justify-content-start align-items-center'>
