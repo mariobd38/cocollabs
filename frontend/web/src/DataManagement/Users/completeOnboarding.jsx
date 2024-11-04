@@ -19,15 +19,6 @@ async function completeOnboarding(profileData, spaceData, setUserInfo, setSpaceI
 
         return await response.json();
 
-        // Update userInfo and spaceInfo after receiving the response
-        // setUserInfo((prevUserInfo) => ({
-        //     ...prevUserInfo,
-        //     ...data.profileData, 
-        // }));
-
-        // setSpaceInfo(data.spaceData.body);
-        // console.log(data.spaceData.body);
-
     } catch (error) {
         console.error("Error during onboarding:", error);
     }

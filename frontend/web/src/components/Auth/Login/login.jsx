@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { useLocalStorage } from '@mantine/hooks';
 
-import { GOOGLE_AUTH_URL } from '../../../constants';
+// import { GOOGLE_AUTH_URL } from '../../../constants';
 
 import AuthHeader from './../authHeader';
 import LoginContent from './loginContent';
@@ -18,7 +18,7 @@ const Login = () => {
     });
 
     const handleGoogleLogin = async () => {
-        window.location.href = `${GOOGLE_AUTH_URL}`;
+        // window.location.href = `${GOOGLE_AUTH_URL}`;
         setAuthOrigin('login');
     };
 

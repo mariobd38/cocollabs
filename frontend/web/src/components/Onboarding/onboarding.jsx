@@ -4,7 +4,6 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { Icons } from '../icons/icons';
 
 import {Text,Button,Avatar,Stepper, Group,Box,Flex} from '@mantine/core';
-import { useLocalStorage } from '@mantine/hooks';
 import { theme } from 'antd';
 
 import { UseAuth } from '../../AuthContext/authProvider';
