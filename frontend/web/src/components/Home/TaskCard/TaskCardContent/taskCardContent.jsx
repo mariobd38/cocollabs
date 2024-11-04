@@ -14,7 +14,7 @@ import NewHomeDueDatePopover from '../../newHomeDueDatePopover';
 import { MantineDropdown } from '../../../models/ModelDropdown2/mantineDropdown';
 import PriorityDropdownContent from '../../DropdownContent/priorityDropdownContent';
 import StatusDropdownContent from '../../DropdownContent/statusDropdownContent';
-import TaskOptionsPortal from './TaskOptionsPortal';
+import TaskOptionsPortal from './TaskOptionsPortal/taskOptionsPortal';
 import { useScrollLock } from '../../../../utils/useScrollLock';
 
 import './taskCardContent.css';

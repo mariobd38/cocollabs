@@ -5,7 +5,7 @@ import {Icons} from '../../icons/icons';
 
 import classes from './navbarSearch.module.css';
 
-import HomeSidebarSpaceOptions from './HomeSideBarSpaceOptions/homeSideBarSpaceOptions';
+import HomeSidebarSpaceOptions from './HomeSidebarSpaceOptions/homeSidebarSpaceOptions';
 import SpaceCreationModal from '../SpaceCreationModal/spaceCreationModal';
 import { MantineDropdown } from '../../models/ModelDropdown2/mantineDropdown';
 import './homeSidebar.css';

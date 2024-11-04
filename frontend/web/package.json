@@ -78,7 +78,6 @@
     "ws": "^8.17.1"
   },
   "scripts": {
-    "preinstall": "npm install --legacy-peer-deps || true",
     "dev": "vite",
     "build": "vite build",
     "test": "vite test",

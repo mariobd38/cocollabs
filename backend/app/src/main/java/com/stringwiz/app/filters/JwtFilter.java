@@ -25,8 +25,8 @@ public class JwtFilter extends OncePerRequestFilter {
     @Autowired private UserDetailsService userDetailsService;
     @Value("${JWT_COOKIE_ATTRIBUTE_NAME}")
     private String JWT_COOKIE_NAME;
-    @Value("${OAUTH2_GOOGLE_CALLBACK_URI}")
-    private String OAUTH2_GOOGLE_CALLBACK;
+    //@Value("${OAUTH2_GOOGLE_CALLBACK_URI}")
+    //private String OAUTH2_GOOGLE_CALLBACK;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -34,10 +34,10 @@ public class JwtFilter extends OncePerRequestFilter {
         final String userEmail;
 
         String requestURI = request.getRequestURI();
-        if (requestURI.startsWith(OAUTH2_GOOGLE_CALLBACK)) {
-            filterChain.doFilter(request, response);
-            return;
-        }
+        //if (requestURI.startsWith(OAUTH2_GOOGLE_CALLBACK)) {
+        //    filterChain.doFilter(request, response);
+        //    return;
+        //}
 
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {

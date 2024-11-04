@@ -64,7 +64,6 @@ public class SecurityConfiguration {
                         .requestMatchers(new AntPathRequestMatcher("/google/**")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/api/user/exists")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/api/user/isOAuth")).permitAll()
-
                         .requestMatchers(new AntPathRequestMatcher("/api/**")).authenticated()
                         .anyRequest().authenticated());
 
