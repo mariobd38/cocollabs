@@ -12,13 +12,9 @@
     color: #fafafa;
 }
 .landing-header {
-    /* width: 100vw; */
-	/* background: linear-gradient(234deg, #1aa130, #1a7b97, #1a44ed); */
-	/* background: linear-gradient(234deg, #008080, #05484b, #105356); */
     background-color: #0f5255;
 	background-size: 180% 180%;
 	animation: gradient-animation 9s ease-in-out infinite;
-    /* 1a9120 */
 }
 .main-content-slide-logo {
     height: 45px;
