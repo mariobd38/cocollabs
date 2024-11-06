@@ -1,5 +1,6 @@
 import { nextui } from "@nextui-org/react";
 
+
 /** @type {import('tailwindcss').Config} */
 const config = {
 	content: [
@@ -56,7 +57,8 @@ const config = {
     			}
     		},
     		animation: {
-    			meteor: 'meteor 5s linear infinite'
+    			meteor: 'meteor 5s linear infinite',
+    			gradient: 'gradient 8s linear infinite'
     		},
     		keyframes: {
     			meteor: {
@@ -70,6 +72,11 @@ const config = {
     				'100%': {
     					transform: 'rotate(215deg) translateX(-500px)',
     					opacity: '0'
+    				}
+    			},
+    			gradient: {
+    				to: {
+    					backgroundPosition: 'var(--bg-size) 0'
     				}
     			}
     		}

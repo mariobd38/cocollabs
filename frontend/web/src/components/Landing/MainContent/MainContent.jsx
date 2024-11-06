@@ -10,7 +10,6 @@ import { Carousel } from '@mantine/carousel';
 
 import { Icons } from '../../icons/icons';
 
-import Meteors from "../../ui/meteors";
   
 import engineering_team from '../../../assets/illustrations/landing/engineering_team.png';
 import marketing_team from '../../../assets/illustrations/landing/marketing_team.png';

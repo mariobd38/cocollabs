@@ -102,7 +102,7 @@ const NavbarContent = (props) => {
 
     return (
         <Box pb={0} className={"sticky-top"}>
-            <header className={classes.header} style={{backgroundColor: scrollPosition > 40 ? navbarBackground : 'transparent',
+            <header className={classes.header} style={{background: scrollPosition > 40 ? navbarBackground : 'linear-gradient(0.25turn,#101216, #0e1523)',
         borderBottom: scrollPosition > 40 ? '1.2px solid #c9c9c9' : 'none'}}>
                 <Group justify="space-between" h="100%">
                     <button style={{width: "12.5rem"}}>
@@ -131,7 +131,7 @@ const NavbarContent = (props) => {
                                 </a>
                             </HoverCard.Target>
 
-                            <HoverCard.Dropdown bg='#fafafa' style={{ overflow: 'hidden', transform: scrollPosition > 40 ? 'translateY(15px)' : 'translateY(-2px)'  }}>
+                            <HoverCard.Dropdown bg='#fafafa' style={{ overflow: 'hidden', transform: scrollPosition > 40 ? 'translateY(15px)' : 'translateY(-2px)', zIndex: "10000"  }}>
                                 <Group justify="space-between" mb="sm">
                                     <Text fw={600}>Products</Text>
                                 </Group>
@@ -162,7 +162,7 @@ const NavbarContent = (props) => {
                                 </a>
                             </HoverCard.Target>
 
-                            <HoverCard.Dropdown bg='#fafafa' style={{ overflow: 'hidden',transform: scrollPosition > 40 ? 'translateY(15px)' : 'translateY(-2px)' }}>
+                            <HoverCard.Dropdown bg='#fafafa' style={{ overflow: 'hidden',transform: scrollPosition > 40 ? 'translateY(15px)' : 'translateY(-2px)', zIndex: "10000" }}>
                                 <Group  mb="sm">
                                     <Text fw={600} style={{width: "50%"}}>Teams</Text>
                                     <Text fw={600}>Use Cases</Text>
