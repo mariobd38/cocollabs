@@ -2,10 +2,11 @@
     /* margin-top: rem(120px); */
     padding-top: calc(var(--mantine-spacing-xl) * 2) !important;
     padding-bottom: calc(var(--mantine-spacing-xl) * 2) !important;
-    background-color: #fafafa !important;
-  }
+    /* background-color: #fafafa !important; */
+    background: linear-gradient(0.25turn,#101216, #0e1523) !important;
+}
   
-  .logo {
+.logo {
     max-width: rem(220px) !important;
   
     @media (max-width: $mantine-breakpoint-sm) {
@@ -13,9 +14,9 @@
       flex-direction: column;
       align-items: center;
     }
-  }
+}
   
-  .description {
+.description {
     margin-top: rem(5px) !important;
     font-family: 'Inter';
   
@@ -23,9 +24,9 @@
       margin-top: var(--mantine-spacing-xs) !important;
       text-align: center !important;
     }
-  }
+}
   
-  .inner {
+.inner {
     display: flex !important;
     justify-content: space-between !important;
   
@@ -33,25 +34,25 @@
       flex-direction: column;
       align-items: center;
     }
-  }
+}
   
-  .groups {
+.groups {
     display: flex !important;
     flex-wrap: wrap !important;
   
     @media (max-width: $mantine-breakpoint-sm) {
       display: none !important;
     }
-  }
+}
   
-  .wrapper {
+.wrapper {
     max-width: rem(130px) !important;
     margin: 0px 60px 50px 60px;
-  }
+}
   
-  .link {
+.link {
     display: block !important;
-    color: #797979 !important;
+    color: #a0a0a0 !important;
     font-size: var(--mantine-font-size-sm) !important;
     padding-top: rem(3px) !important;
     padding-bottom: rem(3px) !important;
@@ -59,9 +60,9 @@
     &:hover {
       text-decoration: underline !important;
     }
-  }
+}
   
-  .title {
+.title {
 
     font-size: var(--mantine-font-size-lg) !important;
     font-weight: 700 !important;
@@ -69,25 +70,25 @@
       Greycliff CF,
       var(--mantine-font-family) !important;
     margin-bottom: calc(var(--mantine-spacing-xs) / 2) !important;
-    color: #303030 !important;
-  }
+    color: #c0c0c0 !important;
+}
   
-  .afterFooter {
+.afterFooter {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-top: var(--mantine-spacing-xl);
     padding-top: var(--mantine-spacing-xl);
     padding-bottom: var(--mantine-spacing-xl);
-    border-top: 1px solid #c1c1c4;
+    border-top: .1px solid #919195;
   
     @media (max-width: $mantine-breakpoint-sm) {
       flex-direction: column;
     }
-  }
+}
   
-  .social {
+.social {
     @media (max-width: $mantine-breakpoint-sm) {
       margin-top: var(--mantine-spacing-xs);
     }
-  }
+}

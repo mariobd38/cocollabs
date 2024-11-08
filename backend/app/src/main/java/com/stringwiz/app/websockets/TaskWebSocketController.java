@@ -1,10 +1,10 @@
 package com.stringwiz.app.websockets;
 
-import com.stringwiz.app.models.Task;
-import com.stringwiz.app.models.User;
-import com.stringwiz.app.repositories.UserRepository;
-import com.stringwiz.app.services.TaskService;
-import com.stringwiz.app.utils.JwtUtil;
+import com.stringwiz.app.task.model.Task;
+import com.stringwiz.app.user.model.User;
+import com.stringwiz.app.user.repository.UserRepository;
+import com.stringwiz.app.task.service.TaskService;
+import com.stringwiz.app.user.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;

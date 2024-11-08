@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Text, Container, ActionIcon, Group } from '@mantine/core';
+import { Text, Container, ActionIcon, Group,Divider,Box,Flex } from '@mantine/core';
 import classes from './FooterLinks.module.css';
 import {Icons} from '../../icons/icons';
 
@@ -61,12 +61,18 @@ export function FooterContent() {
     });
 
     return (
-        <footer className={classes.footer}>
+        <Box className={classes.footer}>
+            {/* <Divider pt={40} bd='1px solid #303030'/> */}
+            <Flex justify='center'>
+
+            <Divider mx='10' mb={80}  orientation="vertical" m='auto' w={{base: '100%', md: '90%'}}  size='xs'  style={{borderRadius: "10px"}}  bd='.5px solid #202038'/>
+            </Flex>
+
             <Container className={classes.inner}>
                 <div className={classes.logo}>
-                    <Logo2 strokeColor='#0f5255' />
+                    <Logo2 strokeColor='#d0d0d0' />
                     <Text size="xs" c="#696969" className={classes.description}>
-                        Collaborate and optimize your daily workflow
+                        Optimize your developer workflow
                     </Text>
                 </div>
                 <div className={classes.groups}>{groups}</div>
@@ -89,7 +95,7 @@ export function FooterContent() {
                     </ActionIcon>
                 </Group>
             </Container>
-        </footer>
+        </Box>
     );
 }
 

@@ -1,0 +1,16 @@
+package com.stringwiz.app.space.repository;
+
+import com.stringwiz.app.space.model.Visibility;
+import com.stringwiz.app.space.model.Space;
+import com.stringwiz.app.user.model.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
+
+@Repository
+public interface SpaceRepository extends JpaRepository<Space, Long> {
+    Optional<Space> findByName(String name);
+    Optional<Space> findByNameAndUsers(String name, User user);
+    Space findByVisibilityAndUsers(Visibility visibility, User user);
+}

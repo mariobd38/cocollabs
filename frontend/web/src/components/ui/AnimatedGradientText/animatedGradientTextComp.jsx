@@ -1,9 +1,9 @@
 import React from 'react';
 import AnimatedGradientText from './animated-gradient-text';
 
-const AnimatedGradientTextComp = ({target}) => {
+const AnimatedGradientTextComp = ({target,animate}) => {
     return (
-        <div >
+        <div className={`${animate ? 'float-down' : ''}`} >
             <AnimatedGradientText>
                 {target}
             </AnimatedGradientText>

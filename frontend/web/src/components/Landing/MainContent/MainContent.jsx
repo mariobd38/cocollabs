@@ -1,16 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 
-import team_work from '../../../assets/illustrations/landing/team_work.png';
-import archery_goals from '../../../assets/illustrations/landing/archery_goals.png';
-import shared_goals from '../../../assets/illustrations/landing/shared_goals.png';
-
-import {  Box,Container,Title, SimpleGrid, Text, Button, ThemeIcon, Grid, Card, Image, Badge, Group } from '@mantine/core';
-import { Carousel } from '@mantine/carousel';
+import {  Box, Text, ThemeIcon } from '@mantine/core';
+// import { Carousel } from '@mantine/carousel';
 
 import { Icons } from '../../icons/icons';
 
-  
 import engineering_team from '../../../assets/illustrations/landing/engineering_team.png';
 import marketing_team from '../../../assets/illustrations/landing/marketing_team.png';
 import product_team from '../../../assets/illustrations/landing/product_team.png';
@@ -96,9 +91,13 @@ const MainContent = () => {
     return (
         <div>
             <main className='landing-header'>
-                <NavbarContent navbarBackground={"#fafafa"} scrollPosition={scrollPosition}/>
-                <Hero />
-                <div className='landing-page-features-div '>
+                <NavbarContent scrollPosition={scrollPosition}/>
+                <Box bg='linear-gradient(0.25turn,#101216, #0e1523)'>
+                    <Hero />
+                </Box>
+
+                
+                {/* <div className='landing-page-features-div '>
 
                     <div className='landing-main-content-features-wrapper px-3 px-md-5 m-0'>
 
@@ -197,7 +196,7 @@ const MainContent = () => {
                         </Grid>
                         
                     </div>
-                </div>
+                </div> */}
             </main>
         </div>
     );

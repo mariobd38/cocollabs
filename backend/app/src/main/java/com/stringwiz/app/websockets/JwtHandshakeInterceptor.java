@@ -1,6 +1,7 @@
 package com.stringwiz.app.websockets;
 
 import jakarta.servlet.http.Cookie;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.http.server.ServletServerHttpRequest;
@@ -10,6 +11,8 @@ import org.springframework.web.socket.server.support.HttpSessionHandshakeInterce
 import java.util.Map;
 
 public class JwtHandshakeInterceptor extends HttpSessionHandshakeInterceptor {
+    @Value("${JWT_COOKIE_ATTRIBUTE_NAME}")
+    private String JWT_COOKIE_NAME;
 
     @Override
     public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response,
@@ -18,7 +21,7 @@ public class JwtHandshakeInterceptor extends HttpSessionHandshakeInterceptor {
         if (request instanceof ServletServerHttpRequest) {
             Cookie[] cookies = ((ServletServerHttpRequest) request).getServletRequest().getCookies();
             for(Cookie c : cookies) {
-                if ("user_session_key".equals(c.getName())) {
+                if (JWT_COOKIE_NAME.equals(c.getName())) {
                     jwt = c.getValue();
                 }
             }

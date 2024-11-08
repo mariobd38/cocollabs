@@ -1,87 +1,80 @@
-.landing-nav-top-link,
-.landing-white-nav-top-link {
-  font-size: 1.15em;
-  display: inline-block;
-  position: relative;
-  text-decoration: none;
-  font-weight: 600;
-  transition: color 0.4s ease-in-out;
-  display: flex;
-  align-items: center;
-  font-family: 'Lato' !important;
+.landing-nav-button {
+    font-size: 1em !important;
+    transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+    font-family: 'Inter' !important;
+    border-radius: 10px !important;
+    letter-spacing: .18px;
+    padding: 3px 18px !important;
+    background-color: transparent !important;
+    transform: none !important;
+    border: 1px solid transparent !important;
 }
-.landing-nav-top-link {
-  color: #fafafa !important;
+.landing-nav-button:hover {
+    background-color: #1b2246 !important;
+    border-color: #2b3266 !important;
 }
-.landing-white-nav-top-link {
-  color: #181d26 !important;
+.landing-signup-nav-button {
+    font-size: 1em !important;
+    transition: filter 0.2s ease-in-out;
+    font-family: 'Inter' !important;
+    border-radius: 10px !important;
+    letter-spacing: .18px;
+    padding: 3px 18px !important;
+    background-color: #fafafa !important;
+    transform: none !important;
+    border: 1px solid #fafafa !important;
+    color: #202020 !important
+}
+.landing-signup-nav-button:hover {
+    /* background-color: #1b2246 !important; */
+    filter: brightness(0.9) !important;
 }
 
-.landing-login-link, .landing-white-nav-login-link {
-  font-size: 1.05rem !important;
-  font-weight: 600;
-  transition: width 0.3s ease-in-out;
-  border-radius: 8px !important;
-  background-color: transparent !important;
-  border: none !important;
-  font-family: 'Lato';
-}
-.landing-login-link:hover, .landing-white-nav-login-link:hover {
-  color: #33b915 !important;
-}
-.landing-login-link {
-  color: #fafafa !important;
-  transition: color 0.4s ease-in-out;
-}
-.landing-white-nav-login-link {
-  color: #222222 !important;
-  transition: color 0.4s ease-in-out;
-}
 
 .landing-navbar-collapse-login-button {
-  background-color: #ffffff !important;
-  border: 1px solid #228be6 !important;
-  color: #228be6 !important; 
-  font-size: 1.02rem !important;
-  max-width: 80px;
+    background-color: #ffffff !important;
+    border: 1px solid #228be6 !important;
+    color: #228be6 !important; 
+    font-size: 1.02rem !important;
+    max-width: 80px;
 }
 .landing-navbar-collapse-signup-button {
-  background-color: #228be6 !important;
-  border: 1px solid #228be6 !important;
-  color: #ffffff !important; 
-  font-size: 1.02rem !important;
-  max-width: 80px;
+    background-color: #228be6 !important;
+    border: 1px solid #228be6 !important;
+    color: #ffffff !important; 
+    font-size: 1.02rem !important;
+    max-width: 80px;
 }
 .landing-register-link {
-  background-color: #121212 !important;
-  font-weight: 600 !important;
-  border-radius: 8px !important;
-  color: #fafafa !important;
-  text-transform: capitalize !important;
-  font-size: 1.05rem !important;
-  font-family: 'Lato';
-  border: none !important;
-  transition: background-color 0.7s ease !important;
+    background-color: #121212 !important;
+    font-weight: 600 !important;
+    border-radius: 8px !important;
+    color: #fafafa !important;
+    text-transform: capitalize !important;
+    font-size: 1.05rem !important;
+    font-family: 'Lato';
+    border: none !important;
+    transition: background-color 0.7s ease !important;
 }
 .landing-register-link:hover {
-  background-color: #139905 !important;
+    background-color: #139905 !important;
 }
 
 .navbar-content-burger .mantine-Burger-burger, 
 .navbar-content-burger .mantine-Burger-burger::before,
 .navbar-content-burger .mantine-Burger-burger::after {
-  background-color: #fafafa;
-  border-radius: 20px;
+    background-color: #fafafa;
+    border-radius: 20px;
 }
-.navbar-content-burger.scrolled .mantine-Burger-burger,
+/* .navbar-content-burger.scrolled .mantine-Burger-burger,
 .navbar-content-burger.scrolled .mantine-Burger-burger::before,
 .navbar-content-burger.scrolled .mantine-Burger-burger::after {
   background-color:#0f5255 !important;
-}
+} */
 
 .drawer-parent section,.drawer-parent header {
-  background-color: #fafafa;
+    background-color: #fafafa;
 }
 .drawer-parent .mantine-Drawer-close:hover {
-  background-color: #e1e1e1;
+    background-color: #e1e1e1;
 }
