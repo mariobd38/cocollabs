@@ -98,7 +98,7 @@ const Hero = () => {
 
             <ContainerScrollAnimationComp />
 
-            <Container py={{base: 80, sm: 150, md: 220}} px={{sm: '20', md: '0'}}>
+            <Container pt={{base: 80, sm: 150, md: 210}} pb={{base: 80, sm: 150, md: 160}} px={{sm: '20', md: '0'}}>
                 <Flex gap={24} direction='column' px={10}>
 
                     <Title c='#fafafa' order={3} fz={{ base: '1.7rem', xs: '2rem', sm: '2.2rem'}} style={{transition: "font-size 0.4s ease"}}

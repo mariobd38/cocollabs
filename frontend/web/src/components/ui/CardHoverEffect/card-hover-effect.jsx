@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
-import { Title, Text, Image,Card as MantineCard } from "@mantine/core";
+import { Title, Text, Image } from "@mantine/core";
 
 export const HoverEffect = ({items,className}) => {
     let [hoveredIndex, setHoveredIndex] = useState(null);
@@ -17,7 +17,7 @@ export const HoverEffect = ({items,className}) => {
       useEffect(() => {
         const currentSection = sectionRef.current; 
         const observer = new IntersectionObserver(handleIntersection, {
-          threshold: 0.32,
+          threshold: 0.25,
         });
       
         if (currentSection) {
@@ -36,7 +36,7 @@ export const HoverEffect = ({items,className}) => {
             ref={sectionRef}
             initial={{ opacity: 0, y: 50 }} // Initial hidden state
             animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }} // Animate in when visible
-            transition={{ duration: 0.4, ease: 'easeIn' }} // Customize animation timing
+            transition={{ duration: 0.34, ease: 'easeIn' }} // Customize animation timing
         >
             <div
             className={cn("grid grid-cols-1 md:grid-cols-2 gap-6 py-10", className)}>
@@ -67,7 +67,7 @@ export const HoverEffect = ({items,className}) => {
                         )}
                     </AnimatePresence>
                     <Card key={idx}>
-                        <Image h={80} w='auto' mb={20} src={item.illustration} />
+                        <Image h={{base: 60, sm: 80}} w='auto' mb={20} src={item.illustration} />
                         <CardTitle>{item.title}</CardTitle>
                         <CardDescription>{item.description}</CardDescription>
                     </Card>
@@ -95,11 +95,11 @@ export const Card = ({className,children}) => {
 };
 export const CardTitle = ({children}) => {
     return (
-        <Title c='#eaeaea' order={2} ff='Helvetica' className={cn('tracking-wide')}>{children}</Title>
+        <Title c='#eaeaea' fz={{base: 22, sm: 25}} ff='Helvetica' className={cn('tracking-wide')}>{children}</Title>
     );
 };
 export const CardDescription = ({className,children}) => {
     return (
-        <Text c='#b6b6b6' fz={13.8} ff='Helvetica' mt={34} className={cn('tracking-wide leading-relaxed')}>{children}</Text>
+        <Text c='#b6b6b6' fz={{base: 13.3, sm: 13.8}} ff='Helvetica' mt={34} className={cn('tracking-wide leading-relaxed')}>{children}</Text>
     );
 };
