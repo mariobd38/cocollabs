@@ -3,31 +3,39 @@
     flex-direction: column;
     margin: auto;
     justify-content: center;
-    width: 80%;
+    /* width: 80%; */
     transition: width 0.5s ease;
 }
-@media(max-width: 480px) {
+/* @media(max-width: 480px) {
     .auth-content-block {
-        width: 100% !important;
+        width: 70% !important;
     }
-}
+} */
 
 .auth-user-input-field label {
     font-size: 15px;
-    color: #fafafa;
+    color: #f0f0f0;
     font-weight: 500 !important;
     padding-bottom: 5px;
 }
 .auth-user-input-field .mantine-Input-wrapper .mantine-Input-input {
     font-size: 16px !important;
     font-family: 'Lato';
-    background-color: #f6f6f6;
-    border: .1px solid #acacac;
+    color: #f0f0f0 !important;
+    border-radius: 6px !important;
+    /* background-color: #f6f6f6; */
+    background-color: transparent;
+    border: 1px solid #acacac;
+    transition: border-color .5s ease;
+}
+.auth-user-input-field .mantine-Input-wrapper .mantine-Input-input:focus {
+    border-color: #2b63f0ab !important;
 }
 .auth-user-input-field .mantine-Input-wrapper .mantine-Input-input::placeholder,
 .auth-user-input-field .mantine-Input-wrapper .mantine-Input-input input::placeholder {
     color: #a2a2a2;
-    font-family: 'Lato';
+    font-family: 'Nunito Sans';
+    font-size: 15px;
 }
 .auth-user-input-field .mantine-Input-wrapper[data-error] .mantine-Input-input input::placeholder,
 .auth-user-input-field .mantine-Input-wrapper[data-error] .mantine-Input-input::placeholder,

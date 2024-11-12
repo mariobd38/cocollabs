@@ -4,7 +4,7 @@ import com.stringwiz.app.task.model.Task;
 import com.stringwiz.app.user.model.User;
 import com.stringwiz.app.user.repository.UserRepository;
 import com.stringwiz.app.task.service.TaskService;
-import com.stringwiz.app.user.util.JwtUtil;
+import com.stringwiz.app.auth.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

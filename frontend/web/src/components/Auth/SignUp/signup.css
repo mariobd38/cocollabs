@@ -11,17 +11,23 @@
     display: flex;
     flex-direction: column;
     height: 100%;
-    /* background: #124540 !important; */
-    background: #10504e !important;
+    /* background: #12141f !important; */
+    background: #121212 !important;
     border-radius: 0px !important;
 }
 .signup-content-wrapper-paper-divider .mantine-Divider-label {
-    color: #12b886;
+    /* color: #12b886; */
+    color: #898989;
     font-family: 'Nunito Sans';
+    font-size: 14px;
 }
 .sign-up-oauth-button {
-    width: 80% !important;
-    transition: width 0.5s ease;
+    width: 100% !important;
+    transition: all 0.5s ease;
+}
+.sign-up-oauth-button:disabled:hover {
+    cursor: default !important;
+    filter: brightness(0.95) !important;
 }
 .signup-user-info-block {
     width: 80% !important;
@@ -35,7 +41,7 @@
 }
 
 .sign-up-oauth-button:hover {
-    background-color: #eaedef !important;
+    background-color: #fafdff !important;
 }
 
 .signup-user-info-block-email {
@@ -57,14 +63,14 @@
 }
 
 .signup-image {
-    transition: width 0.5s ease;
+    transition: width 0.4s ease;
 }
 
-@media(max-width: 1300px) {
+/* @media(max-width: 1300px) {
     .signup-image {
         width: 380px !important;
     }
-}
+} */
 
 @media(max-width: 991px) {
     .signup-left-info-block {

@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { useNavigate } from "react-router-dom";
 
-import { Text, Button,Flex, Box,Container, Title, Divider } from '@mantine/core';
+import { Button,Flex, Box,Container, Title, Divider } from '@mantine/core';
 import MeteorsComp from '@/components/ui/Meteors/meteorsComp';
 import AnimatedGradientTextComp from '@/components/ui/AnimatedGradientText/animatedGradientTextComp';
 import HeroGetStartedButton from './heroGetStartedButton';
@@ -10,10 +10,6 @@ import ContainerScrollAnimationComp from '@/components/ui/ContainerScrollAnimati
 import { CardHoverEffectComp } from '@/components/ui/CardHoverEffect/cardHoverEffectComp';
 
 import { Icons } from '@/components/icons/icons';
-
-// import team_work from '../../../../assets/illustrations/landing/team_work.png';
-// import archery_goals from '../../../../assets/illustrations/landing/archery_goals.png';
-// import shared_goals from '../../../../assets/illustrations/landing/shared_goals.png';
 
 
 const Hero = () => {
@@ -26,10 +22,8 @@ const Hero = () => {
     const [animate, setAnimate] = useState(false);
 
     useEffect(() => {
-        // Trigger the animation when the component mounts
         setAnimate(true);
-    }, []); // Empty dependency array to run only once on mount
-
+    }, []);
 
     return (
         <>
@@ -43,9 +37,11 @@ const Hero = () => {
                                 <AnimatedGradientTextComp
                                     animate={animate}
                                     target={<>
-                                        <span className='fafafa-color d-flex align-items-center'> 🎉 
+                                        <span className='fafafa-color d-flex align-items-center'> 
+                                            <Flex display={{base: 'none', xs: 'flex'}}>🎉 
                                             <Divider mx='10' orientation="vertical" m='auto' size='xs' h='18' style={{borderRadius: "10px"}}  bd='.5px solid #363636'/>
-                                            Introducing a new way to build solutions 
+                                            </Flex>
+                                            Introducing a new way to build solutions together
                                             <span className='ps-2 transition-transform duration-300 ease-in-out group-hover:translate-x-0.5'>
 
                                             {Icons('IconChevronRight',13,13)}
@@ -54,7 +50,7 @@ const Hero = () => {
                                     </>}
                                 />
 
-                                <TypingAnimationComp text={'Collab and develop like never before.'} duration={40} />
+                                <TypingAnimationComp text={'The platform made for developer collaboration.'} duration={40} />
 
                                 <Flex gap={70} direction='column'>
                                     

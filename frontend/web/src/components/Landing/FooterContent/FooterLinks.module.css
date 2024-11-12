@@ -52,7 +52,7 @@
   
 .link {
     display: block !important;
-    color: #a0a0a0 !important;
+    color: #c0c0c0 !important;
     font-size: var(--mantine-font-size-sm) !important;
     padding-top: rem(3px) !important;
     padding-bottom: rem(3px) !important;
@@ -70,7 +70,7 @@
       Greycliff CF,
       var(--mantine-font-family) !important;
     margin-bottom: calc(var(--mantine-spacing-xs) / 2) !important;
-    color: #c0c0c0 !important;
+    color: #f0f0f0 !important;
 }
   
 .afterFooter {

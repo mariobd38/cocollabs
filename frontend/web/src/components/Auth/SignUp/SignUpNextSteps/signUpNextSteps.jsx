@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 
 import AuthHeader from '../../authHeader';
 import SignupContent from '../signupContent';
+import SignupContentv2 from '../signupContentv2';
 
 import { VerifyEmailRegex } from '../../../../utils/emailRegexFormat';
 import { userExists } from '../../../../DataManagement/Users/userExists';
@@ -44,10 +45,8 @@ const SignUpNextSteps = (props) => {
 
     return (
         <div className='w-100'>
-            <AuthHeader />
-            <SignupContent 
-                // email={email}
-                // setEmail={setEmail}
+            {/* <AuthHeader /> */}
+            <SignupContentv2
                 inputEmail={inputEmail}
                 isFocused={isFocused}
                 setIsFocused={setIsFocused}

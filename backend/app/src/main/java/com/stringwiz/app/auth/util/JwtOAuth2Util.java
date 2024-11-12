@@ -1,4 +1,4 @@
-package com.stringwiz.app.user.util;
+package com.stringwiz.app.auth.util;
 
 /*
 import com.stringwiz.app.services.GooglePublicKeysService;

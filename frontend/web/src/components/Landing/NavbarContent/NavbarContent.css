@@ -25,51 +25,13 @@
     filter: brightness(0.9) !important;
 }
 
-
-.landing-navbar-collapse-login-button {
-    background-color: #ffffff !important;
-    border: 1px solid #228be6 !important;
-    color: #228be6 !important; 
-    font-size: 1.02rem !important;
-    max-width: 80px;
-}
-.landing-navbar-collapse-signup-button {
-    background-color: #228be6 !important;
-    border: 1px solid #228be6 !important;
-    color: #ffffff !important; 
-    font-size: 1.02rem !important;
-    max-width: 80px;
-}
-.landing-register-link {
-    background-color: #121212 !important;
-    font-weight: 600 !important;
-    border-radius: 8px !important;
-    color: #fafafa !important;
-    text-transform: capitalize !important;
-    font-size: 1.05rem !important;
-    font-family: 'Lato';
-    border: none !important;
-    transition: background-color 0.7s ease !important;
-}
-.landing-register-link:hover {
-    background-color: #139905 !important;
-}
-
 .navbar-content-burger .mantine-Burger-burger, 
 .navbar-content-burger .mantine-Burger-burger::before,
 .navbar-content-burger .mantine-Burger-burger::after {
     background-color: #fafafa;
     border-radius: 20px;
 }
-/* .navbar-content-burger.scrolled .mantine-Burger-burger,
-.navbar-content-burger.scrolled .mantine-Burger-burger::before,
-.navbar-content-burger.scrolled .mantine-Burger-burger::after {
-  background-color:#0f5255 !important;
-} */
 
-.drawer-parent section,.drawer-parent header {
-    background-color: #fafafa;
-}
 .drawer-parent .mantine-Drawer-close:hover {
     background-color: #e1e1e1;
 }
@@ -85,29 +47,22 @@
     border-radius: 10px !important;
     transition: all 0.3s ease !important;
     display: flex !important;
-    /* border-bottom: 1px solid #fafafa !important; */
 }
 .navbar-drawer-nav-item:hover {
-    background-color: #1b224670 !important;
-    filter: brightness(1.3);
+    background-color: #1b2246 !important;
+    border-color: #2b3266 !important;
+    filter: brightness(1.2);
 }
 
 .navbar-drawer-nav-login-signup {
     padding: 6px 10px !important;
-    /* background-color: #fafafa !important; */
-    /* color: #202020 !important; */
     font-family: Inter !important;
     font-size: 17px !important;
     letter-spacing: 0.18px;
     border-radius: 10px !important;
     transition: all 0.5s ease !important;
-
-    /* width: 100% !important; */
-    /* width: auto !important; */
+    border: 1px solid #566a93 !important;
 }
 .navbar-drawer-nav-login-signup:hover {
     filter: brightness(1.25);
 }
-
-
-/* new */

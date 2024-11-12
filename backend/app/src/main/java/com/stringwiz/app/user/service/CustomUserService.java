@@ -23,10 +23,10 @@ public class CustomUserService implements UserService {
     @Autowired private UserRepository userRepository;
     @Autowired private RoleRepository roleRepository;
     @Autowired private PasswordEncoder passwordEncoder;
-    @Override
-    public void saveUser(User user) {
-        if (user.getPassword() != null)
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+    public void createUser(User user) {
+//        if (user.getPassword() != null)
+//            user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         List<RoleNames> roleNames = new RoleSelectorUtil().getRolesFromEmail(user.getEmail());
         List<Role> roleList = new ArrayList<>();
@@ -51,5 +51,9 @@ public class CustomUserService implements UserService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Optional<User> user = userRepository.findByEmail(email);
         return user.orElseThrow(() -> new UsernameNotFoundException("Invalid username or password."));
+    }
+
+    public boolean existsByEmail(String email) {
+        return userRepository.findByEmail(email).isPresent();
     }
 }

@@ -1,16 +1,18 @@
 package com.stringwiz.app.user.dto;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserAuthenticationDto {
+    @NotBlank
+    @Email
     private String email;
-
-    @NonNull
+    @NotBlank
     String password;
 }

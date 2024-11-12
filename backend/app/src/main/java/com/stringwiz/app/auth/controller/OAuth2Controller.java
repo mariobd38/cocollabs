@@ -1,4 +1,4 @@
-package com.stringwiz.app.user.controller;
+package com.stringwiz.app.auth.controller;
 
 /*
 import com.stringwiz.app.user.model.User;
@@ -8,9 +8,9 @@ import com.stringwiz.app.user.repository.UserTokenRepository;
 import com.stringwiz.app.user.service.CustomUserService;
 import com.stringwiz.app.services.OAuth2TokenRetrievalService;
 import com.stringwiz.app.services.UserTokenService;
-import com.stringwiz.app.user.util.CookieUtil;
+import com.stringwiz.app.auth.util.CookieUtil;
 import com.stringwiz.app.utils.JwtOAuth2Util;
-import com.stringwiz.app.user.util.JwtUtil;
+import com.stringwiz.app.auth.util.JwtUtil;
 import com.stringwiz.app.user.util.UserPlatformDtoConverter;
 import com.stringwiz.app.user.dto.UserPlatformDto;
 import io.jsonwebtoken.UnsupportedJwtException;

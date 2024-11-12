@@ -1,6 +1,6 @@
 function VerifyEmailRegex(email) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return email && emailRegex.test(email.trim());
 }
 
 export {VerifyEmailRegex}

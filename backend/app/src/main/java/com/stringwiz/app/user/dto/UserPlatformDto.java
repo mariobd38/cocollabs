@@ -1,18 +1,20 @@
 package com.stringwiz.app.user.dto;
 
 import com.stringwiz.app.profile.dto.ProfileDto;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserPlatformDto {
-    @NonNull
+    @NotBlank
     private String fullName;
-    @NonNull
+    @NotBlank
+    @Email
     private String email;
     private String picture;
     private ProfileDto profileDto;
