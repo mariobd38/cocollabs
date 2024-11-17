@@ -48,7 +48,7 @@ function App() {
 
 
                 <Route path="/login" element={<Login/> } />
-                <Route path="/app/login" element={<LoginNextSteps/> } />
+                {/* <Route path="/app/login" element={<LoginNextSteps/> } /> */}
 
                 <Route path="/oauth2/redirect" element={<OAuth2RedirectHandler />} />
 

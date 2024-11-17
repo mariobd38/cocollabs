@@ -1,4 +1,3 @@
-/* new */
 .signup-login-button {
     padding: 4px 17px !important;
     font-size: 19px !important;
@@ -8,12 +7,10 @@
     border-radius: 8px !important;
 }
 .signup-content-wrapper-paper {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
     /* background: #12141f !important; */
-    background: #121212 !important;
-    border-radius: 0px !important;
+    background: #121212;
+    background: -webkit-linear-gradient(to left, #0d1620, #121212);
+    background: linear-gradient(to left, #0d1620, #121212);
 }
 .signup-content-wrapper-paper-divider .mantine-Divider-label {
     /* color: #12b886; */
@@ -29,51 +26,43 @@
     cursor: default !important;
     filter: brightness(0.95) !important;
 }
-.signup-user-info-block {
+.auth-user-info-block {
     width: 80% !important;
     justify-content: space-between !important;
     transition: width 0.5s ease;
 }
 @media(max-width: 480px) {
-    .sign-up-oauth-button, .signup-user-info-block {
+    .sign-up-oauth-button, .auth-user-info-block {
         width: 100% !important;
     }
 }
 
 .sign-up-oauth-button:hover {
-    background-color: #fafdff !important;
+    background-color: #252629 !important;
 }
 
 .signup-user-info-block-email {
     display: flex;
     justify-content: center;
     padding: 3px 20px !important;
-    background-color:#edfff1 !important;
-    color: #367179 !important;
+    background-color:#232529 !important;
+    color: #f0f0f0 !important;
     /* border: 2px solid #228be6 !important; */
     font-size: 15px !important;
 }
 
 .signup-back-arrow-icon {
     color: #edfff1;
+    padding: 4px 4px 5px 4px  !important;
+    border-radius: 4px;
     cursor: pointer !important;
+    transition: all 0.6s ease !important;
 }
 .signup-back-arrow-icon:hover {
-    color: #bdcfc1 !important;
+    background-color: #282828;
+    filter: brightness(1.1);
 }
 
-.signup-image {
-    transition: width 0.4s ease;
-}
-
-/* @media(max-width: 1300px) {
-    .signup-image {
-        width: 380px !important;
-    }
-} */
-
-@media(max-width: 991px) {
-    .signup-left-info-block {
-        display: none !important;
-    }
+.signup-content-progress-bar .mantine-Progress-section {
+    border-radius: 5px !important;
 }

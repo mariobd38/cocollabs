@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 
 import { useLocalStorage } from '@mantine/hooks';
+import { Box } from '@mantine/core';
 
 // import { GOOGLE_AUTH_URL } from '../../../constants';
 
-import AuthHeader from './../authHeader';
-import LoginContent from './loginContent';
+import LoginContentv2 from './loginContentv2';
 
 import './../auth.css';
 import './login.css'
@@ -23,15 +23,15 @@ const Login = () => {
     };
 
     return (
-        <div className='w-100'>
-            <AuthHeader />
-            <LoginContent 
+        <Box w='100%' mih='100dvh' >
+            {/* <AuthHeader /> */}
+            <LoginContentv2
                 handleGoogleLogin={handleGoogleLogin}
                 inputEmail={inputEmail}
                 setInputEmail={setInputEmail}
                 showOAuth2Buttons={true}
             />
-        </div>
+        </Box>
     );
 };
 

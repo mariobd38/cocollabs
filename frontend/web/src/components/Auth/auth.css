@@ -6,11 +6,24 @@
     /* width: 80%; */
     transition: width 0.5s ease;
 }
-/* @media(max-width: 480px) {
+@media(max-width: 580px) {
     .auth-content-block {
-        width: 70% !important;
+        /* width: 85% !important; */
     }
-} */
+}
+@media(max-width: 360px) {
+    .signup-welcome-title {
+        font-size: 1.7rem !important;
+    }
+}
+.signup-welcome-title, .signup-welcome-subtitle {
+    transition: font-size 0.6s ease;
+}
+@media(max-width: 320px) {
+    .auth-content-block {
+        /* width: 85% !important; */
+    }
+}
 
 .auth-user-input-field label {
     font-size: 15px;
@@ -25,10 +38,11 @@
     border-radius: 6px !important;
     /* background-color: #f6f6f6; */
     background-color: transparent;
-    border: 1px solid #acacac;
+    border: 1px solid #5c5c5c;
     transition: border-color .5s ease;
 }
-.auth-user-input-field .mantine-Input-wrapper .mantine-Input-input:focus {
+.auth-user-input-field .mantine-Input-wrapper .mantine-Input-input:focus,
+.auth-user-input-field .mantine-Input-wrapper .mantine-Input-input:focus-within {
     border-color: #2b63f0ab !important;
 }
 .auth-user-input-field .mantine-Input-wrapper .mantine-Input-input::placeholder,
@@ -44,18 +58,24 @@
     color: #adb5bd !important;
     --input-color: #222222 !important;
 }
-.auth-user-input-field .mantine-Input-section .mantine-ActionIcon-icon svg {
-    color: #515151 !important;
+.auth-user-input-field .mantine-Input-section .mantine-ActionIcon-root {
+    border-radius: 6px;
 }
-.auth-user-input-field .mantine-Input-section .mantine-ActionIcon-icon:hover {
-    background-color: #d4d4d4 !important;
+.auth-user-input-field .mantine-Input-section .mantine-ActionIcon-icon svg {
+    color: #808080 !important;
+}
+.auth-user-input-field .mantine-Input-section .mantine-ActionIcon-icon:hover,
+.auth-user-input-field .mantine-Input-section .mantine-ActionIcon-root:hover  {
+    background-color: #1d1f23 !important;
+    border-color: #27292c;
 }
 
-.auth-content-signup-button {
-    transition: background-color 0.5s ease;
+.auth-content-signup-button, .oauth-button-text {
+    transition: all 0.5s ease;
 }
 .auth-content-signup-button:hover {
-    background-color: #029866 !important;
+    background-color: #1467af !important;
+    border-color: #1467af !important;
 }
 
 .auth-user-input-field .mantine-InputWrapper-error {

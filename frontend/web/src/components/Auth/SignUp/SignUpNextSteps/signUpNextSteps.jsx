@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
-import AuthHeader from '../../authHeader';
-import SignupContent from '../signupContent';
 import SignupContentv2 from '../signupContentv2';
 
 import { VerifyEmailRegex } from '../../../../utils/emailRegexFormat';

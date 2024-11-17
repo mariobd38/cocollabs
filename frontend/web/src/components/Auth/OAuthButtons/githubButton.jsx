@@ -26,5 +26,5 @@ function GithubIcon(props) {
 }
 
 export function GithubButton(props) {
-  return <Button disabled leftSection={<GithubIcon />} variant="default" {...props}>Github</Button>;
+  return <Button disabled leftSection={<GithubIcon />} variant="default" {...props} />;
 }

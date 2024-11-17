@@ -87,6 +87,11 @@ public class AuthController {
             String sanitizedFullName = HtmlUtils.htmlEscape(requestBody.getFullName().trim());
             String encodedPassword = passwordEncoder.encode(requestBody.getPassword());
 
+            if (requestBody.getPassword().length() < 8) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("Password must be at least 8 characters long");
+            }
+
             if (!EmailValidator.getInstance().isValid(sanitizedEmail)) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("Invalid email format");

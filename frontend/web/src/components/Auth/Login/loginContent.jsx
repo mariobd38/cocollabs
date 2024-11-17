@@ -190,7 +190,7 @@ const LoginContent = (props) => {
 
                         {nextSteps ? 
                         <div className='d-flex flex-column align-items-center w-100'>
-                            <form style={{width: "80%"}} className='signup-user-info-block' 
+                            <form  className='auth-user-info-block' 
                             onSubmit={(e) => {
                                 e.preventDefault();
                                 setInvalidPasswordErrorText('');
@@ -198,7 +198,7 @@ const LoginContent = (props) => {
                             }}>
                                 <div className='d-flex align-items-center mb-4 justify-content-between'>
                                     <div className='login-back-arrow-icon' onClick={() => routeChange('/login')}>
-                                        {Icons('IconSquareArrowLeft',30,30)}
+                                        {Icons('IconArrowBack',30,30)}
                                     </div>
 
                                     <div className='text-center' style={{ flex: 1 }}>

@@ -5,7 +5,7 @@ async function getUserInfo() {
             headers: {
                 "Content-Type": "application/json",
             },
-            credentials: 'include' // If you need to send cookies
+            credentials: 'include'
         });
         if (!response.ok) {
             throw new Error("Network response was not ok");
