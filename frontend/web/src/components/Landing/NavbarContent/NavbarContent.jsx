@@ -109,7 +109,7 @@ const NavbarContent = (props) => {
                                     <Button w='100%' className='navbar-drawer-nav-item'>
                                         <span style={{padding: "0px 10px"}}>{item}</span>
                                     </Button>
-                                    <Divider c='red' bd='.1px solid #464646' orientation='vertical' />
+                                    <Divider bd='.1px solid #464646' orientation='vertical' />
                                 </Flex>
                             ))}
                         </Flex>
@@ -175,12 +175,12 @@ const NavbarContent = (props) => {
                     hiddenFrom="md"
                     zIndex={1000}
                     transitionProps={{
-                        duration: 600,
+                        duration: 480,
                         timingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
                         transition: {
                             in: { opacity: 1, transform: 'translateY(0)' },
                             out: { opacity: 0.1, transform: 'translateY(-80%)' },
-                            common: { transition: 'transform 550ms ease-in-out, opacity 550ms ease-in-out' },
+                            common: { transition: 'transform 480ms ease-in-out, opacity 480ms ease-in-out' },
                             transitionProperty: 'transform, opacity'
                         },
                     }}
@@ -194,7 +194,7 @@ const NavbarContent = (props) => {
                                     <Button w='100%' className='navbar-drawer-nav-item'>
                                         <span style={{padding: "0px 10px"}}>{item}</span>
                                     </Button>
-                                    <Divider c='red' bd='.1px solid #464646' orientation='vertical' />
+                                    <Divider bd='.1px solid #464646' orientation='vertical' />
                                 </Flex>
                             ))}
                         </Flex>

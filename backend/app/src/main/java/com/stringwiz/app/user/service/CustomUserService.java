@@ -1,16 +1,13 @@
 package com.stringwiz.app.user.service;
 
-
 import com.stringwiz.app.role.model.RoleNames;
 import com.stringwiz.app.role.model.Role;
 import com.stringwiz.app.user.model.User;
 import com.stringwiz.app.role.repository.RoleRepository;
 import com.stringwiz.app.user.repository.UserRepository;
 import com.stringwiz.app.role.util.RoleSelectorUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,14 +17,16 @@ import java.util.Optional;
 
 @Service
 public class CustomUserService implements UserService {
-    @Autowired private UserRepository userRepository;
-    @Autowired private RoleRepository roleRepository;
-    @Autowired private PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+
+    public CustomUserService(UserRepository userRepository, RoleRepository roleRepository) {
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+    }
+
 
     public void createUser(User user) {
-//        if (user.getPassword() != null)
-//            user.setPassword(passwordEncoder.encode(user.getPassword()));
-
         List<RoleNames> roleNames = new RoleSelectorUtil().getRolesFromEmail(user.getEmail());
         List<Role> roleList = new ArrayList<>();
         for(RoleNames names : roleNames) {

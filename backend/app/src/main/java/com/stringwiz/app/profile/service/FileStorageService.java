@@ -5,15 +5,17 @@ import java.util.stream.Stream;
 
 import com.stringwiz.app.profile.model.ProfileFile;
 import com.stringwiz.app.profile.repository.FileRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class FileStorageService {
-    @Autowired
-    private FileRepository fileDBRepository;
+    private final FileRepository fileDBRepository;
+
+    public FileStorageService(FileRepository fileDBRepository) {
+        this.fileDBRepository = fileDBRepository;
+    }
 
     public ProfileFile store(MultipartFile file) throws IOException {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());

@@ -31,7 +31,7 @@ public class CookieUtil {
                 .httpOnly(true)
                 .secure(false)
                 .sameSite("Strict")
-                .maxAge(Duration.ofSeconds(maxAge))
+                //.maxAge(0)
                 .path("/")
                 .build();
         response.addHeader(HttpHeaders.SET_COOKIE, jwtCookie.toString());

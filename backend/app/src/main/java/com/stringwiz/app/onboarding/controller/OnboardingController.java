@@ -3,7 +3,6 @@ package com.stringwiz.app.onboarding.controller;
 import com.stringwiz.app.user.exception.UserNotFoundException;
 import com.stringwiz.app.space.model.Space;
 import com.stringwiz.app.user.model.User;
-import com.stringwiz.app.profile.repository.ProfileRepository;
 import com.stringwiz.app.user.repository.UserRepository;
 import com.stringwiz.app.profile.service.ProfileService;
 import com.stringwiz.app.space.service.SpaceService;
@@ -12,7 +11,6 @@ import com.stringwiz.app.onboarding.dto.OnboardingResponseDto;
 import com.stringwiz.app.profile.dto.ProfileDto;
 import com.stringwiz.app.space.dto.SpaceDto;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -23,10 +21,16 @@ import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 public class OnboardingController {
-    @Autowired ProfileRepository profileRepository;
-    @Autowired UserRepository userRepository;
-    @Autowired ProfileService profileService;
-    @Autowired SpaceService spaceService;
+    private final UserRepository userRepository;
+    private final ProfileService profileService;
+    private final SpaceService spaceService;
+
+    public OnboardingController(UserRepository userRepository, ProfileService profileService,
+                                SpaceService spaceService) {
+        this.userRepository = userRepository;
+        this.profileService = profileService;
+        this.spaceService = spaceService;
+    }
 
     @PostMapping("/api/onboarding/complete")
     public ResponseEntity<?> completeOnboarding(@AuthenticationPrincipal User user, @RequestBody OnboardingDto onboardingDto) {

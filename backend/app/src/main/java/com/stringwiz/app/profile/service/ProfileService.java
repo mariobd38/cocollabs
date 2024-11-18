@@ -6,13 +6,17 @@ import com.stringwiz.app.user.model.User;
 import com.stringwiz.app.profile.repository.ProfileRepository;
 import com.stringwiz.app.user.repository.UserRepository;
 import com.stringwiz.app.profile.dto.ProfileDto;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ProfileService {
-    @Autowired UserRepository userRepository;
-    @Autowired ProfileRepository profileRepository;
+    private final UserRepository userRepository;
+    private final ProfileRepository profileRepository;
+
+    public ProfileService(UserRepository userRepository, ProfileRepository profileRepository) {
+        this.userRepository = userRepository;
+        this.profileRepository = profileRepository;
+    }
 
     public ProfileDto handleDefaultAvatar(User user) {
         user.setProfile(null);

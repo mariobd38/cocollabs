@@ -1,8 +1,8 @@
 package com.stringwiz.app.profile.controller;
+
 import com.stringwiz.app.profile.model.ProfileFile;
 import com.stringwiz.app.profile.service.FileStorageService;
 import com.stringwiz.app.profile.dto.ProfileFileDto;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +11,12 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequestMapping("/api")
 public class ProfileFileUploadController {
-    @Autowired private FileStorageService storageService;
+    private final FileStorageService storageService;
+
+    public ProfileFileUploadController(FileStorageService storageService) {
+        this.storageService = storageService;
+    }
+
 
     @PostMapping("/upload")
     public ResponseEntity<ProfileFileDto> uploadFile(@RequestParam("file") MultipartFile file) {

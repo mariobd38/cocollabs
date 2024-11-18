@@ -4,9 +4,9 @@ import { useLocalStorage, useColorScheme } from '@mantine/hooks';
 import { theme } from './theme';  // We'll create this file next
 
 export function ThemeProvider({ children }) {
-    const [colorScheme, setColorScheme] = useLocalStorage({
+    const colorScheme = useLocalStorage({
         key: 'mantine-color-scheme',
-        defaultValue: 'light',
+        // defaultValue: 'light',
     });
 
     const systemColorScheme = useColorScheme();
@@ -16,7 +16,7 @@ export function ThemeProvider({ children }) {
     return (
         <MantineProvider 
             theme={{ ...theme, colorScheme: effectiveColorScheme }} 
-            defaultColorScheme="light"
+            defaultColorScheme="dark"
         >
             {children}
         </MantineProvider>

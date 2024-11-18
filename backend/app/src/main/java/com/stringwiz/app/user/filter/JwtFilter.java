@@ -1,6 +1,7 @@
 package com.stringwiz.app.user.filter;
 
 import com.stringwiz.app.auth.util.JwtUtil;
+import com.stringwiz.app.user.service.CustomUserService;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -40,7 +41,7 @@ public class JwtFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
 
         //String requestURI = request.getRequestURI();
         //if (requestURI.startsWith(OAUTH2_GOOGLE_CALLBACK)) {
@@ -62,6 +63,7 @@ public class JwtFilter extends OncePerRequestFilter {
         } catch (Exception e) {
             response.setStatus(HttpStatus.NOT_FOUND.value());
             response.getWriter().write("Cannot set user authentication");
+            return;
         }
 
         filterChain.doFilter(request, response);
