@@ -3,13 +3,13 @@ import React, { useState } from 'react';
 
 import { Table, Card, Text,SegmentedControl,Flex,Button, Box } from '@mantine/core';
 
-import { getTagInfo } from '../../../DataManagement/Tags/getTags';
+import { getTagInfo } from '../../../api/Tags/getTags';
 
 import TaskDetailsModal from '../TaskDetailsModal/taskDetailsModal';
 import TaskCardContent from './TaskCardContent/taskCardContent';
 import TaskCreationModal from '../taskCreationModal/taskCreationModal';
 
-import { UpdateTaskInfoNew } from '../../../DataManagement/Tasks/updateTaskNew';
+import { UpdateTaskInfoNew } from '../../../api/Tasks/updateTaskNew';
 
 import checklist from '../../../assets/illustrations/home/checklist.png';
 

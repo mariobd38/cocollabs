@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CustomUserService implements UserService {
+public class CustomUserService extends User implements UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
 

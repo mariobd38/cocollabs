@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import "./tagColorDropdown.css";
 
-import { updateTagInfo } from "../../../../DataManagement/Tags/updateTag";
+import { updateTagInfo } from "../../../../api/Tags/updateTag";
 
 export const TagColorDropdown = (props) => {
     const { allTagData,currentTaskTags,tagColorChangeDropdownRef,

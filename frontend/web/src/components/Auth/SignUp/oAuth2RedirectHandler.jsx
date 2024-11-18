@@ -5,9 +5,10 @@ import { useNavigate } from 'react-router-dom';
 import { OAUTH2_CALLBACK_URI } from '../../../constants';
 
 import { UseAuth } from '../../../AuthContext/authProvider';
+import { authStatusInfo } from '@/api/Auth/status';
 
 const OAuth2RedirectHandler = () => {
-    const { setIsAuthenticated, setIsOnboarded } = UseAuth();
+    const { updateAuthStatus } = UseAuth();
     
     const navigate = useNavigate();
 
@@ -59,29 +60,15 @@ const OAuth2RedirectHandler = () => {
                 })
                 .then(async (loginData) => {
                     if (loginData) {
-                        setIsAuthenticated(true);
-            
-                        // Fetch onboarding status based on the email or user ID
-                        const onboardResponse = await fetch(`/api/user/isUserOnboarded?email=${loginData.email}`, {
-                            headers: {
-                                "Content-Type": "application/json",
-                            },
-                        });
-            
-                        if (onboardResponse.status === 200) {
-                            const isOnboarded = await onboardResponse.json();
-            
+                        await updateAuthStatus();
+
+                        const { isAuthenticated, isOnboarded } = await authStatusInfo();
+                        if (isAuthenticated) {
                             if (isOnboarded) {
-                                setIsOnboarded(true);
-                                // If the user is onboarded, navigate to the home page
                                 navigate('/home', { state: { loginData } });
                             } else {
-                                setIsOnboarded(false);
-                                // If the user is not onboarded, navigate to onboarding
                                 navigate('/onboarding', { state: { loginData } });
                             }
-                        } else {
-                            throw new Error("Failed to check onboarding status");
                         }
                     }
                 })
@@ -98,7 +85,7 @@ const OAuth2RedirectHandler = () => {
         console.error('Error during authentication:', error);
         //   navigate('/login');
         }
-    }, [navigate, setIsAuthenticated, setIsOnboarded]);
+    }, [navigate,updateAuthStatus]);
 };
 
 export default OAuth2RedirectHandler;

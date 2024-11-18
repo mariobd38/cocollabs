@@ -1,7 +1,6 @@
 import React from 'react';
 
-import Cookies from 'js-cookie';
-import { userLogout } from '../../../DataManagement/Users/logout';
+import { userLogout } from '../../../api/Users/logout';
 // import { constructImageSrc } from '../../../utils/constructImageSrc';
 
 import { Text,Menu } from '@mantine/core';
@@ -15,7 +14,6 @@ const HomeNavbarUserMenu = (props) => {
 
     const handleUserLogout = () => {
         localStorage.clear();
-        Cookies.set('isAuthenticated', false);
         userLogout();
     };
 

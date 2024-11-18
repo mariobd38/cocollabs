@@ -3,7 +3,7 @@ import React, {forwardRef,useState } from 'react';
 import { Menu,Box,Portal, Divider } from '@mantine/core';
 import {Icons} from '../../../../icons/icons';
 
-import { deleteTaskInfo } from '../../../../../DataManagement/Tasks/deleteTask';
+import { deleteTaskInfo } from '../../../../../api/Tasks/deleteTask';
 
 import './taskOptionsPortal.css';
 

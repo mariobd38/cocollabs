@@ -3,10 +3,20 @@ import { Navigate } from 'react-router-dom';
 import { UseAuth } from '../AuthContext/authProvider';
 
 const PrivateRoute = ({ children }) => {
-    const { isAuthenticated,isOnboarded } = UseAuth();
-    // return isAuthenticated && !isOnboarded ? children : <Navigate to="/login" />;
-    return isAuthenticated && isOnboarded ? children : (isAuthenticated) ? <Navigate to="/onboarding" /> : 
-    <Navigate to="/login" />;
+    const { isAuthenticated, isOnboarded,pending } = UseAuth();
+    if (pending) {
+        return null;
+    }
+
+    if (!isAuthenticated) {
+        return <Navigate to="/login" replace />;
+    }
+
+    if (isAuthenticated && !isOnboarded) {
+        return <Navigate to="/onboarding" replace />;
+    }
+
+    return children;
 };
 
 export default PrivateRoute;

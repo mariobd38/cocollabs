@@ -6,7 +6,7 @@ import { useForm } from '@mantine/form';
 import { Popover, PopoverContent, PopoverTrigger} from "@nextui-org/react";
 
 import {Icons} from '../../../icons/icons';
-import { updateTagInfo } from '../../../../DataManagement/Tags/updateTag';
+import { updateTagInfo } from '../../../../api/Tags/updateTag';
 
 import "./tagOptionsDropdown.css";
 

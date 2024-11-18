@@ -9,15 +9,16 @@ import { theme } from 'antd';
 import { UseAuth } from '../../AuthContext/authProvider';
 import { generateSpaceIconJson } from '../../utils/generateSpaceIconJson';
 import AuthHeader from '../../../src/components/Auth/authHeader';
-import { getUserInfo } from '../../DataManagement/Users/getUserInfo';
-import { completeOnboarding } from '../../DataManagement/Users/completeOnboarding';
+import { getUserInfo } from '../../api/Users/getUserInfo';
+import { completeOnboarding } from '../../api/Users/completeOnboarding';
+import { authStatusInfo } from '@/api/Auth/status';
 import OnboardingCreateProfile from './onboardingCreateProfile';
 import OnboardingCreateSpace from './onboardingCreateSpace';
 
 import './onboarding.css';
 
 const Onboarding = () => {
-    const { setIsOnboarded } = UseAuth();
+    const { updateAuthStatus } = UseAuth();
     const [userInfo, setUserInfo] = useState({ email: '', fullName: '', picture: null, profile: null});
     const [spaceInfo, setSpaceInfo] = useState({ name: '', icon: null, description: '', visibility: ''});
     const navigate = useNavigate();
@@ -69,17 +70,6 @@ const Onboarding = () => {
     }] : []);
     const [selectedProfile, setSelectedProfile] = useState(picture ? profileOptions[0] : []);
 
-    //upload
-
-    const handleContinueWithProfileAvatar = () => {
-        
-        // localStorage.removeItem('onboarding_active_step')
-        setMissingProfileError(false);
-        setMissingSpaceNameError(false)
-        completeOnboarding(selectedProfile,setUserInfo);
-        setIsOnboarded(true);
-        navigate('/home', { state: { userInfo }});
-    }
     //steps
     const [activeStep, setActiveStep] = useState(0);
     // const [activeStep, setActiveStep] = useLocalStorage({
@@ -117,16 +107,15 @@ const Onboarding = () => {
             };
             const response = await completeOnboarding(profileData,spaceData,setUserInfo,setSpaceInfo);
 
-                setIsOnboarded(true);
-                const updatedUserInfo = {
-                    ...response.profileData, 
-                };
-                
-                // Update spaceInfo with the response from the API
-                const updatedSpaceInfo = response.spaceData.body;
-                
-                // Use navigate with the updated userInfo and spaceInfo objects
-                navigate('/home', { state: { userInfo: updatedUserInfo, spaceInfo: updatedSpaceInfo } });
+            const updatedUserInfo = {
+                ...response.profileData, 
+            };
+            
+            const updatedSpaceInfo = response.spaceData.body;
+            
+            await updateAuthStatus();
+            
+            navigate('/home', { state: { userInfo: updatedUserInfo, spaceInfo: updatedSpaceInfo } });
         }
         else
             setActiveStep((current) => (current < 3 ? current + 1 : current))

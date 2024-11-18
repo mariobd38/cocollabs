@@ -1,11 +1,14 @@
 package com.stringwiz.app.auth.controller;
 
+import com.stringwiz.app.user.dto.UserPlatformDto;
+import com.stringwiz.app.user.repository.UserRepository;
 import com.stringwiz.app.user.service.CustomUserService;
 import com.stringwiz.app.auth.util.CookieUtil;
 import com.stringwiz.app.auth.util.JwtUtil;
 import com.stringwiz.app.user.util.UserPlatformDtoConverter;
 import com.stringwiz.app.user.dto.UserAuthenticationDto;
 import com.stringwiz.app.user.dto.UserRegistrationDto;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.apache.commons.validator.routines.EmailValidator;
@@ -17,12 +20,20 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import com.stringwiz.app.user.model.User;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.HtmlUtils;
+
+import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -31,7 +42,8 @@ public class AuthController {
     private final JwtUtil jwtUtil;
     private final CustomUserService customUserService;
     private final PasswordEncoder passwordEncoder;
-
+    private final UserDetailsService userDetailsService;
+    private final UserRepository userRepository;
     private final String jwtCookieName;
 
 
@@ -40,11 +52,15 @@ public class AuthController {
             JwtUtil jwtUtil,
             CustomUserService customUserService,
             PasswordEncoder passwordEncoder,
+            UserDetailsService userDetailsService,
+            UserRepository userRepository,
             @Value("${JWT_COOKIE_ATTRIBUTE_NAME}") String jwtCookieName ) {
         this.authenticationManager = authenticationManager;
         this.jwtUtil = jwtUtil;
         this.customUserService = customUserService;
         this.passwordEncoder = passwordEncoder;
+        this.userDetailsService = userDetailsService;
+        this.userRepository = userRepository;
         this.jwtCookieName = jwtCookieName;
     }
 
@@ -120,6 +136,28 @@ public class AuthController {
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body("An error occurred during registration");
+        }
+    }
+
+    @GetMapping("/status")
+    public ResponseEntity<?> checkAuthStatus(@CookieValue(name = "${JWT_COOKIE_ATTRIBUTE_NAME}", required = false) String jwt) {
+        if (jwt == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Authentication required");
+        }
+        try {
+            String email = jwtUtil.getUserEmailFromToken(jwt);
+            UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+
+            Optional<User> optionalUser = userRepository.findByEmail(email);
+            if (optionalUser.isPresent()) {
+                boolean isOnboarded = optionalUser.get().isOnboardingComplete();
+                boolean isAuthenticated = jwtUtil.validateToken(jwt,userDetails);
+                return ResponseEntity.ok(Map.of("isAuthenticated", isAuthenticated, "isOnboarded", isOnboarded));
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("User not found");
+            }
+        } catch(Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("isAuthenticated", false, "isOnboarded",false));
         }
     }
 }

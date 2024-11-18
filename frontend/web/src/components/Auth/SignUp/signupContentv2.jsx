@@ -11,7 +11,7 @@ import { GithubButton } from '../OAuthButtons/githubButton';
 // import { SlackButton } from './slackButton';
 import { UseAuth } from '@/AuthContext/authProvider';
 import { VerifyEmailRegex } from '@/utils/emailRegexFormat';
-import { userExists } from '../../../DataManagement/Users/userExists';
+import { userExists } from '../../../api/Users/userExists';
 import AuthSideBlock from '../authSideBlock';
 
 const requirements = [
@@ -132,7 +132,8 @@ const SignupContentv2 = (props) => {
 
     const { ref: fullNameRef, focused: isFullNameFocused } = useFocusWithin();
     const { ref: passwordRef, focused: isPasswordFocused } = useFocusWithin();
-    const { setIsAuthenticated, setIsOnboarded } = UseAuth();
+    // const { setIsAuthenticated, setIsOnboarded } = UseAuth();
+    
 
     const handleSignUpWithEmailRequest = async (values) => {
         setHideProgressBars(true);
@@ -165,8 +166,8 @@ const SignupContentv2 = (props) => {
             });
 
             if (response.status === 200) {
-                setIsAuthenticated(true);
-                setIsOnboarded(false);
+                // setIsAuthenticated(true);
+                // setIsOnboarded(false);
                 navigate('/onboarding');
             } else {
                 console.error("Unexpected error with user registration");

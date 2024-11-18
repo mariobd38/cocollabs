@@ -12,7 +12,7 @@ import { MantineDropdown } from '../../models/ModelDropdown2/mantineDropdown';
 import PriorityDropdownContent from '../DropdownContent/priorityDropdownContent';
 import StatusDropdownContent from '../DropdownContent/statusDropdownContent';
 import NextUICalendar from '../../models/NextUICalendar/nextUICalendar';
-import { createTaskInfo } from '../../../DataManagement/Tasks/createTaskv2';
+import { createTaskInfo } from '../../../api/Tasks/createTaskv2';
 import TaskDescriptionTipTap from '../TaskDetailsModal/TaskDescriptionTipTap/taskDescriptionTipTap';
 
 import './taskCreationModal.css';

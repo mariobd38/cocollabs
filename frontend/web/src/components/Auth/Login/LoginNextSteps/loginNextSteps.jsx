@@ -5,8 +5,8 @@ import AuthHeader from '../../authHeader';
 import LoginContent from '../loginContent';
 
 import { VerifyEmailRegex } from '../../../../utils/emailRegexFormat';
-import { userExists } from '../../../../DataManagement/Users/userExists';
-import { isOAuthUser } from '../../../../DataManagement/Users/isOAuthUser';
+import { userExists } from '../../../../api/Users/userExists';
+import { isOAuthUser } from '../../../../api/Users/isOAuthUser';
 
 const LoginNextSteps = (props) => {
     let navigate = useNavigate();

@@ -10,10 +10,10 @@ import TaskCard from './TaskCard/taskCard';
 import QuickActions from './QuickActions/quickActions';
 import HomeSidebar from './HomeSidebar/homeSidebar';
 
-import { getUserInfo } from '../../DataManagement/Users/getUserInfo';
+import { getUserInfo } from '../../api/Users/getUserInfo';
 // import { getTaskInfo } from './../../DataManagement/Tasks/getTasks';
-import { getPersonalSpaceInfo } from '../../DataManagement/Spaces/getPersonalSpaceInfo';
-import { getTaskInfoBySpace } from '../../DataManagement/Tasks/getTasksBySpace';
+import { getPersonalSpaceInfo } from '../../api/Spaces/getPersonalSpaceInfo';
+import { getTaskInfoBySpace } from '../../api/Tasks/getTasksBySpace';
 // import { getGoogleTaskInfo } from '../../DataManagement/Tasks/getGoogleTasks';
 
 import { getThemeColor } from '../Themes/getThemeColor';

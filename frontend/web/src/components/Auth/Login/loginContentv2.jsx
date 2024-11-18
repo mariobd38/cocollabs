@@ -10,8 +10,9 @@ import { GithubButton } from '../OAuthButtons/githubButton';
 // import { SlackButton } from './slackButton';
 import { UseAuth } from '@/AuthContext/authProvider';
 import { VerifyEmailRegex } from '@/utils/emailRegexFormat';
-import { isOAuthUser } from '@/DataManagement/Users/isOAuthUser';
-import { userExists } from '../../../DataManagement/Users/userExists';
+import { isOAuthUser } from '@/api/Users/isOAuthUser';
+import { userExists } from '../../../api/Users/userExists';
+import { authStatusInfo } from '@/api/Auth/status';
 import AuthSideBlock from '../authSideBlock';
 
 
@@ -38,7 +39,8 @@ const LoginContentv2 = (props) => {
 
     const [invalidEmailErrorText, setInvalidEmailErrorText] = useState('');
     const [invalidPasswordErrorText, setInvalidPasswordErrorText] = useState('');
-    const { setIsAuthenticated, setIsOnboarded } = UseAuth();
+    // const { setIsAuthenticated, setIsOnboarded } = UseAuth();
+    const { updateAuthStatus } = UseAuth();
 
     const navigate = useNavigate(); 
 
@@ -129,26 +131,15 @@ const LoginContentv2 = (props) => {
     
             if (loginResponse.status === 200) {
                 const loginData = await loginResponse.json();
-                setIsAuthenticated(true);
-    
-                const onboardResponse = await fetch(`/api/user/isUserOnboarded?email=${email}`, {
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                });
-    
-                if (onboardResponse.status === 200) {
-                    const isOnboarded = await onboardResponse.json();
+                await updateAuthStatus();
+
+                const { isAuthenticated, isOnboarded } = await authStatusInfo();
+                if (isAuthenticated) {
                     if (isOnboarded) {
-                        setIsOnboarded(true);
-                        
                         navigate('/home', { state: { loginData } });
                     } else {
-                        setIsOnboarded(false);
                         navigate('/onboarding', { state: { loginData } });
                     }
-                } else {
-                    throw new Error("Failed to check onboarding status");
                 }
     
             } else if (loginResponse.status === 401) {

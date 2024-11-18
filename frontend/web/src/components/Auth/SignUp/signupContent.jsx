@@ -11,7 +11,7 @@ import { useForm } from '@mantine/form';
 import { GoogleButton } from '../OAuthButtons/googleButton';
 // import { SlackButton } from './slackButton';
 import { VerifyEmailRegex } from '../../../utils/emailRegexFormat';
-import { userExists } from '../../../DataManagement/Users/userExists';
+import { userExists } from '../../../api/Users/userExists';
 import { UseAuth } from '../../../AuthContext/authProvider';
 
 const requirements = [

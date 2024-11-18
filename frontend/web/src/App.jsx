@@ -14,7 +14,6 @@ import OAuth2RedirectHandler from "./components/Auth/SignUp/oAuth2RedirectHandle
 import LoginNextSteps from "./components/Auth/Login/LoginNextSteps/loginNextSteps";
 
 import './App.css';
-
   
 function App() {
     const location = useLocation();

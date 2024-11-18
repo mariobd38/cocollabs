@@ -7,7 +7,7 @@ import { Text,Button,Textarea,Box,Flex,Divider,TextInput,Grid,Radio, Group,Stack
 
 import { Modal } from "antd";
 import SpaceCreationIconsPopover from './spaceCreationIconsPopover';
-import { createSpaceInfo } from '../../../DataManagement/Spaces/createSpace';
+import { createSpaceInfo } from '../../../api/Spaces/createSpace';
 import { generateSpaceIconJson } from '../../../utils/generateSpaceIconJson';
 // import { linkTasksToPersonalSpace } from '../../../DataManagement/Spaces/linkTasksToPersonalSpace';
 
