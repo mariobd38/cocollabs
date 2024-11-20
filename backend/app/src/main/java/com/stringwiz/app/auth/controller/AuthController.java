@@ -1,6 +1,6 @@
 package com.stringwiz.app.auth.controller;
 
-import com.stringwiz.app.user.dto.UserPlatformDto;
+import com.stringwiz.app.auth.util.AuthValidationUtil;
 import com.stringwiz.app.user.repository.UserRepository;
 import com.stringwiz.app.user.service.CustomUserService;
 import com.stringwiz.app.auth.util.CookieUtil;
@@ -8,7 +8,6 @@ import com.stringwiz.app.auth.util.JwtUtil;
 import com.stringwiz.app.user.util.UserPlatformDtoConverter;
 import com.stringwiz.app.user.dto.UserAuthenticationDto;
 import com.stringwiz.app.user.dto.UserRegistrationDto;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.apache.commons.validator.routines.EmailValidator;
@@ -20,7 +19,6 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import com.stringwiz.app.user.model.User;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -99,29 +97,40 @@ public class AuthController {
     @PostMapping("/signup")
     public ResponseEntity<?> signup(@RequestBody UserRegistrationDto requestBody, HttpServletResponse response) {
         try {
-            String sanitizedEmail = HtmlUtils.htmlEscape(requestBody.getEmail().toLowerCase().trim());
+            AuthValidationUtil authValidationUtil = new AuthValidationUtil();
             String sanitizedFullName = HtmlUtils.htmlEscape(requestBody.getFullName().trim());
-            String encodedPassword = passwordEncoder.encode(requestBody.getPassword());
+            String sanitizedEmail = HtmlUtils.htmlEscape(requestBody.getEmail().toLowerCase().trim());
 
-            if (requestBody.getPassword().length() < 8) {
+            //full name validation check
+            AuthValidationUtil.ValidationResult fullNameValidation = AuthValidationUtil.validateFullName(sanitizedFullName);
+            if (!fullNameValidation.isValid()) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("Password must be at least 8 characters long");
+                        .body(fullNameValidation.getErrors().get(0));
             }
 
-            if (!EmailValidator.getInstance().isValid(sanitizedEmail)) {
+            //email validation check
+            AuthValidationUtil.ValidationResult emailValidation = AuthValidationUtil.validateEmail(sanitizedEmail);
+            if (!emailValidation.isValid()) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("Invalid email format");
+                        .body(emailValidation.getErrors().get(0));
             }
+
             // Check if user already exists
             if (customUserService.existsByEmail(sanitizedEmail)) {
                 return ResponseEntity.status(HttpStatus.CONFLICT)
-                    .body("Email already registered");
+                        .body("Email already registered");
             }
 
-            //TODO: add password validation check
+            //password validation check
+            AuthValidationUtil.ValidationResult passwordValidation = AuthValidationUtil.validatePassword(requestBody.getPassword());
+            if (!passwordValidation.isValid()) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body(passwordValidation.getErrors().get(0));
+            }
+            String encodedPassword = passwordEncoder.encode(requestBody.getPassword());
 
             User user = new User(
-                sanitizedFullName,
+                AuthValidationUtil.capitalizeName(sanitizedFullName),
                 sanitizedEmail,
                 encodedPassword,
                 null

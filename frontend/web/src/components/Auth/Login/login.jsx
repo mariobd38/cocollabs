@@ -5,7 +5,7 @@ import { Box } from '@mantine/core';
 
 // import { GOOGLE_AUTH_URL } from '../../../constants';
 
-import LoginContentv2 from './loginContentv2';
+import LoginContent from './loginContent';
 
 import './../auth.css';
 import './login.css'
@@ -24,8 +24,7 @@ const Login = () => {
 
     return (
         <Box w='100%' mih='100dvh' >
-            {/* <AuthHeader /> */}
-            <LoginContentv2
+            <LoginContent
                 handleGoogleLogin={handleGoogleLogin}
                 inputEmail={inputEmail}
                 setInputEmail={setInputEmail}

@@ -65,7 +65,7 @@ public class User implements UserDetails {
     @Column(nullable = false,unique = true)
     private String email;
 
-    @Column
+    @Column(length = 60)
     private String password;
 
     @Column
@@ -112,10 +112,6 @@ public class User implements UserDetails {
             inverseJoinColumns = {@JoinColumn(name = "space_id")})
     private Set<Space> spaces = new LinkedHashSet<>();
 
-    public User(String email, String password) {
-        this.email = email;
-        this.password = password;
-    }
 
     public User(String fullName, String email, String password, String picture) {
         setFullName(fullName);
@@ -126,6 +122,13 @@ public class User implements UserDetails {
         this.createdOn = currentTime;
         this.lastUpdatedOn = currentTime;
         this.isOnboardingComplete = false;
+    }
+
+    private void setFullName(String fullName) {
+        this.fullName = fullName;
+        String[] names = fullName.split(" ");
+        this.firstName = names.length > 0 ? names[0] : "";
+        this.lastName = names.length > 1 ? names[names.length - 1] : "";
     }
 
     @Override
@@ -166,20 +169,6 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
-    }
-
-    private void setFullName(String fullName) {
-        this.fullName = capitalizeName(fullName);
-        String[] names = this.fullName.split(" ");
-        this.firstName = names.length > 0 ? names[0] : "";
-        this.lastName = names.length > 1 ? names[names.length - 1] : "";
-    }
-
-    // Utility method for capitalizing names properly
-    private String capitalizeName(String fullName) {
-        return Arrays.stream(fullName.trim().split("\\s+"))
-                .map(word -> Character.toUpperCase(word.charAt(0)) + word.substring(1).toLowerCase())
-                .collect(Collectors.joining(" "));
     }
 
     public void addSpace(Space space) {

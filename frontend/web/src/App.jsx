@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useState } from 'react';
+import React from 'react';
 import { Routes, Route, useLocation } from "react-router-dom";
 
 import NewHome from "./components/Home/newHome";
@@ -11,7 +11,6 @@ import Onboarding from "./components/Onboarding/onboarding";
 import PrivateRoute from "./PrivateRoute/privateRoute";
 import { AuthProvider } from "./AuthContext/authProvider";
 import OAuth2RedirectHandler from "./components/Auth/SignUp/oAuth2RedirectHandler";
-import LoginNextSteps from "./components/Auth/Login/LoginNextSteps/loginNextSteps";
 
 import './App.css';
   
@@ -47,7 +46,6 @@ function App() {
 
 
                 <Route path="/login" element={<Login/> } />
-                {/* <Route path="/app/login" element={<LoginNextSteps/> } /> */}
 
                 <Route path="/oauth2/redirect" element={<OAuth2RedirectHandler />} />
 

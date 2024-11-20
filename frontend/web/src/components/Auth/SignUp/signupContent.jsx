@@ -1,24 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import achievement from '../../../assets/illustrations/signup/achievement.png';
-
 import { useFocusWithin } from '@mantine/hooks';
-import {TextInput,PasswordInput,Text,Paper,Group,Button,Divider,Anchor,Stack,List, Image,Progress } from '@mantine/core';
-import {Icons} from '../../icons/icons';
+import {Title,Flex,Box,TextInput,PasswordInput,Text,Paper,Group,Button,Divider,Anchor,Stack,Progress } from '@mantine/core';
+import {Icons} from '@/components/icons/icons';
 import { useForm } from '@mantine/form';
 
 import { GoogleButton } from '../OAuthButtons/googleButton';
+import { GithubButton } from '../OAuthButtons/githubButton';
 // import { SlackButton } from './slackButton';
-import { VerifyEmailRegex } from '../../../utils/emailRegexFormat';
+import { VerifyEmailRegex } from '@/utils/emailRegexFormat';
 import { userExists } from '../../../api/Users/userExists';
-import { UseAuth } from '../../../AuthContext/authProvider';
+import AuthSideBlock from '../authSideBlock';
 
 const requirements = [
     { re: /[0-9]/ },
     { re: /[a-z]/},
     { re: /[A-Z]/ },
-    { re: /[$&+,:;=?@#|'<>.^*()%!-]/ },
+    { re: /[$&+,:;~=?@#|'<>.^*({})%!-]/ },
 ];
 const validateFullName = (value) => {
     if (!value.trim()) {
@@ -36,7 +35,10 @@ const validatePassword = (value) => {
         return 'Password is required';
     }
     if (value.length < 8) {
-        return 'Password must be at least 8 characters';
+        return 'Password must be at least 8 characters long';
+    }
+    if (getStrength(value) < 50) {
+        return 'Password is too weak'; 
     }
     return null;
 };
@@ -50,15 +52,13 @@ function getStrength(password) {
                 multiplier += 1;
             }
         });
-  
-        return Math.max(100 - (100 / (requirements.length + 1)) * multiplier, 0);
+        return Math.max(100 - (100 / (requirements.length)) * multiplier, 0);
     }
 }
+
 const SignupContent = (props) => {
     
     const { handleGoogleLogin,setInputEmail,showOAuth2Buttons,inputEmail,nextSteps } = props;
-
-    const { setIsAuthenticated, setIsOnboarded } = UseAuth();
 
     const [invalidEmailErrorText, setInvalidEmailErrorText] = useState('');
     const navigate = useNavigate(); 
@@ -67,6 +67,8 @@ const SignupContent = (props) => {
         navigate(path);
     }
     const handleEmailSignUp = async () => {
+        setSignupClicked(true);
+
         let userExistsVar = false;
         if (inputEmail) {
             try {
@@ -99,30 +101,45 @@ const SignupContent = (props) => {
 
     const [strength, setStrength] = useState(0);
     form.watch('password', ({ value }) => {
+        setSignupClicked(false)
         const strengthValue = getStrength({ value }.value);
         setStrength(strengthValue);
     });
+
+    const [hideProgressBars, setHideProgressBars] = useState(true);
+    const [signupClicked, setSignupClicked] = useState(false);
+
+    useEffect(() => {
+        if (form.values.password.length === 0)
+            setHideProgressBars(true);
+        else
+            setHideProgressBars(false);
+    },[form.values,hideProgressBars])
 
     const bars = Array(1)
         .fill(0)
         .map((_, index) => (
             <Progress
                 className='signup-content-progress-bar'
-                styles={{ section: { transition: 'all 1.2s ease-in-out' } }}
-                style={{visibility: `${form.values.password.length === 0 ? 'hidden' : 'visible'}`}}
+                styles={{ section: { transition: 'all 1s ease-in-out' } }}
+                style={{visibility: `${form.values.password.length === 0 ? 'hidden' : 'visible'}` }}
                 value={strength}
-                color={strength > 80 ? 'teal' : strength > 60 ? 'blue' : strength > 40 ? 'yellow' : strength > 20 ? 'orange' : 'red'}
+                color={strength > 80 ? 'teal' : strength > 60 ? 'blue' : strength > 40 ? '#d5c30a' : 'red' }
                 key={index}
-                bg='#d7d9db'
-                size={15}
+                bg='#323436'
+                size={10}
                 radius='xl'
             />
     ));
 
     const { ref: fullNameRef, focused: isFullNameFocused } = useFocusWithin();
     const { ref: passwordRef, focused: isPasswordFocused } = useFocusWithin();
+    // const { setIsAuthenticated, setIsOnboarded } = UseAuth();
+    
 
     const handleSignUpWithEmailRequest = async (values) => {
+        setHideProgressBars(true);
+
         const fullName = values.fullName
             .trim()
             .split(/\s+/)
@@ -135,6 +152,12 @@ const SignupContent = (props) => {
             email: inputEmail,
             password: password,
         };
+        // const data = await signupInfo(reqBody);
+        // if (data) {
+        //     setIsAuthenticated(true);
+        //     setIsOnboarded(false);
+        //     navigate('/onboarding');
+        // }
         try {
             const response = await fetch("/api/auth/signup", {
                 headers: {
@@ -145,8 +168,8 @@ const SignupContent = (props) => {
             });
 
             if (response.status === 200) {
-                setIsAuthenticated(true);
-                setIsOnboarded(false);
+                // setIsAuthenticated(true);
+                // setIsOnboarded(false);
                 navigate('/onboarding');
             } else {
                 console.error("Unexpected error with user registration");
@@ -155,173 +178,169 @@ const SignupContent = (props) => {
             console.error(error);
             console.error("Error with API call to register user");
         }
+
     }
-    
 
     return (
-        <div className='d-flex flex-column-reverse flex-lg-row'>
-            <div className='w-100 py-4 signup-left-info-block' style={{background: "#fafafa"}}>
+        <Flex mih='100dvh'>
 
-                <div className='mx-5 pt-4'>
-                    <Text pb='20' fw={700} ta="center" fz={27}  m='auto' c='#272839' w='80%'>Trusted, intuitive interface made for productivity</Text>
-                    <div className='mb-5 d-flex align-items-center'>
-                        <List
-                        spacing="sm"
-                        className='m-auto'
-                        icon={Icons('IconCircleCheck',24,24,'#0f5255')}
-                        >
-                            <List.Item fw={400} fz={15}>Track and complete tasks </List.Item>
-                            <List.Item fw={400} fz={15}>Collaborate with your team </List.Item>
-                            <List.Item fw={400} fz={15}>Create documents</List.Item>
-                            <List.Item fw={400} fz={15}>Monitor timelines and milestones</List.Item>
-                        </List>
-                    </div>
-
-                    <div className='col-12 d-flex justify-content-center'>
-
-                        {/* <img src={achievement} className=" " alt="Cocollabs" style={{width: "26rem"}}/> */}
-                        <Image src={achievement} w={420} className='signup-image' />
-                    </div>
-                </div>
-            </div>
-
-            <div className='w-100' style={{borderRadius: "7px"}}>
-                <Paper px="xl" pb="xl" className='py-4 signup-content-wrapper-paper' style={{minHeight: "94.6dvh"}}>
-                    <div className='pt-4'>
-                        <Text fz={33} fw={600} ta="center" mb="xs" c='#fafafa' ff='Lato'>
-                            Get started with Cocollabs
-                        </Text>
-
-                        <Text fz={15.5} c={"#e9ebed"} fw={300} ta="center" mb="xl">
-                            It&apos;s free! No credit card required.
-                        </Text>
-
-                        {showOAuth2Buttons &&
-                        <>
-                            <Group mt="lg" className='d-flex flex-column' w='100%'>
-                                <GoogleButton bd='1px solid #acacac' c='#252525' size="md" onClick={handleGoogleLogin} radius="md" px="0" className='py-2 sign-up-oauth-button' fz={17} bg={"#fafafa"}>
-                                    Continue with Google
-                                </GoogleButton>
-                                {/* <SlackButton size="md" radius="md" px="0" className='py-2 sign-up-oauth-button' style={{fontSize: "17px",background: "#fafafa"}}>Continue with Slack</SlackButton> */}
-                            </Group>
-
-                            <Divider label="OR" color='teal' className='signup-content-wrapper-paper-divider' labelPosition="center" my="xl" />
-                        </>}
-
-                        {nextSteps ? 
-                        <div className='d-flex flex-column align-items-center w-100'>
-                            <form style={{width: "80%"}} className='signup-user-info-block' onSubmit={form.onSubmit((values) => handleSignUpWithEmailRequest(values))}>
-                                <div className='d-flex align-items-center mb-4 justify-content-between'>
-                                    <div className='signup-back-arrow-icon' onClick={() => routeChange('/signup')}>
-                                        {Icons('IconSquareArrowLeft',30,30)}
-                                    </div>
-
-                                    <div className='text-center' style={{ flex: 1 }}>
-                                        <Button className='signup-user-info-block-email' radius="xl" fw={800}>
-                                            <div className='d-flex'>
-                                                <div className='me-3'>
-                                                    {Icons('IconMail',18,18,'#717171',2.5)}
-                                                </div>
-                                                <span>{inputEmail}</span>
-                                            </div>
-                                        </Button>
-                                    </div>
-                                </div>
-
-                                <Stack className='d-flex align-items-center'>
-                                    <div ref={fullNameRef} className='w-100'>
-                                        <TextInput
-                                            label="Full name"
-                                            placeholder={isFullNameFocused ? '' : 'John Doe'}
-                                            type="text"
-                                            autoComplete='off'
-                                            leftSection={Icons('IconUser',18,18,'#717171','2.5')}
-                                            className='w-100 auth-user-input-field'
-                                            size="lg"
-                                            radius="md"
-                                            key={form.key('fullName')}
-                                            {...form.getInputProps('fullName')}
-                                        />
-                                    </div>
-
-                                    <div ref={passwordRef} className='w-100'>
-                                        <PasswordInput
-                                            label="Password"
-                                            placeholder={isPasswordFocused ? '' : 'Minimum 8 characters'}
-                                            type="password"
-                                            autoComplete='off'
-                                            // leftSection={<IconLock style={{ width: rem(18), height: rem(18) }} stroke={2.5}/>}
-                                            leftSection={Icons('IconLock',18,18,'#717171','2.5')}
-                                            className='w-100 auth-user-input-field'
-                                            size="lg"
-                                            radius="md"
-                                            key={form.key('password')}
-                                            {...form.getInputProps('password')}
-                                        />
-                                    </div>
-                                </Stack>
+            <Box w='100%' className='signup-content-wrapper-paper'>
+                <Flex w={{xs: 530, md: '100%'}} m='auto' >
+                    <Flex align='center' direction='column' w='100%' justify='center' mih='100vh' py={20}>
+                        <Paper w={{base: '85%', xs: 580}}  bg='transparent'  >
                                 
-                                {form.values.password && form.values.password.length > 0 &&
-                                    <Text c='#858789' fw={400} align='center' mt={9} ff='Lato, sans-serif'>
-                                        Strength: {strength > 80 ? 'Excellent!' : strength > 60 ? 'Good' : strength > 40 ? 'Fair' : strength > 20 ? 'Needs work' : 'Low'}
-                                </Text>}
+                            <Flex gap={5} direction='column' align='center'>
+                                <Title className='signup-welcome-title' w='90%' fz={{base: '2rem', xs: '2.2rem', md: '2.3rem'}} fw={800} ta="center" c='#fafafa' ff='Nunito Sans'>
+                                    Welcome to Cocollabs
+                                </Title>
 
-                                <Group grow mt="sm" mb="md" px='1'>
-                                    {bars}
-                                </Group>
+                                <Text className='signup-welcome-subtitle' fz={{base: '0.8rem', xs: '0.93rem', md: '.95rem'}} c="#97999c"  fw={500} ta="center" mb="xl" ff='Nunito Sans'>
+                                    Sign up for the free edition. No credit card required.
+                                </Text>
+                            </Flex>
+                                
 
-                                <Group mt="xl" mb="lg">
+                            {nextSteps ? 
+                            <Flex align='center' direction='column' >
+                                <form noValidate style={{width: "80%"}} className='auth-user-info-block' onSubmit={form.onSubmit((values) => handleSignUpWithEmailRequest(values))}>
+                                    <div className='d-flex align-items-center mb-4 justify-content-between'>
+                                        <div className='signup-back-arrow-icon' onClick={() => routeChange('/signup')}>
+                                            {Icons('IconArrowBack',24,24, '#a6a7a9')}
+                                        </div>
+
+                                        <div className='text-center' style={{ flex: 1 }}>
+                                            <Button className='signup-user-info-block-email' radius="xl" fw={800}>
+                                                <Flex align='center'>
+                                                    <Box me={10}>
+                                                        {Icons('IconMail',18,18,'#f0f0f0',2)}
+                                                    </Box>
+                                                    <Text fw={600} c='#f0f0f0'>{inputEmail}</Text>
+                                                </Flex>
+                                            </Button>
+                                        </div>
+                                    </div>
+
+                                    <Stack className='d-flex align-items-center'>
+                                        <div ref={fullNameRef} className='w-100'>
+                                            <TextInput
+                                                // onClick={() => setSignupClicked(false)}
+                                                required
+                                                label="Full name"
+                                                placeholder={isFullNameFocused ? '' : 'John Doe'}
+                                                type="text"
+                                                autoComplete='off'
+                                                leftSection={Icons('IconUser',18,18,'#717171',2)}
+                                                className='w-100 auth-user-input-field'
+                                                size="lg"
+                                                radius="md"
+                                                key={form.key('fullName')}
+                                                {...form.getInputProps('fullName')}
+                                            />
+                                        </div>
+
+                                        <div ref={passwordRef} className='w-100'>
+                                            <PasswordInput
+                                                required
+                                                // onClick={() => setSignupClicked(false)}
+                                                label="Password"
+                                                placeholder={isPasswordFocused ? '' : 'Minimum 8 characters'}
+                                                type="password"
+                                                autoComplete='off'
+                                                leftSection={Icons('IconLock',18,18,'#717171',2)}
+                                                className='w-100 auth-user-input-field'
+                                                size="lg"
+                                                radius="md"
+                                                key={form.key('password')}
+                                                {...form.getInputProps('password')}
+                                            />
+                                        </div>
+                                    </Stack>
+
+                                    {!signupClicked && form.values.password && form.values.password.length > 0 && <>
+                                            <Text c='#959799' fz='14.5' fw={400}  mt={9} ff='Lato, sans-serif'>
+                                                Password strength: {strength > 80 ? 'Excellent' : strength > 60 ? 'Good' : strength > 40 ? 'Fair' : 'Low'}
+                                            </Text>
+
+                                            <Group grow mt="sm" mb="md" px='1'>
+                                                {bars}
+                                            </Group> 
+                                        </>}
+
+                                    <Group mt="xl" mb="lg">
+                                        
+                                        <Button type="submit" bg='transparent'  bd='1px solid #5c5c5c' c='#f0f0f0' className='auth-content-signup-button' radius="md" px="18" py="3" fw={700} w="100%" fz="15" onClick={handleEmailSignUp}>
+                                            Sign Up
+                                        </Button>
+                                    </Group>
+
+                                </form>
+                            </Flex>
+                            :
+                            // className='auth-content-block' w={{xs: '80%'}} 
+                            <Flex direction='column' w={{xs: '80%'}} className='auth-content-block' >
+                                {showOAuth2Buttons &&
+                                    <Box>
+
+                                        <Flex mb="lg" gap={20} direction='column' >
+                                            <GoogleButton bd='1px solid #5c5c5c' c='#f0f0f0' size="sm" onClick={handleGoogleLogin} radius={6} p='8px 0' className='sign-up-oauth-button' fz={17} bg="transparent">
+                                                <Text className='ms-2 oauth-button-text' fw={700} fz={{base: 16, xs: 17}}>Continue with Google</Text>
+                                            </GoogleButton>
+                                                
+                                            <GithubButton bd='1px solid #5c5c5c' c='#f0f0f0' size="sm" onClick={handleGoogleLogin} radius={6} p='8px 0' className='sign-up-oauth-button' fz={17} bg="transparent">
+                                                <Text className='ms-2 oauth-button-text' fw={700} fz={{base: 16, xs: 17}}>Continue with Github</Text>
+                                            </GithubButton>
+                                            {/* <SlackButton size="md" radius="md" px="0" className='py-2 sign-up-oauth-button' style={{fontSize: "17px",background: "#fafafa"}}>Continue with Slack</SlackButton> */}
+                                        </Flex>
+
+                                        <Divider label="or" color='#929292' className='signup-content-wrapper-paper-divider' labelPosition="center" my={30} />
+                                    </Box>
+                                }
+                                
+                                <Box>
+                                    <Stack align='center'>
+                                        <TextInput
+                                            label='Email'
+                                            type="text"
+                                            placeholder=""
+                                            leftSection={Icons('IconMail',18,18,'#a2a2a2',2)}
+                                            autoComplete='off'
+                                            value={inputEmail}
+                                            onChange={(e) => setInputEmail(e.target.value)}
+                                            className='w-100 auth-user-input-field'
+                                            size="lg"
+                                        />
+                                    </Stack>
+                                    { invalidEmailErrorText.length > 0 && 
+                                    <Text fz={14.5} c='#dc5050' pt='5' fw={400} >
+                                        {invalidEmailErrorText}
+                                    </Text> }
+                                </Box>
+
+                                <Group justify='space-between' pt={30} >
+                                    <Flex align='center'>
+                                        <Text c="#97999c" size="sm" ff='Nunito Sans'>
+                                            Already have an account?
+                                        </Text>
+                                        <Anchor href='/login' ps={5} c="#2b93f0" size="sm" ff='Nunito Sans'>
+                                            Log In
+                                        </Anchor>
+                                    </Flex>
                                     
-                                    <Button type="submit" bg='teal' className='auth-content-signup-button' radius="md" px="18" py="3" fw={700} w="100%" fz="15" onClick={handleEmailSignUp}>
-                                        Sign Up
+                                    <Button bg='transparent' bd='1px solid #5c5c5c' c='#f0f0f0' type="submit" className='auth-content-signup-button' radius={6} px="18" py="3" fw={700} fz={15} onClick={handleEmailSignUp}>
+                                        Continue
                                     </Button>
                                 </Group>
-
-                            </form>
-                        </div>
-                        :
-                        <div className='auth-content-block'>
-                            <div style={{width: "100%", minHeight: "55px"}}>
-                                <Stack className='d-flex align-items-center'>
-                                    <TextInput
-                                        label="Enter your email"
-                                        type="text"
-                                        placeholder=""
-                                        leftSection={Icons('IconMail',18,18,'#717171',2.5)}
-                                        autoComplete='off'
-                                        value={inputEmail}
-                                        onChange={(e) => setInputEmail(e.target.value)}
-                                        radius="md"
-                                        className='w-100 auth-user-input-field'
-                                        size="lg"
-                                    />
-                                </Stack>
-                                {
-                                    invalidEmailErrorText.length > 0 && 
-                                    <Text fz={14.5} c='#ec4848' pt='5' fw={400} ta='center'>
-                                        {invalidEmailErrorText}
-                                    </Text>
-                                }
-                            </div>
+                            </Flex>
+                            }
                             
+                        </Paper>
+                    </Flex>
+                    <AuthSideBlock  />
 
-                            <Group className='d-flex justify-content-between py-3'>
-                                <Anchor href='/login' c="#e9ebed" size="sm">
-                                    Already have an account? Login
-                                </Anchor>
-                                
-                                <Button bg='teal' type="submit" className='auth-content-signup-button' radius="xl" px="18" py="3" fw={700} fz={15} onClick={handleEmailSignUp}>
-                                    Sign Up
-                                </Button>
-                            </Group>
-                        </div>
-                        }
+                </Flex>
 
-                        
-                    </div>
-                </Paper>
-            </div>
-        </div>
+            </Box>
+        </Flex>
     );
 };
 

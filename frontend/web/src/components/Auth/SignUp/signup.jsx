@@ -1,13 +1,9 @@
 import React, { useState } from 'react';
 
 import { useLocalStorage } from '@mantine/hooks';
-
 // import { GOOGLE_AUTH_URL } from '../../../constants';
 import { Box } from '@mantine/core';
-
-import AuthHeader from './../authHeader';
 import SignupContent from './signupContent';
-import SignupContentv2 from './signupContentv2';
 
 import './../auth.css';
 import './signup.css'
@@ -26,14 +22,7 @@ const SignUp = () => {
 
     return (
         <Box w='100%' mih='100dvh' >
-            {/* <AuthHeader /> */}
-            {/* <SignupContent 
-                handleGoogleLogin={handleGoogleLogin}
-                inputEmail={inputEmail}
-                setInputEmail={setInputEmail}
-                showOAuth2Buttons={true}
-            /> */}
-            <SignupContentv2
+            <SignupContent
                 handleGoogleLogin={handleGoogleLogin}
                 inputEmail={inputEmail}
                 setInputEmail={setInputEmail}

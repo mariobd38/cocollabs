@@ -79,7 +79,7 @@ export function FooterContent() {
             </Container>
 
             <Container className={classes.afterFooter}>
-                <Text c="dimmed" size="sm">
+                <Text c="gray" size="sm">
                     © 2024 Cocollabs. All rights reserved.
                 </Text>
 

@@ -9,7 +9,7 @@ import { Icons } from '../icons/icons';
 
 const AuthSideBlock = ({isLogin}) => {
     return (
-        <Paper radius={0} ms={isLogin ? 15 : 0} bg='transparent' py={40} display={{base: 'none', md: 'block'}} mih='100vh' >
+        <Paper radius={0} ms={isLogin ? 15 : 0} bg='transparent' py={20} display={{base: 'none', md: 'block'}} mih='100vh' >
             <Flex px={25} bg='#233142a0' bd='1px solid #536172a0' align='center' justify='center' direction='column' py={50} me={20} gap={45} h='100%' style={{ flexGrow: 1, borderRadius: "8px"}}>
                 <Box>
                     <Flex pb={45} justify='center'>
@@ -89,8 +89,8 @@ const AuthSideBlock = ({isLogin}) => {
                                     </Text>
                                 </Flex>
                                 <Flex justify='flex-end' gap={20} my={5} align='center' w='100%' >
-                                    <Button fz={15}  style={{cursor: "default",transform: 'none'}} p='0 10px' bd='1px solid blue' c='blue' bg='transparent'>
-                                        {Icons('IconMessages',20,20)}
+                                    <Button fz={15}  style={{cursor: "default",transform: 'none'}} p='0 10px' bd='1.5px solid blue' c='blue' bg='transparent'>
+                                        {Icons('IconMessages',20,20,'#1971c2')}
                                     </Button>
                                     <Button fz={15}  style={{cursor: "default",transform: 'none'}} p='0 12px' bd='1px solid blue' bg='blue'>Connect</Button>
                                 </Flex>

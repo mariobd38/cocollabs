@@ -1,29 +1,19 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import {Icons} from '../../icons/icons';
-
-import login from '../../../assets/illustrations/login/login.png';
-
-import {
-    TextInput,
-    PasswordInput,
-    Text,
-    Paper,
-    Group,
-    Button,
-    Divider,
-    Anchor,
-    Stack,
-    Image,
-} from '@mantine/core';
+import {Title,Flex,Box,TextInput,PasswordInput,Text,Paper,Group,Button,Divider,Anchor } from '@mantine/core';
+import {Icons} from '@/components/icons/icons';
 import { useForm } from '@mantine/form';
 
-import { GoogleButton } from './../OAuthButtons/googleButton';
-import { VerifyEmailRegex } from '../../../utils/emailRegexFormat';
+import { GoogleButton } from '../OAuthButtons/googleButton';
+import { GithubButton } from '../OAuthButtons/githubButton';
+// import { SlackButton } from './slackButton';
+import { UseAuth } from '@/AuthContext/authProvider';
+import { VerifyEmailRegex } from '@/utils/emailRegexFormat';
+import { isOAuthUser } from '@/api/Users/isOAuthUser';
 import { userExists } from '../../../api/Users/userExists';
-import { UseAuth } from '../../../AuthContext/authProvider';
-import { isOAuthUser } from '../../../api/Users/isOAuthUser';
+import { authStatusInfo } from '@/api/Auth/status';
+import AuthSideBlock from '../authSideBlock';
 
 
 const validatePassword = (value) => {
@@ -33,91 +23,104 @@ const validatePassword = (value) => {
     return null;
 };
 
+const validateEmail = (value) => {
+    if (!value.trim()) {
+        return 'Email is required';
+    }
+    if (!VerifyEmailRegex(value)) {
+        return 'Please enter a valid email address';
+    }
+    return null;
+}
+
 const LoginContent = (props) => {
     
-    const { handleGoogleLogin,setInputEmail,showOAuth2Buttons,inputEmail,nextSteps } = props;
-
-    const { setIsAuthenticated, setIsOnboarded } = UseAuth();
+    const { handleGoogleLogin,setInputEmail,inputEmail } = props;
 
     const [invalidEmailErrorText, setInvalidEmailErrorText] = useState('');
     const [invalidPasswordErrorText, setInvalidPasswordErrorText] = useState('');
+    // const { setIsAuthenticated, setIsOnboarded } = UseAuth();
+    const { updateAuthStatus } = UseAuth();
+
     const navigate = useNavigate(); 
 
-    const routeChange = (path) =>{ 
-        navigate(path);
-    }
     const validateEmailLogin = async () => {
+        // Clear previous error messages
+        setInvalidEmailErrorText('');
+        setInvalidPasswordErrorText('');
+
+        // Skip backend validation if basic validation fails
+        const email = form.values.email;
+        const basicValidation = validateEmail(email);
+        if (basicValidation) {
+            setInvalidEmailErrorText(basicValidation);
+            return false;
+        }
+
         let userExistsVar = false;
         let isOAuth = false;
-        if (inputEmail) {
-            try {
-                userExistsVar = await userExists(inputEmail);
-                isOAuth = await isOAuthUser(inputEmail);
-            } catch (error) {
-                console.error(error); 
+
+        try {
+            userExistsVar = await userExists(email);
+            isOAuth = await isOAuthUser(email);
+
+            if (!userExistsVar) {
+                setInvalidEmailErrorText('Invalid credentials.');
+                return false;
             }
+            
+            if (isOAuth) {
+                setInvalidEmailErrorText('Invalid credentials. Try signing in with Google or GitHub.');
+                return false;
+            }
+
+            return true;
+        } catch (error) {
+            console.error(error);
+            setInvalidEmailErrorText('An error occurred while validating email.');
+            return false;
         }
-        if (inputEmail === '' || !VerifyEmailRegex(inputEmail)) {
-            setInvalidEmailErrorText('Please enter a valid email address.');
-        } else if (!userExistsVar) {
-            setInvalidEmailErrorText(`The email you entered is not registered. Please create an account.`);
-        } else if (isOAuth) {
-            setInvalidEmailErrorText(`You have no password set. Please login with a third party provider.`);
-        } else {
-            setInvalidEmailErrorText('');
-            navigate(`/app/login?email=${inputEmail}`);
-        }
-    }
+    };
 
     const form = useForm({
         initialValues: {
+            email: inputEmail || '',
             password: '',
         },
-
         validate: {
+            email: (value) => null, // Remove form-level email validation
             password: validatePassword
         },
     });
 
+    // Update both form and parent state when email changes
+    const handleEmailChange = (e) => {
+        const value = e.target.value;
+        setInputEmail(value);
+        form.setFieldValue('email', value);
+        if (invalidEmailErrorText) {
+            setInvalidEmailErrorText('');
+        }
+    };
 
-    // const handleLoginWithEmailRequest = async (values) => {
-
-    //     const password = values.password;
-    //     const reqBody = {
-    //         email: inputEmail,
-    //         password: password,
-    //     };
-    //     try {
-    //         const response = await fetch("/api/auth/login", {
-    //             headers: {
-    //                 "Content-Type": "application/json",
-    //             },
-    //             method: "post",
-    //             body: JSON.stringify(reqBody),
-    //         });
-
-    //         if (response.status === 200) {
-    //             const data = await response.json();
-    //             setIsAuthenticated(true);
-    //             navigate('/home', { state: { data }});
-    //         } else if (response.status === 401) {
-    //             setInvalidPasswordErrorText('Invalid Password');
-    //         } else {
-    //             throw new Error("Invalid login attempt");
-    //         }
-    //     } catch (error) {
-    //         //console.error(error);
-    //     }
-    // }
-    const handleLoginWithEmailRequest = async (values) => {
-        const password = values.password;
+    const handleSubmit = async (values) => {
+        const { email,password } = values;
         const reqBody = {
-            email: inputEmail,
-            password: password,
+            email,
+            password,
         };
     
         try {
-            // First, make the login request
+            setInvalidPasswordErrorText('');
+            setInvalidEmailErrorText('');
+
+            // Perform email validation before attempting login
+            const validationSuccess = await validateEmailLogin();
+
+            if (!validationSuccess) {
+                return;
+            }
+
             const loginResponse = await fetch("/api/auth/login", {
                 headers: {
                     "Content-Type": "application/json",
@@ -128,32 +131,19 @@ const LoginContent = (props) => {
     
             if (loginResponse.status === 200) {
                 const loginData = await loginResponse.json();
-                setIsAuthenticated(true);
-    
-                // After login, check if the user is onboarded
-                const onboardResponse = await fetch(`/api/user/isUserOnboarded?email=${inputEmail}`, {
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                });
-    
-                if (onboardResponse.status === 200) {
-                    const isOnboarded = await onboardResponse.json();
+                await updateAuthStatus();
+
+                const { isAuthenticated, isOnboarded } = await authStatusInfo();
+                if (isAuthenticated) {
                     if (isOnboarded) {
-                        setIsOnboarded(true);
-                        
                         navigate('/home', { state: { loginData } });
                     } else {
-                        setIsOnboarded(false);
-                        // navigate('/onboarding');
                         navigate('/onboarding', { state: { loginData } });
                     }
-                } else {
-                    throw new Error("Failed to check onboarding status");
                 }
     
             } else if (loginResponse.status === 401) {
-                setInvalidPasswordErrorText('Invalid Password');
+                setInvalidPasswordErrorText('Invalid credentials');
             } else {
                 throw new Error("Invalid login attempt");
             }
@@ -164,138 +154,115 @@ const LoginContent = (props) => {
     
 
     return (
+        <Flex mih='100dvh'>
+            <Box w='100%'  className='signup-content-wrapper-paper'>
+                <Flex w={{xs: 530, md: '100%'}} m='auto' >
+                    
+                    <AuthSideBlock isLogin={true} />
 
-        <div className='w-100'>
-            <div className='d-flex flex-column flex-lg-row'>
-                <div className='w-100' style={{background: "#fff", minHeight: "94.6dvh"}}>
-                    <Paper px="xl" py="xl" bg='#fff'>
-                        <div className='pt-4'>
-                            <Text fz={33} fw={600} ta="center" mb="xs" c='#121212' ff='Lato'>
-                                Welcome to Cocollabs
-                            </Text>
-
-                            {showOAuth2Buttons &&
-                                <div>
-                                    <Group mt="lg" className='d-flex flex-column login-container-block' w='100%'>
-                                        <GoogleButton onClick={handleGoogleLogin} size="md" radius="md" px="0" className='py-2 login-oauth-button ' style={{fontSize: "17px",background: "#fafafa"}}>
-                                            Continue with Google
-                                        </GoogleButton>
-                                    </Group>
-                                    <Divider label="OR" color='dimmed' className='login-paper-divider' labelPosition="center" my="xl" />
-
-                                </div> 
-                            }
-
-
-
-                        {nextSteps ? 
-                        <div className='d-flex flex-column align-items-center w-100'>
-                            <form  className='auth-user-info-block' 
-                            onSubmit={(e) => {
-                                e.preventDefault();
-                                setInvalidPasswordErrorText('');
-                                form.onSubmit((values) => handleLoginWithEmailRequest(values))(e);
-                            }}>
-                                <div className='d-flex align-items-center mb-4 justify-content-between'>
-                                    <div className='login-back-arrow-icon' onClick={() => routeChange('/login')}>
-                                        {Icons('IconArrowBack',30,30)}
-                                    </div>
-
-                                    <div className='text-center' style={{ flex: 1 }}>
-                                        <Button className='signup-user-info-block-email' radius="xl" fw={800}>
-                                            <div className='me-2'>
-                                                {Icons('IconMail',18,18)}
-                                            </div>
-                                            {inputEmail}
-                                        </Button>
-                                    </div>
-                                </div>
-
-                                <Stack className='d-flex align-items-center'>
-                                    <div className='w-100'>
-                                        <PasswordInput
-                                            label="Enter your password"
-                                            type="password"
-                                            autoComplete='off'
-                                            placeholder=""
-                                            // leftSection={<IconLock style={{ width: rem(18), height: rem(18) }} stroke={2.5}/>}
-                                            leftSection={Icons('IconLock',18,18,'#717171',2.5)}
-                                            className='w-100 auth-user-input-field login'
-                                            size="lg"
-                                            radius="md"
-                                            key={form.key('password')}
-                                            {...form.getInputProps('password')}
-                                        />
-                                    </div>
-                                </Stack>
-                                {
-                                    invalidPasswordErrorText.length > 0 && 
-                                    <Text fz={14.5} c='#ec4848' pt='5' fw={400} >
-                                        {invalidPasswordErrorText}
-                                    </Text>
-                                }                                
-
-                                <Group mt="xl" mb="lg">
-                                    
-                                    <Button type="submit" bg='teal' className='auth-content-signup-button' radius="md" px="18" py="3" fw={700} w="100%" fz="15" >
-                                        Log In
-                                    </Button>
-                                </Group>
-
-                            </form>
-                        </div>
-                        :
-                        <div className='auth-content-block login-container-block'>
-                            <div style={{width: "100%", minHeight: "50px"}} className='pb-4'>
-                                <Stack className='d-flex align-items-center'>
-                                    <TextInput
-                                        label="Enter your email"
-                                        type="text"
-                                        placeholder=""
-                                        leftSection={Icons('IconMail',18,18,'#717171',2.5)}
-                                        autoComplete='off'
-                                        value={inputEmail}
-                                        onChange={(e) => setInputEmail(e.target.value)}
-                                        radius="md"
-                                        className='w-100 auth-user-input-field login'
-                                        size="lg"
-                                        // key={form.key('email')}
-                                        // {...form.getInputProps('email')}
-                                    />
-                                </Stack>
-                                {
-                                    invalidEmailErrorText.length > 0 && 
-                                    <Text fz={14.5} c='#ec4848' pt='5' fw={400} ta='center'>
-                                        {invalidEmailErrorText}
-                                    </Text>
-                                }
-                            </div>
-
-                            <Group className='d-flex justify-content-between py-3'>
-                                <Anchor href='/signup'  c="#898b8d" size="sm">
-                                    Don&apos;t have an account? Sign Up
-                                </Anchor>
+                    <Flex align='center' direction='column' w='100%' justify='center' mih='100vh' py={20}>
+                        <Paper w={{base: '100%', xs: 580}}  bg='transparent' >
                                 
-                                <Button bg='teal' type="submit" className='auth-content-signup-button' radius="xl" px="18" py="3" fw={700} fz={15} onClick={validateEmailLogin}>
-                                    Continue
-                                </Button>
-                            </Group>
-                        </div>
-                        }
+                            <Flex gap={5} direction='column' align='center'>
+                                <Title className='signup-welcome-title' w='90%' fz={{base: '2rem', xs: '2.2rem', md: '2.3rem'}} fw={800} ta="center" c='#fafafa' ff='Nunito Sans'>
+                                    Welcome back to Cocollabs
+                                </Title>
 
-                            
-                        </div>
-                    </Paper>
-                </div>
+                                <Text className='signup-welcome-subtitle' fz={{base: '0.8rem', xs: '0.93rem', md: '.95rem'}} c="#97999c" w='90%' fw={500} ta="center" mb="xl" ff='Nunito Sans'>
+                                    Log in to continue where you left off.
+                                </Text>
+                            </Flex>
+                                
+                                
+                            <Flex className='auth-content-block' w={{base: '85%', xs: '80%'}} >
+                                <Box>
 
-                <div className='w-100 login-illustration-block'>
-                    <div className='d-flex justify-content-center'>
-                        <Image src={login} w={700} className='login-image'/>
-                    </div>
-                </div>
+                                    <Flex mb="lg" gap={20} direction='column' >
+                                        <GoogleButton bd='1px solid #5c5c5c' c='#f0f0f0' size="sm" onClick={handleGoogleLogin} radius={6} p='8px 0' className='sign-up-oauth-button' fz={17} bg="transparent">
+                                            <Text className='ms-2 oauth-button-text' fw={700} fz={{base: 16, xs: 17}}>Continue with Google</Text>
+                                        </GoogleButton>
+                                            
+                                        <GithubButton bd='1px solid #5c5c5c' c='#f0f0f0' size="sm" onClick={handleGoogleLogin} radius={6} p='8px 0' className='sign-up-oauth-button' fz={17} bg="transparent">
+                                            <Text className='ms-2 oauth-button-text' fw={700} fz={{base: 16, xs: 17}}>Continue with Github</Text>
+                                        
+                                        </GithubButton>
+                                        {/* <SlackButton size="md" radius="md" px="0" className='py-2 sign-up-oauth-button' style={{fontSize: "17px",background: "#fafafa"}}>Continue with Slack</SlackButton> */}
+                                    </Flex>
 
-            </div>
-        </div>
+                                    <Divider label="or" color='#929292' className='signup-content-wrapper-paper-divider' labelPosition="center" my={30} />
+                                </Box>
+                                
+                                <form onSubmit={form.onSubmit(handleSubmit)}>
+                                    <Box>
+                                        <Flex align='flex-start' gap={10} direction='column'>
+                                            <Box w='100%'>
+                                                <TextInput
+                                                    label='Email'
+                                                    type="text"
+                                                    placeholder=""
+                                                    leftSection={Icons('IconMail',18,18,'#a2a2a2',2)}
+                                                    autoComplete='off'
+                                                    value={inputEmail}
+                                                    onChange={(e) => {
+                                                        handleEmailChange(e);
+                                                        form.getInputProps('email').onChange(e);
+                                                    }}
+                                                    // onChange={(e) => setInputEmail(e.target.value)}
+                                                    className='w-100 auth-user-input-field'
+                                                    key={form.key('email')}
+                                                    {...form.getInputProps('email')}
+                                                    size="lg"
+                                                />
+                                                { invalidEmailErrorText.length > 0 && 
+                                                <Text fz={14.5} c='#dc5050' py={5} fw={400}>
+                                                    {invalidEmailErrorText}
+                                                </Text> }
+                                            </Box>
+
+                                            <Box w='100%'>
+                                                <PasswordInput
+                                                    label="Password"
+                                                    type="password"
+                                                    autoComplete='off'
+                                                    placeholder=""
+                                                    // leftSection={<IconLock style={{ width: rem(18), height: rem(18) }} stroke={2.5}/>}
+                                                    leftSection={Icons('IconLock',18,18,'#717171',2.5)}
+                                                    className='w-100 auth-user-input-field '
+                                                    size="lg"
+                                                    radius="md"
+                                                    key={form.key('password')}
+                                                    {...form.getInputProps('password')}
+                                                />
+                                                { invalidPasswordErrorText.length > 0 && 
+                                                <Text fz={14.5} c='#ec4848' pt={5} fw={400} >
+                                                    {invalidPasswordErrorText}
+                                                </Text> }  
+                                            </Box>
+                                        </Flex>
+                                        
+                                    </Box>
+
+                                    <Group justify='space-between' pt={30} >
+                                        <Flex align='center'>
+                                            <Text c="#97999c" size="sm" ff='Nunito Sans'>
+                                                Don&apos;t have an account?
+                                            </Text>
+                                            <Anchor href='/signup' ps={5} c="#2b93f0" size="sm" ff='Nunito Sans'>
+                                                Sign up
+                                            </Anchor>
+                                        </Flex>
+                                        
+                                        <Button bg='transparent' bd='1px solid #5c5c5c' c='#f0f0f0' type="submit" className='auth-content-signup-button' radius={6} px="18" py="3" fw={700} fz={15} onClick={validateEmailLogin}>
+                                            Continue
+                                        </Button>
+                                    </Group>
+                                </form>
+                            </Flex>
+                        </Paper>
+                    </Flex>
+                </Flex>
+            </Box>
+        </Flex>
     );
 };
 
