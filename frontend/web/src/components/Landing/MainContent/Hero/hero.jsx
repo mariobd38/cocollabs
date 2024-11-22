@@ -32,7 +32,7 @@ const Hero = () => {
                     <Box w='100%' m={0} p={0} pb={{base: '0', sm: '60'}}>
                 
                         <Container px={{sm: '10', md: '0'}}>
-                            <Flex gap={70} direction='column' py={60} px={10}>
+                            <Flex gap={70} direction='column' py={30} px={10}>
                                 <AnimatedGradientTextComp
                                     animate={animate}
                                     target={<>
