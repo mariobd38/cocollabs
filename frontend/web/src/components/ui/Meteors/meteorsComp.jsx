@@ -1,5 +1,6 @@
 import React from 'react';
-import Meteors from './meteors';
+
+import Meteors from '@/components/ui/Meteors/meteors';
 
 const MeteorsComp = ({target,num}) => {
     return (

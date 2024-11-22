@@ -5,16 +5,15 @@ import {Title,Flex,Box,TextInput,PasswordInput,Text,Paper,Group,Button,Divider,A
 import {Icons} from '@/components/icons/icons';
 import { useForm } from '@mantine/form';
 
-import { GoogleButton } from '../OAuthButtons/googleButton';
-import { GithubButton } from '../OAuthButtons/githubButton';
+import { GoogleButton } from '@/components/Auth/OAuthButtons/googleButton';
+import { GithubButton } from '@/components/Auth/OAuthButtons/githubButton';
 // import { SlackButton } from './slackButton';
 import { UseAuth } from '@/AuthContext/authProvider';
 import { VerifyEmailRegex } from '@/utils/emailRegexFormat';
 import { isOAuthUser } from '@/api/Users/isOAuthUser';
-import { userExists } from '../../../api/Users/userExists';
+import { userExists } from '@/api/Users/userExists';
 import { authStatusInfo } from '@/api/Auth/status';
-import AuthSideBlock from '../authSideBlock';
-
+import AuthSideBlock from '@/components/Auth/authSideBlock';
 
 const validatePassword = (value) => {
     if (!value.trim()) {

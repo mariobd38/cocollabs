@@ -2,10 +2,9 @@ import React from 'react'
 
 import { Avatar } from '@mantine/core';
 
-import { constructImageSrc } from '../../../utils/constructImageSrc';
+import { constructImageSrc } from '@/utils/constructImageSrc';
 
 import './userAvatar.css'
-
 
 const UserAvatar = (props) => {
     const { userProfileDto, userProfilePicture, initials, multiplier, fontSize } = props;

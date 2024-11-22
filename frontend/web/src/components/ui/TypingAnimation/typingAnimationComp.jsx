@@ -1,6 +1,6 @@
 import React from 'react';
 
-import TypingAnimation from './typing-animation';
+import TypingAnimation from '@/components/ui/TypingAnimation/typing-animation';
 
 const TypingAnimationComp = ({text, duration}) => {
     return (

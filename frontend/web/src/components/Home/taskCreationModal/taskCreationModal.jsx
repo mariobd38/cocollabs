@@ -5,15 +5,16 @@ import { Modal } from "antd";
 import { Text,Textarea,Button,Box,Flex,Divider } from '@mantine/core';
 import { Popover, PopoverContent, PopoverTrigger} from "@nextui-org/react";
 
-import { useScrollLock } from '../../../utils/useScrollLock';
-import {Icons} from '../../icons/icons';
-import getPriorityProperty from '../../../utils/getPriorityProperty';
-import { MantineDropdown } from '../../models/ModelDropdown2/mantineDropdown';
-import PriorityDropdownContent from '../DropdownContent/priorityDropdownContent';
-import StatusDropdownContent from '../DropdownContent/statusDropdownContent';
-import NextUICalendar from '../../models/NextUICalendar/nextUICalendar';
-import { createTaskInfo } from '../../../api/Tasks/createTaskv2';
-import TaskDescriptionTipTap from '../TaskDetailsModal/TaskDescriptionTipTap/taskDescriptionTipTap';
+import {Icons} from '@/components/icons/icons';
+import { MantineDropdown } from '@/components/models/ModelDropdown2/mantineDropdown';
+import PriorityDropdownContent from '@/components/Home/DropdownContent/priorityDropdownContent';
+import StatusDropdownContent from '@/components/Home/DropdownContent/statusDropdownContent';
+import NextUICalendar from '@/components/models/NextUICalendar/nextUICalendar';
+import TaskDescriptionTipTap from '@/components/Home/TaskDetailsModal/TaskDescriptionTipTap/taskDescriptionTipTap';
+
+import { useScrollLock } from '@/utils/useScrollLock';
+import getPriorityProperty from '@/utils/getPriorityProperty';
+import { createTaskInfo } from '@/api/Tasks/createTaskv2';
 
 import './taskCreationModal.css';
 import dayjs from 'dayjs';
@@ -66,7 +67,7 @@ const TaskCreationModal = (props) => {
 
     // console.log(dueDatePopoverOpened)
     return (
-        <Modal styles={{ body: { backgroundColor: themeColors.bg[1], border: `1px solid ${colorScheme==='dark' ? '#57585a' : '#c7c7c7'}`} }} 
+        <Modal styles={{ body: { backgroundColor: themeColors.bg[12], border: `1px solid ${colorScheme==='dark' ? '#57585a' : '#c7c7c7'}`} }} 
         open={openTaskCreateModal} onCancel={() => {setOpenTaskCreateModal(false) }} className='task-creation-modal' width={650} >
             <div style={{margin: "auto",width: "100%"}}>
                 <Box p='15px 20px' w='100%'>

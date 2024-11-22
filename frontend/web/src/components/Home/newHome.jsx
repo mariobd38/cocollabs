@@ -4,20 +4,20 @@ import { useLocation } from 'react-router-dom';
 import { useMantineTheme,useMantineColorScheme} from '@mantine/core';
 import { useLocalStorage } from '@mantine/hooks';
 
-import HomeHeader from '../Home/HomeHeader/homeHeader';
-import HomeNavbar from './HomeNavbar/homeNavbar';
-import TaskCard from './TaskCard/taskCard';
-import QuickActions from './QuickActions/quickActions';
-import HomeSidebar from './HomeSidebar/homeSidebar';
+import HomeHeader from '@/components/Home/HomeHeader/homeHeader';
+import HomeNavbar from '@/components/Home/HomeNavbar/homeNavbar';
+import TaskCard from '@/components/Home/TaskCard/taskCard';
+// import QuickActions from './QuickActions/quickActions';
+import HomeSidebar from '@/components/Home/HomeSidebar/homeSidebar';
 
-import { getUserInfo } from '../../api/Users/getUserInfo';
+import { getUserInfo } from '@/api/Users/getUserInfo';
 // import { getTaskInfo } from './../../DataManagement/Tasks/getTasks';
-import { getPersonalSpaceInfo } from '../../api/Spaces/getPersonalSpaceInfo';
-import { getTaskInfoBySpace } from '../../api/Tasks/getTasksBySpace';
+import { getPersonalSpaceInfo } from '@/api/Spaces/getPersonalSpaceInfo';
+import { getTaskInfoBySpace } from '@/api/Tasks/getTasksBySpace';
 // import { getGoogleTaskInfo } from '../../DataManagement/Tasks/getGoogleTasks';
 
-import { getThemeColor } from '../Themes/getThemeColor';
-import { getTextColor } from '../Themes/getTextColor';
+import { getThemeColor } from '@/components/Themes/getThemeColor';
+import { getTextColor } from '@/components/Themes/getTextColor';
 
 import './newHome.css';
 
@@ -206,7 +206,7 @@ const NewHome = () => {
                             <div className='user-home-all-content-left-spacing'>
                                 {/* <Button onClick={getSpaceTasks}>get personal tasks</Button> */}
                                 {/* <Button onClick={getUserSpace}>get personal tasks</Button> */}
-                                <div className=''>
+                                <div>
                                     {userFullName &&
                                     <TaskCard 
                                         colorScheme={colorScheme}
@@ -224,6 +224,23 @@ const NewHome = () => {
                                         userProfilePicture={userProfilePicture}
                                         spaceId={spaceData.id}
                                     />}
+                                    {/* {userFullName &&
+                                    <TaskCard 
+                                        colorScheme={colorScheme}
+                                        themeColors={themeColors}
+                                        userFullName={userFullName}
+                                        initials={initials}
+                                        userEmail={userEmail}
+                                        taskData={taskData} 
+                                        setTaskData={setTaskData} 
+                                        today={today} 
+                                        ongoingTasks={ongoingTasks}
+                                        overdueTasks={overdueTasks}
+                                        completedTasks={completedTasks}
+                                        userProfileDto={userProfileDto}
+                                        userProfilePicture={userProfilePicture}
+                                        spaceId={spaceData.id}
+                                    />} */}
                                     
                                 </div>
                             </div>

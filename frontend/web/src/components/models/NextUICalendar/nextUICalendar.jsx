@@ -1,14 +1,13 @@
 import React, { useState, useRef } from 'react';
 
 import dayjs from 'dayjs';
-
-import { Box,Flex,Select,Button } from '@mantine/core';
-import {Icons} from '../../icons/icons';
-
 import { parseDate } from '@internationalized/date';
-import { Calendar } from "@nextui-org/react";
 
+import { Calendar } from "@nextui-org/react";
+import { Box,Flex,Select,Button } from '@mantine/core';
 import { DatePicker as AntDatePicker }  from 'antd';
+
+import { Icons } from '@/components/icons/icons';
 
 import './nextUICalendar.css';
 
@@ -267,7 +266,7 @@ const NextUICalendar = (props) => {
             <Flex bg={dropdownColor} justify='flex-end'>
                 <Flex gap={30} justify='center' direction='column'>
                     {presetOptions.map((preset) => (
-                        <Button radius={4} key={preset.name} className={`preset-button ${colorScheme}`} onClick={preset.handler}>
+                        <Button radius={4} key={preset.name} fw={600} className={`preset-button ${colorScheme}`} onClick={preset.handler}>
                             {preset.name}
                         </Button>
                     ))}

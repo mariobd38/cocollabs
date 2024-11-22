@@ -29,12 +29,10 @@
     background-color: #dcdddf !important;
 }
  .user-home-task-details-modal-due-date-div {
-    background-color: red;
     padding: 6px 10px;
     border-radius: 6px;
     cursor: pointer;
     min-width:120px;
-
     height: 100%;
 }
 .user-home-task-details-modal-due-date-div:hover {
@@ -178,32 +176,38 @@
     overflow-y: auto;
 }
 .user-home-task-details-modal-name {
-    border: 2px solid transparent;
+    border: 1.5px solid transparent;
     border-radius: 8px;
     padding-left: 15px !important;
-    transition: border-color 0.5s ease-in;
+    transition: background-color 0.4s ease-in,border-color 0.2s ease-in;
+    .mantine-Input-input  {
+        border: none;
+        background-color: transparent !important;
+        font-size: 40px;
+        font-family: 'Nunito Sans' !important;
+        padding: 5px 0px !important;
+    }
 }
-.user-home-task-details-modal-name .mantine-Input-input {
-    border: none;
-    background-color: transparent !important;
-    /* color: #fafafa; */
-    font-size: 40px;
-    font-family: 'Nunito Sans' !important;
-    padding: 5px 0px !important;
-}
+
 .user-home-task-details-modal-name.light .mantine-Input-input {
     color: #222222;
 }
 .user-home-task-details-modal-name.dark .mantine-Input-input {
     color: #fafafa;
 }
-.user-home-task-details-modal-name.dark:hover,
-.user-home-task-details-modal-name.dark:focus {
-    border-color: #424242;
+.user-home-task-details-modal-name.dark:focus-within {
+    border-color: #404143;
+    background-color: #252628;
 }
-.user-home-task-details-modal-name.light:hover,
-.user-home-task-details-modal-name.light:focus {
+.user-home-task-details-modal-name.light:focus-within {
     border-color: #d4d4d4;
+    background-color: #e0e1e3;
+}
+.user-home-task-details-modal-name.dark:hover {
+    background-color: #252628;
+}
+.user-home-task-details-modal-name.light:hover {
+    background-color: #e0e1e3;
 }
 
 .user-home-task-details-modal-tags-button, .user-home-task-details-modal-head-text-dropdown-value {

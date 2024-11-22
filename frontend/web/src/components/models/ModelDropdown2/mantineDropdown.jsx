@@ -1,7 +1,8 @@
 import React, { useState, useRef, useCallback } from 'react';
-import { useScrollLock } from '../../../utils/useScrollLock';
 
 import { Menu } from '@mantine/core';
+
+import { useScrollLock } from '@/utils/useScrollLock';
 
 const MantineDropdown = (props) => {
     const { background,target,width,dropdown,childDropdownOpened,position,dmt,setModalDropdownIsOpen,colorScheme,modalName } = props;

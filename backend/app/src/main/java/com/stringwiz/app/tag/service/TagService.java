@@ -8,7 +8,6 @@ import com.stringwiz.app.task.repository.TaskRepository;
 import com.stringwiz.app.tag.util.TagColorsUtil;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -22,10 +21,13 @@ import java.util.Set;
 @Service
 @Transactional
 public class TagService {
-    @Autowired
-    private TagRepository tagRepository;
-    @Autowired
-    private TaskRepository taskRepository;
+    private final TagRepository tagRepository;
+    private final TaskRepository taskRepository;
+
+    public TagService(TagRepository tagRepository, TaskRepository taskRepository) {
+        this.tagRepository = tagRepository;
+        this.taskRepository = taskRepository;
+    }
 
     public Tag create(User user, Tag tag, Long task_id) {
         try {

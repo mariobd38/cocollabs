@@ -1,7 +1,8 @@
 import React from 'react';
 
 import {Text,Flex,TextInput,Textarea} from '@mantine/core';
-import SpaceCreationIconsPopover from '../Home/SpaceCreationModal/spaceCreationIconsPopover';
+
+import SpaceCreationIconsPopover from '@/components/Home/SpaceCreationModal/spaceCreationIconsPopover';
 
 const OnboardingCreateSpace = (props) => {
     const {color, setColor,spaceIcon,setSpaceIcon,firstLetter,spaceName,setSpaceName,spaceDescription, setSpaceDescription,

@@ -1,6 +1,8 @@
 import React from 'react';
+
 import { Divider, Menu, Box } from '@mantine/core';
-import { Icons } from '../../../icons/icons';
+
+import { Icons } from '@/components/icons/icons';
 
 const HomeSidebarSpaceOptions = (props) => {
     const {spaceName,setOpenSpaceCreateModal,themeColors,colorScheme } = props;
@@ -21,7 +23,7 @@ const HomeSidebarSpaceOptions = (props) => {
                     key={item.name} 
                     c={themeColors.text[3]}
                     className={`home-button ${colorScheme}`}
-                    bg={themeColors.bg[2]}
+                    bg={themeColors.bg[12]}
                     mt={item?.marginTop} 
                     w='calc(240px - 13.8%)' 
                     leftSection={Icons(item.icon,15,15,themeColors.text[3])}
@@ -32,7 +34,7 @@ const HomeSidebarSpaceOptions = (props) => {
             <Divider size="xs" bd='.1px solid #676869' my={5} />
             <Menu.Item 
                 c={themeColors.text[3]}
-                bg={themeColors.bg[2]}
+                bg={themeColors.bg[12]}
                 className={`home-button ${colorScheme}`}
                 w='calc(240px - 13.8%)' 
                 leftSection={Icons('IconPlus',15,15,themeColors.text[3])} 

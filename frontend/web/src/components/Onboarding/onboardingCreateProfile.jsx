@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
 
-import {Text,Avatar} from '@mantine/core';
+import { Text,Avatar } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 
-import { Icons } from '../icons/icons';
-import OnboardingProfileModal from './OnboardingProfileModal/onboardingProfileModal';
+import { Icons } from '@/components/icons/icons';
+import OnboardingProfileModal from '@/components/Onboarding/OnboardingProfileModal/onboardingProfileModal';
 
 const initialColorSwatchList = [
     { color: "#414141", active: true },
@@ -106,7 +106,7 @@ const OnboardingCreateProfile = (props) => {
                                     >
                                         
                                         <span>{item.option}</span>
-                                        <Text c='#343639' ta='center' ff='Lato' fw='600' fz='19' pt='10' className='text-name'>{fullName}</Text>
+                                        <Text c='#343639' ta='center' ff='Lato' fw={600} fz='19' pt='10' className='text-name'>{fullName}</Text>
                                     </div>
                                 </div>
                         ))}

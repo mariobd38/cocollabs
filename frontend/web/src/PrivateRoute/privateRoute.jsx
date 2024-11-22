@@ -1,6 +1,6 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
-import { UseAuth } from '../AuthContext/authProvider';
+import { UseAuth } from '@/AuthContext/authProvider';
 
 const PrivateRoute = ({ children }) => {
     const { isAuthenticated, isOnboarded,pending } = UseAuth();

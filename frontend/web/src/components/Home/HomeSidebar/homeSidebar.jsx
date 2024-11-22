@@ -1,13 +1,14 @@
 import React, { useState, useRef,useEffect } from 'react';
+
 import {Avatar,UnstyledButton,Badge,Tooltip,rem,Flex} from '@mantine/core';
 
-import {Icons} from '../../icons/icons';
+import {Icons} from '@/components/icons/icons';
 
-import classes from './navbarSearch.module.css';
+import HomeSidebarSpaceOptions from '@/components/Home/HomeSidebar/HomeSidebarSpaceOptions/homeSidebarSpaceOptions';
+import SpaceCreationModal from '@/components/Home/SpaceCreationModal/spaceCreationModal';
+import { MantineDropdown } from '@/components/models/ModelDropdown2/mantineDropdown';
 
-import HomeSidebarSpaceOptions from './HomeSidebarSpaceOptions/homeSidebarSpaceOptions';
-import SpaceCreationModal from '../SpaceCreationModal/spaceCreationModal';
-import { MantineDropdown } from '../../models/ModelDropdown2/mantineDropdown';
+import classes from './homeSidebar.module.css';
 import './homeSidebar.css';
 
 const HomeSidebar = (props) => {
@@ -164,7 +165,7 @@ const HomeSidebar = (props) => {
                                 colorScheme={colorScheme}
                             />
                         }
-                        background={themeColors.bg[2]} position='right-start' dmt={6}
+                        background={themeColors.bg[12]} position='right-start' dmt={6}
                     />
                 </div>
                 <div className={classes.section} data-theme={colorScheme}>

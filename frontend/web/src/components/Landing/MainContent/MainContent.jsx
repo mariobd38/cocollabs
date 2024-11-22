@@ -4,15 +4,14 @@ import { useNavigate } from "react-router-dom";
 import {  Box, Text, ThemeIcon } from '@mantine/core';
 // import { Carousel } from '@mantine/carousel';
 
-import { Icons } from '../../icons/icons';
+import { Icons } from '@/components/icons/icons';
+import NavbarContent from '@/components/Landing/NavbarContent/NavbarContent';
+import Hero from '@/components/Landing/MainContent/Hero/hero';
 
 import engineering_team from '../../../assets/illustrations/landing/engineering_team.png';
 import marketing_team from '../../../assets/illustrations/landing/marketing_team.png';
 import product_team from '../../../assets/illustrations/landing/product_team.png';
 import design_team from '../../../assets/illustrations/landing/design_team.png';
-
-import NavbarContent from '../NavbarContent/NavbarContent';
-import Hero from './Hero/hero';
 
 import '@mantine/carousel/styles.css';
 import './MainContent.css'

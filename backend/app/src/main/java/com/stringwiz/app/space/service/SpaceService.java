@@ -4,10 +4,8 @@ import com.stringwiz.app.space.model.Visibility;
 import com.stringwiz.app.space.model.Space;
 import com.stringwiz.app.user.model.User;
 import com.stringwiz.app.space.repository.SpaceRepository;
-import com.stringwiz.app.task.repository.TaskRepository;
 import com.stringwiz.app.user.repository.UserRepository;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.NoSuchElementException;
@@ -15,9 +13,13 @@ import java.util.Optional;
 
 @Service
 public class SpaceService {
-    @Autowired private SpaceRepository spaceRepository;
-    @Autowired private UserRepository userRepository;
-    @Autowired TaskRepository taskRepository;
+    private final SpaceRepository spaceRepository;
+    private final UserRepository userRepository;
+
+    public SpaceService(SpaceRepository spaceRepository, UserRepository userRepository) {
+        this.spaceRepository = spaceRepository;
+        this.userRepository = userRepository;
+    }
 
     @Transactional
     public Space save(User user, Space space) {

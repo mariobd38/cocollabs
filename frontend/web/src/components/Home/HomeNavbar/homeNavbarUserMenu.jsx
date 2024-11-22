@@ -1,13 +1,11 @@
 import React from 'react';
 
-import { userLogout } from '../../../api/Users/logout';
-// import { constructImageSrc } from '../../../utils/constructImageSrc';
+import { userLogout } from '@/api/Users/logout';
 
 import { Text,Menu } from '@mantine/core';
-
-import {Icons} from '../../icons/icons';
-import UserAvatar from '../UserAvatar/userAvatar';
-import { MantineDropdown } from '../../models/ModelDropdown2/mantineDropdown';
+import {Icons} from '@/components/icons/icons';
+import UserAvatar from '@/components/Home/UserAvatar/userAvatar';
+import { MantineDropdown } from '@/components/models/ModelDropdown2/mantineDropdown';
 
 const HomeNavbarUserMenu = (props) => {
     const {userProfileDto,userProfilePicture, userFullName, initials,colorScheme,setColorScheme,themeColors } = props;
@@ -31,7 +29,7 @@ const HomeNavbarUserMenu = (props) => {
         <>
             <MantineDropdown 
                 target={
-                    <div className={`d-flex align-items-center home-button ${colorScheme}`} style={{borderRadius: "8px", cursor: "pointer", padding: "5.5px 8px"}}>
+                    <div className={`d-flex align-items-center home-button ${colorScheme}`} style={{borderRadius: "6px", cursor: "pointer", padding: "5.5px 8px"}}>
                         <UserAvatar 
                             userProfileDto={userProfileDto}
                             userProfilePicture={userProfilePicture}
@@ -39,9 +37,9 @@ const HomeNavbarUserMenu = (props) => {
                             multiplier={2.075}
                             fontSize={1}
                         />
-                        <span className='ps-1'>
+                        {/* <span className='ps-1'>
                             {Icons('IconChevronDown',15,15,themeColors.text[1])}
-                        </span>
+                        </span> */}
                     </div>
                 }
                 width={300}
@@ -66,17 +64,17 @@ const HomeNavbarUserMenu = (props) => {
                     </Menu.Label>
 
                     {menuItems.map((item) => (
-                        <Menu.Item key={item.name} onClick={item.action} className={`home-button ${colorScheme}`} bg={themeColors.bg[2]} c={themeColors.text[4]} mt={item?.marginTop} w='91.5%' leftSection={Icons(item.icon,14,14,themeColors.text[4])}>
+                        <Menu.Item key={item.name} onClick={item.action} className={`home-button ${colorScheme}`} bg={themeColors.bg[12]} c={themeColors.text[4]} mt={item?.marginTop} w='91.5%' leftSection={Icons(item.icon,14,14,themeColors.text[4])}>
                             {item.name}
                         </Menu.Item>
                     ))}
                     <Menu.Divider size="xs" bd={`.1px solid ${colorScheme==='dark' ? '#484a4b' : '#d0d2d3'}`}/>
-                    <Menu.Item w='91.5%' className={`home-button ${colorScheme}`} bg={themeColors.bg[2]} c={themeColors.text[4]} onClick={handleUserLogout} leftSection={Icons('IconLogout',14,14,themeColors.text[4])}>
+                    <Menu.Item w='91.5%' className={`home-button ${colorScheme}`} bg={themeColors.bg[12]} c={themeColors.text[4]} onClick={handleUserLogout} leftSection={Icons('IconLogout',14,14,themeColors.text[4])}>
                         Log out
                     </Menu.Item>
                     </div>
                 }
-                background={themeColors.bg[2]} position='bottom-end' colorScheme={colorScheme}
+                background={themeColors.bg[12]} position='bottom-end' colorScheme={colorScheme}
             />
         </>
     );

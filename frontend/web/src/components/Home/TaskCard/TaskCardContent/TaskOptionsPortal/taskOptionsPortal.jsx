@@ -1,17 +1,17 @@
-import React, {forwardRef,useState } from 'react';
+import React, { forwardRef,useState } from 'react';
 
 import { Menu,Box,Portal, Divider } from '@mantine/core';
-import {Icons} from '../../../../icons/icons';
 
-import { deleteTaskInfo } from '../../../../../api/Tasks/deleteTask';
+import {Icons} from '@/components/icons/icons';
+
+import { deleteTaskInfo } from '@/api/Tasks/deleteTask';
 
 import './taskOptionsPortal.css';
 
 const TaskOptionsPortal = forwardRef((props, ref) => {
-    const { contextMenuPosition, showContextMenu,setShowContextMenu,openMenuIndex,setOpenMenuIndex,
-        enableScroll,setShowInnerContextMenu,setOpenRenameModal,taskType, setTaskType, currentIndex,
-        setCurrentTask
-     } = props;
+    const { contextMenuPosition,showContextMenu,setShowContextMenu,openMenuIndex,setOpenMenuIndex,
+        enableScroll,setShowInnerContextMenu,setOpenRenameModal,taskType,setTaskType,currentIndex,
+        setCurrentTask,colorScheme } = props;
 
     const menuItems = [
         {label: 'Rename', icon: Icons('IconEdit',17,17), cascade: false, 
@@ -38,16 +38,14 @@ const TaskOptionsPortal = forwardRef((props, ref) => {
         setShowContextMenu(false);
     }
 
-    const firstSectionItems = menuItems.slice(0,4);
-    const secondSectionItems = menuItems.slice(4,5);
-
     const handleMouseEnter = (index) => {
         setOpenMenuIndex(index);
         setFirstSectionActive(true);
     };
+    
     const [firstSectionActive, setFirstSectionActive] = useState(false);
 
-    return (<>
+    return (
         <Portal>
             <Box 
                 bg='#28292b'
@@ -78,7 +76,7 @@ const TaskOptionsPortal = forwardRef((props, ref) => {
 
                         <Menu >
                             {/* <Menu.Dropdown> */}
-                            {firstSectionItems.map((item, index) => (
+                            {menuItems.map((item, index) => (
                                 <Menu
                                     trigger="hover"
                                     openDelay={150} 
@@ -89,10 +87,12 @@ const TaskOptionsPortal = forwardRef((props, ref) => {
                                     closeOnItemClick={false}
                                     onMouseEnter={() => handleMouseEnter(index)}
                                 >
+                                    {index === 4 && <Divider my={8} bd='.1px solid #6a6a6a'/>}
+
                                     <Menu.Target closeOnItemClick={false}  >
                                         <Menu.Item
                                             w='86%'
-                                            className={`rte-styles-options-button ${openMenuIndex === index && firstSectionActive   ? 'isActive' : ''}`}
+                                            className={`rte-styles-options-button ${openMenuIndex === index && firstSectionActive   ? 'isActive' : ''} ${colorScheme}`}
                                             bg='#28292b'
                                             c='#eaebed'
                                             leftSection={item.icon}
@@ -114,39 +114,19 @@ const TaskOptionsPortal = forwardRef((props, ref) => {
                                         bg='#28292b'
                                         c='#eaebed' 
                                         bd='.1px solid #757779' 
-                                        m='0' style={{left: `${contextMenuPosition.left+200}px`,pointerEvents: "auto"}} 
+                                        m='0' 
+                                        style={{left: `${contextMenuPosition.left+200}px`,pointerEvents: "auto"}} 
                                     >
-                                        <Menu.Item w='84%' m='auto' bg='#28292b' c='inherit'  className='rte-styles-options-button'>a</Menu.Item>
-                                        <Menu.Item w='84%' m='auto' bg='#28292b' c='inherit'  className='rte-styles-options-button'>a</Menu.Item>
-                                        
+                                        <Menu.Item w='84%' m='auto' bg='#28292b' c='inherit'  className={`rte-styles-options-button ${colorScheme}`}>a</Menu.Item>
+                                        <Menu.Item w='84%' m='auto' bg='#28292b' c='inherit'  className={`rte-styles-options-button ${colorScheme}`}>a</Menu.Item>
                                     </Menu.Dropdown>}
                                 </Menu>
                             ))}
                         </Menu>
-
-                            <Divider my={8} bd='.1px solid #6a6a6a'/>
-                            {secondSectionItems.map((item, index) => (
-                                <div key={index} style={{ width: '98%' }} className=''>
-                                    <Menu.Item 
-                                        className='rte-styles-options-button '
-                                        key={index}
-                                        w='89%' 
-                                        style={{borderRadius: "6px"}}
-                                        bg='#28292b' 
-                                        c='#eaebed'
-                                        leftSection={item.icon}
-                                        onClick={item.action} 
-                                    >
-                                        <span className='fafafa-color d-flex'>{item.label}</span>
-                                    </Menu.Item>
-                                </div>
-                            ))}
                     </div>
                 </Menu>
             </Box>
         </Portal>
-
-        </>
     );
 });
 

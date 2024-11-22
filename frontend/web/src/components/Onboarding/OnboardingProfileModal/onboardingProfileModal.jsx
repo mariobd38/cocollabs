@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 
-
-import {Avatar,Text,Button,Modal,Group,ColorSwatch,Divider} from '@mantine/core';
+import { Avatar,Text,Button,Modal,Group,ColorSwatch,Divider } from '@mantine/core';
 
 import { Upload } from 'antd';
 import ImgCrop from 'antd-img-crop';
 
-import {Icons} from '../../icons/icons';
+import { Icons } from '@/components/icons/icons';
 
 import './onboardingProfileModal.css';
 

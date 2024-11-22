@@ -1,11 +1,10 @@
 import React, { useMemo, isValidElement, useState } from 'react';
 
-import {Icons} from '../../icons/icons';
-import { IconsFilled, GetAllFilledIcons } from '../../icons/iconsFilled';
-
 import { Button,Flex,Divider,Avatar,ColorInput,Group,ColorSwatch } from '@mantine/core';
 import {Popover, PopoverTrigger, PopoverContent} from "@nextui-org/react";
 
+import {Icons} from '@/components/icons/icons';
+import { IconsFilled, GetAllFilledIcons } from '@/components/icons/iconsFilled';
 
 const HexColorInput = ({ value, onChange, spaceIcon, setSpaceIcon, setColor, firstLetter, iconBg,colorMode, ...props }) => {
     const handleChange = (newValue) => {

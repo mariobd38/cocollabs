@@ -1,7 +1,8 @@
 import React, {forwardRef} from 'react';
 
 import { Menu,Box,Text } from '@mantine/core';
-import { Icons } from '../../../icons/icons';
+
+import { Icons } from '@/components/icons/icons';
 
 const TaskDescriptionTipTapOptionsMenu = forwardRef(( props, ref) => {
     const {onClose, menuPosition, menuOpened, setMenuOpened, editor,colorScheme,themeColors} = props;

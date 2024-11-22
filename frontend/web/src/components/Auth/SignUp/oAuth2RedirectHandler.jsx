@@ -1,10 +1,11 @@
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { readLocalStorageValue } from '@mantine/hooks';
-import { useNavigate } from 'react-router-dom';
 import { OAUTH2_CALLBACK_URI } from '../../../constants';
 
-import { UseAuth } from '../../../AuthContext/authProvider';
+import { UseAuth } from '@/AuthContext/authProvider';
+
 import { authStatusInfo } from '@/api/Auth/status';
 
 const OAuth2RedirectHandler = () => {

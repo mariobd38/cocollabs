@@ -1,10 +1,11 @@
 import React from 'react';
 
 import { Text, Container, ActionIcon, Group,Divider,Box,Flex } from '@mantine/core';
-import classes from './FooterLinks.module.css';
-import {Icons} from '../../icons/icons';
 
-import Logo2 from '../../Logo/logo2';
+import { Icons } from '@/components/icons/icons';
+import Logo2 from '@/components/Logo/logo2';
+
+import classes from './FooterLinks.module.css';
 import './FooterContent.css';
 
 const data = [

@@ -7,22 +7,24 @@ import { Modal } from 'antd';
 import { Text, Button,Textarea } from '@mantine/core';
 import { Popover, PopoverContent, PopoverTrigger} from "@nextui-org/react";
 
-import { useScrollLock } from '../../../utils/useScrollLock';
-import {Icons} from '../../icons/icons';
-import UserAvatar from '../UserAvatar/userAvatar';
-import { ProfileCard } from './ProfileCard/profileCard';
-import { MantineDropdown } from '../../models/ModelDropdown2/mantineDropdown';
-import { removeTagInfo } from '../../../api/Tags/removeTag';
-import { deleteTagInfo } from '../../../api/Tags/deleteTag';
-import getStatusProperty from '../../../utils/getStatusProperty';
-import getPriorityProperty from '../../../utils/getPriorityProperty';
-import NewHomeDueDatePopover from '../newHomeDueDatePopover';
-import TagDeletionModal from './TagDeletionModal/tagDeletionModal';
-import TaskDetailsModalHeader from './TaskDetailsModalHeader/taskDetailsModalHeader';
-import StatusDropdownContent from '../DropdownContent/statusDropdownContent';
-import PriorityDropdownContent from '../DropdownContent/priorityDropdownContent';
-import TagsDropdownContent from '../DropdownContent/tagsDropdownContent';
-import TaskDescriptionTipTap from './TaskDescriptionTipTap/taskDescriptionTipTap'
+import { useScrollLock } from '@/utils/useScrollLock';
+import getStatusProperty from '@/utils/getStatusProperty';
+import getPriorityProperty from '@/utils/getPriorityProperty';
+
+import { Icons } from '@/components/icons/icons';
+import UserAvatar from '@/components/Home/UserAvatar/userAvatar';
+import { ProfileCard } from '@/components/Home/TaskDetailsModal/ProfileCard/profileCard';
+import { MantineDropdown } from '@/components/models/ModelDropdown2/mantineDropdown';
+import NewHomeDueDatePopover from '@/components/Home/DueDatePopover/newHomeDueDatePopover';
+import TagDeletionModal from '@/components/Home/TaskDetailsModal/TagDeletionModal/tagDeletionModal';
+import TaskDetailsModalHeader from '@/components/Home/TaskDetailsModal/TaskDetailsModalHeader/taskDetailsModalHeader';
+import StatusDropdownContent from '@/components/Home/DropdownContent/statusDropdownContent';
+import PriorityDropdownContent from '@/components/Home/DropdownContent/priorityDropdownContent';
+import TagsDropdownContent from '@/components/Home/DropdownContent/tagsDropdownContent';
+import TaskDescriptionTipTap from '@/components/Home/TaskDetailsModal/TaskDescriptionTipTap/taskDescriptionTipTap'
+
+import { removeTagInfo } from '@/api/Tags/removeTag';
+import { deleteTagInfo } from '@/api/Tags/deleteTag';
 
 import './taskDetailsModal.css';
 
@@ -207,7 +209,7 @@ const TaskDetailsModal = (props) => {
 
     return (
         <Modal
-        styles={{ body: { backgroundColor: themeColors.bg[1], border: `1px solid ${colorScheme==='dark' ? '#57585a' : '#c7c7c7'}`} }} 
+        styles={{ body: { backgroundColor: themeColors.bg[12], border: `1px solid ${colorScheme==='dark' ? '#57585a' : '#c7c7c7'}`} }} 
             centered
             open={show}
             onCancel={() => {handleTaskDetailsModalClose(); setTiptapExpanded(false); }}

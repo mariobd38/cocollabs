@@ -1,12 +1,11 @@
 import { useState } from "react";
 
-import UserAvatar from "../../UserAvatar/userAvatar";
+import { HoverCard, Button } from '@mantine/core';
 
-import { HoverCard, Button, Avatar } from '@mantine/core';
+import UserAvatar from "@/components/Home/UserAvatar/userAvatar";
+import {Icons} from "@/components/icons/icons";
 
-import {Icons} from "../../../icons/icons";
-
-import { constructImageSrc } from "../../../../utils/constructImageSrc";
+// import { constructImageSrc } from "../../../../utils/constructImageSrc";
 
 import "./profileCard.css";
 

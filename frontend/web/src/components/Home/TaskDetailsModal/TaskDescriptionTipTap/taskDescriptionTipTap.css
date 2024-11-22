@@ -168,11 +168,11 @@
 .rte-styles-options-button {
     border: .1px solid transparent !important;
 }
-.rte-styles-options-button.dark:hover, .rte-styles-options-button.isActive {
+.rte-styles-options-button.dark:hover, .rte-styles-options-button.dark.isActive {
     background-color: #323335 !important;
     border-color: #505153 !important;
 }
-.rte-styles-options-button.light:hover, .rte-styles-options-button.isActive {
+.rte-styles-options-button.light:hover, .rte-styles-options-button.light.isActive {
     background-color: #e5e6e8 !important;
     border-color: #c2c3c5 !important;
 }

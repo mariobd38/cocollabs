@@ -1,19 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
-import { Icons } from '../icons/icons';
-
 import {Text,Button,Avatar,Stepper, Group,Box,Flex} from '@mantine/core';
 import { theme } from 'antd';
 
-import { UseAuth } from '../../AuthContext/authProvider';
-import { generateSpaceIconJson } from '../../utils/generateSpaceIconJson';
-import AuthHeader from '../../../src/components/Auth/authHeader';
-import { getUserInfo } from '../../api/Users/getUserInfo';
-import { completeOnboarding } from '../../api/Users/completeOnboarding';
-import { authStatusInfo } from '@/api/Auth/status';
-import OnboardingCreateProfile from './onboardingCreateProfile';
-import OnboardingCreateSpace from './onboardingCreateSpace';
+import { Icons } from '@/components/icons/icons';
+import OnboardingCreateProfile from '@/components/Onboarding/onboardingCreateProfile';
+import OnboardingCreateSpace from '@/components/Onboarding/onboardingCreateSpace';
+import AuthHeader from '@/components/Auth/authHeader';
+
+import { UseAuth } from '@/AuthContext/authProvider';
+
+import { generateSpaceIconJson } from '@/utils/generateSpaceIconJson';
+
+import { getUserInfo } from '@/api/Users/getUserInfo';
+import { completeOnboarding } from '@/api/Users/completeOnboarding';
+// import { authStatusInfo } from '@/api/Auth/status';
 
 import './onboarding.css';
 

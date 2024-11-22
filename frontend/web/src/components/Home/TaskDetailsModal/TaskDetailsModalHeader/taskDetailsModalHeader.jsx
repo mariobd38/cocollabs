@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { Tooltip,Breadcrumbs, Anchor,Divider,Text, Button,Box } from '@mantine/core';
+import { Breadcrumbs, Anchor,Divider,Text, Button,Box } from '@mantine/core';
 
-import {Icons} from '../../../icons/icons';
+import { Icons } from '@/components/icons/icons';
 
 import './taskDetailsModalHeader.css';
 

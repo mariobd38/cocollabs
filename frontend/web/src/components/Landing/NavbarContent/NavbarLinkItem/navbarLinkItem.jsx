@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
-import {
-    Group,
-    UnstyledButton,
-    Text,
-    ThemeIcon
-  } from '@mantine/core';
-import {Icons} from '../../../icons/icons';
+import { Group,UnstyledButton,Text,ThemeIcon } from '@mantine/core';
+
+import { Icons } from '@/components/icons/icons';
 
 import classes from './../../NavbarContent/NavbarContent.module.css';
 
@@ -15,27 +11,27 @@ const NavbarLinkItem = ({ mockdata, drawerOpened,closeDrawer }) => {
     const [alignment, setAlignment] = useState(drawerOpened ? 'start' : 'center');
   
     const updatePaddingAndAlignment = () => {
-      const screenWidth = window.innerWidth;
-      const isLargeScreen = screenWidth > 992;
+        const screenWidth = window.innerWidth;
+        const isLargeScreen = screenWidth > 992;
 
-      if (isLargeScreen) {
-        closeDrawer();
-        setPaddingStart(0);
-        setAlignment('center');
-      } else {
-        setPaddingStart(drawerOpened ? 22.5 : 0);
-        setAlignment(drawerOpened ? 'start' : 'center');
-      }
+        if (isLargeScreen) {
+            closeDrawer();
+            setPaddingStart(0);
+            setAlignment('center');
+        } else {
+            setPaddingStart(drawerOpened ? 22.5 : 0);
+            setAlignment(drawerOpened ? 'start' : 'center');
+        }
     };
   
     useEffect(() => {
-      updatePaddingAndAlignment();
-  
-      window.addEventListener('resize', updatePaddingAndAlignment);
-  
-      return () => {
-        window.removeEventListener('resize', updatePaddingAndAlignment);
-      };
+        updatePaddingAndAlignment();
+    
+        window.addEventListener('resize', updatePaddingAndAlignment);
+    
+        return () => {
+            window.removeEventListener('resize', updatePaddingAndAlignment);
+        };
     }, [drawerOpened]);
 
     return (

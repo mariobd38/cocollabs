@@ -8,14 +8,15 @@ import dayjs from 'dayjs';
 import { Tooltip, Table, Text,Button,Textarea,Box } from '@mantine/core';
 import { useClickOutside } from '@mantine/hooks';
 
-import {Icons} from '../../../icons/icons';
+import { Icons } from '@/components/icons/icons';
 
-import NewHomeDueDatePopover from '../../newHomeDueDatePopover';
-import { MantineDropdown } from '../../../models/ModelDropdown2/mantineDropdown';
-import PriorityDropdownContent from '../../DropdownContent/priorityDropdownContent';
-import StatusDropdownContent from '../../DropdownContent/statusDropdownContent';
-import TaskOptionsPortal from './TaskOptionsPortal/taskOptionsPortal';
-import { useScrollLock } from '../../../../utils/useScrollLock';
+import NewHomeDueDatePopover from '@/components/Home/DueDatePopover/newHomeDueDatePopover';
+import { MantineDropdown } from '@/components/models/ModelDropdown2/mantineDropdown';
+import PriorityDropdownContent from '@/components/Home/DropdownContent/priorityDropdownContent';
+import TaskOptionsPortal from '@/components/Home/TaskCard/TaskCardContent/TaskOptionsPortal/taskOptionsPortal';
+
+// import StatusDropdownContent from '../../DropdownContent/statusDropdownContent';
+import { useScrollLock } from '@/utils/useScrollLock';
 
 import './taskCardContent.css';
 
@@ -123,9 +124,10 @@ const TaskCardContent = (props) => {
             currentIndex={currentIndex}
             setTaskType={setTaskType}
             setCurrentTask={setCurrentTask}
+            colorScheme={colorScheme}
         />
         
-    },[showContextMenu,contextMenuPosition,ref,openMenuIndex,enableScroll,currentIndex,setTaskType,taskType]);
+    },[showContextMenu,contextMenuPosition,ref,openMenuIndex,enableScroll,currentIndex,setTaskType,taskType,colorScheme]);
 
     const handleTaskRename = () => {
         handleTaskUpdateNew(taskType[currentIndex], newTaskName, "name", taskType, setTaskType, currentIndex);
@@ -222,7 +224,7 @@ const TaskCardContent = (props) => {
                                     </Button> :
 
                                     <span className='table-cell-icon'>
-                                        <Tooltip label="Add due date" position="top" offset={8} openDelay={400} className='user-home-tooltip' >
+                                        <Tooltip label="Add due date" position="top" offset={8} openDelay={400} className='user-home-tooltip' bg={`${colorScheme==='dark' ? '#121212' : '#272727'}`} c='#f0f0f0' >
                                             <Box bd={buttonBorderColor} className={`user-home-calendar-icon-div ${colorScheme}`} onClick={(event) => handleDueDatePopoverClick(event, index,element)}>
                                                 {Icons('IconCalendarMonth',20.80,16,themeColors.text[1])}
                                             </Box>

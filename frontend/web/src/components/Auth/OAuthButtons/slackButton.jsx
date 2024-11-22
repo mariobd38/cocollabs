@@ -1,4 +1,5 @@
 import { Button } from '@mantine/core';
+
 import slack_icon from '../../../assets/logos/slack_logo.png';
 
 function SlackIcon(props) {

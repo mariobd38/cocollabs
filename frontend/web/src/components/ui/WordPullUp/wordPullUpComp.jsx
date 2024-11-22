@@ -1,6 +1,6 @@
 import React from 'react';
 
-import WordPullUp from './word-pull-up';
+import WordPullUp from '@/components/ui/WordPullUp/word-pull-up';
 
 const WordPullUpComp = ({text}) => {
     return (

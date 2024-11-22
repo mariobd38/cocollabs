@@ -1,16 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
-// import { Butt,ColorInput,Group,ColorSwatch } from '@mantine/core';
-
-import {Icons} from '../../icons/icons';
 
 import { Text,Button,Textarea,Box,Flex,Divider,TextInput,Grid,Radio, Group,Stack,Avatar } from '@mantine/core';
-
 import { Modal } from "antd";
-import SpaceCreationIconsPopover from './spaceCreationIconsPopover';
-import { createSpaceInfo } from '../../../api/Spaces/createSpace';
-import { generateSpaceIconJson } from '../../../utils/generateSpaceIconJson';
-// import { linkTasksToPersonalSpace } from '../../../DataManagement/Spaces/linkTasksToPersonalSpace';
 
+import { Icons } from '@/components/icons/icons';
+import SpaceCreationIconsPopover from '@/components/Home/SpaceCreationModal/spaceCreationIconsPopover';
+
+import { createSpaceInfo } from '@/api/Spaces/createSpace';
+import { generateSpaceIconJson } from '@/utils/generateSpaceIconJson';
+// import { linkTasksToPersonalSpace } from '../../../DataManagement/Spaces/linkTasksToPersonalSpace';
 
 import classes from './spaceCreationModal.module.css';
 import './spaceCreationModal.css';
@@ -92,7 +90,7 @@ const SpaceCreationModal = (props) => {
     // };
     
     return (
-        <Modal styles={{ body: { backgroundColor: themeColors.bg[1]} }} open={openSpaceCreateModal} onCancel={() => {setOpenSpaceCreateModal(false) }} className='space-creation-modal' width={650} >
+        <Modal styles={{ body: { backgroundColor: themeColors.bg[12]} }} open={openSpaceCreateModal} onCancel={() => {setOpenSpaceCreateModal(false) }} className='space-creation-modal' width={650} >
             
             <div style={{margin: "auto",width: "100%"}}>
                 

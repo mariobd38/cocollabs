@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
-import SignupContent from '../signupContent';
+import SignupContent from '@/components/Auth/SignUp/signupContent';
 
-import { VerifyEmailRegex } from '../../../../utils/emailRegexFormat';
-import { userExists } from '../../../../api/Users/userExists';
+import { VerifyEmailRegex } from '@/utils/emailRegexFormat';
+import { userExists } from '@/api/Users/userExists';
 
 const SignUpNextSteps = (props) => {
     let navigate = useNavigate();

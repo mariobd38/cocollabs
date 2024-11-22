@@ -18,7 +18,6 @@ function deleteTaskInfo (currentRowIndex, taskData,setTaskData ) {
             // No content in response (successful deletion)
             const updatedTaskData = taskData.filter((_, index) => index !== currentRowIndex);
             setTaskData(updatedTaskData);
-            console.log("Deleted item from task array!");
         }
     })
     .catch((error) => {

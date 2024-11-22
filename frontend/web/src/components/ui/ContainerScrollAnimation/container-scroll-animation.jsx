@@ -75,6 +75,7 @@ export const Card = ({
         style={{
             rotateX: rotate,
             scale,
+            transitionDuration: '500ms',
             // background: '#313131',
             // overflowX: "hidden",
             background: '#111116a6',

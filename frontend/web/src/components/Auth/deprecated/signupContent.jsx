@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import achievement from '../../../assets/illustrations/signup/achievement.png';
-
 import { useFocusWithin } from '@mantine/hooks';
 import {TextInput,PasswordInput,Text,Paper,Group,Button,Divider,Anchor,Stack,List, Image,Progress } from '@mantine/core';
-import {Icons} from '../../icons/icons';
 import { useForm } from '@mantine/form';
 
-import { GoogleButton } from '../OAuthButtons/googleButton';
+import {Icons} from '@/components/Logo/logo2';
+import { GoogleButton } from '@/components/Auth/OAuthButtons/googleButton';
 // import { SlackButton } from './slackButton';
-import { VerifyEmailRegex } from '../../../utils/emailRegexFormat';
-import { userExists } from '../../../api/Users/userExists';
-import { UseAuth } from '../../../AuthContext/authProvider';
+
+import { userExists } from '@/api/Users/userExists';
+import { VerifyEmailRegex } from '@/utils/emailRegexFormat';
+import { UseAuth } from '@/AuthContext/authProvider';
+
+import achievement from '../../../assets/illustrations/signup/achievement.png';
 
 const requirements = [
     { re: /[0-9]/ },

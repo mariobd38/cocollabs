@@ -48,12 +48,11 @@ code {
 .user-avatar:hover {
   scale: 1;  
 }
-/* .mantine-Avatar-placeholder:not(.sidebar-avatar .mantine-Avatar-placeholder) {
-  display: none !important;
-} */
+/* 
+makes text pixelated
 .subpixel-antialiased {
-  -webkit-font-smoothing: none ;
-}
+  -webkit-font-smoothing: none !important;
+} */
 .shadow-small {
   --tw-shadow: none;
 }
@@ -61,7 +60,7 @@ code {
 :root[data-mantine-color-scheme="light"] body {
   /* --mantine-color-body: var(--mantine-color-gray-1); */
   /* background-color: var(--mantine-color-gray-1); */
-  background-color: #fafafa;
+  background-color: #f2f3fb;
 }
 
 /* For dark mode */

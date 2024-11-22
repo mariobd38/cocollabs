@@ -2,7 +2,8 @@ import React from 'react';
 
 import { Modal } from 'antd';
 import { Text, Flex, Box,Button,Divider } from '@mantine/core';
-import {Icons} from '../../../icons/icons';
+
+import { Icons } from '@/components/icons/icons';
 
 import './tagDeletionModal.css';
 
@@ -11,7 +12,7 @@ const TagDeletionModal = (props) => {
 
     return (
         <Modal 
-        styles={{ body: { backgroundColor: themeColors.bg[1], border: `1px solid ${colorScheme==='dark' ? '#57585a' : '#c7c7c7'}`} }} 
+        styles={{ body: { backgroundColor: themeColors.bg[12], border: `1px solid ${colorScheme==='dark' ? '#57585a' : '#c7c7c7'}`} }} 
         
         centered open={show} onHide={handleClose} onCancel={handleClose} className='tag-deletion-modal'>
             <div style={{padding: '12px 24px'}}>

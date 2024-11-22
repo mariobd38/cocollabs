@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import {Icons} from '../../icons/icons';
-
-import login from '../../../assets/illustrations/login/login.png';
+import {Icons} from '@/components/Logo/logo2';
+import { GoogleButton } from '@/components/Auth/OAuthButtons/googleButton';
 
 import {TextInput,PasswordInput,Text,Paper,Group,Button,Divider,Anchor,Stack,Image} from '@mantine/core';
 import { useForm } from '@mantine/form';
 
-import { GoogleButton } from '../OAuthButtons/googleButton';
-import { VerifyEmailRegex } from '../../../utils/emailRegexFormat';
-import { userExists } from '../../../api/Users/userExists';
-import { UseAuth } from '../../../AuthContext/authProvider';
-import { isOAuthUser } from '../../../api/Users/isOAuthUser';
+import { userExists } from '@/api/Users/userExists';
+import { isOAuthUser } from '@/api/Users/isOAuthUser';
 
+import { VerifyEmailRegex } from '@/utils/emailRegexFormat';
+import { UseAuth } from '@/AuthContext/authProvider';
+
+import login from '../../../assets/illustrations/login/login.png';
 
 const validatePassword = (value) => {
     if (!value.trim()) {

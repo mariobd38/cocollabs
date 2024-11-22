@@ -2,15 +2,14 @@ import React, {useState, useEffect} from 'react';
 import { useNavigate } from "react-router-dom";
 
 import { Button,Flex, Box,Container, Title, Divider } from '@mantine/core';
+
 import MeteorsComp from '@/components/ui/Meteors/meteorsComp';
 import AnimatedGradientTextComp from '@/components/ui/AnimatedGradientText/animatedGradientTextComp';
-import HeroGetStartedButton from './heroGetStartedButton';
+import HeroGetStartedButton from '@/components/Landing/MainContent/Hero/heroGetStartedButton';
 import TypingAnimationComp from '@/components/ui/TypingAnimation/typingAnimationComp';
 import ContainerScrollAnimationComp from '@/components/ui/ContainerScrollAnimation/containerScrollAnimationComp';
 import { CardHoverEffectComp } from '@/components/ui/CardHoverEffect/cardHoverEffectComp';
-
 import { Icons } from '@/components/icons/icons';
-
 
 const Hero = () => {
 

@@ -2,9 +2,7 @@ package com.stringwiz.app.space.controller;
 
 import com.stringwiz.app.space.model.Space;
 import com.stringwiz.app.user.model.User;
-import com.stringwiz.app.user.repository.UserRepository;
 import com.stringwiz.app.space.service.SpaceService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,8 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class SpaceController {
-    @Autowired SpaceService spaceService;
-    @Autowired UserRepository userRepository;
+    private final SpaceService spaceService;
+
+    public SpaceController(SpaceService spaceService) {
+        this.spaceService = spaceService;
+    }
 
     @PostMapping("/api/spaces/create")
     public ResponseEntity<?> createSpace(@AuthenticationPrincipal User user, @RequestBody Space space) {

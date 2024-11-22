@@ -5,7 +5,6 @@ import com.stringwiz.app.user.model.User;
 import com.stringwiz.app.user.repository.UserRepository;
 import com.stringwiz.app.task.service.TaskService;
 import com.stringwiz.app.auth.util.JwtUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -24,9 +23,15 @@ import java.util.Optional;
 @RestController
 //@RequestMapping("/api/tasks")
 public class TaskController {
-    @Autowired TaskService taskService;
-    @Autowired UserRepository userRepository;
-    @Autowired JwtUtil jwtUtil;
+    private final TaskService taskService;
+    private final UserRepository userRepository;
+    private final JwtUtil jwtUtil;
+
+    public TaskController(TaskService taskService, UserRepository userRepository, JwtUtil jwtUtil) {
+        this.taskService = taskService;
+        this.userRepository = userRepository;
+        this.jwtUtil = jwtUtil;
+    }
 
     @PostMapping("/api/tasks/create")
     public ResponseEntity<?> createTask(@AuthenticationPrincipal User user, @RequestBody Task task, @RequestParam("spaceId") Long spaceId) {

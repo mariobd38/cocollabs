@@ -1,7 +1,9 @@
 import React from 'react';
+
 import { MantineProvider } from '@mantine/core';
 import { useLocalStorage, useColorScheme } from '@mantine/hooks';
-import { theme } from './theme';  // We'll create this file next
+
+import { theme } from '@/components/Themes/theme';
 
 export function ThemeProvider({ children }) {
     const colorScheme = useLocalStorage({

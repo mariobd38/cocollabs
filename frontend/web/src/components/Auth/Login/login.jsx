@@ -5,7 +5,7 @@ import { Box } from '@mantine/core';
 
 // import { GOOGLE_AUTH_URL } from '../../../constants';
 
-import LoginContent from './loginContent';
+import LoginContent from '@/components/Auth/Login/loginContent';
 
 import './../auth.css';
 import './login.css'

@@ -3,7 +3,6 @@ package com.stringwiz.app.tag.controller;
 import com.stringwiz.app.tag.model.Tag;
 import com.stringwiz.app.user.model.User;
 import com.stringwiz.app.tag.service.TagService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -20,7 +19,11 @@ import java.util.Set;
 
 @RestController
 public class TagController {
-    @Autowired TagService tagService;
+    private final TagService tagService;
+
+    public TagController(TagService tagService) {
+        this.tagService = tagService;
+    }
 
     @PostMapping("/api/tags/create")
     public ResponseEntity<?> createTag(@AuthenticationPrincipal User user, @RequestBody Tag tag, @RequestParam("taskId") Long task_id) {

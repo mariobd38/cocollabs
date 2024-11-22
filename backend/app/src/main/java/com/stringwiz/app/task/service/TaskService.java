@@ -6,7 +6,6 @@ import com.stringwiz.app.user.model.User;
 import com.stringwiz.app.space.repository.SpaceRepository;
 import com.stringwiz.app.task.repository.TaskRepository;
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -19,8 +18,13 @@ import java.util.Optional;
 
 @Service
 public class TaskService {
-    @Autowired private TaskRepository taskRepository;
-    @Autowired private SpaceRepository spaceRepository;
+    private final TaskRepository taskRepository;
+    private final SpaceRepository spaceRepository;
+
+    public TaskService(TaskRepository taskRepository, SpaceRepository spaceRepository) {
+        this.taskRepository = taskRepository;
+        this.spaceRepository = spaceRepository;
+    }
 
     public Task save(User user, Task task, Long space_id) {
             Optional<Space> optionalSpace = spaceRepository.findById(space_id);

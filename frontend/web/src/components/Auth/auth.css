@@ -6,11 +6,6 @@
     /* width: 80%; */
     transition: width 0.5s ease;
 }
-@media(max-width: 580px) {
-    .auth-content-block {
-        /* width: 85% !important; */
-    }
-}
 @media(max-width: 360px) {
     .signup-welcome-title {
         font-size: 1.7rem !important;
@@ -18,11 +13,6 @@
 }
 .signup-welcome-title, .signup-welcome-subtitle {
     transition: font-size 0.6s ease;
-}
-@media(max-width: 320px) {
-    .auth-content-block {
-        /* width: 85% !important; */
-    }
 }
 
 .auth-user-input-field label {

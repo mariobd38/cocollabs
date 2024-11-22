@@ -1,6 +1,7 @@
 import React from 'react';
-import MainContent from './MainContent/MainContent'
-import FooterContent from './FooterContent/FooterContent';
+
+import MainContent from '@/components/Landing/MainContent/MainContent';
+import FooterContent from '@/components/Landing/FooterContent/FooterContent';
 
 import './LandingPage.css'
 

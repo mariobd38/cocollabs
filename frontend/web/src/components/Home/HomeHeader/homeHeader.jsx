@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Button, Tooltip, Box,Flex,Text } from '@mantine/core';
-import {Icons} from '../../icons/icons';
+import {Icons} from '@/components/icons/icons';
 
 import './homeHeader.css';
 
@@ -35,14 +35,13 @@ const HomeHeader = ({spaceName,themeColors, colorScheme}) => {
                         <div className='me-2 d-flex'>
                             {Icons('IconHome', 24,24,themeColors.text[3])}
                         </div>
-                         {/* <IconHome className='me-2' color='#f2f4f7'/> */}
-                        <Text c={themeColors.text[3]} ff='Lato' fw='600' fz='17'>Home</Text>
+                        <Text c={themeColors.text[3]} ff='Lato' fw={600} fz='17'>Home</Text>
                     </span>
                     <div className='d-flex gap-3 align-items-center'>
                         {homeHeaderButtons.map((button, index) => (
                             <div key={index} >
                                 <Tooltip label={button.label} bg={`${colorScheme==='dark' ? '#121212' : '#d7d7d7'}`} c={`${colorScheme==='dark' ? '#fafafa' : '#121212'}`} className='user-home-tooltip' position="bottom" offset={8} openDelay={200} >
-                                    <Button radius='8' fw='400' c='#fafafa' p='0px 7px' bg='transparent' bd={homeHeaderBd} className={`home-header-button ${colorScheme}`}>
+                                    <Button radius='8' fw={400} c='#fafafa' p='0px 7px' bg='transparent' bd={homeHeaderBd} className={`home-header-button ${colorScheme}`}>
                                         {button.icon}
                                     </Button>
                                 </Tooltip>
@@ -52,34 +51,33 @@ const HomeHeader = ({spaceName,themeColors, colorScheme}) => {
                 </div>
             </div>
 
-            <div className='d-flex align-items-center justify-content-between' style={{margin: "24px 0"}}>
+            <Flex m='0 0 20px' align='center' justify='space-between' >
                 <div className='user-home-all-content-left-spacing'>
                     <Box>
                         <Flex direction={{ base: 'column' }} gap={5}>
-                            <Text ff='Inter' fw='700' fz='18.4' c={themeColors.text[3]}>{spaceName}</Text>
-                            <Text ff='Inter' fw='400' fz='13.2' c={themeColors.text[8]}>{dayOfWeek}, {month} {date.getDate()}, {date.getFullYear()}</Text>
+                            <Text ff='Inter' fw={700} fz='18.4' c={themeColors.text[3]}>{spaceName}</Text>
+                            <Text ff='Inter' fw={400} fz='13.2' c={themeColors.text[8]}>{dayOfWeek}, {month} {date.getDate()}, {date.getFullYear()}</Text>
                         </Flex>
                     </Box>
-                    {/* c4c0c6 */}
                 </div>
                 
                 {/* <div className='fafafa-color lato-font-600 user-home-all-content-left-spacing' style={{fontSize: ".99rem"}}>
                     <span>{dayOfWeek}, {month} {date.getDate()}, {date.getFullYear()}</span>
                 </div> */}
-                <div>
+                <Box>
                     <Button bd={`.1px solid ${colorScheme==='dark' ? '#048369' : '#24b689e3'}`}
                     radius={8} p='1px 13px' color={`${colorScheme==='dark' ? '#048369' : '#24b689e3'}`}
                     c='#fafafa' className='home-header-customize-button'
                     >
-                        <div className='d-flex align-items-center'>
-                            <div style={{marginRight: "7px"}}>
+                        <Flex align='center'>
+                            <Box me={8} >
                                 {Icons('IconFidgetSpinner',18,18,'#fafafa')}
-                            </div>
+                            </Box>
                             <span>Customize</span>
-                        </div>
+                        </Flex>
                     </Button>
-                </div>
-            </div>
+                </Box>
+            </Flex>
                 
         </>
     )

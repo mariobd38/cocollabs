@@ -1,12 +1,12 @@
 import React from 'react';
 
 import { Menu,Text, Input,Divider } from '@mantine/core';
-import { useForm } from '@mantine/form';
-
+// import { useForm } from '@mantine/form';
 import { Popover, PopoverContent, PopoverTrigger} from "@nextui-org/react";
 
-import {Icons} from '../../../icons/icons';
-import { updateTagInfo } from '../../../../api/Tags/updateTag';
+import { Icons } from '@/components/icons/icons';
+
+import { updateTagInfo } from '@/api/Tags/updateTag';
 
 import "./tagOptionsDropdown.css";
 

@@ -1,15 +1,13 @@
 
-.user-home-sidebar {
-    top: 100px !important;
-
-}
 .user-home-all-content {
-    /* height: calc(100vh - 4.5rem) !important; */
-    overflow-y: scroll;
+    height: calc(100dvh - 4rem) !important;
+    /* height: 100dvh !important; */
+    overflow-y: scroll !important;
     position: relative !important;
-    top: 70px;
+    top: 3.89rem;
     transition: margin 0.27s linear;
     margin: 0 1rem 0 4.25rem;
+
 }
 .user-home-all-content-left-spacing {
     padding-left: 1.6rem;
@@ -19,14 +17,7 @@
     margin-left: 15.5rem;
     transition: margin 0.27s linear;
 }
-.user-home-main-content {
-    width: 52.5rem;
-    /* border-right: 1px solid #222222; */
-}
-.user-home-right-content {
-    width: 26.3rem;
-    border-radius: 10px !important;
-}
+
 
 /* task and project cards */
 .user-home-card-header {
@@ -42,18 +33,6 @@
 }
 .css-19kzrtu {
     padding: 18px !important;
-}
-.user-home-card-task-tab {
-    color: #fafafa !important;
-    text-transform: capitalize !important;
-    font-size: 1rem !important;
-    font-family: 'Lato' !important;
-    border-bottom: none !important;
-    border-top-left-radius: 6px !important;
-    border-top-right-radius: 6px !important;
-}
-.user-home-card-task-tab:hover {
-    background-color: #2e2f31;
 }
 
 /* calendar */
@@ -104,29 +83,8 @@
 }
 
 .home-button.light:hover {
-    background-color: #e2e0de !important;
+    background-color: #e0e2e4 !important;
 }
 .home-button.dark:hover {
     background-color: #2d2f31 !important;
-}
-.home-search.light {
-    .mantine-Input-input {
-        background-color: #e1e4e7;
-        border: 1.5px solid #898b8d;
-        color: #222222;
-    }
-    .mantine-Input-input::placeholder {
-        color: #626467 !important;
-    }
-}
-.home-search.dark {
-    .mantine-Input-input {
-        background-color: #393b3d;
-        border: 1.5px solid #4b4d4f;
-        color: #fafafa;
-    }
-
-    .mantine-Input-input::placeholder {
-        color: #e1e1e1 !important;
-    }
 }

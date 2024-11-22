@@ -1,16 +1,17 @@
 import React from 'react';
 import { Routes, Route, useLocation } from "react-router-dom";
 
-import NewHome from "./components/Home/newHome";
-import TaskDetailsModal from "./components/Home/TaskDetailsModal/taskDetailsModal";
-import LandingPage from "./components/Landing/LandingPage";
-import Login from "./components/Auth/Login/login";
-import SignUp from "./components/Auth/SignUp/signup"
-import SignUpNextSteps from "./components/Auth/SignUp/SignUpNextSteps/signUpNextSteps";
-import Onboarding from "./components/Onboarding/onboarding";
-import PrivateRoute from "./PrivateRoute/privateRoute";
-import { AuthProvider } from "./AuthContext/authProvider";
-import OAuth2RedirectHandler from "./components/Auth/SignUp/oAuth2RedirectHandler";
+import PrivateRoute from "@/PrivateRoute/privateRoute";
+import { AuthProvider } from "@/AuthContext/authProvider";
+
+import NewHome from "@/components/Home/newHome";
+import TaskDetailsModal from "@/components/Home/TaskDetailsModal/taskDetailsModal";
+import LandingPage from "@/components/Landing/LandingPage";
+import Login from "@/components/Auth/Login/login";
+import SignUp from "@/components/Auth/SignUp/signup"
+import SignUpNextSteps from "@/components/Auth/SignUp/SignUpNextSteps/signUpNextSteps";
+import Onboarding from "@/components/Onboarding/onboarding";
+import OAuth2RedirectHandler from "@/components/Auth/SignUp/oAuth2RedirectHandler";
 
 import './App.css';
   

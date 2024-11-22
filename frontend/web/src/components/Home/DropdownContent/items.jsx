@@ -1,4 +1,4 @@
-import {Icons} from '../../icons/icons';
+import { Icons } from '@/components/icons/icons';
 
 function items(property,themeColors) {
     let items = null;

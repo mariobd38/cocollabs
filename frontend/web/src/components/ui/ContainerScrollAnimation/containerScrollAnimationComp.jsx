@@ -1,7 +1,8 @@
 import React from 'react';
 
-import {ContainerScroll} from './container-scroll-animation'
-import { Image,Title,Flex,Box } from '@mantine/core';
+import { Image,Title,Flex } from '@mantine/core';
+
+import { ContainerScroll } from '@/components/ui/ContainerScrollAnimation/container-scroll-animation';
 
 import home_screenshot from '../../../assets/images/home-screenshot.png';
 

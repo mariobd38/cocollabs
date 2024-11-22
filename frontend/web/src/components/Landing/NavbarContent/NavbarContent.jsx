@@ -4,13 +4,12 @@ import { useNavigate } from "react-router-dom";
 import { Group,Flex,Divider,Box,Button,Burger,Drawer,ScrollArea } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 
-import Logo2 from '../../Logo/logo2';
+import Logo2 from '@/components/Logo/logo2';
 
 // import { NavigationMenuComp } from '@/components/ui/NavigationMenu/navigationMenuComp';
 
 import './NavbarContent.css';
 import classes from './NavbarContent.module.css';
-
 
 const NavbarContent = (props) => {
     const {scrollPosition} = props; 

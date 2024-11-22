@@ -2,16 +2,17 @@ import React, { useState,useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useFocusWithin } from '@mantine/hooks';
-import {Title,Flex,Box,TextInput,PasswordInput,Text,Paper,Group,Button,Divider,Anchor,Stack,Progress } from '@mantine/core';
-import {Icons} from '@/components/icons/icons';
+import { Title,Flex,Box,TextInput,PasswordInput,Text,Paper,Group,Button,Divider,Anchor,Stack,Progress } from '@mantine/core';
 import { useForm } from '@mantine/form';
 
-import { GoogleButton } from '../OAuthButtons/googleButton';
-import { GithubButton } from '../OAuthButtons/githubButton';
+import {Icons} from '@/components/icons/icons';
+import { GoogleButton } from '@/components/Auth/OAuthButtons/googleButton';
+import { GithubButton } from '@/components/Auth/OAuthButtons/githubButton';
+import AuthSideBlock from '@/components/Auth/authSideBlock';
+
 // import { SlackButton } from './slackButton';
+import { userExists } from '@/api/Users/userExists';
 import { VerifyEmailRegex } from '@/utils/emailRegexFormat';
-import { userExists } from '../../../api/Users/userExists';
-import AuthSideBlock from '../authSideBlock';
 
 const requirements = [
     { re: /[0-9]/ },

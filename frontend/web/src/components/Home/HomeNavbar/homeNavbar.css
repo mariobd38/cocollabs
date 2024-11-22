@@ -3,39 +3,34 @@ body.scroll-lock {
   }
 
 .home-navbar-search-ss {
-    background-color: #3c3e40;
     border-radius: 50%;
-    width: 2.3rem;
-    height: 2.3rem;
+    /* width: 2.3rem;
+    height: 2.3rem; */
+    padding:9px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid #797979;
+    border: .1px solid #797979;
     cursor: pointer;
 }
 .home-navbar-search-ss.dark {
-    background-color: #3c3e40;
+    background-color: #2a2c2e;
 }
 .home-navbar-search-ss.light {
-    background-color: #e2e4e6;
+    background-color: #e4e6e8;
 }
 @media(max-width: 340px) {
-    .home-navbar-search-ss {
+    .home-navbar-search-ss,.home-navbar-divider {
         display: none;
     }
 }
 .home-navbar-search {
     width: 24rem;
-    transition: width 0.45s ease;
+    transition: width 0.4s ease;
 }
-@media(max-width: 990px) {
+@media(max-width: 950px) {
     .home-navbar-search {
-        width: 24rem;
-    }
-}
-@media(max-width: 800px) {
-    .home-navbar-search {
-        width: 17rem;
+        width: 18rem;
     }
 }
 .home-navbar-search-input {
@@ -45,11 +40,33 @@ body.scroll-lock {
     .mantine-Input-input {
         font-family: 'Inter' !important;
         height: 42px;
-        border-radius: 8px;
+        font-size:13.5px;
+        border-radius: 9px;
     }
 }
 .home-navbar-search-input::before, .home-navbar-search-input::after {
     border-bottom: none !important;
+}
+.home-navbar-search-input.light {
+    .mantine-Input-input {
+        background-color: #fff;
+        border: 1px solid #c9cbcd;
+        color: #222222;
+    }
+    .mantine-Input-input::placeholder {
+        color: #526467 !important;
+    }
+}
+.home-navbar-search-input.dark {
+    .mantine-Input-input {
+        background-color: #36383a;
+        border: 1px solid #4b4d4f;
+        color: #fafafa;
+    }
+
+    .mantine-Input-input::placeholder {
+        color: #cacaca !important;
+    }
 }
 
 .user-home-avatar-menu-target:hover {
@@ -75,3 +92,10 @@ body.scroll-lock {
 /* .user-home-navbar-icon-apps:hover,.navbar-menu-sidebar-icon:hover {
     background-color: #37393b;
 } */
+
+.home-navbar-search-input-right-section {
+    border-radius: 5px;
+    padding: 2px 9px;
+    margin-right: 30px;
+    height: 28px;
+}

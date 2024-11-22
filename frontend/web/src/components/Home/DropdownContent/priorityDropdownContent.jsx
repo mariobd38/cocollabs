@@ -1,9 +1,9 @@
 import React from 'react';
 
 import { Menu,Divider } from '@mantine/core';
-import {Icons} from '../../icons/icons';
+import {Icons} from '@/components/icons/icons';
 
-import { items } from './items';
+import { items } from '@/components/Home/DropdownContent/items';
 
 import './dropdownContent.css';
 

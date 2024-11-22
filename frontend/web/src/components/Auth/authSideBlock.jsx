@@ -2,10 +2,10 @@ import React from 'react';
 
 import { Flex,Paper,Box,Title,Text,Button,Image } from '@mantine/core';
 
-import Logo2 from '../Logo/logo2';
+import Logo2 from '@/components/Logo/logo2';
 import profile from '@/assets/profiles/aesthetic_profile.png';
-import { IconsFilled } from '../icons/iconsFilled';
-import { Icons } from '../icons/icons';
+import { IconsFilled } from '@/components/icons/iconsFilled';
+import { Icons } from '@/components/icons/icons';
 
 const AuthSideBlock = ({isLogin}) => {
     return (

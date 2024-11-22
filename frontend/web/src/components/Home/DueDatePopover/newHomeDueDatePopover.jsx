@@ -3,10 +3,9 @@ import React from 'react';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 
-// import { Popover } from 'antd';
 import { Popover, PopoverContent, PopoverTrigger} from "@nextui-org/react";
 
-import NextUICalendar from '../models/NextUICalendar/nextUICalendar';
+import NextUICalendar from '@/components/models/NextUICalendar/nextUICalendar';
 
 import './newHomeDueDatePopover.css';
 

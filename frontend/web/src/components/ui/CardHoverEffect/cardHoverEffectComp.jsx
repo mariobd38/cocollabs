@@ -1,11 +1,11 @@
 import React from 'react';
 
-import { HoverEffect } from "./card-hover-effect";
-
 import integration from '@/assets/illustrations/integration.svg';
 import apis from '@/assets/illustrations/apis.svg';
 import thoughts from '@/assets/illustrations/thoughts.svg';
 import community from '@/assets/illustrations/community.svg';
+
+import { HoverEffect } from "@/components/ui/CardHoverEffect/card-hover-effect";
  
 export function CardHoverEffectComp() {
     const projects = [
