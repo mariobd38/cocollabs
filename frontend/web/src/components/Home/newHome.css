@@ -1,21 +1,19 @@
-.parent-container {
-    /* height: 100dvh; */
-    /* padding-top: 3.89rem; */
-}
+
 .user-home-all-content {
-    /* max-height: calc(100dvh - 4rem) !important; */
-    max-height: calc(100dvh - 3rem) !important;
-    /* background-color: red; */
+    height: calc(100dvh - 4rem) !important;
+    /* height: 100dvh !important; */
     overflow-y: scroll !important;
     position: relative !important;
-    top: 3.82rem;
+    top: 3.89rem;
     transition: margin 0.27s linear;
     margin: 0 1rem 0 4.25rem;
+
 }
 .user-home-all-content-left-spacing {
     padding-left: 1.6rem;
 }
 .user-home-all-content.open {
+    
     margin-left: 15.5rem;
     transition: margin 0.27s linear;
 }

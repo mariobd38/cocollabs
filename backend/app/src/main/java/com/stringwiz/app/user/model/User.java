@@ -98,11 +98,6 @@ public class User implements UserDetails {
     private boolean isOnboardingComplete = false;
 
     @JsonIgnore
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "preference_id")
-    private UserPreference userPreference;
-
-    @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER, cascade= CascadeType.ALL)
     @JoinTable(
             name="users_roles",

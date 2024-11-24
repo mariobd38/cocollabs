@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -117,8 +116,12 @@ public class TagService {
     }
 
     private List<String> getAllTagColors(User user) {
+        List<String> allColors = new ArrayList<>();
         List<Tag> tags = tagRepository.findByUser(user);
-        return tags.stream().map(Tag::getColor).collect(Collectors.toList());
+        for(Tag tag : tags) {
+            allColors.add(tag.getColor());
+        }
+        return allColors;
     }
 
     public void delete(Long tag_id) {

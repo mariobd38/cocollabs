@@ -71,14 +71,3 @@
 .auth-user-input-field .mantine-InputWrapper-error {
     font-size: 14.5px;
 }
-
-.auth-content-wrapper-paper {
-    background: #121212 !important;
-    background: -webkit-linear-gradient(to left, #0d1620, #121212) !important;
-    background: linear-gradient(to left, #0d1620, #121212) !important;
-}
-.auth-content-wrapper-paper-divider .mantine-Divider-label {
-    color: #898989;
-    font-family: 'Nunito Sans';
-    font-size: 14px;
-}

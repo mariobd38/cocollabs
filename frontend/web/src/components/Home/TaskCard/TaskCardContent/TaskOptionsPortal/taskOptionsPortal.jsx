@@ -27,16 +27,9 @@ const TaskOptionsPortal = forwardRef((props, ref) => {
                 width: '200'
             }, action: () => console.log('test')
         },
-        {label: 'Set due date', icon: Icons('IconCalendarPlus',17,17), cascade: false, action: () => setShowContextMenu(false)},
-        {label: 'Delete', icon: Icons('IconTrash',17,17), cascade: false, action: () => deleteTask()}
+        {label: 'Set due date', icon: Icons('IconCalendarPlus',17,17), cascade: false, action: () => console.log('test')},
+        {label: 'Delete', icon: Icons('IconTrash',17,17), cascade: false, action: () => {setCurrentTask(null); deleteTaskInfo(currentIndex,taskType,setTaskType)}}
     ]
-
-    const deleteTask = () => {
-        setCurrentTask(null);
-        deleteTaskInfo(currentIndex,taskType,setTaskType);
-        setShowContextMenu(false);
-        enableScroll();
-    }
 
     const handleRenameButtonClick = () => {
         enableScroll();

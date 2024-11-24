@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { Button } from '@mantine/core';
+
 const HeroGetStartedButton = ({routeChange}) => {
     return (
         <button className="get-started relative overflow-hidden p-[1px]" onClick={() => routeChange("/signup")}

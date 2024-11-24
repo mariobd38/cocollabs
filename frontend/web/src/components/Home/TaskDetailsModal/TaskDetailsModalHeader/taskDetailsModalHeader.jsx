@@ -11,7 +11,7 @@ const TaskDetailsModalHeader = (props) => {
 
     const breadcrumbItems = [
     { title: `${userFullName.split(" ")[0]}'s Workspace`, href: '#' },
-    { title: `My Issues`, href: '#' },
+    { title: `My Tasks`, href: '#' },
     ].map((item, index) => (
     <Anchor href={item.href} key={index} c={themeColors.text[4]} className='user-home-task-details-modal-breadcrumbs'>
         {item.title}
