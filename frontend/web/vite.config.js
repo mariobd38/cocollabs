@@ -44,7 +44,13 @@ export default defineConfig(({mode}) => {
                     secure: false,
                 }
             },
-            
         },
+        source: '/fonts/Nunito_Sans/NunitoSans-Regular/woff2',
+        headers: [
+            {
+              key: 'CDN-Cache-Control',
+              value: 'public, immutable, max-age=31536000',
+            },
+          ],
     };
 });

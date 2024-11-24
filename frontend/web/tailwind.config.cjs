@@ -1,5 +1,5 @@
 import { nextui } from "@nextui-org/react";
-
+const defaultTheme = require("tailwindcss/defaultTheme");
 
 /** @type {import('tailwindcss').Config} */
 const config = {
@@ -10,7 +10,7 @@ const config = {
 	theme: {
     	extend: {
 			fontFamily: {
-				sans: ['Lato', 'sans-serif']
+				sans: ['Lato', 'Nunito Sans', 'Inter', 'Poppins', 'Open Sans', 'sans-serif',...defaultTheme.fontFamily.sans]
 			},
     		borderRadius: {
     			lg: 'var(--radius)',

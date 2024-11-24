@@ -24,6 +24,8 @@ const MantineDropdown = (props) => {
 
     }, [enableScroll,setModalDropdownIsOpen]);
 
+    const boxShadowBg = colorScheme==='dark' ? '0 2px 16px #0006' : '0 2px 16px #0002';
+
     return (
         <Menu shadow="md" width={width} position={position} offset={12} zIndex={1000000}
             closeOnEscape={true}
@@ -47,7 +49,7 @@ const MantineDropdown = (props) => {
                 ref={dropdownRef}
                 style={{
                     pointerEvents: shouldEnablePointerEvents() ? "auto" : "none",
-                    boxShadow: "0 2px 16px #0006",
+                    boxShadow: boxShadowBg,
                     borderRadius: "6px",
                     marginTop: dmt || '0'
                 }}

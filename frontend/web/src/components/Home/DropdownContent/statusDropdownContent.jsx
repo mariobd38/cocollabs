@@ -83,7 +83,7 @@ const StatusDropdownContent = (props) => {
                     {item.name}
                 </Menu.Item>
             )) : 
-                <Text m='8px auto' fz='14.5' w='95%' c={themeColors.text[9]}>No results</Text>
+                <Text m='8px auto' fz='14.5' w='95%' c={themeColors.text[9]}>No results.</Text>
             }
         </>
     );

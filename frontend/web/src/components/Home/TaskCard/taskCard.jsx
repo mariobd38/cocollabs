@@ -58,7 +58,7 @@ const TaskCard = (props) => {
 
     const segments = seg.map((item,index) => (
         { value: item.value, label: <> {
-            <Text key={index} className={`d-flex align-items-center task-card-segment ${colorScheme}`} c='#f5f6f9' ff='Nunito Sans' fz='15'>{item.text}<Text className='d-flex align-items-center text' ms={10}>{item.taskType.length}</Text></Text>
+            <Text key={index} className={`d-flex align-items-center task-card-segment ${colorScheme}`} c='#f5f6f9' fw={550} ff='Nunito Sans' fz='14'>{item.text}<Text className='d-flex align-items-center text' ms={10}>{item.taskType.length}</Text></Text>
             }
         </> }
     ));
@@ -96,7 +96,7 @@ const TaskCard = (props) => {
         <Box py={20} px={20} bg={themeColors.bg[4]} bd={`1px solid ${colorScheme === 'dark' ? '#323539' : '#b9b9b9'}`}
             style={{borderRadius: "10px", boxShadow: `0 2px 10px ${colorScheme==='dark' ? '#30314447' : '#70718457'}` }}>
             <div className='d-flex align-items-center justify-content-between pb-2'>
-                <Text fz='18'  c={themeColors.text[3]} ff='Lato'>My Tasks</Text>
+                <Text fz='18'  c={themeColors.text[3]} ff='Lato'>My Issues</Text>
                 {Icons('IconDots',24,24,themeColors.text[3])}
             </div>
 
@@ -119,7 +119,7 @@ const TaskCard = (props) => {
                         <div style={{marginRight: "7px"}}>
                         {Icons('IconPlus',15,15,'#fafafa')}
                         </div>
-                        <span>Create task</span>
+                        <span>New issue</span>
                     </div>
                 </Button>
                 

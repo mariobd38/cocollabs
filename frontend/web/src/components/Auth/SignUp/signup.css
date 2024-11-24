@@ -6,18 +6,6 @@
     color: #329bf6 !important;
     border-radius: 8px !important;
 }
-.signup-content-wrapper-paper {
-    /* background: #12141f !important; */
-    background: #121212;
-    background: -webkit-linear-gradient(to left, #0d1620, #121212);
-    background: linear-gradient(to left, #0d1620, #121212);
-}
-.signup-content-wrapper-paper-divider .mantine-Divider-label {
-    /* color: #12b886; */
-    color: #898989;
-    font-family: 'Nunito Sans';
-    font-size: 14px;
-}
 .sign-up-oauth-button {
     width: 100% !important;
     transition: all 0.5s ease;

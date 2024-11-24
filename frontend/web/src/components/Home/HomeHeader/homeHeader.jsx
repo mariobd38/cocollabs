@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Button, Tooltip, Box,Flex,Text } from '@mantine/core';
-import {Icons} from '@/components/icons/icons';
+import { Icons } from '@/components/icons/icons';
 
 import './homeHeader.css';
 
@@ -26,17 +26,16 @@ const HomeHeader = ({spaceName,themeColors, colorScheme}) => {
 
     return (
         <>
-            <div style={{position: "sticky", top: "1.8px", zIndex: "20"}}>
-                <div className='d-flex align-items-center justify-content-between user-home-all-content-left-spacing' style={{position: "sticky",top: ".13rem",background: themeColors.bg[1], 
-                    borderBottom: `1px solid ${colorScheme === 'dark' ? '#323539' : '#b9b9b9'}`, zIndex: "2",height: "59.4px", 
-                    // if quick actions is active, make top = 5rem;
-                }}>
-                    <span className='lato-font d-flex align-items-center'>
-                        <div className='me-2 d-flex'>
+            <Box pos='sticky' top={3.2}  style={{zIndex: "20"}} >
+                <Flex align='center' justify='space-between' pos='sticky' bg={themeColors.bg[1]} h={59.3}
+                className='user-home-all-content-left-spacing' 
+                style={{ borderBottom: `1px solid ${colorScheme === 'dark' ? '#323539' : '#b9b9b9'}`, zIndex: "2" }}>
+                    <Flex align='center' >
+                        <Flex me={10}>
                             {Icons('IconHome', 24,24,themeColors.text[3])}
-                        </div>
+                        </Flex>
                         <Text c={themeColors.text[3]} ff='Lato' fw={600} fz='17'>Home</Text>
-                    </span>
+                    </Flex>
                     <div className='d-flex gap-3 align-items-center'>
                         {homeHeaderButtons.map((button, index) => (
                             <div key={index} >
@@ -48,18 +47,16 @@ const HomeHeader = ({spaceName,themeColors, colorScheme}) => {
                             </div>
                         ))}
                     </div>
-                </div>
-            </div>
+                </Flex>
+            </Box>
 
-            <Flex m='0 0 20px' align='center' justify='space-between' >
-                <div className='user-home-all-content-left-spacing'>
-                    <Box>
+            <Flex  align='center' justify='space-between' py={30}>
+                    <Box className='user-home-all-content-left-spacing'>
                         <Flex direction={{ base: 'column' }} gap={5}>
                             <Text ff='Inter' fw={700} fz='18.4' c={themeColors.text[3]}>{spaceName}</Text>
                             <Text ff='Inter' fw={400} fz='13.2' c={themeColors.text[8]}>{dayOfWeek}, {month} {date.getDate()}, {date.getFullYear()}</Text>
                         </Flex>
                     </Box>
-                </div>
                 
                 {/* <div className='fafafa-color lato-font-600 user-home-all-content-left-spacing' style={{fontSize: ".99rem"}}>
                     <span>{dayOfWeek}, {month} {date.getDate()}, {date.getFullYear()}</span>

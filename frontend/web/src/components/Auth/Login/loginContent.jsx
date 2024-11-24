@@ -15,6 +15,7 @@ import { userExists } from '@/api/Users/userExists';
 import { authStatusInfo } from '@/api/Auth/status';
 import AuthSideBlock from '@/components/Auth/authSideBlock';
 
+
 const validatePassword = (value) => {
     if (!value.trim()) {
         return 'Password is required';
@@ -42,6 +43,9 @@ const LoginContent = (props) => {
     const { updateAuthStatus } = UseAuth();
 
     const navigate = useNavigate(); 
+    const routeChange = (path) => { 
+        navigate(path);
+    }
 
     const validateEmailLogin = async () => {
         // Clear previous error messages
@@ -154,7 +158,7 @@ const LoginContent = (props) => {
 
     return (
         <Flex mih='100dvh'>
-            <Box w='100%'  className='signup-content-wrapper-paper'>
+            <Box w='100%' className='auth-content-wrapper-paper'>
                 <Flex w={{xs: 530, md: '100%'}} m='auto' >
                     
                     <AuthSideBlock isLogin={true} />
@@ -188,7 +192,7 @@ const LoginContent = (props) => {
                                         {/* <SlackButton size="md" radius="md" px="0" className='py-2 sign-up-oauth-button' style={{fontSize: "17px",background: "#fafafa"}}>Continue with Slack</SlackButton> */}
                                     </Flex>
 
-                                    <Divider label="or" color='#929292' className='signup-content-wrapper-paper-divider' labelPosition="center" my={30} />
+                                    <Divider label="or" color='#929292' className='auth-content-wrapper-paper-divider' labelPosition="center" my={30} />
                                 </Box>
                                 
                                 <form onSubmit={form.onSubmit(handleSubmit)}>
@@ -246,7 +250,7 @@ const LoginContent = (props) => {
                                             <Text c="#97999c" size="sm" ff='Nunito Sans'>
                                                 Don&apos;t have an account?
                                             </Text>
-                                            <Anchor href='/signup' ps={5} c="#2b93f0" size="sm" ff='Nunito Sans'>
+                                            <Anchor onClick={() => routeChange('/signup')}  ps={5} c="#2b93f0" size="sm" ff='Nunito Sans'>
                                                 Sign up
                                             </Anchor>
                                         </Flex>

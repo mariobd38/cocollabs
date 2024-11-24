@@ -205,7 +205,7 @@ const TaskDetailsModal = (props) => {
 
     const [modalDropdownIsOpen, setModalDropdownIsOpen] = useState(false);
     const fadedTextColor = `${colorScheme==='dark' ? '#aaabae' : '#808184'}`;
-    const dropdownColor = colorScheme==='dark' ? '#232426' : '#f0f0f0';
+    const dropdownColor = colorScheme==='dark' ? '#232426' : '#fff';
 
     return (
         <Modal
