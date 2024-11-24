@@ -93,18 +93,20 @@ const NewHome = () => {
             setUserEmail(storedUserInfo.email);
             setUserProfilePicture(storedUserInfo.picture);
             setUserProfileDto(storedUserInfo.profileDto);
+            setColorScheme(storedUserInfo.userPreferenceDto.theme);
           } else {
             // Fetch data from API if no data in localStorage
             const data = await getUserInfo(passedUserInfo || null);
             if (data) {
-              setUserFullName(data.fullName);
-              setInitials((data.fullName.split(' ')[0][0] + data.fullName.split(' ')[1][0]).toUpperCase());
-              setUserEmail(data.email);
-              setUserProfilePicture(data.picture);
-              setUserProfileDto(data.profileDto);
+                setUserFullName(data.fullName);
+                setInitials((data.fullName.split(' ')[0][0] + data.fullName.split(' ')[1][0]).toUpperCase());
+                setUserEmail(data.email);
+                setUserProfilePicture(data.picture);
+                setUserProfileDto(data.profileDto);
+                setColorScheme(data.userPreferenceDto.theme);
     
-              // Store the user info in localStorage
-              setStoredUserInfo(data);
+                // Store the user info in localStorage
+                setStoredUserInfo(data);
             }
           }
         };
@@ -167,6 +169,8 @@ const NewHome = () => {
                 userProfileDto={userProfileDto}
                 openSidebarToggle={openSidebarToggle}
                 setOpenSidebarToggle={setOpenSidebarToggle}
+                storedUserInfo={storedUserInfo}
+                setStoredUserInfo={setStoredUserInfo}
             />}
             <div className='container m-0 p-0'>
                 {userFullName &&
@@ -182,6 +186,7 @@ const NewHome = () => {
                 />}
             </div>
 
+            <div className={` parent-container`}>
             <div className={`row user-home-all-content ${openSidebarToggle && 'open' }`}>
                 {}
                 <HomeHeader 
@@ -270,6 +275,7 @@ const NewHome = () => {
                         </div> */}
                     </div>
                 </div>
+            </div>
             </div>
         </>
     );

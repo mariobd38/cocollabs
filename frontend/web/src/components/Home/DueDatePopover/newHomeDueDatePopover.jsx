@@ -17,7 +17,7 @@ const NewHomeDueDatePopover = (props) => {
 
     dayjs.extend(customParseFormat);
     const dateFormatList = ['YYYY-MM-DD', 'M-D-YY', 'M-D-YYYY', 'MM-DD-YY', 'MM-DD-YYYY'];
-    const dropdownColor = colorScheme==='dark' ? '#232426' : '#f0f0f0';
+    const dropdownColor = colorScheme==='dark' ? '#232426' : '#fafafa';
 
     const content = (
         <NextUICalendar 

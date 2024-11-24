@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { updateThemeInfo } from '@/api/Users/updateTheme';
 import { userLogout } from '@/api/Users/logout';
 
 import { Text,Menu } from '@mantine/core';
@@ -8,18 +9,40 @@ import UserAvatar from '@/components/Home/UserAvatar/userAvatar';
 import { MantineDropdown } from '@/components/models/ModelDropdown2/mantineDropdown';
 
 const HomeNavbarUserMenu = (props) => {
-    const {userProfileDto,userProfilePicture, userFullName, initials,colorScheme,setColorScheme,themeColors } = props;
+    const {userProfileDto,userProfilePicture, userFullName, initials,colorScheme,setColorScheme,themeColors,
+        storedUserInfo,setStoredUserInfo
+     } = props;
 
     const handleUserLogout = () => {
         localStorage.clear();
         userLogout();
     };
 
+    const handleThemeUpdate = () => {
+        const newTheme = colorScheme === 'dark' ? 'light' : 'dark';
+        setColorScheme(newTheme);
+        updateThemeInfo(newTheme);
+        if (storedUserInfo) {
+            const updatedUserInfo = {
+                ...storedUserInfo, // Spread existing user data
+                userPreferenceDto: {
+                    ...storedUserInfo.userPreferenceDto, // Spread existing preferences
+                    theme: newTheme, // Update theme
+                },
+            };
+        
+            // Update localStorage with the new data
+            setStoredUserInfo(updatedUserInfo);
+        }
+
+    }
+
     const menuItems = [
         { name: 'Profile',icon: 'IconUser', marginTop: '20', action: () => console.log("profile")},
         { name: 'Settings',icon: 'IconSettings', action: () => console.log("settings")},
         { name: 'Notification Settings',icon: 'IconBell', action: () => console.log("notification settings")},
-        { name: 'Themes',icon: 'IconBrush', action: () => setColorScheme(colorScheme === 'dark' ? 'light' : 'dark')},
+        // { name: 'Themes',icon: 'IconBrush', action: () => setColorScheme(colorScheme === 'dark' ? 'light' : 'dark')},
+        { name: 'Themes',icon: 'IconBrush', action: handleThemeUpdate},
         { name: 'Archive',icon: 'IconArchive', action: () => console.log("archive")},
         { name: 'Trash',icon: 'IconTrash', action: () => console.log("trash")},
         { name: 'Help',icon: 'IconHelp', action: () => console.log("help")},

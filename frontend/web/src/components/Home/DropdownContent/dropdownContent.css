@@ -24,7 +24,7 @@
     color: #fafafa;
 }
 .model-dropdown-search-input.light .mantine-Input-input {
-    background-color: #f0f0f0 !important;
+    background-color: #fafafa !important;
     color: #252525;
 }
 .model-dropdown-search-input.dark .mantine-Input-input::placeholder {

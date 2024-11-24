@@ -63,10 +63,10 @@ const SignupContent = (props) => {
 
     const [invalidEmailErrorText, setInvalidEmailErrorText] = useState('');
     const navigate = useNavigate(); 
-
     const routeChange = (path) =>{ 
         navigate(path);
     }
+
     const handleEmailSignUp = async () => {
         setSignupClicked(true);
 
@@ -185,7 +185,7 @@ const SignupContent = (props) => {
     return (
         <Flex mih='100dvh'>
 
-            <Box w='100%' className='signup-content-wrapper-paper'>
+            <Box w='100%' className='auth-content-wrapper-paper'>
                 <Flex w={{xs: 530, md: '100%'}} m='auto' >
                     <Flex align='center' direction='column' w='100%' justify='center' mih='100vh' py={20}>
                         <Paper w={{base: '85%', xs: 580}}  bg='transparent'  >
@@ -293,7 +293,7 @@ const SignupContent = (props) => {
                                             {/* <SlackButton size="md" radius="md" px="0" className='py-2 sign-up-oauth-button' style={{fontSize: "17px",background: "#fafafa"}}>Continue with Slack</SlackButton> */}
                                         </Flex>
 
-                                        <Divider label="or" color='#929292' className='signup-content-wrapper-paper-divider' labelPosition="center" my={30} />
+                                        <Divider label="or" color='#929292' className='auth-content-wrapper-paper-divider' labelPosition="center" my={30} />
                                     </Box>
                                 }
                                 
@@ -322,7 +322,7 @@ const SignupContent = (props) => {
                                         <Text c="#97999c" size="sm" ff='Nunito Sans'>
                                             Already have an account?
                                         </Text>
-                                        <Anchor href='/login' ps={5} c="#2b93f0" size="sm" ff='Nunito Sans'>
+                                        <Anchor onClick={() => routeChange('/login')} ps={5} c="#2b93f0" size="sm" ff='Nunito Sans'>
                                             Log In
                                         </Anchor>
                                     </Flex>

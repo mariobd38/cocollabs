@@ -43,7 +43,7 @@
     border: 1px solid #d3d4d6;
 }
 .nextui-calendar-parent.light .bg-content1, .nextui-calendar-parent.light {
-    background-color: #f0f0f0 !important;
+    background-color: #fafafa !important;
 }
 .nextui-calendar-parent {
     border-radius: 10px;
@@ -102,7 +102,7 @@
             color: #aaaaaa !important;
         }
         table tbody {
-            background-color: #f0f0f0;
+            background-color: #fafafa;
         }
         table tbody tr td span,
         [data-slot="header-wrapper"] button, 
@@ -195,9 +195,9 @@
         transition: all 0.4s ease;
     }
     .preset-button.dark {
-        background-color: #323539;
+        background-color: transparent;
         color: #d6d7da;
-        border: .1px solid #525559;
+        border: none;
     }
     .preset-button.light {
         background-color: #c2c5c9;

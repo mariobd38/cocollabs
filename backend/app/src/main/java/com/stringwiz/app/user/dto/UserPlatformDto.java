@@ -18,4 +18,5 @@ public class UserPlatformDto {
     private String email;
     private String picture;
     private ProfileDto profileDto;
+    private UserPreferenceDto userPreferenceDto;
 }

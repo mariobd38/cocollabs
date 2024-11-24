@@ -1,6 +1,9 @@
 package com.stringwiz.app.user.controller;
 
+import com.stringwiz.app.user.model.ThemePreference;
 import com.stringwiz.app.user.model.User;
+import com.stringwiz.app.user.model.UserPreference;
+import com.stringwiz.app.user.repository.UserPreferenceRepository;
 import com.stringwiz.app.user.repository.UserRepository;
 import com.stringwiz.app.user.repository.UserTokenRepository;
 import com.stringwiz.app.auth.util.CookieUtil;
@@ -18,6 +21,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,14 +33,17 @@ import java.util.Optional;
 @RequestMapping("/api/user")
 public class UserController {
     private final UserRepository userRepository;
+    private final UserPreferenceRepository userPreferenceRepository;
     private final JwtUtil jwtUtil;
     private final UserTokenRepository userTokenRepository;
 
     public UserController(
             UserRepository userRepository,
+            UserPreferenceRepository userPreferenceRepository,
             JwtUtil jwtUtil,
             UserTokenRepository userTokenRepository) {
         this.userRepository = userRepository;
+        this.userPreferenceRepository = userPreferenceRepository;
         this.jwtUtil = jwtUtil;
         this.userTokenRepository = userTokenRepository;
     }
@@ -61,6 +69,39 @@ public class UserController {
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body("An error occurred while processing the request");
+        }
+    }
+
+    @PutMapping("/updateTheme")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<?> updateTheme(@AuthenticationPrincipal User user, @RequestBody ThemePreference newTheme) {
+        try {
+            if (user == null) {
+                return ResponseEntity
+                        .status(HttpStatus.UNAUTHORIZED)
+                        .body("User not authenticated");
+            }
+
+            UserPreference userPreference = user.getUserPreference();
+
+            if (userPreference == null) {
+                // Create and save UserPreference first
+                userPreference = new UserPreference(newTheme);
+                userPreference = userPreferenceRepository.save(userPreference);
+                user.setUserPreference(userPreference); // Link saved preference to user
+            } else {
+                // Update the existing UserPreference
+                userPreference.setTheme(newTheme);
+                userPreferenceRepository.save(userPreference);
+            }
+
+            // Save the user with updated preference
+            userRepository.save(user);
+
+            return ResponseEntity.ok().build();
+        } catch(Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("An error occurred while updating the theme preference");
         }
     }
 

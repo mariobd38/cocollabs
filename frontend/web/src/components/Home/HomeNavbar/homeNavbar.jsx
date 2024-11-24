@@ -12,7 +12,7 @@ import './homeNavbar.css';
 
 const HomeNavbar = (props) => {
     const { themeColors,colorScheme, setColorScheme,userFullName, initials,userEmail,userProfilePicture,userProfileDto
-        , setOpenSidebarToggle, openSidebarToggle
+        , setOpenSidebarToggle, openSidebarToggle,storedUserInfo,setStoredUserInfo
      } = props;
 
     //user button
@@ -125,6 +125,8 @@ const HomeNavbar = (props) => {
                                 colorScheme={colorScheme}
                                 themeColors={themeColors}
                                 setColorScheme={setColorScheme}
+                                storedUserInfo={storedUserInfo}
+                                setStoredUserInfo={setStoredUserInfo}
                             />
 
                             <SpaceCreationModal 

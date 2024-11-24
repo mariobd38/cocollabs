@@ -63,7 +63,7 @@ const TaskCreationModal = (props) => {
 
     const buttonColor = colorScheme==='dark' ? '#e0e2e6' : '#121212';
     const buttonBg = colorScheme==='dark' ? '#242629' : '#e0e3e6';
-    const dropdownColor = colorScheme==='dark' ? '#232426' : '#f0f0f0';
+    const dropdownColor = colorScheme==='dark' ? '#232426' : '#fff';
 
     // console.log(dueDatePopoverOpened)
     return (
