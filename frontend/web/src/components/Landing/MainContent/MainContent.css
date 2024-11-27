@@ -156,10 +156,10 @@ a {
     }
 }
 
-.get-started:hover {
+.get-started:hover,.visit-community-button:hover {
     filter: brightness(1.35);
-    box-shadow: #0f204180 0px 22px 60px 1px;
-    transform: translateY(-5px) !important;
+    box-shadow: #0f204180 0px 0px 45px 1px;
+    transform: translateY(-5px);
 }
 .visit-community-icon {
     transition: transform 1s ease;
@@ -169,9 +169,6 @@ a {
 }
 .visit-community-button:hover {
     background-color: #393BB22a !important;
-    box-shadow: #0f204180 0px 22px 60px 1px;
-    filter: brightness(1.35);
-    transform: translateY(-5px) !important;
     .visit-community-icon {
         transform: translateX(5px) !important;
     }

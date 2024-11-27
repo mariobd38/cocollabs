@@ -10,7 +10,7 @@ import TaskCard from '@/components/Home/TaskCard/taskCard';
 // import QuickActions from './QuickActions/quickActions';
 import HomeSidebar from '@/components/Home/HomeSidebar/homeSidebar';
 
-import { getUserInfo } from '@/api/Users/getUserInfo';
+import { getUserProfileInfo } from '@/api/Users/getUserProfileInfo';
 // import { getTaskInfo } from './../../DataManagement/Tasks/getTasks';
 import { getPersonalSpaceInfo } from '@/api/Spaces/getPersonalSpaceInfo';
 import { getTaskInfoBySpace } from '@/api/Tasks/getTasksBySpace';
@@ -78,25 +78,27 @@ const NewHome = () => {
     //     fetchData();
     // }, [userProfileDto, passedUserInfo]);
 
-    const [storedUserInfo, setStoredUserInfo] = useLocalStorage({
-        key: 'clientInfo', // localStorage key
+    const [storedProfileInfo, setStoredProfileInfo] = useLocalStorage({
+        key: 'ApplicationStore', // localStorage key
         defaultValue: null, // default value when localStorage is empty
         getInitialValueInEffect: true, // fetch value lazily on first render
       });
 
     useEffect(() => {
-        const fetchData = async () => {
-          if (storedUserInfo) {
+        const fetchProfileData = async () => {
+          if (storedProfileInfo) {
             // Use the cached data if available
-            setUserFullName(storedUserInfo.fullName);
-            setInitials((storedUserInfo.fullName.split(' ')[0][0] + storedUserInfo.fullName.split(' ')[1][0]).toUpperCase());
-            setUserEmail(storedUserInfo.email);
-            setUserProfilePicture(storedUserInfo.picture);
-            setUserProfileDto(storedUserInfo.profileDto);
-            setColorScheme(storedUserInfo.userPreferenceDto.theme);
+            setUserFullName(storedProfileInfo.fullName);
+            setInitials((storedProfileInfo.fullName.split(' ')[0][0] + storedProfileInfo.fullName.split(' ')[1][0]).toUpperCase());
+            setUserEmail(storedProfileInfo.email);
+            setUserProfilePicture(storedProfileInfo.picture);
+            setUserProfileDto(storedProfileInfo.profileDto);
+            setColorScheme(storedProfileInfo.userPreferenceDto.theme);
+            const jsonData = { user: storedProfileInfo };
+            console.log(jsonData);
           } else {
             // Fetch data from API if no data in localStorage
-            const data = await getUserInfo(passedUserInfo || null);
+            const data = await getUserProfileInfo(passedUserInfo || null);
             if (data) {
                 setUserFullName(data.fullName);
                 setInitials((data.fullName.split(' ')[0][0] + data.fullName.split(' ')[1][0]).toUpperCase());
@@ -106,12 +108,12 @@ const NewHome = () => {
                 setColorScheme(data.userPreferenceDto.theme);
     
                 // Store the user info in localStorage
-                setStoredUserInfo(data);
+                setStoredProfileInfo(data);
             }
           }
         };
-        fetchData();
-      }, [passedUserInfo, storedUserInfo, setStoredUserInfo]);
+        fetchProfileData();
+      }, [passedUserInfo, storedProfileInfo, setStoredProfileInfo]);
 
     const processTaskData = useCallback(() => {
         const now = dayjs();
@@ -169,8 +171,8 @@ const NewHome = () => {
                 userProfileDto={userProfileDto}
                 openSidebarToggle={openSidebarToggle}
                 setOpenSidebarToggle={setOpenSidebarToggle}
-                storedUserInfo={storedUserInfo}
-                setStoredUserInfo={setStoredUserInfo}
+                storedUserInfo={storedProfileInfo}
+                setStoredUserInfo={setStoredProfileInfo}
             />}
             <div className='container m-0 p-0'>
                 {userFullName &&

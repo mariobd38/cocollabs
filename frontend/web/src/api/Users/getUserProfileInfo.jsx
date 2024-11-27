@@ -1,4 +1,4 @@
-async function getUserInfo() {
+async function getUserProfileInfo() {
     try {
         const response = await fetch('/api/user/getInfo', {
             method: "GET",
@@ -18,4 +18,4 @@ async function getUserInfo() {
     }
 }
 
-export { getUserInfo };
+export { getUserProfileInfo };

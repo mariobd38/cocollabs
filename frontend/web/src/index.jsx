@@ -12,6 +12,7 @@ import { NextUIProvider } from '@nextui-org/system';
 import { ThemeProvider } from '@/components/Themes/themeProvider';
 
 import './index.css';
+import './fonts.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 

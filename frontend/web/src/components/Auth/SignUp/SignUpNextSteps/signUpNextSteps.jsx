@@ -42,7 +42,7 @@ const SignUpNextSteps = (props) => {
     const [isFocused, setIsFocused] = useState(false);
 
     return (
-        <div className='w-100'>
+        <div className='w-full'>
             {/* <AuthHeader /> */}
             <SignupContent
                 inputEmail={inputEmail}

@@ -1,6 +1,6 @@
 import React, { useState, useRef,useEffect } from 'react';
 
-import {Avatar,UnstyledButton,Badge,Tooltip,rem,Flex} from '@mantine/core';
+import {Avatar,Box,UnstyledButton,Badge,Tooltip,rem,Flex,Text} from '@mantine/core';
 
 import {Icons} from '@/components/icons/icons';
 
@@ -25,31 +25,17 @@ const HomeSidebar = (props) => {
 
     const profileLink = (
         <div className={openSidebarToggle ? 'home-sidebar-profile-parent-div active' : 'home-sidebar-profile-parent-div'}>
-            <UnstyledButton className={`d-flex justify-content-start w-100 ${!openSidebarToggle ?  classes.mainLink : 'px-3'} ${classes.profile} mb-0`} style={{padding:"7px"}}>
+            <UnstyledButton className={`flex justify-start ${!openSidebarToggle ?  classes.mainLink : 'px-3'} ${classes.profile}`} >
                 <Flex gap={openSidebarToggle && 10} align='center'>
+                    <Avatar className='profile-avatar' color={spaceIcon && spaceIcon.color} radius={spaceIcon && spaceIcon.radius}>
+                        {spaceIcon && spaceIcon.children}
+                    </Avatar>
 
-                    <div>
-                        <Avatar className='profile-avatar' color={spaceIcon && spaceIcon.color} radius={spaceIcon && spaceIcon.radius}>
-                            {spaceIcon && spaceIcon.children}
-                        </Avatar>
-                    </div>
-                    <div 
-                    style={{
-                            whiteSpace: 'nowrap', 
-                            overflow: 'hidden', 
-                            textOverflow: 'ellipsis',
-                            maxWidth: '165px',
-                            // color: "#f1f1f1",
-                            paddingLeft: "3px",
-                            color: themeColors.text[3],
-                            fontWeight: "550",
-                            fontFamily: 'Lato'
-                        }}
-                    >
+                    <Text maw={165} ps={3} c={themeColors.text[3]} fw={550} ff='Lato'
+                    style={{whiteSpace: 'nowrap',overflow: 'hidden',textOverflow: 'ellipsis'}}>
                         {openSidebarToggle && spaceName}
-                    </div>
+                    </Text>
                 </Flex>
-                
             </UnstyledButton>
         </div>
     );
@@ -58,14 +44,14 @@ const HomeSidebar = (props) => {
         <React.Fragment key={link.label}>
             {openSidebarToggle ? 
                 <UnstyledButton key={link.label} className={`${classes.mainLink} ${classes.active}`} data-theme={colorScheme}>
-                    <div className={classes.mainLinkInner}>
+                    <Box className={classes.mainLinkInner} >
                         <div className={`${classes.mainLinkIcon} ${classes.active}`}>
-                            {Icons(link.icon, 25, 25, themeColors.text[10])}
+                            {Icons(link.icon, 20, 20, themeColors.text[10])}
                         </div>
-                        <span style={{fontFamily: 'Lato', fontWeight: "500", fontSize: "15px", color: themeColors.text[5]}}>
+                        <Text ff='Lato' fz={15} c={themeColors.text[5]} >
                             {link.label}
-                        </span>
-                    </div>
+                        </Text>
+                    </Box>
                     {link.notifications && (
                         <Badge size="sm" variant="filled" className={classes.mainLinkBadge}>
                             {link.notifications}
@@ -81,19 +67,19 @@ const HomeSidebar = (props) => {
                 arrowSize={4} 
                 bg={`${colorScheme==='dark' ? '#121212' : '#272727'}`} 
                 c='#f0f0f0' 
-                openDelay={500} 
+                openDelay={100} 
                 offset={{ mainAxis: 10 }}
             >
                 <UnstyledButton key={link.label} className={classes.mainLink} data-theme={colorScheme}>
-                    <div className={`${classes.mainLinkInner} d-flex justify-content-center`}>
-                        <div className={classes.iconWrapper}>
-                            {Icons(link.icon, 25, 25, themeColors.text[10])}
+                    <div className={`${classes.mainLinkInner} flex justify-center`}>
+                        <Box className={classes.iconWrapper} mb={2}>
+                            {Icons(link.icon, 20, 20, themeColors.text[10],1.7)}
                             {link.notifications && (
                                 <Badge circle size="xs" color="blue" className={classes.badge}>
                                     {link.notifications}
                                 </Badge>
                             )}
-                        </div>
+                        </Box>
                     </div>
                 </UnstyledButton>
             </Tooltip>
@@ -147,11 +133,11 @@ const HomeSidebar = (props) => {
     return (
         <nav className={`${classes.navbar} ${openSidebarToggle ? 'active' : ''}`} 
             style={{
-                width: openSidebarToggle ? rem(260) : rem(80),
+                width: openSidebarToggle ? rem(255) : rem(57),
                 background: themeColors.bg[4],
                 borderRight: `1px solid ${colorScheme === 'dark' ? '#323539' : '#b9b9b9'}`
             }}
-            >
+        >
 
                 <div className={classes.section} data-theme={colorScheme}>
                     <MantineDropdown 

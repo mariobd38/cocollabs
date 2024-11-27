@@ -8,8 +8,8 @@
     overflow-y: scroll !important;
     position: relative !important;
     top: 3.82rem;
-    transition: margin 0.27s linear;
-    margin: 0 1rem 0 4.25rem;
+    transition: margin 0.23s linear;
+    margin: 0 1rem 0 2.8rem;
 
 }
 .user-home-all-content-left-spacing {
@@ -17,8 +17,8 @@
 }
 .user-home-all-content.open {
     
-    margin-left: 15.5rem;
-    transition: margin 0.27s linear;
+    margin-left: 15.2rem;
+    transition: margin 0.23s linear;
 }
 
 

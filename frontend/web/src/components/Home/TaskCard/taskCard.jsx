@@ -58,7 +58,7 @@ const TaskCard = (props) => {
 
     const segments = seg.map((item,index) => (
         { value: item.value, label: <> {
-            <Text key={index} className={`d-flex align-items-center task-card-segment ${colorScheme}`} c='#f5f6f9' fw={550} ff='Nunito Sans' fz='14'>{item.text}<Text className='d-flex align-items-center text' ms={10}>{item.taskType.length}</Text></Text>
+            <Text key={index} className={`d-flex align-items-center task-card-segment ${colorScheme}`} c='#f5f6f9' fw={550} ff='Nunito Sans' fz='14'>{item.text}<Text className='d-flex align-items-center text' ms={10} fz={13}>{item.taskType.length}</Text></Text>
             }
         </> }
     ));
@@ -104,7 +104,8 @@ const TaskCard = (props) => {
                 <SegmentedControl
                     className={`task-card-segmented-control ${colorScheme}`}
                     bg={themeColors.bg[7]}
-                    color={`${colorScheme==='dark' ? '#048369' : '#24b689e3'}`}
+                    // color={`${colorScheme==='dark' ? '#048369' : '#24b689e3'}`}
+                    color={`${colorScheme==='dark' ? '#1e1f21' : '#fafafa'}`}
                     withItemsBorders={false}
                     data={segments}
                     value={activeSegment}
@@ -114,7 +115,7 @@ const TaskCard = (props) => {
 
                 <Button bd={`.1px solid ${colorScheme==='dark' ? '#048369' : '#24b689e3'}`}
                 className='task-card-create-task-button' c='#fafafa' radius={8} p='0px 12px' 
-                bg={`${colorScheme==='dark' ? '#048369' : '#24b689e3'}`} onClick={() => setOpenTaskCreateModal(true)}>
+                bg='#24b689df' onClick={() => setOpenTaskCreateModal(true)}>
                     <div className='d-flex align-items-center'>
                         <div style={{marginRight: "7px"}}>
                         {Icons('IconPlus',15,15,'#fafafa')}
@@ -159,7 +160,7 @@ const TaskCard = (props) => {
                                         </Table.Tbody>
                                     </Table>
                                 ) : (
-                                    <div className='d-flex flex-column  p-0 justify-content-center align-items-center'>
+                                    <div className='flex flex-col p-0 justify-center align-items-center'>
                                         <img style={{ width: "14rem" }} src={checklist} alt="" />
                                         <div className='fafafa-color pt-3 lato-font'>Your completed tasks will appear here ✅</div>
                                     </div>

@@ -141,7 +141,7 @@ const TaskCardContent = (props) => {
     const [openPopoverId, setOpenPopoverId] = useState(null);
 
     const buttonBorderColor = `1px solid ${colorScheme === 'dark' ? '#969696' : '#b0b0b0'}`;
-    const dropdownColor = colorScheme==='dark' ? '#232426' : '#f0f0f0';
+    const dropdownColor = colorScheme==='dark' ? '#232426' : '#fff';
 
     const rows = (taskType) => {
         
@@ -185,7 +185,7 @@ const TaskCardContent = (props) => {
                                 <MantineDropdown 
                                     target={
                                         <Button p='0 12px' size="xs" radius='6' fz={13} bg='transparent' bd={buttonBorderColor} className={`user-home-calendar-icon-div ${colorScheme}`}>
-                                            <span style={{ color: "#a7a7a7" }} className={`lato-font, user-home-chosen-due-date-text`} >
+                                            <span style={{ color: "#a7a7a7" }} className={`lato-font user-home-chosen-due-date-text`} >
                                                 <span className='d-flex align-items-center' style={{color: colorScheme==='dark' ? "#e5e5e5" : '#414141'}} >
                                                     <div className='me-1'>
                                                         {Icons('IconFlag3',18,18,colorScheme==='dark' ? "#e5e5e5" : '#414141')}

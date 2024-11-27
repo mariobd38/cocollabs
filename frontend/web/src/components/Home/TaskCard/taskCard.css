@@ -24,14 +24,14 @@
 .user-home-new-task-input {
     padding: 0 0 0 4px !important;
     background-color: #1e1f21;
-}
-.user-home-new-task-input .mantine-Input-input {
-    background-color: transparent;
-    border: none;
-    color: #e7e7e7;
-    padding:4.224px 14.08px;
-    font-family: 'Poppins';
-    /* padding:0; */
+    .mantine-Input-input {
+        background-color: transparent;
+        border: none;
+        color: #e7e7e7;
+        padding:4.224px 14.08px;
+        font-family: 'Poppins';
+        /* padding:0; */
+    }
 }
 .table-container-wrapper {
     height: 22rem; 
@@ -53,32 +53,34 @@
 
 .task-card-segmented-control {
     /* background-color: #323539 !important; */
-    padding:1.8px !important; 
+    padding:3px !important; 
     display: flex !important;
     align-items: center !important;
-}
-.task-card-segmented-control .mantine-SegmentedControl-control label {
-    color: #121212 !important;
-}
-.task-card-segmented-control.dark .mantine-SegmentedControl-control label p {
-    color: #fafafa !important;
-}
-.task-card-segmented-control.light .mantine-SegmentedControl-control label p {
-    color: #252525 !important;
+
+    .mantine-SegmentedControl-control[data-active='true'] label p:not(.text) {
+        font-weight: 600 !important;
+    }
+    label {
+        /* padding: var(--sc-padding) 10px !important; */
+        padding:4px 15px !important;
+    }
 }
 .task-card-segment .text {
     border-radius: 4px;
-    /* background-color: #252628; */
-    padding: 0 8px;
-    height: 25px;
-    color: #d5d6d8 !important;
+    height: 28px;
     font-size: 12px;
 }
-.task-card-segment.light .text {
-    background-color: #f0f0f0;
+.task-card-segment.light {
+    color: #252525 !important;
+    .text {
+        color: #545659 !important;
+    }
 }
-.task-card-segment.dark .text {
-    background-color: #252628;
+.task-card-segment.dark {
+    color: #f0f0f0 !important;
+    .text {
+        color: #a4a6a9 !important;
+    }
 }
 .task-card-create-task-button {
     transition: all .8s ease !important;

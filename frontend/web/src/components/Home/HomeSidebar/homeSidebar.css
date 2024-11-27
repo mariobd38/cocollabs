@@ -83,6 +83,9 @@ a {
 
 .profile-avatar {
     transition: filter 0.52s linear; /* Smooth transition */
+    width: calc(2.075rem * var(--mantine-scale)) !important; 
+    min-width: calc(2.075rem * var(--mantine-scale)) !important; 
+    height: calc(2.075rem * var(--mantine-scale)) !important; 
 }
 .profile-avatar:hover {
     filter: brightness(1.34); /* Adjusts the brightness by 20% */

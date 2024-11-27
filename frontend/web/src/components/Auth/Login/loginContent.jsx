@@ -210,7 +210,7 @@ const LoginContent = (props) => {
                                                         form.getInputProps('email').onChange(e);
                                                     }}
                                                     // onChange={(e) => setInputEmail(e.target.value)}
-                                                    className='w-100 auth-user-input-field'
+                                                    className='auth-user-input-field'
                                                     key={form.key('email')}
                                                     {...form.getInputProps('email')}
                                                     size="lg"
@@ -229,7 +229,7 @@ const LoginContent = (props) => {
                                                     placeholder=""
                                                     // leftSection={<IconLock style={{ width: rem(18), height: rem(18) }} stroke={2.5}/>}
                                                     leftSection={Icons('IconLock',18,18,'#717171',2.5)}
-                                                    className='w-100 auth-user-input-field '
+                                                    className='auth-user-input-field '
                                                     size="lg"
                                                     radius="md"
                                                     key={form.key('password')}

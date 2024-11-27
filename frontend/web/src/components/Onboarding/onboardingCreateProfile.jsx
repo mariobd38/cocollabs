@@ -81,12 +81,12 @@ const OnboardingCreateProfile = (props) => {
     }
 
     return (
-        <div className='py-0 d-flex flex-column justify-content-center m-auto' style={{width: "80%"}}>
+        <div className='py-0 flex flex-col justify-center m-auto' style={{width: "80%"}}>
             {/* <Text fw={700} fz={20} c='#4a4b4d' ta='center' pt={20} tt='uppercase' ff='Nunito Sans'>Select a profile avatar</Text> */}
 
-            <div className={`d-flex w-100 flex-wrap justify-content-center ${profileOptions.length !== 0 && 'gap-5'}`}>
-                <div className='d-flex flex-column align-items-center'>
-                    <span className='d-flex gap-5 flex-wrap justify-content-center'>
+            <div className={`flex w-full flex-wrap justify-center ${profileOptions.length !== 0 && 'gap-5'}`}>
+                <div className='d-flex flex-col align-items-center'>
+                    <span className='flex gap-5 flex-wrap justify-center'>
                         
                         {profileOptions.map((item, index) => (
                                 

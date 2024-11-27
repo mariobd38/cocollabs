@@ -13,7 +13,7 @@ import { UseAuth } from '@/AuthContext/authProvider';
 
 import { generateSpaceIconJson } from '@/utils/generateSpaceIconJson';
 
-import { getUserInfo } from '@/api/Users/getUserInfo';
+import { getUserProfileInfo } from '@/api/Users/getUserProfileInfo';
 import { completeOnboarding } from '@/api/Users/completeOnboarding';
 // import { authStatusInfo } from '@/api/Auth/status';
 
@@ -33,7 +33,7 @@ const Onboarding = () => {
 
     useEffect(() => {
         const fetchUserData = async () => {
-            setUserInfo(await getUserInfo());
+            setUserInfo(await getUserProfileInfo());
         };
         fetchUserData();
     },[]);

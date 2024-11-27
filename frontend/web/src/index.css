@@ -2,43 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
-  font-family: "Lato";
-  src: url("/fonts/Lato/Lato-Regular.woff2") format("woff2");
-  font-size: normal;
-  font-weight: 400;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Nunito Sans";
-  /* src: url("/fonts/Nunito_Sans/NunitoSans-Regular.woff2") format("woff2"); */
-  src: url("https://fonts.gstatic.com/s/nunitosans/v15/pe0AMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfUVwoNnq4CLz0_kJ3xzHGGVFM.woff2") format("woff2");
-  font-size: normal;
-  font-weight: 400;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Inter";
-  src: url("/fonts/Inter/Inter-Regular.woff2") format("woff2");
-  font-size: normal;
-  font-weight: 400;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Open Sans";
-  src: url("/fonts/Open_Sans/OpenSans-Regular.woff2") format("woff2");
-  font-size: normal;
-  font-weight: 400;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Poppins";
-  src: url("/fonts/Poppins/Poppins-Regular.woff2") format("woff2");
-  font-size: normal;
-  font-weight: 400;
-  font-display: swap;
-}
-
 html {
   --nextui-background: unset !important;
 }

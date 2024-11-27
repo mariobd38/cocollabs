@@ -202,8 +202,8 @@ const SignupContent = (props) => {
                                 
 
                             {nextSteps ? 
-                            <Flex align='center' direction='column' >
-                                <form noValidate style={{width: "80%"}} className='auth-user-info-block' onSubmit={form.onSubmit((values) => handleSignUpWithEmailRequest(values))}>
+                            <Flex align='center' m='auto'  direction='column' w={{xs: '80%'}}>
+                                <form noValidate style={{width: "100%"}} className='auth-user-info-block' onSubmit={form.onSubmit((values) => handleSignUpWithEmailRequest(values))}>
                                     <div className='d-flex align-items-center mb-4 justify-content-between'>
                                         <div className='signup-back-arrow-icon' onClick={() => routeChange('/signup')}>
                                             {Icons('IconArrowBack',24,24, '#a6a7a9')}
@@ -222,7 +222,7 @@ const SignupContent = (props) => {
                                     </div>
 
                                     <Stack className='d-flex align-items-center'>
-                                        <div ref={fullNameRef} className='w-100'>
+                                        <Box ref={fullNameRef} className='w-full'>
                                             <TextInput
                                                 // onClick={() => setSignupClicked(false)}
                                                 required
@@ -231,15 +231,15 @@ const SignupContent = (props) => {
                                                 type="text"
                                                 autoComplete='off'
                                                 leftSection={Icons('IconUser',18,18,'#717171',2)}
-                                                className='w-100 auth-user-input-field'
+                                                className='w-full auth-user-input-field'
                                                 size="lg"
                                                 radius="md"
                                                 key={form.key('fullName')}
                                                 {...form.getInputProps('fullName')}
                                             />
-                                        </div>
+                                        </Box>
 
-                                        <div ref={passwordRef} className='w-100'>
+                                        <div ref={passwordRef} className='w-full'>
                                             <PasswordInput
                                                 required
                                                 // onClick={() => setSignupClicked(false)}
@@ -248,7 +248,7 @@ const SignupContent = (props) => {
                                                 type="password"
                                                 autoComplete='off'
                                                 leftSection={Icons('IconLock',18,18,'#717171',2)}
-                                                className='w-100 auth-user-input-field'
+                                                className='w-full auth-user-input-field'
                                                 size="lg"
                                                 radius="md"
                                                 key={form.key('password')}
@@ -307,7 +307,7 @@ const SignupContent = (props) => {
                                             autoComplete='off'
                                             value={inputEmail}
                                             onChange={(e) => setInputEmail(e.target.value)}
-                                            className='w-100 auth-user-input-field'
+                                            className='w-full auth-user-input-field'
                                             size="lg"
                                         />
                                     </Stack>

@@ -49,7 +49,7 @@ const Hero = () => {
                                     </>}
                                 />
 
-                                <TypingAnimationComp text={'The platform made for developer collaboration.'} duration={40} />
+                                <TypingAnimationComp text={'Collab like never before.'} duration={55} />
 
                                 <Flex gap={70} direction='column'>
                                     
