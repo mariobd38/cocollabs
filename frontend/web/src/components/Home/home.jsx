@@ -19,9 +19,9 @@ import { getTaskInfoBySpace } from '@/api/Tasks/getTasksBySpace';
 import { getThemeColor } from '@/components/Themes/getThemeColor';
 import { getTextColor } from '@/components/Themes/getTextColor';
 
-import './newHome.css';
+import './home.css';
 
-const NewHome = () => {
+const Home = () => {
     const dayjs = require('dayjs');
     const theme = useMantineTheme();
     const { colorScheme, setColorScheme } = useMantineColorScheme();
@@ -42,6 +42,7 @@ const NewHome = () => {
     const [userProfileDto, setUserProfileDto] = useState('');
     const [initials, setInitials] = useState(passedUserInfo?.fullName || '');
     const [spaceData, setSpaceData] = useState(passedSpaceInfo || []);
+    const [userSpaces, setUserSpaces] = useState([]);
 
     useEffect(() => {
         async function fetchSpaceData() {
@@ -64,56 +65,49 @@ const NewHome = () => {
         return () => clearInterval(intervalId);
     }, [today,dayjs]);
 
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //             const data = await getUserInfo(passedUserInfo || null);
-    //             if (data) {
-    //                 setUserFullName(data.fullName);
-    //                 setInitials((data.fullName.split(' ')[0][0] + data.fullName.split(' ')[1][0]).toUpperCase());
-    //                 setUserEmail(data.email);
-    //                 setUserProfilePicture(data.picture);
-    //                 setUserProfileDto(data.profileDto);
-    //             }
-    //     };
-    //     fetchData();
-    // }, [userProfileDto, passedUserInfo]);
 
-    const [storedProfileInfo, setStoredProfileInfo] = useLocalStorage({
+    const [storedAppInfo, setStoredAppInfo] = useLocalStorage({
         key: 'ApplicationStore', // localStorage key
         defaultValue: null, // default value when localStorage is empty
         getInitialValueInEffect: true, // fetch value lazily on first render
-      });
+    });
 
     useEffect(() => {
         const fetchProfileData = async () => {
-          if (storedProfileInfo) {
+          if (storedAppInfo) {
             // Use the cached data if available
-            setUserFullName(storedProfileInfo.fullName);
-            setInitials((storedProfileInfo.fullName.split(' ')[0][0] + storedProfileInfo.fullName.split(' ')[1][0]).toUpperCase());
-            setUserEmail(storedProfileInfo.email);
-            setUserProfilePicture(storedProfileInfo.picture);
-            setUserProfileDto(storedProfileInfo.profileDto);
-            setColorScheme(storedProfileInfo.userPreferenceDto.theme);
-            const jsonData = { user: storedProfileInfo };
-            console.log(jsonData);
+            setUserFullName(storedAppInfo.user.fullName);
+            setInitials((storedAppInfo.user.fullName.split(' ')[0][0] + storedAppInfo.user.fullName.split(' ')[1][0]).toUpperCase());
+            setUserEmail(storedAppInfo.user.email);
+            setUserProfilePicture(storedAppInfo.user.picture);
+            setUserProfileDto(storedAppInfo.profile);
+            setUserSpaces(storedAppInfo.userSpace);
+            setColorScheme(storedAppInfo.userPreference.theme);
+            // const jsonData = { user: storedAppInfo };
           } else {
             // Fetch data from API if no data in localStorage
             const data = await getUserProfileInfo(passedUserInfo || null);
             if (data) {
-                setUserFullName(data.fullName);
-                setInitials((data.fullName.split(' ')[0][0] + data.fullName.split(' ')[1][0]).toUpperCase());
-                setUserEmail(data.email);
-                setUserProfilePicture(data.picture);
-                setUserProfileDto(data.profileDto);
-                setColorScheme(data.userPreferenceDto.theme);
-    
-                // Store the user info in localStorage
-                setStoredProfileInfo(data);
+                const jsonData = {
+                    user: data.userDto,
+                    profile: data.profileDto,
+                    userPreference: data.userPreferenceDto,
+                    userSpace: data.userSpaceDto
+                }
+                setUserFullName(jsonData.user.fullName);
+                setInitials((jsonData.user.fullName.split(' ')[0][0] + jsonData.user.fullName.split(' ')[1][0]).toUpperCase());
+                setUserEmail(jsonData.user.email);
+                setUserProfilePicture(jsonData.user.picture);
+                setUserProfileDto(jsonData.profile);
+                setColorScheme(jsonData.userPreference.theme);
+                setUserSpaces(jsonData.userSpace);
+
+                setStoredAppInfo(jsonData);
             }
           }
         };
         fetchProfileData();
-      }, [passedUserInfo, storedProfileInfo, setStoredProfileInfo]);
+      }, [passedUserInfo, storedAppInfo, setStoredAppInfo]);
 
     const processTaskData = useCallback(() => {
         const now = dayjs();
@@ -136,7 +130,7 @@ const NewHome = () => {
         setOngoingTasks(ongoing);
         setOverdueTasks(overdue);
         setCompletedTasks(completed);
-    },[dayjs,taskData]);
+    },[taskData]);
 
     useEffect(() => {
         if (spaceData && spaceData.name) {
@@ -171,8 +165,8 @@ const NewHome = () => {
                 userProfileDto={userProfileDto}
                 openSidebarToggle={openSidebarToggle}
                 setOpenSidebarToggle={setOpenSidebarToggle}
-                storedUserInfo={storedProfileInfo}
-                setStoredUserInfo={setStoredProfileInfo}
+                storedUserInfo={storedAppInfo}
+                setStoredUserInfo={setStoredAppInfo}
             />}
             <div className='container m-0 p-0'>
                 {userFullName &&
@@ -283,4 +277,4 @@ const NewHome = () => {
     );
 };
 
-export default NewHome;
+export default Home;

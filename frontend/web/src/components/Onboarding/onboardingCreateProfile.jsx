@@ -98,10 +98,9 @@ const OnboardingCreateProfile = (props) => {
                                 >
                                     
                                     <div
-                                        className='d-flex flex-column align-items-center'
+                                        className='cursor-pointer d-flex flex-column align-items-center'
                                         style={{
-                                            borderRadius: "50%",
-                                            cursor: "pointer",
+                                            borderRadius: "50%"
                                         }}
                                     >
                                         

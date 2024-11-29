@@ -4,7 +4,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import dayjs from 'dayjs';
 
 import { Modal } from 'antd';
-import { Text, Button,Textarea } from '@mantine/core';
+import { Text, Button,Textarea,Flex,Box } from '@mantine/core';
 import { Popover, PopoverContent, PopoverTrigger} from "@nextui-org/react";
 
 import { useScrollLock } from '@/utils/useScrollLock';
@@ -22,6 +22,8 @@ import StatusDropdownContent from '@/components/Home/DropdownContent/statusDropd
 import PriorityDropdownContent from '@/components/Home/DropdownContent/priorityDropdownContent';
 import TagsDropdownContent from '@/components/Home/DropdownContent/tagsDropdownContent';
 import TaskDescriptionTipTap from '@/components/Home/TaskDetailsModal/TaskDescriptionTipTap/taskDescriptionTipTap'
+
+import { dropdownProps } from '@/animations/dropdownProps';
 
 import { removeTagInfo } from '@/api/Tags/removeTag';
 import { deleteTagInfo } from '@/api/Tags/deleteTag';
@@ -98,8 +100,8 @@ const TaskDetailsModal = (props) => {
     const modalTextColor = colorScheme === 'dark' ? '#fafafa' : '#3a3a3a';
     const assigneeContent = (
         <div className={`user-home-task-details-modal-head-property-value ${colorScheme}`} >
-            <div className='d-flex align-items-center user-home-task-details-modal-assignee-div'>
-                <div className='me-2'>
+            <Flex align='center' className='user-home-task-details-modal-assignee-div'>
+                <Box me={10}>
                     <UserAvatar
                         userProfileDto={userProfileDto}
                         userProfilePicture={userProfilePicture}
@@ -107,11 +109,11 @@ const TaskDetailsModal = (props) => {
                         multiplier={2.2}
                         fontSize={1.1}
                     />
-                </div>
+                </Box>
                 <Text ff='Lato' c={modalTextColor}>
                     {userFullName}
                 </Text>
-            </div>
+            </Flex>
          </div>
     );
 
@@ -225,8 +227,8 @@ const TaskDetailsModal = (props) => {
             />
 
             <div className='user-home-task-details-modal-body'>
-                <div className='d-flex justify-content-between pb-4' style={{height: "auto"}}>
-                    <div className='w-100'>
+                <Flex justify='space-between' pb={24} >
+                    <Box w='100%'>
                         <Textarea
                             className={`mt-2 mb-3 py-2 user-home-task-details-modal-name ${colorScheme}`}
                             minRows={1}
@@ -239,7 +241,7 @@ const TaskDetailsModal = (props) => {
                         />
 
                         <div className='d-flex flex-column flex-lg-row  flex-wrap row-gap-3 lato-font'>
-                            <div className='d-flex user-home-task-details-modal-head-property-group' style={{ fontSize: "1.06rem"}} >
+                            <Flex fz='1.06rem' className='user-home-task-details-modal-head-property-group' >
                                 <Text className={`user-home-task-details-modal-property-lefttext ${colorScheme}`} c={modalTextColor}>Assignee</Text>
                                 <ProfileCard
                                     userFullName={userFullName}
@@ -247,31 +249,29 @@ const TaskDetailsModal = (props) => {
                                     userEmail={userEmail}
                                     userProfileDto={userProfileDto}
                                     userProfilePicture={userProfilePicture}
-                                    target={<div >
-                                        {assigneeContent}
-                                    </div>}
+                                    target={<div>{assigneeContent}</div>}
                                     themeColors={themeColors}
                                     colorScheme={colorScheme}
                                 />
-                            </div>
+                            </Flex>
 
-                            <div className='d-flex user-home-task-details-modal-head-property-group' style={{ fontSize: "1.06rem"}}>
+                            <Flex fz='1.06rem' className='user-home-task-details-modal-head-property-group' >
                                     <Text className={`user-home-task-details-modal-property-lefttext ${colorScheme}`} c={modalTextColor}>Due Date</Text>
                                     <NewHomeDueDatePopover
                                         popoverTarget={
-                                            <div className={`justify-content-between user-home-task-details-modal-head-property-value ${colorScheme}`} onClick={(event) => handleDueDatePopoverClick(event, currentIndex)}>
-                                                <Text ff='Lato' fz='16.5' c={currentTaskDateFormatter(currentTaskDueDate) !== 'None' ? modalTextColor : fadedTextColor}>
+                                            <Flex justify='space-between' className={`user-home-task-details-modal-head-property-value ${colorScheme}`} onClick={(event) => handleDueDatePopoverClick(event, currentIndex)}>
+                                                <Text ff='Lato' fz={16.5} c={currentTaskDateFormatter(currentTaskDueDate) !== 'None' ? modalTextColor : fadedTextColor}>
                                                     {currentTaskDateFormatter(currentTaskDueDate)}
                                                 </Text>
                                                 {currentTaskDateFormatter(currentTaskDueDate) !== 'None' &&
                                                 <span className='user-home-task-details-modal-due-date-remove'
                                                 onClick={(e) => { e.stopPropagation(); handleTaskUpdateNew(taskType[currentIndex], null, "clear due date", taskType, setTaskType, currentIndex);
                                                     setCurrentTaskDueDate(null); setCurrentTaskDueDateTime(null); }}>
-                                                    <div className='user-home-task-details-modal-due-date-remove-icon d-flex align-items-center'>
+                                                    <Flex align='center' className='user-home-task-details-modal-due-date-remove-icon'>
                                                         {Icons('IconX',24,24)}
-                                                    </div>
+                                                    </Flex>
                                                 </span>}
-                                        </div>
+                                            </Flex>
                                         }
                                         currentIndex={currentIndex} taskType={taskType} setTaskType={setTaskType}
                                         currentTaskDueDate={currentTaskDueDate} setCurrentTaskDueDate={setCurrentTaskDueDate}
@@ -282,18 +282,18 @@ const TaskDetailsModal = (props) => {
                                         handleDueDatePopoverClose={handleDueDatePopoverClose} handleTaskUpdateNew={(element,value, attribute, taskType,setTaskType,index) => handleTaskUpdateNew(element,value, attribute, taskType,setTaskType,index)}
                                         enableScroll={enableScroll} disableScroll={disableScroll} colorScheme={colorScheme}
                                     />
-                            </div>
+                            </Flex>
 
-                            <div className='d-flex user-home-task-details-modal-head-property-group' style={{ fontSize: "1.06rem" }}>
+                            <Flex fz='1.06rem' className='user-home-task-details-modal-head-property-group' >
                                 <Text className={`user-home-task-details-modal-property-lefttext ${colorScheme}`} c={modalTextColor}>Status</Text>
                                 <MantineDropdown
                                     target={
                                         <div className={`user-home-task-details-modal-head-property-value ${colorScheme}`} onClick={() => setModalDropdownIsOpen(true)}>
                                             <div className='user-home-task-details-modal-head-text-dropdown-value' style={{color: '#e7e7e7', background: currentTaskStatus && getStatusProperty(currentTaskStatus).background }}>
-                                                <div className='d-flex'>
-                                                    <span className='d-flex align-items-center me-2'>{currentTaskStatus && getStatusProperty(currentTaskStatus).icon}</span>
+                                                <Flex>
+                                                    <Flex align='center' className='me-2'>{currentTaskStatus && getStatusProperty(currentTaskStatus).icon}</Flex>
                                                     <span>{currentTaskStatus}</span>
-                                                </div>
+                                                </Flex>
                                             </div>
                                         </div>
                                     }
@@ -301,19 +301,19 @@ const TaskDetailsModal = (props) => {
                                     setTaskType={setTaskType} idx={currentIndex} setCurrentTaskStatus={setCurrentTaskStatus}  existingTask={true} themeColors={themeColors} colorScheme={colorScheme} dropdownColor={dropdownColor} /> }
                                     position='bottom-start' setModalDropdownIsOpen={setModalDropdownIsOpen} colorScheme={colorScheme} modalName='task-details-modal-parent'
                                 />
-                            </div>
+                            </Flex>
 
-                            <div className='d-flex user-home-task-details-modal-head-property-group' style={{ fontSize: "1.06rem" }}>
+                            <Flex fz='1.06rem' className='user-home-task-details-modal-head-property-group' >
                                 <Text className={`user-home-task-details-modal-property-lefttext ${colorScheme}`} c={modalTextColor}>Priority</Text>
                                 <MantineDropdown
                                     target={
                                         <div className={`user-home-task-details-modal-head-property-value ${colorScheme}`} onClick={() => setModalDropdownIsOpen(true)}>
                                             {currentTaskPriority ?
                                             <div className='user-home-task-details-modal-head-text-dropdown-value' style={{background: currentTaskPriority && getPriorityProperty(currentTaskPriority).color}}>
-                                                <div className='d-flex'>
-                                                    <span className='d-flex align-items-center me-2'>{currentTaskPriority && getPriorityProperty(currentTaskPriority).icon}</span>
+                                                <Flex>
+                                                    <Flex align='center' className='me-2'>{currentTaskPriority && getPriorityProperty(currentTaskPriority).icon}</Flex>
                                                     <span>{currentTaskPriority}</span>
-                                                </div>
+                                                </Flex>
                                             </div> : <Text c={fadedTextColor}>Empty</Text>}
                                         </div>
                                     }
@@ -321,21 +321,24 @@ const TaskDetailsModal = (props) => {
                                     setTaskType={setTaskType} idx={currentIndex} setCurrentTaskPriority={setCurrentTaskPriority} existingTask={true} themeColors={themeColors} dropdownColor={dropdownColor} /> }
                                     position='bottom-start' setModalDropdownIsOpen={setModalDropdownIsOpen} colorScheme={colorScheme} modalName='task-details-modal-parent'
                                 />
-                            </div>
+                            </Flex>
 
 
-                            <div className='d-flex user-home-task-details-modal-head-property-group' style={{ fontSize: "1.06rem" }}>
+                            <Flex fz='1.06rem' className='user-home-task-details-modal-head-property-group' >
                                 <Text className={`user-home-task-details-modal-property-lefttext ${colorScheme}`} c={modalTextColor}>Tags</Text>
-                                <Popover placement="bottom-start" isOpen={openParentTagDropdown} onOpenChange={(open) => {setOpenParentTagDropdown(open); if (!open) enableScroll();}}
+                                <Popover 
+                                motionProps={dropdownProps}
+
+                                placement="bottom-start" isOpen={openParentTagDropdown} onOpenChange={(open) => {setOpenParentTagDropdown(open); if (!open) enableScroll();}}
                                 >
                                     <PopoverTrigger className='tags-dropdown-popover-trigger' onClick={() => disableScroll()}>
                                     <div className={`user-home-task-details-modal-head-property-value ${colorScheme}`} ref={tagButtonContainerRef}>
-                                            <div className="d-flex flex-wrap" ref={tagButtonsRef}>
+                                            <div className="flex flex-wrap" ref={tagButtonsRef}>
                                                 {rowOverflow && firstRowTags.length < currentTaskTags.length ?
                                                     <span>
                                                 {firstRowTags.map((tag, index) => (
                                                     <Button ref={buttonRefs.current[index]} key={index} bg={tag.color} className='user-home-task-details-modal-tags-button' fw={400} h='22' ff='Lato' fz={16}>
-                                                        <span className='d-flex'>
+                                                        <span className='flex'>
                                                             <span className='align-middle user-home-task-details-modal-tags-button-text' >
                                                             {tag.name}
                                                             </span>
@@ -349,11 +352,11 @@ const TaskDetailsModal = (props) => {
                                                     </span>
                                                 : currentTaskTags.map((tag, index) => (
                                                     <Button ref={buttonRefs.current[index]} key={index} bg={tag.color} className='user-home-task-details-modal-tags-button' fw={400} h='22' ff='Lato' fz={16}>
-                                                        <span className='d-flex'>
+                                                        <Flex>
                                                             <span className='align-middle user-home-task-details-modal-tags-button-text' >
                                                             {tag.name}
                                                             </span>
-                                                        </span>
+                                                        </Flex>
 
                                                         <span className='align-middle user-home-task-details-modal-tags-button-close'
                                                         onClick={(event) => handleTagRemoval(event,index)}>
@@ -375,38 +378,38 @@ const TaskDetailsModal = (props) => {
 
                                     </PopoverContent>
                                 </Popover>
+                            </Flex>
                             </div>
-                            </div>
 
-                        </div>
-                    </div>
+                    </Box>
+                </Flex>
 
-                    <div className='mt-3 mb-5'>
-                        <TaskDescriptionTipTap
-                            colorScheme={colorScheme}
-                            themeColors={themeColors}
-                            content={content}
-                            currentIndex={currentIndex}
-                            taskType={taskType}
-                            setTaskType={setTaskType}
-                            handleTaskUpdateNew={(element,value, attribute, taskType,setTaskType,index) => handleTaskUpdateNew(element,value, attribute, taskType,setTaskType,index)}
-                            expanded={tiptapExpanded}
-                            setExpanded={setTiptapExpanded}
-                            modalName='task-details-modal-parent'
-                        />
-                    </div>
-
-                    {tagToDelete && <TagDeletionModal
-                        show={openTagDeletionModal}
-                        handleClose={() => setOpenTagDeletionModal(false)}
-                        handleConfirmDeleteTagButtonClick={() => deleteTagInfo(tagToDelete)}
-                        tagName={tagToDelete.name}
-                        themeColors={themeColors}
+                <div className='mt-3 mb-5'>
+                    <TaskDescriptionTipTap
                         colorScheme={colorScheme}
-                    />}
-
+                        themeColors={themeColors}
+                        content={content}
+                        currentIndex={currentIndex}
+                        taskType={taskType}
+                        setTaskType={setTaskType}
+                        handleTaskUpdateNew={(element,value, attribute, taskType,setTaskType,index) => handleTaskUpdateNew(element,value, attribute, taskType,setTaskType,index)}
+                        expanded={tiptapExpanded}
+                        setExpanded={setTiptapExpanded}
+                        modalName='task-details-modal-parent'
+                    />
                 </div>
-      </Modal>
+
+                {tagToDelete && <TagDeletionModal
+                    show={openTagDeletionModal}
+                    handleClose={() => setOpenTagDeletionModal(false)}
+                    handleConfirmDeleteTagButtonClick={() => deleteTagInfo(tagToDelete)}
+                    tagName={tagToDelete.name}
+                    themeColors={themeColors}
+                    colorScheme={colorScheme}
+                />}
+
+            </div>
+        </Modal>
     );
 };
 

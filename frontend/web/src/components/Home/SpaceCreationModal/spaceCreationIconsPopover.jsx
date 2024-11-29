@@ -46,7 +46,6 @@ const MemoizedIconButtons = ({ filledIcons, color, handleSpaceIconClick,activeIn
     const memoizedButtons = useMemo(() => {
       return filledIcons.map((icon,index) => (
         <Avatar 
-            style={{cursor: "pointer"}} 
             key={icon.key} 
             onClick={() => handleSpaceIconClick(icon.key,index)} 
             variant={`${index === activeIndex ? 'outline' : 'transparent'}`}  
@@ -54,7 +53,7 @@ const MemoizedIconButtons = ({ filledIcons, color, handleSpaceIconClick,activeIn
             radius="md" 
             w={18}
             // bg=''
-            className={`${activeIndex !== index && `space-creation-icon-button ${colorMode}`}`}
+            className={`cursor-pointer ${activeIndex !== index && `space-creation-icon-button ${colorMode}`}`}
         >
             {IconsFilled(icon.key, 18, 18, color)}
         </Avatar>
@@ -120,7 +119,7 @@ const SpaceCreationIconsPopover = (props) => {
                         {colorSwatchList.dark.map((swatch) => (
                             <ColorSwatch 
                                 key={swatch}
-                                style={{cursor: "pointer"}} 
+                                className='cursor-pointer'
                                 color={swatch}
                                 size={22} 
                                 onClick={() => handleIconColorChange(swatch)}
@@ -145,7 +144,6 @@ const SpaceCreationIconsPopover = (props) => {
 
                 <Flex wrap='wrap' justify='center' gap={2} h={280} style={{overflowY: "auto"}}>
                     <Avatar 
-                        style={{cursor: "pointer"}} 
                         onClick={() => handleSpaceIconClick(null,-1)} 
                         // variant={`${activeIndex === -1 ? 'light' : 'transparent'}`} 
                         variant={`${activeIndex === -1 ? 'light' : 'transparent'}`}   
@@ -153,7 +151,7 @@ const SpaceCreationIconsPopover = (props) => {
                         radius="md" 
                         w={18}
                         // className={`${!activeIndex === -1 && 'space-creation-icon-button'}`}
-                        className={`space-creation-icon-button ${colorMode}`}
+                        className={`cursor-pointer space-creation-icon-button ${colorMode}`}
                     >
                         {firstLetter}
                     </Avatar>

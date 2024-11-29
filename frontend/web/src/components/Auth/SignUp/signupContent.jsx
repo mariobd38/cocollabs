@@ -2,7 +2,7 @@ import React, { useState,useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useFocusWithin } from '@mantine/hooks';
-import { Title,Flex,Box,TextInput,PasswordInput,Text,Paper,Group,Button,Divider,Anchor,Stack,Progress } from '@mantine/core';
+import { Title,Flex,Center,Box,TextInput,PasswordInput,Text,Paper,Group,Button,Divider,Anchor,Stack,Progress } from '@mantine/core';
 import { useForm } from '@mantine/form';
 
 import {Icons} from '@/components/icons/icons';
@@ -202,26 +202,26 @@ const SignupContent = (props) => {
                                 
 
                             {nextSteps ? 
-                            <Flex align='center' m='auto'  direction='column' w={{xs: '80%'}}>
+                            <Flex align='center' m='auto' direction='column' w={{xs: '80%'}}>
                                 <form noValidate style={{width: "100%"}} className='auth-user-info-block' onSubmit={form.onSubmit((values) => handleSignUpWithEmailRequest(values))}>
-                                    <div className='d-flex align-items-center mb-4 justify-content-between'>
-                                        <div className='signup-back-arrow-icon' onClick={() => routeChange('/signup')}>
+                                    <Flex align='center' justify='space-between' wrap='wrap' className='mb-4'>
+                                        <Box className='signup-back-arrow-icon' onClick={() => routeChange('/signup')}>
                                             {Icons('IconArrowBack',24,24, '#a6a7a9')}
-                                        </div>
+                                        </Box>
 
-                                        <div className='text-center' style={{ flex: 1 }}>
-                                            <Button className='signup-user-info-block-email' radius="xl" fw={800}>
+                                        <Center flex={1} w='100%' >
+                                            <Button className='signup-user-info-block-email' radius="xl" fw={800} >
                                                 <Flex align='center'>
                                                     <Box me={10}>
                                                         {Icons('IconMail',18,18,'#f0f0f0',2)}
                                                     </Box>
-                                                    <Text fw={600} c='#f0f0f0'>{inputEmail}</Text>
+                                                    <Text fw={600} c='#f0f0f0' fz={{base: 13, xs: 14}}>{inputEmail}</Text>
                                                 </Flex>
                                             </Button>
-                                        </div>
-                                    </div>
+                                        </Center>
+                                    </Flex>
 
-                                    <Stack className='d-flex align-items-center'>
+                                    <Stack className='flex align-center'>
                                         <Box ref={fullNameRef} className='w-full'>
                                             <TextInput
                                                 // onClick={() => setSignupClicked(false)}

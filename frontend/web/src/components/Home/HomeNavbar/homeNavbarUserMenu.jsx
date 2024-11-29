@@ -3,7 +3,7 @@ import React from 'react';
 import { updateThemeInfo } from '@/api/Users/updateTheme';
 import { userLogout } from '@/api/Users/logout';
 
-import { Text,Menu } from '@mantine/core';
+import { Text,Menu,Flex,Group,Box,Paper } from '@mantine/core';
 import {Icons} from '@/components/icons/icons';
 import UserAvatar from '@/components/Home/UserAvatar/userAvatar';
 import { MantineDropdown } from '@/components/models/ModelDropdown2/mantineDropdown';
@@ -25,7 +25,7 @@ const HomeNavbarUserMenu = (props) => {
         if (storedUserInfo) {
             const updatedUserInfo = {
                 ...storedUserInfo, // Spread existing user data
-                userPreferenceDto: {
+                userPreference: {
                     ...storedUserInfo.userPreferenceDto, // Spread existing preferences
                     theme: newTheme, // Update theme
                 },
@@ -52,7 +52,7 @@ const HomeNavbarUserMenu = (props) => {
         <>
             <MantineDropdown 
                 target={
-                    <div className={`d-flex align-items-center home-button ${colorScheme}`} style={{borderRadius: "6px", cursor: "pointer", padding: "5.5px 8px"}}>
+                    <Flex align='center' p='5.5px 8px' className={`cursor-pointer home-button ${colorScheme}`} style={{borderRadius: "6px"}}>
                         <UserAvatar 
                             userProfileDto={userProfileDto}
                             userProfilePicture={userProfilePicture}
@@ -63,7 +63,7 @@ const HomeNavbarUserMenu = (props) => {
                         {/* <span className='ps-1'>
                             {Icons('IconChevronDown',15,15,themeColors.text[1])}
                         </span> */}
-                    </div>
+                    </Flex>
                 }
                 width={300}
                 dropdown={

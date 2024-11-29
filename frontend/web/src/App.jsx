@@ -4,7 +4,7 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import PrivateRoute from "@/PrivateRoute/privateRoute";
 import { AuthProvider } from "@/AuthContext/authProvider";
 
-import NewHome from "@/components/Home/newHome";
+import Home from "@/components/Home/home";
 import TaskDetailsModal from "@/components/Home/TaskDetailsModal/taskDetailsModal";
 import LandingPage from "@/components/Landing/LandingPage";
 import Login from "@/components/Auth/Login/login";
@@ -26,7 +26,7 @@ function App() {
                     element={
                         <PrivateRoute>
                         {/* <Suspense fallback={<LoadingFallback />}> */}
-                            <NewHome />
+                            <Home />
                         {/* </Suspense> */}
                         </PrivateRoute>
                     }

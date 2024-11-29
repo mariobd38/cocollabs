@@ -68,7 +68,7 @@ export const ProfileCard = (props) => {
                                     { emailCopied ?
                                     Icons('IconClipboardCheck',20,20,"rgb(4, 156, 4)")
                                     :
-                                    <span style={{cursor: "pointer"}} onClick={handleEmailCopyClick}>
+                                    <span className='cursor-pointer' onClick={handleEmailCopyClick}>
                                         {Icons('IconClipboard',20,20)}
                                     </span>
                                     }

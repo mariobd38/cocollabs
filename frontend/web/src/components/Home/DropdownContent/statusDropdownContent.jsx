@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from 'react';
 
-import { Menu, Input,Text } from '@mantine/core';
+import { Menu, Input,Text,Flex } from '@mantine/core';
 
 import { Icons } from '@/components/icons/icons';
 import { items } from '@/components/Home/DropdownContent/items';
@@ -50,7 +50,7 @@ const StatusDropdownContent = (props) => {
 
     return (
         <>
-            <div className='d-flex align-items-center' style={{borderBottom: "1px solid #898989", marginBottom: "6px"}}>
+            <Flex mb={6} style={{borderBottom: "1px solid #898989"}}>
                 <form className="model-dropdown-search" role='search' onSubmit={(event) => {event.preventDefault(); return false;}}>
                     <Input
                         className={`model-dropdown-search-input ${colorScheme}`}
@@ -61,7 +61,7 @@ const StatusDropdownContent = (props) => {
                         value={statusInputValue}
                     />
                 </form>
-            </div> 
+            </Flex> 
             {statusItems.length > 0 ? statusItems.map((item, index) => (
                 
                 <Menu.Item

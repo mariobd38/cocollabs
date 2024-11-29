@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Breadcrumbs, Anchor,Divider,Text, Button,Box } from '@mantine/core';
+import { Breadcrumbs, Anchor,Divider,Text, Button,Box,Flex } from '@mantine/core';
 
 import { Icons } from '@/components/icons/icons';
 
@@ -20,9 +20,15 @@ const TaskDetailsModalHeader = (props) => {
 
     const buttonColor = colorScheme === 'dark' ? '#e4e5e6' : '#424345';
 
+    const iconButtons = [
+        { icon: 'IconBookmark', action: null },
+        { icon: 'IconDots', action: null },
+        { icon: 'IconX', action: handleTaskDetailsModalClose },
+      ];
+
     return (
-        <div className='d-flex justify-content-between user-home-task-details-modal-header-parent' style={{borderBottom: `1px solid ${colorScheme==='dark' ? '#57585a' : '#c7c7c7'}`}}>
-            <div className='user-home-task-details-modal-header'>
+        <Flex justify='space-between' className='user-home-task-details-modal-header-parent' style={{borderBottom: `1px solid ${colorScheme==='dark' ? '#57585a' : '#c7c7c7'}`}}>
+            <Flex align='center' className='user-home-task-details-modal-header'>
                 <Text >
                     <Breadcrumbs separator={Icons('IconChevronRight',13,13,themeColors.text[10])} >
                         {breadcrumbItems}
@@ -34,7 +40,7 @@ const TaskDetailsModalHeader = (props) => {
                     <Anchor href='/home'> {Icons('IconSquareChevronUp',24,24)}</Anchor>
                     <Anchor href='/home'> {Icons('IconSquareChevronDown',24,24)}</Anchor>
                 </span>
-            </div>
+            </Flex>
             <div className='d-flex justify-content-end'>
                 <div className='m-auto d-flex gap-1 my-3 my-sm-1'>
                     {/* <div className='d-flex align-items-center flex-column d-none d-md-flex mx-2 lato-font'>
@@ -53,17 +59,26 @@ const TaskDetailsModalHeader = (props) => {
                         </Tooltip>
                     </div> */}
                     {/* <div className='divider m-auto mx-2 d-none d-md-flex'></div> */}
-                    <div className='d-flex align-items-center'>
+                    <Flex align='center'>
                         <Button className='user-home-task-details-modal-share-btn mx-sm-2' m='auto' mx='1' >
-                            <div className='d-flex align-items-center'>
+                            <Flex align='center'>
                                 <div className='me-2'>
                                     {Icons('IconShare',18,18)}
                                 </div>
                                 <span>Share</span>
-                            </div>
+                            </Flex>
                         </Button>
-                    </div>
-                    <Box className={`user-home-task-details-modal-header-right-btn home-button ${colorScheme}`} c={buttonColor}>
+                    </Flex>
+                    {
+                        iconButtons.map((button,index) => (
+                            <Box key={index} className={`user-home-task-details-modal-header-right-btn home-button ${colorScheme}`} c={buttonColor} onClick={button.action}>
+                            <div className='mx-1 mx-sm-2 m-auto'>
+                                {Icons(button.icon,24,24)}
+                            </div>
+                    </Box>
+                        ))
+                    }
+                    {/* <Box className={`user-home-task-details-modal-header-right-btn home-button ${colorScheme}`} c={buttonColor}>
                         <div className='mx-1 mx-sm-2 m-auto'>
                             {Icons('IconBookmark',24,24)}
                         </div>
@@ -77,10 +92,10 @@ const TaskDetailsModalHeader = (props) => {
                         <div className='mx-1 mx-sm-2 m-auto'>
                             {Icons('IconX',24,24)}
                         </div>
-                    </Box> 
+                    </Box>  */}
                 </div>
             </div>
-        </div>
+        </Flex>
     );
 };
 

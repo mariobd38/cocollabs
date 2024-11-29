@@ -88,8 +88,7 @@ public class AuthValidationUtil {
         if (!VALID_NAME_PATTERN.matcher(fullName).matches()) {
             errors.add("Full name can only contain letters, hyphens, apostrophes, and spaces");
         }
-        String[] nameParts = fullName.split("\\s+");
-        if (nameParts.length < 2) {
+        if (fullName.split("\\s+").length < 2) {
             errors.add("Please provide both first and last name");
         }
         return new ValidationResult(errors.isEmpty(), errors);

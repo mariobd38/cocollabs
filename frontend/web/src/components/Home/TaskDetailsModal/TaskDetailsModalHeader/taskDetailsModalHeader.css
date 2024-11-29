@@ -2,16 +2,10 @@
     /* border-bottom: 1px solid #898989; */
     padding: 5px 10px;
 }
-.user-home-task-details-modal-header {
-    border-bottom: none;
-    display:flex;
-    align-items: center;
-}
 .user-home-task-details-modal-header .mantine-Breadcrumbs-separator {
     margin-inline: 3px !important;
 }
 .user-home-task-details-modal-breadcrumbs {
-    /* color: #dedede !important; */
     font-size: 1rem !important;
 }
 .user-home-task-details-created-on {

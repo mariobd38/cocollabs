@@ -224,7 +224,7 @@ const TaskCardContent = (props) => {
                                     </Button> :
 
                                     <span className='table-cell-icon'>
-                                        <Tooltip label="Add due date" position="top" offset={8} openDelay={400} className='user-home-tooltip' bg={`${colorScheme==='dark' ? '#121212' : '#272727'}`} c='#f0f0f0' >
+                                        <Tooltip label="Add due date" position="top" offset={8} openDelay={100} className='user-home-tooltip' bg={`${colorScheme==='dark' ? '#121212' : '#272727'}`} c='#f0f0f0' >
                                             <Box bd={buttonBorderColor} className={`user-home-calendar-icon-div ${colorScheme}`} onClick={(event) => handleDueDatePopoverClick(event, index,element)}>
                                                 {Icons('IconCalendarMonth',20.80,16,themeColors.text[1])}
                                             </Box>

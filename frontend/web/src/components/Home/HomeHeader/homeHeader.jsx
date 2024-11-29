@@ -39,7 +39,7 @@ const HomeHeader = ({spaceName,themeColors, colorScheme}) => {
                     <div className='d-flex gap-3 align-items-center'>
                         {homeHeaderButtons.map((button, index) => (
                             <div key={index} >
-                                <Tooltip label={button.label} bg={`${colorScheme==='dark' ? '#121212' : '#d7d7d7'}`} c={`${colorScheme==='dark' ? '#fafafa' : '#121212'}`} className='user-home-tooltip' position="bottom" offset={8} openDelay={200} >
+                                <Tooltip label={button.label} bg={`${colorScheme==='dark' ? '#121212' : '#d7d7d7'}`} c={`${colorScheme==='dark' ? '#fafafa' : '#121212'}`} className='user-home-tooltip' position="bottom" offset={8} openDelay={100} >
                                     <Button radius='8' fw={400} c='#fafafa' p='0px 7px' bg='transparent' bd={homeHeaderBd} className={`home-header-button ${colorScheme}`}>
                                         {button.icon}
                                     </Button>

@@ -4,14 +4,17 @@ import com.stringwiz.app.space.model.Space;
 import com.stringwiz.app.user.model.User;
 import com.stringwiz.app.space.service.SpaceService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/api/spaces")
 public class SpaceController {
     private final SpaceService spaceService;
 
@@ -19,7 +22,8 @@ public class SpaceController {
         this.spaceService = spaceService;
     }
 
-    @PostMapping("/api/spaces/create")
+    @PostMapping("/create")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> createSpace(@AuthenticationPrincipal User user, @RequestBody Space space) {
         try {
             Space newSpace = spaceService.save(user, space);
@@ -29,7 +33,7 @@ public class SpaceController {
         }
     }
 
-    @GetMapping("/api/spaces/getPersonal")
+    @GetMapping("/getPersonal")
     public ResponseEntity<?> getPersonalSpace(@AuthenticationPrincipal User user) {
         try {
             return ResponseEntity.ok(spaceService.getUserPersonalSpace(user));
@@ -38,7 +42,7 @@ public class SpaceController {
         }
     }
 
-    @GetMapping("/api/spaces/getByName")
+    @GetMapping("/getByName")
     public ResponseEntity<?> getSpaceByName(@AuthenticationPrincipal User user, @RequestParam("spaceName") String spaceName) {
         try {
             return ResponseEntity.ok(spaceService.getByUser(user, spaceName));

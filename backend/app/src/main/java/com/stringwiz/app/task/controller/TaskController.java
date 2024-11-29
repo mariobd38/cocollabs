@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,7 +22,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-//@RequestMapping("/api/tasks")
+@RequestMapping("/api/tasks")
 public class TaskController {
     private final TaskService taskService;
     private final UserRepository userRepository;
@@ -33,7 +34,7 @@ public class TaskController {
         this.jwtUtil = jwtUtil;
     }
 
-    @PostMapping("/api/tasks/create")
+    @PostMapping("/create")
     public ResponseEntity<?> createTask(@AuthenticationPrincipal User user, @RequestBody Task task, @RequestParam("spaceId") Long spaceId) {
         try {
             Task newTask = taskService.save(user, task,spaceId);
@@ -43,7 +44,7 @@ public class TaskController {
         }
     }
 
-    @GetMapping("/api/tasks/get")
+    @GetMapping("/get")
     public ResponseEntity<?> getTasks(@CookieValue(name = "${JWT_COOKIE_ATTRIBUTE_NAME}", required = false) String jwt) {
         if (jwt == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("JWT token not found in cookie");
@@ -60,7 +61,7 @@ public class TaskController {
         }
     }
 
-    @GetMapping("/api/tasks/getBySpace")
+    @GetMapping("/getBySpace")
     public ResponseEntity<?> getTasksBySpace(@CookieValue(name = "${JWT_COOKIE_ATTRIBUTE_NAME}", required = false) String jwt, @RequestParam("spaceName") String spaceName) {
         if (jwt == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("JWT token not found in cookie");
@@ -79,13 +80,13 @@ public class TaskController {
         }
     }
 
-    @PutMapping("/api/tasks/put")
+    @PutMapping("/put")
     public ResponseEntity<?> updateTask(@RequestBody Task task) {
         Task myTask = taskService.update(task);
         return ResponseEntity.ok(myTask);
     }
 
-    @DeleteMapping("/api/tasks/delete")
+    @DeleteMapping("/delete")
     public ResponseEntity<?> deleteTask(@RequestBody Task task) {
         taskService.delete(task);
         return ResponseEntity.noContent().build();

@@ -6,8 +6,6 @@ import { useDisclosure } from '@mantine/hooks';
 
 import Logo2 from '@/components/Logo/logo2';
 
-// import { NavigationMenuComp } from '@/components/ui/NavigationMenu/navigationMenuComp';
-
 import './NavbarContent.css';
 import classes from './NavbarContent.module.css';
 

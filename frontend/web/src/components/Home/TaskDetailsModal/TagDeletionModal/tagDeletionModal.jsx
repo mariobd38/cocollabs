@@ -18,7 +18,7 @@ const TagDeletionModal = (props) => {
             <div style={{padding: '12px 24px'}}>
                 <Flex align='center' justify='space-between'>
                 <Text ff='Inter' ta='center' fz='19' c={themeColors.text[1]}>Delete tag?</Text>
-                    <Box onClick={handleClose} bg='transparent' p='2px 4px' className='delete-tag-button' style={{borderRadius: "4px", cursor: "pointer"}}>
+                    <Box onClick={handleClose} bg='transparent' p='2px 4px' className='cursor-pointer delete-tag-button' style={{borderRadius: "4px"}}>
                         {Icons('IconX',22,22,themeColors.text[1])}
                     </Box>
                 </Flex>

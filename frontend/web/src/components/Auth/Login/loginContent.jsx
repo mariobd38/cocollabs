@@ -11,7 +11,6 @@ import { GithubButton } from '@/components/Auth/OAuthButtons/githubButton';
 import { UseAuth } from '@/AuthContext/authProvider';
 import { VerifyEmailRegex } from '@/utils/emailRegexFormat';
 import { isOAuthUser } from '@/api/Users/isOAuthUser';
-import { userExists } from '@/api/Users/userExists';
 import { authStatusInfo } from '@/api/Auth/status';
 import AuthSideBlock from '@/components/Auth/authSideBlock';
 
@@ -59,24 +58,14 @@ const LoginContent = (props) => {
             return false;
         }
 
-        let userExistsVar = false;
-        let isOAuth = false;
-
         try {
-            userExistsVar = await userExists(email);
-            isOAuth = await isOAuthUser(email);
-
-            if (!userExistsVar) {
-                setInvalidEmailErrorText('Invalid credentials.');
-                return false;
-            }
+            const isOAuth = await isOAuthUser(email);
             
             if (isOAuth) {
                 setInvalidEmailErrorText('Invalid credentials. Try signing in with Google or GitHub.');
-                return false;
             }
 
-            return true;
+            return !isOAuth;
         } catch (error) {
             console.error(error);
             setInvalidEmailErrorText('An error occurred while validating email.');
@@ -178,7 +167,6 @@ const LoginContent = (props) => {
                                 
                             <Flex className='auth-content-block' w={{base: '85%', xs: '80%'}} >
                                 <Box>
-
                                     <Flex mb="lg" gap={20} direction='column' >
                                         <GoogleButton bd='1px solid #5c5c5c' c='#f0f0f0' size="sm" onClick={handleGoogleLogin} radius={6} p='8px 0' className='sign-up-oauth-button' fz={17} bg="transparent">
                                             <Text className='ms-2 oauth-button-text' fw={700} fz={{base: 16, xs: 17}}>Continue with Google</Text>
