@@ -21,14 +21,12 @@ const SignUp = () => {
     };
 
     return (
-        <Box w='100%' mih='100dvh' >
-            <SignupContent
-                handleGoogleLogin={handleGoogleLogin}
-                inputEmail={inputEmail}
-                setInputEmail={setInputEmail}
-                showOAuth2Buttons={true}
-            />
-        </Box>
+        <SignupContent
+            handleGoogleLogin={handleGoogleLogin}
+            inputEmail={inputEmail}
+            setInputEmail={setInputEmail}
+            showOAuth2Buttons={true}
+        />
     );
 };
 

@@ -6,6 +6,10 @@ import { useEditor } from '@tiptap/react';
 import js from 'highlight.js/lib/languages/javascript'
 import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
 import { createLowlight } from 'lowlight';
+import BulletList from '@tiptap/extension-bullet-list';
+import ListItem from '@tiptap/extension-list-item';
+import ListKeymap from '@tiptap/extension-list-keymap';
+import Paragraph from '@tiptap/extension-paragraph';
 import Highlight from '@tiptap/extension-highlight';
 import StarterKit from '@tiptap/starter-kit';
 import Underline from '@tiptap/extension-underline';
@@ -24,6 +28,9 @@ function GetEditor (props) {
         extensions: [
             StarterKit.configure({ codeBlock: false }),
             Underline,
+            BulletList,
+            ListItem,
+            Paragraph,
             Link,
             Superscript,
             SubScript,
@@ -37,6 +44,7 @@ function GetEditor (props) {
                 lowlight: createLowlight({
                     js, // Only load the languages you need
                 }),
+            
             }).extend({
                 addKeyboardShortcuts() {
                     return {

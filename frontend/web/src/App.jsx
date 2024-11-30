@@ -12,6 +12,7 @@ import SignUp from "@/components/Auth/SignUp/signup"
 import SignUpNextSteps from "@/components/Auth/SignUp/SignUpNextSteps/signUpNextSteps";
 import Onboarding from "@/components/Onboarding/onboarding";
 import OAuth2RedirectHandler from "@/components/Auth/SignUp/oAuth2RedirectHandler";
+import NotFound from '@/components/NotFound/notFound';
 
 import './App.css';
   
@@ -61,6 +62,8 @@ function App() {
                 <Route path="/app/signup" element={<SignUpNextSteps/> } />
 
                 <Route path="/" element={<LandingPage/> } />
+
+                <Route path="*" element={<NotFound />} />
 
             </Routes>
         </AuthProvider>

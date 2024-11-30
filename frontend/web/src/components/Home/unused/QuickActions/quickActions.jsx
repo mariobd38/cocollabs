@@ -20,8 +20,8 @@ const QuickActions = ({themeColors, colorScheme}) => {
                 <Box p={20} class='quick-actions-parent' bg={themeColors.bg[4]} bd={`1px solid ${colorScheme === 'dark' ? '#323539' : '#b9b9b9'}`} 
                     style={{borderRadius: "10px", boxShadow: `0 2px 10px ${colorScheme==='dark' ? '#30314447' : '#70718457'}`}} >
                     <Text fz='18'  c={themeColors.text[3]} ff='Lato'>Quick Actions</Text>
-                    <Flex py={10} ff='Inter' justify="center" style={{ width: '100%' }}>
-                        <Grid pt={10} justify="space-between" gutter="lg" style={{ width: '100%' }}>
+                    <Flex py={10} ff='Inter' justify="center" w='100%'>
+                        <Grid pt={10} justify="space-between" gutter="lg" w='100%' >
                             {qaButtons.map((button,index) => (
                                 <Grid.Col key={index}  span={{ base: 12, md: 6, lg: 3 }} style={{ display: 'flex', justifyContent: 'center' }}>
                                     <Button c={themeColors.text[4]} className='quick-actions-button' bd={`1px solid ${colorScheme==='dark' ? '#404040e4' : '#b0b0b0e4'}`}>

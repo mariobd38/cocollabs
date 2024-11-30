@@ -1,7 +1,7 @@
 import React, { useState, useEffect,useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { useMantineTheme,useMantineColorScheme} from '@mantine/core';
+import { useMantineTheme,useMantineColorScheme,Box } from '@mantine/core';
 import { useLocalStorage } from '@mantine/hooks';
 
 import HomeHeader from '@/components/Home/HomeHeader/homeHeader';
@@ -182,7 +182,6 @@ const Home = () => {
                 />}
             </div>
 
-            <div className={` parent-container`}>
             <div className={`row user-home-all-content ${openSidebarToggle && 'open' }`}>
                 {}
                 <HomeHeader 
@@ -191,7 +190,7 @@ const Home = () => {
                     colorScheme={colorScheme}
                 />
 
-                <div  style={{width: "100%"}}>
+                <Box w='100%' >
                     {/* ONLY FOR GOOGLE OAUTH USERS */}
                     {/* {userProfilePicture && <Button onClick={getGoogleTasks}>Access Google tasks</Button>} */}
 
@@ -270,8 +269,7 @@ const Home = () => {
                             </div>
                         </div> */}
                     </div>
-                </div>
-            </div>
+                </Box>
             </div>
         </>
     );

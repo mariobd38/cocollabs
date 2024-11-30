@@ -69,7 +69,7 @@ const TaskCreationModal = (props) => {
     return (
         <Modal styles={{ body: { backgroundColor: themeColors.bg[12], border: `1px solid ${colorScheme==='dark' ? '#57585a' : '#c7c7c7'}`} }} 
         open={openTaskCreateModal} onCancel={() => {setOpenTaskCreateModal(false) }} className='task-creation-modal' width={650} >
-            <div style={{margin: "auto",width: "100%"}}>
+            <Box m='auto' w='100%' >
                 <Box p='15px 20px' w='100%'>
                     <Textarea
                         ref={textareaRef}
@@ -156,7 +156,7 @@ const TaskCreationModal = (props) => {
                     </Box>
                 </Box>
                 <Divider size={1} color={`${colorScheme==='dark' ? '#57585a' : '#c7c7c7'}`}/>
-                <div style={{margin: "auto",width: "100%"}}>
+                <Box m='auto' w='100%' >
                     <Box p='13px 20px' w='100%'>
                         <Flex justify='end' align='center'>
                             <Button disabled={newTaskNameDisabled} 
@@ -164,17 +164,17 @@ const TaskCreationModal = (props) => {
                             className={`${newTaskName && 'task-card-create-task-button'}`} radius={8} p='0px 12px' 
                             c={newTaskNameDisabled ? `${colorScheme==='dark' ? '#838486' : '#757575d8'}` : '#fafafa'} 
                             bg={newTaskNameDisabled ? `${colorScheme==='dark' ? '#434446' : '#c5c5c5'}` : `${colorScheme==='dark' ? '#048369' : '#24b689e3'}`} onClick={handleTaskCreation}>
-                                <div className='d-flex align-items-center'>
-                                    <div style={{marginRight: "5px"}}>
+                                <Flex align='center'>
+                                    <Box me={5} >
                                         {Icons('IconPlus',14,14)}
-                                    </div>
+                                    </Box>
                                     <span>Create</span>
-                                </div>
+                                </Flex>
                             </Button>
                         </Flex>
                     </Box>
-                </div>
-            </div>
+                </Box>
+            </Box>
         </Modal>
     );
 };

@@ -1,9 +1,9 @@
 import React from 'react';
 
-import integration from '@/assets/illustrations/integration.svg';
-import apis from '@/assets/illustrations/apis.svg';
-import thoughts from '@/assets/illustrations/thoughts.svg';
-import community from '@/assets/illustrations/community.svg';
+import integration from '@/assets/illustrations/landing/integration.svg';
+import apis from '@/assets/illustrations/landing/apis.svg';
+import thoughts from '@/assets/illustrations/landing/thoughts.svg';
+import community from '@/assets/illustrations/landing/community.svg';
 
 import { HoverEffect } from "@/components/ui/CardHoverEffect/card-hover-effect";
  

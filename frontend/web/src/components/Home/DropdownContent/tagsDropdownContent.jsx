@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { Input,Button, Divider } from '@mantine/core';
+import { Input,Button,Divider,Flex,Box } from '@mantine/core';
 
 import { getAllTagsInfo } from '@/api/Tags/getAllTags';
 import { addExistingTagInfo } from '@/api/Tags/addExistingTag';
@@ -112,7 +112,7 @@ const TagsDropdownContent = (props) => {
     // console.log(openParentTagDropdown && activeChildDropdownIndex === null);
     // console.log(openParentTagDropdown);
     return (
-        <div style={{width: "240px", pointerEvents: `${openParentTagDropdown && activeChildDropdownIndex === null ? 'auto' : 'none'}`}}>
+        <Box w={240} style={{pointerEvents: `${openParentTagDropdown && activeChildDropdownIndex === null ? 'auto' : 'none'}`}}>
             {currentTaskTags.length > 0 &&
             <><div className='py-2 px-1 d-flex flex-wrap user-home-task-details-modal-tags-button-parent'>
                 {currentTaskTags.map((item, index) => (
@@ -124,7 +124,7 @@ const TagsDropdownContent = (props) => {
             <Divider color={`${colorScheme==='dark' ? '#595959' : '#a9a9a9'}`} />
             </>}
             <div className='model-dropdown-search-wrapper'>
-                <div className='d-flex align-items-center' style={{borderBottom: `1px solid ${colorScheme==='dark' ? '#595959' : '#a9a9a9'}`}}>
+                <Flex align='center' style={{borderBottom: `1px solid ${colorScheme==='dark' ? '#595959' : '#a9a9a9'}`}}>
                     <form className="model-dropdown-search" role='search' onSubmit={(event) => {event.preventDefault(); return false;}}>
                         <Input
                             className={`form-control model-dropdown-search-input ${colorScheme}`}
@@ -135,7 +135,7 @@ const TagsDropdownContent = (props) => {
                             value={tagInputValue}
                         />
                     </form>
-                </div> 
+                </Flex> 
             </div>
             <TagOptionsDropdown 
                 tagItems = {tagItems}
@@ -150,7 +150,7 @@ const TagsDropdownContent = (props) => {
                 colorScheme={colorScheme}
                 themeColors={themeColors}
             />
-        </div>
+        </Box>
     );
 };
 

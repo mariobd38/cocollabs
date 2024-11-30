@@ -133,13 +133,13 @@ const SpaceCreationIconsPopover = (props) => {
                         <HexColorInput value={color} onChange={setColor} spaceIcon={spaceIcon} setSpaceIcon={setSpaceIcon} setColor={setColor} firstLetter={firstLetter} iconBg={iconBg} 
                         colorMode={colorMode} />
                     }
-                    <div className='d-flex align-items-center'>
+                    <Flex align='center'>
                         <Button h={30} p='2px 6px' bg='transparent' bd={`1px solid ${colorMode==='dark' ? '#e7e7e7' : '#898989'}`}
                         className={`space-creation-color-swatch-button ${colorMode}`}
                         onClick={() => setColorSwatchActive(!colorSwatchActive)}>
                             {Icons(colorSwatchActive ? 'IconHash' : 'IconColorFilter', 21, 21, colorMode==='dark' ? '#fafafa' : '#505050')}
                         </Button>
-                    </div>
+                    </Flex>
                 </Flex>
 
                 <Flex wrap='wrap' justify='center' gap={2} h={280} style={{overflowY: "auto"}}>

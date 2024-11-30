@@ -79,10 +79,10 @@ const HomeNavbarUserMenu = (props) => {
                                 fontSize={2.1}
                             />
 
-                            <div className='d-flex flex-column'>
+                            <Flex direction='column'>
                                 <Text c={themeColors.text[2]} fz={17} fw={650} ff='Lato' className='home-navbar-menu-fullnamedesc'>{userFullName}</Text>
                                 <Text c={colorScheme === 'dark' ? '#cccccc' : '#616161'} fz={14} fw={200} ff='Lato' className='home-navbar-menu-fullnamedesc'>Software Engineer</Text>
-                            </div>
+                            </Flex>
                         </div>
                     </Menu.Label>
 

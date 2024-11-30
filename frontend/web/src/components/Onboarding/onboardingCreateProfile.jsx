@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 
-import { Text,Avatar } from '@mantine/core';
+import { Text,Avatar,Flex } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 
 import { Icons } from '@/components/icons/icons';
@@ -85,20 +85,20 @@ const OnboardingCreateProfile = (props) => {
             {/* <Text fw={700} fz={20} c='#4a4b4d' ta='center' pt={20} tt='uppercase' ff='Nunito Sans'>Select a profile avatar</Text> */}
 
             <div className={`flex w-full flex-wrap justify-center ${profileOptions.length !== 0 && 'gap-5'}`}>
-                <div className='d-flex flex-col align-items-center'>
+                <Flex direction='column' align='center'>
                     <span className='flex gap-5 flex-wrap justify-center'>
                         
                         {profileOptions.map((item, index) => (
                                 
-                                <div key={index} className='onboarding-profile-options-parent d-flex align-items-center flex-column m-auto'
+                                <Flex key={index} align='center' direction='column' m='auto' className='onboarding-profile-options-parent'
                                     style={{transform: hoveredIndex === index ? "translateY(-12.5px)" : "translateY(0px)", transition: "transform 0.5s ease"}} 
                                     onMouseEnter={() => setHoveredIndex(index)}
                                     onMouseLeave={() => setHoveredIndex(null)}
                                     onClick={() => handleAvatarClick(index)}
                                 >
                                     
-                                    <div
-                                        className='cursor-pointer d-flex flex-column align-items-center'
+                                    <Flex direction='column' align='center'
+                                        className='cursor-pointer'
                                         style={{
                                             borderRadius: "50%"
                                         }}
@@ -106,22 +106,22 @@ const OnboardingCreateProfile = (props) => {
                                         
                                         <span>{item.option}</span>
                                         <Text c='#343639' ta='center' ff='Lato' fw={600} fz='19' pt='10' className='text-name'>{fullName}</Text>
-                                    </div>
-                                </div>
+                                    </Flex>
+                                </Flex>
                         ))}
                     </span>
-                </div>
+                </Flex>
                 <div className='d-flex align-items-center py-5'>
 
-                    <div className='d-flex flex-column align-items-center'>
+                    <Flex direction='column' align='center' >
                         {colorSwatchList.length > 0 && 
-                        <span className='d-flex align-items-center'>
-                            <div className='d-flex flex-column align-items-center'>
+                        <Flex align='center'>
+                            <Flex direction='column' align='center' >
                                 <span className='onboarding-add-new-profile-button' onClick={onOpen}>
                                     {Icons('IconPlus', 40, 40)}
                                 </span>
-                            </div>
-                        </span>
+                            </Flex>
+                        </Flex>
                         }
 
                         <OnboardingProfileModal 
@@ -139,7 +139,7 @@ const OnboardingCreateProfile = (props) => {
                             picture={picture}
                         />
 
-                    </div>
+                    </Flex>
                 </div>
             </div>
             { missingProfileError && <Text ta='center' pt={15} c='#dc3838' ff='Lato'>Please select a profile before continuing.</Text> }

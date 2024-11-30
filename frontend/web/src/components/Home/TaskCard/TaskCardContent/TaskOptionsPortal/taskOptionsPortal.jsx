@@ -61,11 +61,11 @@ const TaskOptionsPortal = forwardRef((props, ref) => {
                 w='200px'
                 ref={ref}  // Attach the ref here
                 bd='.1px solid #757779'
+                top={`${contextMenuPosition.top}px`}
+                left={`${contextMenuPosition.left}px`}
+                pos='absolute'
                 style={{ 
                     borderRadius: "7px", 
-                    position: 'absolute', 
-                    top: `${contextMenuPosition.top}px`,
-                    left: `${contextMenuPosition.left}px`,
                     zIndex: 100,
                     pointerEvents: "auto",
                 }}
@@ -78,9 +78,10 @@ const TaskOptionsPortal = forwardRef((props, ref) => {
                     closeOnItemClick={false}
                     
                 >
-                    <div 
+                    <Box 
+                        mah={300}
                         className='p-2' 
-                        style={{ borderRadius: "7px", boxShadow: "0 14px 28px rgba(0, 0, 0, 0.35)", maxHeight: "300px", overflow: "auto" }}
+                        style={{ borderRadius: "7px", boxShadow: "0 14px 28px rgba(0, 0, 0, 0.35)", overflow: "auto" }}
                     >
 
                         <Menu >
@@ -124,7 +125,8 @@ const TaskOptionsPortal = forwardRef((props, ref) => {
                                         c='#eaebed' 
                                         bd='.1px solid #757779' 
                                         m='0' 
-                                        style={{left: `${contextMenuPosition.left+200}px`,pointerEvents: "auto"}} 
+                                        left={`${contextMenuPosition.left+200}px`}
+                                        style={{pointerEvents: "auto"}} 
                                     >
                                         <Menu.Item w='84%' m='auto' bg='#28292b' c='inherit'  className={`rte-styles-options-button ${colorScheme}`}>a</Menu.Item>
                                         <Menu.Item w='84%' m='auto' bg='#28292b' c='inherit'  className={`rte-styles-options-button ${colorScheme}`}>a</Menu.Item>
@@ -132,7 +134,7 @@ const TaskOptionsPortal = forwardRef((props, ref) => {
                                 </Menu>
                             ))}
                         </Menu>
-                    </div>
+                    </Box>
                 </Menu>
             </Box>
         </Portal>

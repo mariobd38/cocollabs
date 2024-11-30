@@ -11,8 +11,8 @@ const AuthHeader = () => {
     }
 
     return (
-        <Box style={{background: "#101216"}}>
-            <Flex justify='space-between' align='center' h='100%' px={20} style={{height: "19vh"}} >
+        <Box bg='#101216' >
+            <Flex justify='space-between' align='center' px={20} h='19vh' >
                 <Box my={40}>
                     <UnstyledButton onClick={handleLogoClick} w="11rem" >
                         <Logo2 strokeColor='#f0f0f0'/>

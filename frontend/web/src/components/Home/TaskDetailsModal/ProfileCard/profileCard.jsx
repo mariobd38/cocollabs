@@ -59,7 +59,6 @@ export const ProfileCard = (props) => {
                             </div>
                             
                             <div className="mt-2 d-flex align-items-center">
-                                {/* <span><IconMail style={{width: "1.3rem"}}/></span> */}
                                 <span>{Icons('IconMail',20,20)}</span>
                                 <span className="ps-3 nunito-sans-font" style={{maxWidth: "210px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap"}}>
                                     {userEmail}
@@ -76,7 +75,6 @@ export const ProfileCard = (props) => {
                             </div>
 
                             <div className="mt-2 ">
-                                {/* <span><IconClock style={{width: "1.3rem"}}/></span> */}
                                 <span>{Icons('IconClock',20,20)}</span>
                                 <span className="ps-3 nunito-sans-font">{currentTime} local time</span>
                             </div>

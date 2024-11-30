@@ -52,6 +52,9 @@ public class Space {
     @Column(columnDefinition = "MEDIUMTEXT")
     private String description;
 
+    @Column(unique = true,nullable = false)
+    private String slug;
+
     @Convert(converter = SpaceIconConverter.class)
     @Column(columnDefinition = "TEXT")
     private SpaceIcon icon;

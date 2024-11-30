@@ -2,7 +2,7 @@
 
 import React, {useState} from "react";
 // import Link from "next/link";
-import { Divider,Text,Title } from "@mantine/core";
+import { Text,Title } from "@mantine/core";
 
 import { cn } from "@/lib/utils";
 // import { Icons } from "@/components/icons";

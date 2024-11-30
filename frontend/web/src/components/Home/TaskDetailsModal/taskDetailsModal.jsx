@@ -289,12 +289,12 @@ const TaskDetailsModal = (props) => {
                                 <MantineDropdown
                                     target={
                                         <div className={`user-home-task-details-modal-head-property-value ${colorScheme}`} onClick={() => setModalDropdownIsOpen(true)}>
-                                            <div className='user-home-task-details-modal-head-text-dropdown-value' style={{color: '#e7e7e7', background: currentTaskStatus && getStatusProperty(currentTaskStatus).background }}>
+                                            <Box className='user-home-task-details-modal-head-text-dropdown-value' c='#e7e7e7' bg={currentTaskStatus && getStatusProperty(currentTaskStatus).background} >
                                                 <Flex>
                                                     <Flex align='center' className='me-2'>{currentTaskStatus && getStatusProperty(currentTaskStatus).icon}</Flex>
                                                     <span>{currentTaskStatus}</span>
                                                 </Flex>
-                                            </div>
+                                            </Box>
                                         </div>
                                     }
                                     background={dropdownColor} width={190} dropdown={<StatusDropdownContent element={taskType && taskType[currentIndex]} handleTaskUpdateNew={handleTaskUpdateNew} taskType={taskType}
@@ -309,12 +309,13 @@ const TaskDetailsModal = (props) => {
                                     target={
                                         <div className={`user-home-task-details-modal-head-property-value ${colorScheme}`} onClick={() => setModalDropdownIsOpen(true)}>
                                             {currentTaskPriority ?
-                                            <div className='user-home-task-details-modal-head-text-dropdown-value' style={{background: currentTaskPriority && getPriorityProperty(currentTaskPriority).color}}>
+                                            <Box className='user-home-task-details-modal-head-text-dropdown-value' bg={currentTaskPriority && getPriorityProperty(currentTaskPriority).color} >
                                                 <Flex>
                                                     <Flex align='center' className='me-2'>{currentTaskPriority && getPriorityProperty(currentTaskPriority).icon}</Flex>
                                                     <span>{currentTaskPriority}</span>
                                                 </Flex>
-                                            </div> : <Text c={fadedTextColor}>Empty</Text>}
+                                            </Box>
+                                            : <Text c={fadedTextColor}>Empty</Text>}
                                         </div>
                                     }
                                     background={dropdownColor} width={210} dropdown={<PriorityDropdownContent element={taskType && taskType[currentIndex]} handleTaskUpdateNew={handleTaskUpdateNew} taskType={taskType}

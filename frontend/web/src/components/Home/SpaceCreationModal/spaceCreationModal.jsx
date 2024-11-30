@@ -92,7 +92,7 @@ const SpaceCreationModal = (props) => {
     return (
         <Modal styles={{ body: { backgroundColor: themeColors.bg[12]} }} open={openSpaceCreateModal} onCancel={() => {setOpenSpaceCreateModal(false) }} className='space-creation-modal' width={650} >
             
-            <div style={{margin: "auto",width: "100%"}}>
+            <Box m='auto' w='100%' >
                 
                 <Box p='30px 35px' w='100%'>
                     <Box mb={24}>
@@ -150,7 +150,7 @@ const SpaceCreationModal = (props) => {
                             placeholder=''
                             autoComplete='off'
                             className={`space-creation-input-field ${colorScheme}`}
-                            style={{color: themeColors.text[3]}}
+                            c={themeColors.text[3]}
                             type="text"
                             radius={0}
                             p={0}
@@ -184,22 +184,22 @@ const SpaceCreationModal = (props) => {
     
                 </Box>
                 <Divider size={1} color='#57585a'/>
-                <div style={{margin: "auto",width: "100%"}}>
+                <Box m='auto' w='100%' >
                     <Box p='13px 20px' w='100%'>
                         <Flex justify='end' align='center'>
                             <Button disabled={spaceNameDisabled} bd={`1px solid ${spaceNameDisabled ? '#434446 ' : '#048369'}`} onClick={handleSpaceCreation}
                             className={`${spaceName && 'task-card-create-task-button'}`} radius={8} p='0px 12px' c={spaceNameDisabled ? '#838486 ' : '#fafafa'} bg={spaceNameDisabled ? '#434446 ' : '#048369'} >
-                                <div className='d-flex align-items-center'>
-                                    <div style={{marginRight: "5px"}}>
+                                <Flex align='center'>
+                                    <Box me={5} >
                                         {Icons('IconPlus',14,14)}
-                                    </div>
+                                    </Box>
                                     <span>Create</span>
-                                </div>
+                                </Flex>
                             </Button>
                         </Flex>
                     </Box>
-                </div>
-            </div>
+                </Box>
+            </Box>
         </Modal>
     );
 };

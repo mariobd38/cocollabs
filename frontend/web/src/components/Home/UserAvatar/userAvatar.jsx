@@ -10,27 +10,19 @@ const UserAvatar = (props) => {
     const { userProfileDto, userProfilePicture, initials, multiplier, fontSize } = props;
     const size = `calc(${multiplier}rem * var(--mantine-scale))`;
     return (
-        // <Avatar 
-        //     className='user-avatar'
-        //     src={userProfileDto !== null &&
-        //     userProfileDto.avatarType === 'image' ? constructImageSrc(userProfileDto.pfd.data, userProfileDto.avatarType) : 'none'}
-        //     style={{backgroundImage: userProfilePicture !== null && userProfileDto == null ? `url(${userProfilePicture})` : 'none', overflow: "visible",
-        //     cursor: "pointer",backgroundSize: 'cover',borderRadius: "20%", 
-        //     width: size,minWidth: size,height: size, fontSize: `${fontSize}rem`
-        // }} 
-        //     bg={`${userProfileDto !== null && userProfileDto.avatarType === 'color' ? userProfileDto.color : ''}`}
-        // >
-        //     {userProfileDto !== null && userProfileDto.avatarType === 'color' ? initials : ''}
-        // </Avatar>
-        // <Avatar src={userProfilePicture} alt="it's me"> </Avatar>
         <Avatar 
             className='user-avatar cursor-pointer'
             src={userProfileDto !== null &&
             userProfileDto.avatarType === 'image' ? constructImageSrc(userProfileDto.pfd.data, userProfileDto.avatarType) : 
             userProfilePicture && userProfilePicture }
+            bgsz='cover'
+            radius='20%'
+            w={size}
+            miw={size}
+            h={size}
+            fz={`${fontSize}rem`}
             style={{backgroundImage: userProfilePicture !== null && userProfileDto == null ? `url(${userProfilePicture})` : 'none', overflow: "visible",
-            backgroundSize: 'cover',borderRadius: "20%", 
-            width: size,minWidth: size,height: size, fontSize: `${fontSize}rem`
+            
         }} 
             bg={`${userProfileDto !== null && userProfileDto.avatarType === 'color' ? userProfileDto.color : ''}`}
         >

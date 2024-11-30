@@ -36,16 +36,15 @@ const Hero = () => {
                                 <AnimatedGradientTextComp
                                     animate={animate}
                                     target={<>
-                                        <span className='fafafa-color d-flex align-items-center'> 
+                                        <Flex align='center' c='#fafafa'> 
                                             <Flex display={{base: 'none', xs: 'flex'}}>🎉 
                                             <Divider mx='10' orientation="vertical" m='auto' size='xs' h='18' style={{borderRadius: "10px"}}  bd='.5px solid #363636'/>
                                             </Flex>
                                             Introducing a new way to build solutions together
                                             <span className='ps-2 transition-transform duration-300 ease-in-out group-hover:translate-x-0.5'>
-
                                             {Icons('IconChevronRight',13,13)}
                                             </span>
-                                        </span>
+                                        </Flex>
                                     </>}
                                 />
 
@@ -61,7 +60,7 @@ const Hero = () => {
                                     <Flex align='center' m='auto' gap={50} direction={{ base: 'column', sm: 'row' }} className={`${animate ? 'float-down' : ''}`}
                                     >
                                         <HeroGetStartedButton routeChange={routeChange} />
-                                        <Button className='visit-community-button' p='11px 30px' fz='1.07rem' bg='transparent' ff='Inter' radius={12} style={{fontWeight: "600"}}>Visit the community
+                                        <Button className='visit-community-button' p='11px 30px' fz='1.07rem' bg='transparent' ff='Inter' radius={12} fw={600}>Visit the community
                                             <span className='visit-community-icon' style={{padding: "0 10px 0 8px",}}>{Icons('IconChevronRight',14,14)}</span>
                                         </Button>
                                     </Flex>

@@ -23,14 +23,12 @@ const Login = () => {
     };
 
     return (
-        <Box w='100%' mih='100dvh' >
-            <LoginContent
-                handleGoogleLogin={handleGoogleLogin}
-                inputEmail={inputEmail}
-                setInputEmail={setInputEmail}
-                showOAuth2Buttons={true}
-            />
-        </Box>
+        <LoginContent
+            handleGoogleLogin={handleGoogleLogin}
+            inputEmail={inputEmail}
+            setInputEmail={setInputEmail}
+            showOAuth2Buttons={true}
+        />
     );
 };
 

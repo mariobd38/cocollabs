@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { Avatar,Text,Button,Modal,Group,ColorSwatch,Divider } from '@mantine/core';
+import { Avatar,Text,Button,Modal,Group,ColorSwatch,Divider,Flex } from '@mantine/core';
 
 import { Upload } from 'antd';
 import ImgCrop from 'antd-img-crop';
@@ -71,7 +71,6 @@ const OnboardingProfileModal = (props) => {
                 ];
             }
         };
-        setSelectedProfile()
     }
 
     const handleSaveProfile = () => {
@@ -134,14 +133,14 @@ const OnboardingProfileModal = (props) => {
     return (
         <Modal  styles={{body: {backgroundColor: "#fafafa" }, header: {backgroundColor: "#fafafa"}}}
         removeScrollProps={{ allowPinchZoom: true }} size='lg' opened={opened} onClose={close} className='onboarding-modal' title="Profile Picker" centered radius={12}>
-            <div className='d-flex flex-column'>
+            <Flex direction='column' >
                 <div className='d-flex justify-content-center pt-2 pb-4'>
                     <span className='onboarding-customize-profile' style={{background: customizedProfileColor ? customizedProfileColor : '' }}>
                         {customizedProfileColor ? initials : <img src={activeFile.thumbUrl} alt="main-profile" style={{width: "7rem", height:"7rem", borderRadius: "50%"}}/>} 
                     </span>
                 </div>
 
-                <div className='d-flex justify-content-between'>
+                <Flex justify='space-between' >
                     <div>
                         <Text fw={500} fz={17} c='#303030' pb={10}>Select an avatar color</Text>
 
@@ -205,14 +204,14 @@ const OnboardingProfileModal = (props) => {
                                     
                         </div>
                     </div>
-                </div>
+                </Flex>
 
                         
                 <div className='d-flex justify-content-end pt-3'>
                     <Button onClick={handleSaveProfile}>Save</Button>
                 </div>
                         
-            </div>
+            </Flex>
         </Modal>
     );
 };

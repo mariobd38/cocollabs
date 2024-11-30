@@ -5,7 +5,7 @@ import { Modal } from "antd";
  
 import dayjs from 'dayjs';
 
-import { Tooltip, Table, Text,Button,Textarea,Box } from '@mantine/core';
+import { Tooltip,Table,Text,Button,Textarea,Box,Flex } from '@mantine/core';
 import { useClickOutside } from '@mantine/hooks';
 
 import { Icons } from '@/components/icons/icons';
@@ -150,32 +150,32 @@ const TaskCardContent = (props) => {
             return ( <Table.Tr key={index} className={`table-row-dark table-cell ${colorScheme}`} bd='none' style={{borderRadius: "18px"}} onContextMenu={(event) => handleTaskRowRightClick(event, index)}>
                 <Table.Td className={`text-overflow-cell`}>
                     <div >
-                        <div className="d-flex" style={{ color: themeColors.text[2] }}>
-                            <div className='align-items-center d-flex'>
+                        <Flex c={themeColors.text[2]} >
+                            <Flex align='center' >
                                 {isTaskTabCompleted ?
-                                    <div onClick={() => handleTaskComplete(index)} className='d-flex align-items-center user-home-task-check-icon user-home-task-set-complete'>
+                                    <Flex onClick={() => handleTaskComplete(index)} align='center' className='user-home-task-check-icon user-home-task-set-complete'>
                                         {Icons('IconCircleCheckFilled',24,24,'#048a66')}
-                                    </div>
+                                    </Flex>
                                     : (
-                                        <div onClick={() => handleTaskComplete(index)}
-                                        className="user-home-task-set-complete d-flex align-items-center">
+                                        <Flex onClick={() => handleTaskComplete(index)} align='center'
+                                        className="user-home-task-set-complete">
                                             {Icons('IconCircle',16,16)}
-                                        </div>
+                                        </Flex>
                                     )
                                 }
-                            </div>
+                            </Flex>
                         
                             <Link className='text-overflow m-0 d-flex ps-1' to={{ pathname: '/home/modal' }} state={{ background: location }} 
                                 onClick={(e) => OpenTaskDetailsModal(e, taskType, index)} >
-                                <div className='d-flex flex-column w-100'>
+                                <Flex direction='column' w='100%' >
                                     <button className='task-name-link' >
                                         <div className={`task-name-text`} >
                                             <Text className='text-overflow' c={themeColors.text[2]} fz={14}>{element.name}</Text>
                                         </div>
                                     </button>
-                                </div>
+                                </Flex>
                             </Link>
-                        </div>
+                        </Flex>
                     </div>
                 </Table.Td>
                 <Table.Td ps={0} className='table-icons-cell'>
@@ -186,13 +186,13 @@ const TaskCardContent = (props) => {
                                     target={
                                         <Button p='0 12px' size="xs" radius='6' fz={13} bg='transparent' bd={buttonBorderColor} className={`user-home-calendar-icon-div ${colorScheme}`}>
                                             <span style={{ color: "#a7a7a7" }} className={`lato-font user-home-chosen-due-date-text`} >
-                                                <span className='d-flex align-items-center' style={{color: colorScheme==='dark' ? "#e5e5e5" : '#414141'}} >
+                                                <Flex align='center' c={colorScheme==='dark' ? "#e5e5e5" : '#414141'} >
                                                     <div className='me-1'>
                                                         {Icons('IconFlag3',18,18,colorScheme==='dark' ? "#e5e5e5" : '#414141')}
                                                     </div>
 
                                                     <span>{element.priority}</span>
-                                                </span>
+                                                </Flex>
                                             </span>
                                         </Button> 
                                     }
@@ -209,17 +209,15 @@ const TaskCardContent = (props) => {
                                     <Button fz='13' size="xs" p='0 12px' radius='6' bg='transparent' bd={buttonBorderColor}
                                     className={`user-home-calendar-icon-div ${colorScheme}`} onClick={(event) => handleDueDatePopoverClick(event, index,element)}>
                                         <span style={{ color: "#a7a7a7" }} className={`lato-font, user-home-chosen-due-date-text`} >
-                                            <span className='d-flex align-items-center'
-                                                style={{ color: dayjs(element.dueDate).startOf('day').diff(dayjs(today).startOf('day'), 'day') < 0 && element.status !== 'Completed' ? "#e10845cf" : 
-                                                    colorScheme==='dark' ? "#e5e5e5" : '#414141'  
-                                            }} >
-                                                <div className='d-flex align-items-center'>
+                                            <Flex align='center' c={dayjs(element.dueDate).startOf('day').diff(dayjs(today).startOf('day'), 'day') < 0 && element.status !== 'Completed' ? "#e10845cf" : 
+                                                    colorScheme==='dark' ? "#e5e5e5" : '#414141'} >
+                                                <Flex align='center'>
                                                     <div className='me-2'>
                                                         {Icons('IconCalendarDue',18,18,themeColors.text[1])}
                                                     </div>
                                                     <span>{formatDate(element.dueDateTime || element.dueDate)}</span>
-                                                </div>
-                                            </span>
+                                                </Flex>
+                                            </Flex>
                                         </span>
                                     </Button> :
 
@@ -257,7 +255,7 @@ const TaskCardContent = (props) => {
                         {showContextMenu && CustomContextMenu }
                         {currentTask && 
                             <Modal centered open={openRenameModal} onCancel={() => {setOpenRenameModal(false);}} afterClose={() => {setCurrentTask(null); setNewTaskName(null);}} className='task-rename-modal' width={570}>
-                                <div style={{width: "90%", margin: "auto"}}>
+                                <Box w='90%' m='auto' >
                                     <Textarea
                                         className='mt-1 mb-5 py-2'
                                         p={0}
@@ -269,15 +267,15 @@ const TaskCardContent = (props) => {
                                         onChange={(event) => setNewTaskName(event.currentTarget.value)}
                                     />
                                     <Button disabled={currentTask.name === newTaskName || (newTaskName.length === '' || newTaskName.trim() === '')} onClick={handleTaskRename} w='-webkit-fill-available'>
-                                        <div className='d-flex align-items-center'>
+                                        <Flex align='center'>
                                             <div className='me-2'>
                                                 {Icons('IconPencil',17,17)}
                                             </div>
                                             <span>Confirm new task name</span>
-                                        </div>
+                                        </Flex>
                                         
                                     </Button>
-                                </div>
+                                </Box>
                             </Modal>
                         }
                     </>

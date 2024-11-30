@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { Table, Card, Text,SegmentedControl,Flex,Button, Box } from '@mantine/core';
+import { Table,Card,Text,SegmentedControl,Flex,Button,Box,Image } from '@mantine/core';
 
 import TaskDetailsModal from '@/components/Home/TaskDetailsModal/taskDetailsModal';
 import TaskCardContent from '@/components/Home/TaskCard/TaskCardContent/taskCardContent';
@@ -117,9 +117,9 @@ const TaskCard = (props) => {
                 className='task-card-create-task-button' c='#fafafa' radius={8} p='0px 12px' 
                 bg='#24b689df' onClick={() => setOpenTaskCreateModal(true)}>
                     <div className='d-flex align-items-center'>
-                        <div style={{marginRight: "7px"}}>
+                        <Box me={7} >
                         {Icons('IconPlus',15,15,'#fafafa')}
-                        </div>
+                        </Box>
                         <span>New issue</span>
                     </div>
                 </Button>
@@ -160,10 +160,10 @@ const TaskCard = (props) => {
                                         </Table.Tbody>
                                     </Table>
                                 ) : (
-                                    <div className='flex flex-col p-0 justify-center align-items-center'>
-                                        <img style={{ width: "14rem" }} src={checklist} alt="" />
+                                    <Flex justify='center' direction='column' p={0} align='center' >
+                                        <Image w='14rem' src={checklist} alt="" />
                                         <div className='fafafa-color pt-3 lato-font'>Your completed tasks will appear here ✅</div>
-                                    </div>
+                                    </Flex>
                                 )}
                             </div>
                         )}

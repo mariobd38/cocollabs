@@ -35,7 +35,7 @@ const AuthSideBlock = ({isLogin}) => {
 
                 <Flex w='100%' direction='column' justify='space-between' gap={20}>
                     <Flex justify='flex-start'>
-                        <Paper p='10px 25px' radius={12} w='21rem' style={{cursor: "default"}} bg='#f0f0f0'>
+                        <Paper p='10px 25px' radius={12} w='21rem' className='cursor-default' bg='#f0f0f0'>
                             <Flex gap={10} align='center' justify='center'>
                                 <span>
                                     {IconsFilled('IconPhotoFilled',50,50, '#353535')}
@@ -64,7 +64,7 @@ const AuthSideBlock = ({isLogin}) => {
                     </Flex>
 
                     <Flex justify='flex-end' >
-                        <Paper p='10px 25px' radius={12} w='21rem'  style={{cursor: "default"}} bg='#f0f0f0'>
+                        <Paper p='10px 25px' radius={12} w='21rem' className='cursor-default' bg='#f0f0f0'>
                             <Flex gap={10} align='center' justify='flex-start'>
                                 <Box w='3.8rem' >
                                     <Image src={profile} radius={50}/>

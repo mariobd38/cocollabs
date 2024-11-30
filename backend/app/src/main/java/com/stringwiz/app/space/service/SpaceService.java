@@ -2,6 +2,7 @@ package com.stringwiz.app.space.service;
 
 import com.stringwiz.app.space.model.Visibility;
 import com.stringwiz.app.space.model.Space;
+import com.stringwiz.app.space.util.SpaceSlugGenerationUtil;
 import com.stringwiz.app.user.model.User;
 import com.stringwiz.app.space.repository.SpaceRepository;
 import com.stringwiz.app.user.repository.UserRepository;
@@ -30,6 +31,7 @@ public class SpaceService {
 
                 Space spaceDetails = new Space(space.getName(), space.getDescription(), space.getIcon(),
                         space.getVisibility());
+                spaceDetails.setSlug(SpaceSlugGenerationUtil.generateSlug(space.getName()));
 
                 currentUser.addSpace(spaceDetails);
                 userRepository.save(currentUser);

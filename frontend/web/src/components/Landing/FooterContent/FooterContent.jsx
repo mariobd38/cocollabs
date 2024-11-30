@@ -66,7 +66,7 @@ export function FooterContent() {
             {/* <Divider pt={40} bd='1px solid #303030'/> */}
             <Flex justify='center'>
 
-            <Divider mx='10' mb={80}  orientation="vertical" m='auto' w={{base: '100%', md: '90%'}}  size='xs'  style={{borderRadius: "10px"}}  bd='.5px solid #202038'/>
+            <Divider mx='10' mb={80}  orientation="vertical" m='auto' w={{base: '100%', md: '90%'}}  size='xs' style={{borderRadius: "10px"}}  bd='.5px solid #202038'/>
             </Flex>
 
             <Container className={classes.inner}>
