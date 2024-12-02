@@ -37,8 +37,8 @@ const TaskDetailsModalHeader = (props) => {
                 <Divider size="xs" orientation="vertical" ms={13} me={13} m='auto' h={25} bd={`.1px solid ${colorScheme==='dark' ? '#57585a' : '#c7c7c7'}`} />
                 <span className='gap-2 d-flex'>
 
-                    <Anchor href='/home'> {Icons('IconSquareChevronUp',24,24)}</Anchor>
-                    <Anchor href='/home'> {Icons('IconSquareChevronDown',24,24)}</Anchor>
+                    <Anchor> {Icons('IconSquareChevronUp',24,24)}</Anchor>
+                    <Anchor> {Icons('IconSquareChevronDown',24,24)}</Anchor>
                 </span>
             </Flex>
             <div className='d-flex justify-content-end'>

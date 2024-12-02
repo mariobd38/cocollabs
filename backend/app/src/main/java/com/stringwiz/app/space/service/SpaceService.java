@@ -6,6 +6,8 @@ import com.stringwiz.app.space.util.SpaceSlugGenerationUtil;
 import com.stringwiz.app.user.model.User;
 import com.stringwiz.app.space.repository.SpaceRepository;
 import com.stringwiz.app.user.repository.UserRepository;
+import com.stringwiz.app.userSpace.model.UserSpaceActivity;
+import com.stringwiz.app.userSpace.repository.UserSpaceActivityRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -16,10 +18,14 @@ import java.util.Optional;
 public class SpaceService {
     private final SpaceRepository spaceRepository;
     private final UserRepository userRepository;
+    private final UserSpaceActivityRepository userSpaceActivityRepository;
 
-    public SpaceService(SpaceRepository spaceRepository, UserRepository userRepository) {
+    public SpaceService(SpaceRepository spaceRepository,
+                        UserRepository userRepository,
+                        UserSpaceActivityRepository userSpaceActivityRepository) {
         this.spaceRepository = spaceRepository;
         this.userRepository = userRepository;
+        this.userSpaceActivityRepository = userSpaceActivityRepository;
     }
 
     @Transactional
@@ -28,12 +34,16 @@ public class SpaceService {
             Optional<User> optionalUser = userRepository.findById(user.getId());
             if (optionalUser.isPresent()) {
                 User currentUser = optionalUser.get();
-
+                //add new space to user
                 Space spaceDetails = new Space(space.getName(), space.getDescription(), space.getIcon(),
                         space.getVisibility());
                 spaceDetails.setSlug(SpaceSlugGenerationUtil.generateSlug(space.getName()));
-
                 currentUser.addSpace(spaceDetails);
+
+                //save user-space activity details
+                UserSpaceActivity newActivity = new UserSpaceActivity(user,spaceDetails);
+                userSpaceActivityRepository.save(newActivity);
+
                 userRepository.save(currentUser);
                 return spaceDetails;
             }
@@ -45,30 +55,29 @@ public class SpaceService {
     }
 
     public Space getUserPersonalSpace(User user) {
-        Optional<User> optionalUser = userRepository.findById(user.getId());
-        if (optionalUser.isPresent()) {
-            User foundUser = optionalUser.get();
-            //System.out.println(spaceRepository.findByVisibilityAndUsers(Visibility.PERSONAL, foundUser));
-            return spaceRepository.findByVisibilityAndUsers(Visibility.PERSONAL, foundUser);
-        } else {
-            throw new IllegalArgumentException("User not found with email: " + user.getEmail());
-        }
+        return userRepository.findById(user.getId())
+            .map(foundUser ->
+                spaceRepository.findByVisibilityAndUsers(Visibility.PERSONAL, user)
+                    .orElseThrow(() -> new IllegalArgumentException(
+                        "Personal space not found for user: " + user.getEmail())
+                    )
+            )
+            .orElseThrow(() -> new IllegalArgumentException(
+                    "User not found with email: " + user.getEmail())
+            );
     }
 
     public Space getByUser(User user, String spaceName) {
-        Optional<User> optionalUser = userRepository.findById(user.getId());
-        if (optionalUser.isPresent()) {
-            User foundUser = optionalUser.get();
-            Optional<Space> optionalSpace = spaceRepository.findByNameAndUsers(spaceName, foundUser);
-
-            if (optionalSpace.isPresent()) {
-                return optionalSpace.get();
-            } else {
-                throw new IllegalArgumentException("Space not found with name: " + spaceName + " for user: " + user.getEmail());
-            }
-        } else {
-            throw new IllegalArgumentException("User not found with email: " + user.getEmail());
-        }
+        return userRepository.findById(user.getId())
+            .map(foundUser ->
+                spaceRepository.findByNameAndUsers(spaceName, foundUser)
+                    .orElseThrow(() -> new IllegalArgumentException(
+                        "Space not found with name: " + spaceName + " for user: " + user.getEmail())
+                    )
+            )
+            .orElseThrow(() -> new IllegalArgumentException(
+                "User not found with email: " + user.getEmail())
+            );
     }
 
     /*public void linkWithTasks(User user, Space space) {

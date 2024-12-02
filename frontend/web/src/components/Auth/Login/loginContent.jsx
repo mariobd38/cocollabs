@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import {Title,Flex,Box,TextInput,PasswordInput,Text,Paper,Group,Button,Divider,Anchor } from '@mantine/core';
@@ -8,10 +8,12 @@ import { useForm } from '@mantine/form';
 import { GoogleButton } from '@/components/Auth/OAuthButtons/googleButton';
 import { GithubButton } from '@/components/Auth/OAuthButtons/githubButton';
 // import { SlackButton } from './slackButton';
-import { UseAuth } from '@/AuthContext/authProvider';
+import { UseAuth } from '@/hooks/authProvider';
 import { VerifyEmailRegex } from '@/utils/emailRegexFormat';
 import { isOAuthUser } from '@/api/Users/isOAuthUser';
 import { authStatusInfo } from '@/api/Auth/status';
+import { getLastActiveSpaceInfo } from '@/api/Spaces/getLastActiveSpace';
+import { UseLastActiveSpace } from '@/hooks/UseLastActiveSpace';
 import AuthSideBlock from '@/components/Auth/authSideBlock';
 
 const validatePassword = (value) => {
@@ -32,7 +34,6 @@ const validateEmail = (value) => {
 }
 
 const LoginContent = (props) => {
-    
     const { handleGoogleLogin,setInputEmail,inputEmail } = props;
 
     const [invalidEmailErrorText, setInvalidEmailErrorText] = useState('');
@@ -64,7 +65,6 @@ const LoginContent = (props) => {
             if (isOAuth) {
                 setInvalidEmailErrorText('Invalid credentials. Try signing in with Google or GitHub.');
             }
-
             return !isOAuth;
         } catch (error) {
             console.error(error);
@@ -93,6 +93,7 @@ const LoginContent = (props) => {
             setInvalidEmailErrorText('');
         }
     };
+    
 
     const handleSubmit = async (values) => {
         const { email,password } = values;
@@ -127,7 +128,13 @@ const LoginContent = (props) => {
                 const { isAuthenticated, isOnboarded } = await authStatusInfo();
                 if (isAuthenticated) {
                     if (isOnboarded) {
-                        navigate('/home', { state: { loginData } });
+                        try {
+                            const activeUserSpace = await getLastActiveSpaceInfo();
+                            navigate(`/${activeUserSpace.slug}`, { state: { loginData } });
+                        } catch(error) {
+                            console.error("Could not redirect to user space:", error);
+                        }
+                        // navigate('/home', { state: { loginData } });
                     } else {
                         navigate('/onboarding', { state: { loginData } });
                     }

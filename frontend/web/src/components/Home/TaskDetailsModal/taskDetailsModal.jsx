@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
 
 import dayjs from 'dayjs';
 
@@ -41,9 +40,6 @@ const TaskDetailsModal = (props) => {
     const content = currentTaskDescriptionHtml;
     const [originalTaskName, setOriginalTaskName] = useState(currentTaskName);
 
-    const navigate = useNavigate();
-    const location = useLocation();
-
     const currentTaskDateFormatter = (dateString) => {
         if (dateString === null)
             return 'None';
@@ -66,22 +62,19 @@ const TaskDetailsModal = (props) => {
             setOriginalTaskName(null);
             setCurrentTaskDescriptionHtml(null);
             onHide();
-            navigate(-1);
+            // navigate(-1);
         }
     };
 
-    useEffect(() => {
-        if (location.pathname === '/home/modal' && !show) {
+    // useEffect(() => {
+    //     if (location.pathname === '/home/modal' && !show) {
 
-            const timeout = setTimeout(() => {
-                // const newUrl = '/home';
-                // window.history.replaceState(null, null, newUrl);
-                navigate('/home');
-            }, 300);
-            return () => clearTimeout(timeout);
-                // navigate('/home');
-        }
-    }, [location.pathname, show, navigate]);
+    //         const timeout = setTimeout(() => {
+    //             navigate('/home');
+    //         }, 300);
+    //         return () => clearTimeout(timeout);
+    //     }
+    // }, [location.pathname, show, navigate]);
 
 
     //task due date
@@ -226,7 +219,7 @@ const TaskDetailsModal = (props) => {
                 themeColors={themeColors}
             />
 
-            <div className='user-home-task-details-modal-body'>
+            <Box className='overflow-y-auto' mah={680} mih={630} p='5px 20px' >
                 <Flex justify='space-between' pb={24} >
                     <Box w='100%'>
                         <Textarea
@@ -251,7 +244,6 @@ const TaskDetailsModal = (props) => {
                                     userProfilePicture={userProfilePicture}
                                     target={<div>{assigneeContent}</div>}
                                     themeColors={themeColors}
-                                    colorScheme={colorScheme}
                                 />
                             </Flex>
 
@@ -409,7 +401,7 @@ const TaskDetailsModal = (props) => {
                     colorScheme={colorScheme}
                 />}
 
-            </div>
+            </Box>
         </Modal>
     );
 };

@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { readLocalStorageValue } from '@mantine/hooks';
 import { OAUTH2_CALLBACK_URI } from '../../../constants';
 
-import { UseAuth } from '@/AuthContext/authProvider';
+import { UseAuth } from '@/hooks/authProvider';
 
 import { authStatusInfo } from '@/api/Auth/status';
 

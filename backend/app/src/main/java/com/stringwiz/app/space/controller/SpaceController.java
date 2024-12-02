@@ -3,6 +3,12 @@ package com.stringwiz.app.space.controller;
 import com.stringwiz.app.space.model.Space;
 import com.stringwiz.app.user.model.User;
 import com.stringwiz.app.space.service.SpaceService;
+import com.stringwiz.app.user.repository.UserRepository;
+import com.stringwiz.app.user.util.UserPlatformDtoConverter;
+import jakarta.transaction.Transactional;
+import org.apache.coyote.Response;
+import org.hibernate.Hibernate;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -13,24 +19,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Optional;
+import java.util.Set;
+
 @RestController
 @RequestMapping("/api/spaces")
 public class SpaceController {
     private final SpaceService spaceService;
+    private final UserRepository userRepository;
 
-    public SpaceController(SpaceService spaceService) {
+    public SpaceController(SpaceService spaceService, UserRepository userRepository) {
         this.spaceService = spaceService;
+        this.userRepository = userRepository;
     }
 
     @PostMapping("/create")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> createSpace(@AuthenticationPrincipal User user, @RequestBody Space space) {
-        try {
-            Space newSpace = spaceService.save(user, space);
-            return ResponseEntity.ok(newSpace);
-        } catch (Exception e) {
-            return ResponseEntity.ok(new Space());
-        }
+        return ResponseEntity.ok(
+            Optional.ofNullable(spaceService.save(user, space))
+                    .orElseThrow(() -> new RuntimeException("Failed to create space")));
     }
 
     @GetMapping("/getPersonal")
@@ -38,7 +46,22 @@ public class SpaceController {
         try {
             return ResponseEntity.ok(spaceService.getUserPersonalSpace(user));
         } catch (Exception e) {
-            return ResponseEntity.ok(new Space());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error fetching user's personal space: " + e.getMessage());
+        }
+    }
+
+    @Transactional
+    @GetMapping("/getAll")
+    public ResponseEntity<?> getAllUserSpaces(@AuthenticationPrincipal User authenticatedUser) {
+        try {
+            User user = userRepository.findById(authenticatedUser.getId())
+                    .orElseThrow(() -> new RuntimeException("User not found"));
+
+            return ResponseEntity.ok(UserPlatformDtoConverter.getUserSpacesDto(user));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error fetching user spaces: " + e.getMessage());
         }
     }
 

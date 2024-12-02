@@ -10,7 +10,6 @@ import { createSpaceInfo } from '@/api/Spaces/createSpace';
 import { generateSpaceIconJson } from '@/utils/generateSpaceIconJson';
 // import { linkTasksToPersonalSpace } from '../../../DataManagement/Spaces/linkTasksToPersonalSpace';
 
-import classes from './spaceCreationModal.module.css';
 import './spaceCreationModal.css';
 
 const visibilityOptions = [
@@ -41,12 +40,12 @@ const SpaceCreationModal = (props) => {
     const [spaceVisibility, setSpaceVisibility] = useState('Private');
 
     const cards = visibilityOptions.map((item) => (
-        <Radio.Card className={classes.root} radius="md" value={item.name} key={item.name} >
+        <Radio.Card bg='transparent' bd='none' pos='relative' p='10px 0' radius="md" value={item.name} key={item.name} >
             <Group wrap="nowrap" align="flex-start">
                 <Radio.Indicator />
                 <div>
-                    <Text className={classes.label} c={colorScheme === 'dark' ? '#ececec' : '#3a3a3a'}>{item.name}</Text>
-                    <Text className={classes.description} c={colorScheme === 'dark' ? '#c3c3c3' : '#696969'}>{item.description}</Text>
+                    <Text fw='bold' ff='Inter' fz={14} lh={1.2} c={colorScheme === 'dark' ? '#e5e5e5' : '#3a3a3a'}>{item.name}</Text>
+                    <Text mt={8} fz={12} c={colorScheme === 'dark' ? '#c3c3c3' : '#696969'}>{item.description}</Text>
                 </div>
             </Group>
         </Radio.Card>

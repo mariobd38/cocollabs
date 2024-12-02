@@ -67,34 +67,33 @@ const HomeNavbarUserMenu = (props) => {
                 }
                 width={300}
                 dropdown={
-                    <div className={`user-home-navbar-menu-dropdown`}
-                    >
-                    <Menu.Label>
-                        <div className='d-flex gap-3 align-items-center'>
-                            <UserAvatar 
-                                userProfileDto={userProfileDto}
-                                userProfilePicture={userProfilePicture}
-                                initials={initials}
-                                multiplier={4.8}
-                                fontSize={2.1}
-                            />
+                    <div>
+                        <Menu.Label>
+                            <div className='d-flex gap-3 align-items-center'>
+                                <UserAvatar 
+                                    userProfileDto={userProfileDto}
+                                    userProfilePicture={userProfilePicture}
+                                    initials={initials}
+                                    multiplier={4.8}
+                                    fontSize={2.1}
+                                />
 
-                            <Flex direction='column'>
-                                <Text c={themeColors.text[2]} fz={17} fw={650} ff='Lato' className='home-navbar-menu-fullnamedesc'>{userFullName}</Text>
-                                <Text c={colorScheme === 'dark' ? '#cccccc' : '#616161'} fz={14} fw={200} ff='Lato' className='home-navbar-menu-fullnamedesc'>Software Engineer</Text>
-                            </Flex>
-                        </div>
-                    </Menu.Label>
+                                <Flex direction='column'>
+                                    <Text c={themeColors.text[2]} fz={17} fw={650} className='home-navbar-menu-fullnamedesc'>{userFullName}</Text>
+                                    <Text c={colorScheme === 'dark' ? '#cccccc' : '#616161'} fz={14} fw={200} className='home-navbar-menu-fullnamedesc'>Software Engineer</Text>
+                                </Flex>
+                            </div>
+                        </Menu.Label>
 
-                    {menuItems.map((item) => (
-                        <Menu.Item key={item.name} onClick={item.action} className={`home-button ${colorScheme}`} bg={themeColors.bg[12]} c={themeColors.text[4]} mt={item?.marginTop} w='91.5%' leftSection={Icons(item.icon,14,14,themeColors.text[4])}>
-                            {item.name}
+                        {menuItems.map((item) => (
+                            <Menu.Item key={item.name} onClick={item.action} className={`home-button ${colorScheme}`} bg={themeColors.bg[12]} c={themeColors.text[4]} mt={item?.marginTop} w='91.5%' leftSection={Icons(item.icon,14,14,themeColors.text[4])}>
+                                {item.name}
+                            </Menu.Item>
+                        ))}
+                        <Menu.Divider size="xs" bd={`.1px solid ${colorScheme==='dark' ? '#484a4b' : '#d0d2d3'}`}/>
+                        <Menu.Item w='91.5%' className={`home-button ${colorScheme}`} bg={themeColors.bg[12]} c={themeColors.text[4]} onClick={handleUserLogout} leftSection={Icons('IconLogout',14,14,themeColors.text[4])}>
+                            Log out
                         </Menu.Item>
-                    ))}
-                    <Menu.Divider size="xs" bd={`.1px solid ${colorScheme==='dark' ? '#484a4b' : '#d0d2d3'}`}/>
-                    <Menu.Item w='91.5%' className={`home-button ${colorScheme}`} bg={themeColors.bg[12]} c={themeColors.text[4]} onClick={handleUserLogout} leftSection={Icons('IconLogout',14,14,themeColors.text[4])}>
-                        Log out
-                    </Menu.Item>
                     </div>
                 }
                 background={themeColors.bg[12]} position='bottom-end' colorScheme={colorScheme}

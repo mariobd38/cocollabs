@@ -1,7 +1,3 @@
-.user-avatar {
-    display: flex;
-    align-items: center;
-}
 .user-avatar .mantine-Avatar-placeholder {
     font-size: 0.8em;
     color: #fafafa;

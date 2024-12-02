@@ -9,7 +9,7 @@ import OnboardingCreateProfile from '@/components/Onboarding/onboardingCreatePro
 import OnboardingCreateSpace from '@/components/Onboarding/onboardingCreateSpace';
 import AuthHeader from '@/components/Auth/authHeader';
 
-import { UseAuth } from '@/AuthContext/authProvider';
+import { UseAuth } from '@/hooks/authProvider';
 
 import { generateSpaceIconJson } from '@/utils/generateSpaceIconJson';
 

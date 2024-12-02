@@ -1,6 +1,6 @@
 body.scroll-lock {
     overflow: hidden;
-  }
+}
 
 .home-navbar-search-ss {
     border-radius: 50%;
@@ -69,33 +69,15 @@ body.scroll-lock {
     }
 }
 
-.user-home-avatar-menu-target:hover {
-    background-color: #343638;
-}
-
-.user-home-navbar-menu-dropdown {
-    border: none !important;
-    pointer-events: auto;
-}
-
 .home-navbar-menu-fullnamedesc {
     white-space: nowrap;
     overflow:hidden;
     text-overflow:ellipsis;
     width: 170px;
+    font-family: 'Lato';
 }
 .user-home-navbar-icon-apps,.navbar-menu-sidebar-icon {
     border-radius: 6px;
     padding: 6px;
     cursor: pointer;
-}
-/* .user-home-navbar-icon-apps:hover,.navbar-menu-sidebar-icon:hover {
-    background-color: #37393b;
-} */
-
-.home-navbar-search-input-right-section {
-    border-radius: 5px;
-    padding: 2px 9px;
-    margin-right: 30px;
-    height: 28px;
 }

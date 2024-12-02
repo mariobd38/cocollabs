@@ -131,9 +131,9 @@ const TaskDescriptionTipTap = (props) => {
         <>
         <div className="rich-text-editor-wrapper" ref={editorRef} >
             <RichTextEditor editor={editor} onInput={handleChange}
-                style={{border: tiptapBd, paddingBottom: `${handleTaskUpdateNew && !expanded && isSpoilerButtonVisible ? '50px' : '0'}`}} 
+                style={{border: tiptapBd, paddingBottom: `${handleTaskUpdateNew && !expanded && isSpoilerButtonVisible ? '50px' : '0'}`, borderRadius: '8px'}} 
                 className={`rte ${(handleTaskUpdateNew && !expanded && isSpoilerButtonVisible) && `not-expanded ${colorScheme}`}`} 
-                bg={tiptapBg}
+                bg={tiptapBg} ff='Inter' pos='relative' 
                 >
 
                 {handleTaskUpdateNew ? <Spoiler maxHeight={280} w='100%'
@@ -144,10 +144,10 @@ const TaskDescriptionTipTap = (props) => {
                     transitionDuration={2000}
                 >
                     <RichTextEditor.Content onClick={() => setExpanded(true)} bg={tiptapBg} content={content} 
-                    c={themeColors.text[1]} className={`rte-content ${colorScheme}`} ref={contentRef} />
+                    c={themeColors.text[1]} className={`rte-content ${colorScheme}`} ref={contentRef} p={0} />
                 </Spoiler> : 
                     <RichTextEditor.Content bg={tiptapBg} content={content} 
-                    c={themeColors.text[1]} className={`rte-content overflow ${colorScheme}`} ref={contentRef} />
+                    c={themeColors.text[1]} className={`rte-content overflow ${colorScheme}`} ref={contentRef} p={0} />
                 }
                 {/* <Spoiler maxHeight={280} w='100%'
                     showLabel={`${!expanded || isSpoilerButtonVisible ? 'Show more' : ''}`} 

@@ -13,5 +13,6 @@ public class UserSpaceDto {
     private String name;
     private SpaceIcon icon;
     private String description;
+    private String slug;
     private Visibility visibility;
 }

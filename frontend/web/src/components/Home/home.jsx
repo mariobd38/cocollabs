@@ -1,7 +1,7 @@
 import React, { useState, useEffect,useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { useMantineTheme,useMantineColorScheme,Box } from '@mantine/core';
+import { useMantineTheme,useMantineColorScheme,Box,Flex } from '@mantine/core';
 import { useLocalStorage } from '@mantine/hooks';
 
 import HomeHeader from '@/components/Home/HomeHeader/homeHeader';
@@ -11,9 +11,11 @@ import TaskCard from '@/components/Home/TaskCard/taskCard';
 import HomeSidebar from '@/components/Home/HomeSidebar/homeSidebar';
 
 import { getUserProfileInfo } from '@/api/Users/getUserProfileInfo';
+import { getLastActiveSpaceInfo } from '@/api/Spaces/getLastActiveSpace';
 // import { getTaskInfo } from './../../DataManagement/Tasks/getTasks';
-import { getPersonalSpaceInfo } from '@/api/Spaces/getPersonalSpaceInfo';
+// import { getPersonalSpaceInfo } from '@/api/Spaces/getPersonalSpaceInfo';
 import { getTaskInfoBySpace } from '@/api/Tasks/getTasksBySpace';
+// import { getAllUserSpacesInfo } from '@/api/Spaces/getAllUserSpaces';
 // import { getGoogleTaskInfo } from '../../DataManagement/Tasks/getGoogleTasks';
 
 import { getThemeColor } from '@/components/Themes/getThemeColor';
@@ -46,7 +48,7 @@ const Home = () => {
 
     useEffect(() => {
         async function fetchSpaceData() {
-            const data = await getPersonalSpaceInfo();
+            const data = await getLastActiveSpaceInfo();
             setSpaceData(data);
         }
 
@@ -81,7 +83,7 @@ const Home = () => {
             setUserEmail(storedAppInfo.user.email);
             setUserProfilePicture(storedAppInfo.user.picture);
             setUserProfileDto(storedAppInfo.profile);
-            setUserSpaces(storedAppInfo.userSpace);
+            // setUserSpaces(storedAppInfo.userSpace);
             setColorScheme(storedAppInfo.userPreference.theme);
             // const jsonData = { user: storedAppInfo };
           } else {
@@ -92,7 +94,7 @@ const Home = () => {
                     user: data.userDto,
                     profile: data.profileDto,
                     userPreference: data.userPreferenceDto,
-                    userSpace: data.userSpaceDto
+                    // userSpace: data.userSpaceDto
                 }
                 setUserFullName(jsonData.user.fullName);
                 setInitials((jsonData.user.fullName.split(' ')[0][0] + jsonData.user.fullName.split(' ')[1][0]).toUpperCase());
@@ -100,7 +102,7 @@ const Home = () => {
                 setUserProfilePicture(jsonData.user.picture);
                 setUserProfileDto(jsonData.profile);
                 setColorScheme(jsonData.userPreference.theme);
-                setUserSpaces(jsonData.userSpace);
+                // setUserSpaces(jsonData.userSpace);
 
                 setStoredAppInfo(jsonData);
             }
@@ -130,7 +132,7 @@ const Home = () => {
         setOngoingTasks(ongoing);
         setOverdueTasks(overdue);
         setCompletedTasks(completed);
-    },[taskData]);
+    },[taskData,dayjs]);
 
     useEffect(() => {
         if (spaceData && spaceData.name) {
@@ -144,7 +146,6 @@ const Home = () => {
     const themeColors = {
         bg: Array.from({ length: 13 }, (_, index) => getThemeColor(colorScheme, theme, index)),
         text: Array.from({ length: 13 }, (_, index) => getTextColor(colorScheme, theme, index))
-
     };
 
     // const getGoogleTasks = () => {
@@ -182,8 +183,7 @@ const Home = () => {
                 />}
             </div>
 
-            <div className={`row user-home-all-content ${openSidebarToggle && 'open' }`}>
-                {}
+            <Flex direction='column' className={` user-home-all-content ${openSidebarToggle && 'open' }`}>
                 <HomeHeader 
                     spaceName={spaceData.name}
                     themeColors={themeColors}
@@ -195,82 +195,63 @@ const Home = () => {
                     {/* {userProfilePicture && <Button onClick={getGoogleTasks}>Access Google tasks</Button>} */}
 
 
-                    <div className='row mb-5'>
-                        {/* <QuickActions 
-                            themeColors={themeColors}
-                            colorScheme={colorScheme}
-                        /> */}
+                    {/* <QuickActions 
+                        themeColors={themeColors}
+                        colorScheme={colorScheme}
+                    /> */}
 
-                        <div className="task-card-parent">
-                            
-                            <div className='user-home-all-content-left-spacing'>
-                                {/* <Button onClick={getSpaceTasks}>get personal tasks</Button> */}
-                                {/* <Button onClick={getUserSpace}>get personal tasks</Button> */}
-                                <div>
-                                    {userFullName &&
-                                    <TaskCard 
-                                        colorScheme={colorScheme}
-                                        themeColors={themeColors}
-                                        userFullName={userFullName}
-                                        initials={initials}
-                                        userEmail={userEmail}
-                                        taskData={taskData} 
-                                        setTaskData={setTaskData} 
-                                        today={today} 
-                                        ongoingTasks={ongoingTasks}
-                                        overdueTasks={overdueTasks}
-                                        completedTasks={completedTasks}
-                                        userProfileDto={userProfileDto}
-                                        userProfilePicture={userProfilePicture}
-                                        spaceId={spaceData.id}
-                                    />}
-                                    {/* {userFullName &&
-                                    <TaskCard 
-                                        colorScheme={colorScheme}
-                                        themeColors={themeColors}
-                                        userFullName={userFullName}
-                                        initials={initials}
-                                        userEmail={userEmail}
-                                        taskData={taskData} 
-                                        setTaskData={setTaskData} 
-                                        today={today} 
-                                        ongoingTasks={ongoingTasks}
-                                        overdueTasks={overdueTasks}
-                                        completedTasks={completedTasks}
-                                        userProfileDto={userProfileDto}
-                                        userProfilePicture={userProfilePicture}
-                                        spaceId={spaceData.id}
-                                    />} */}
-                                    
-                                </div>
+                    <div className="task-card-parent">
+                        
+                        <div className='user-home-all-content-left-spacing'>
+                            {/* <Button onClick={getSpaceTasks}>get personal tasks</Button> */}
+                            {/* <Button onClick={getUserSpace}>get personal tasks</Button> */}
+                            <div>
+                                {userFullName &&
+                                <TaskCard 
+                                    colorScheme={colorScheme}
+                                    themeColors={themeColors}
+                                    userFullName={userFullName}
+                                    initials={initials}
+                                    userEmail={userEmail}
+                                    taskData={taskData} 
+                                    setTaskData={setTaskData} 
+                                    today={today} 
+                                    ongoingTasks={ongoingTasks}
+                                    overdueTasks={overdueTasks}
+                                    completedTasks={completedTasks}
+                                    userProfileDto={userProfileDto}
+                                    userProfilePicture={userProfilePicture}
+                                    spaceData={{ id: spaceData.id, slug: spaceData.slug }}
+
+                                />}
+                                {/* {userFullName &&
+                                <TaskCard 
+                                    colorScheme={colorScheme}
+                                    themeColors={themeColors}
+                                    userFullName={userFullName}
+                                    initials={initials}
+                                    userEmail={userEmail}
+                                    taskData={taskData} 
+                                    setTaskData={setTaskData} 
+                                    today={today} 
+                                    ongoingTasks={ongoingTasks}
+                                    overdueTasks={overdueTasks}
+                                    completedTasks={completedTasks}
+                                    userProfileDto={userProfileDto}
+                                    userProfilePicture={userProfilePicture}
+                                    spaceData={{ id: spaceData.id, slug: spaceData.slug }}
+                                />} */}
+                                
                             </div>
-
-                            {/* <div className='d-flex justify-content-between py-2 user-home-all-content-left-spacing'>
-                                <ProjectCard 
-                                />
-                            </div> */}
                         </div>
 
-                        {/* <div className="user-home-right-side-block">
-                            <div className='d-md-block col-12 user-home-all-content-left-spacing'>
-                                <div className="row">
-                                    <div className='col-lg-12 calendar-block-parent'>
-                                        <CalendarBlock 
-                                            taskData={taskData}
-                                            today={today}
-                                        />
-                                    </div>
-                                    <div className='col-lg-12 milestone-block-parent'>
-                                        <MilestoneBlock />
-
-                                    </div>
-                                    
-                                </div>
-                            </div>
+                        {/* <div className='d-flex justify-content-between py-2 user-home-all-content-left-spacing'>
+                            <ProjectCard 
+                            />
                         </div> */}
                     </div>
                 </Box>
-            </div>
+            </Flex>
         </>
     );
 };

@@ -27,7 +27,8 @@ public class OnboardingController {
     private final ProfileService profileService;
     private final SpaceService spaceService;
 
-    public OnboardingController(UserRepository userRepository, ProfileService profileService,
+    public OnboardingController(UserRepository userRepository,
+                                ProfileService profileService,
                                 SpaceService spaceService) {
         this.userRepository = userRepository;
         this.profileService = profileService;

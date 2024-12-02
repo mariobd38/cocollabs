@@ -1,55 +1,3 @@
-.task-card-card {
-    width: 100% !important;
-    /* border: 2px solid #37383a !important; */
-    border-radius: 10px !important;
-    padding:0 !important;
-    /* background-color: #323539 !important; */
-}
-@media (max-width: 1200px) {
-    .task-card-card {
-        width: 100% !important;
-    }
-}
-.user-home-create-task-button-dark {
-    font-family: 'Nunito Sans', serif;
-    text-transform: initial;
-    font-weight: 600;
-    padding: 6px 0px;
-    border-radius: 7px;
-}
-.user-home-create-task-button-dark:hover {
-    background-color: #25262a !important;
-    color: #b7b7b7 !important;
-}
-.user-home-new-task-input {
-    padding: 0 0 0 4px !important;
-    background-color: #1e1f21;
-    .mantine-Input-input {
-        background-color: transparent;
-        border: none;
-        color: #e7e7e7;
-        padding:4.224px 14.08px;
-        font-family: 'Poppins';
-        /* padding:0; */
-    }
-}
-.table-container-wrapper {
-    height: 22rem; 
-    overflow: auto;
-}
-.table-container {
-    width: 100%;
-    border-collapse: separate !important;
-}
-.table-row:hover, .tag-dropdown-item:hover {
-    background-color: #eeeeee !important;
-}
-
-
-/* new */
-/* .user-home-card-body {
-    background-color: #222529 !important;
-} */
 
 .task-card-segmented-control {
     /* background-color: #323539 !important; */
@@ -61,7 +9,6 @@
         font-weight: 600 !important;
     }
     label {
-        /* padding: var(--sc-padding) 10px !important; */
         padding:4px 15px !important;
     }
 }

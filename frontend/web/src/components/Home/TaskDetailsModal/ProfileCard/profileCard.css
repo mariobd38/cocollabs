@@ -1,54 +1,3 @@
-.profile-card-dropdown {
-    position: relative;
-}
-
-.profile-card-dropdown-menu {
-    position: absolute;
-    z-index: 1;
-    width: 22rem;
-    left: 0px;
-    top: 48px;
-    height: auto;
-    opacity: 0;
-    transform: translateY(-20px);
-    visibility: hidden;
-    border-radius: 6px;
-    background-color: #262729;
-    transition: 0.3s;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
-}
-.profile-card-dropdown.open .profile-card-dropdown-menu {
-    opacity: 1;
-    transform: translateY(0);
-    visibility: visible;
-}
-.profile-card-initials-button {
-    position: relative;
-    width: 4.7rem;
-    height: 4.7rem;
-    background-color: #72bad7;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 2rem;
-}
-.profile-card-circle-hider {
-    color: #262729; 
-    position: absolute;
-    top: 0;
-    right: 0;
-    margin: -0.2rem; 
-}
-.profile-card-circle-assignee-status {
-    width: 1.2rem !important;
-    height: 1.2rem !important;
-    position: absolute;
-    top: 0;
-    right: 0;
-    margin: -0.05rem;
-    color: rgb(4, 156, 4);
-}
 .profile-card-user-status-btn {
     background-color: #324232 !important;
     border-color: #324232 !important;
@@ -65,9 +14,4 @@
     background-color: #9850ff;
     border-color: #9850ff;
     transition: all 0.55s linear;
-}
-
-/* new */
-.profile-card-avatar img {
-    border-radius: 50%;
 }

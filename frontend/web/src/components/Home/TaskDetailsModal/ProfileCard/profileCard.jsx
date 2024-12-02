@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { HoverCard, Button } from '@mantine/core';
+import { HoverCard,Button,Flex } from '@mantine/core';
 
 import UserAvatar from "@/components/Home/UserAvatar/userAvatar";
 import {Icons} from "@/components/icons/icons";
@@ -10,7 +10,7 @@ import {Icons} from "@/components/icons/icons";
 import "./profileCard.css";
 
 export const ProfileCard = (props) => {
-    const { userFullName, initials, userEmail,userProfileDto, userProfilePicture, target,themeColors,colorScheme } = props;
+    const { userFullName, initials, userEmail,userProfileDto, userProfilePicture, target,themeColors } = props;
 
     const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     const currentTime = new Date().toLocaleTimeString('en-US', { timeZone: timeZone, hour: 'numeric', minute: '2-digit' });
@@ -38,7 +38,7 @@ export const ProfileCard = (props) => {
                 </HoverCard.Target>
                 <HoverCard.Dropdown bg={themeColors.bg[2]} c={themeColors.text[1]}>
 
-                    <div className="d-flex justify-content-between">
+                    <Flex justify='space-between'>
                         <div className="me-2">
                             <UserAvatar 
                                 userProfileDto={userProfileDto}
@@ -48,10 +48,10 @@ export const ProfileCard = (props) => {
                                 fontSize={2.3}
                             />
                         </div>
-                        <div >
+                        <div>
                             <Button className="profile-card-user-status-btn ">Online</Button>
                         </div> 
-                    </div>
+                    </Flex>
 
                     <div>
                             <div className="mt-3 nunito-sans-font" style={{fontSize: "1.15rem"}}>

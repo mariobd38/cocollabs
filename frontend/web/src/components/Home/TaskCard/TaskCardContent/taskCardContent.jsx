@@ -24,7 +24,7 @@ const TaskCardContent = (props) => {
     const {today,taskType,currentTaskDueDate, currentTaskDueDateTime, currentIndex, setCurrentIndex,setCurrentTaskDueDate,
         setCurrentTaskDueDateTime, getTagInfo,setCurrentTaskTags,setModalShow,setCurrentTaskName,setCurrentTaskCreationDate,
         setCurrentTaskLastUpdatedOn,setCurrentTaskStatus,setCurrentTaskPriority,setTaskType,isTaskTabCompleted, setCurrentTaskDescriptionHtml,handleTaskUpdateNew,
-        colorScheme,themeColors
+        colorScheme,themeColors,spaceSlug
     } = props;
 
     const location = useLocation();
@@ -142,6 +142,7 @@ const TaskCardContent = (props) => {
 
     const buttonBorderColor = `1px solid ${colorScheme === 'dark' ? '#969696' : '#b0b0b0'}`;
     const dropdownColor = colorScheme==='dark' ? '#232426' : '#fff';
+    // console.log(spaceSlug);
 
     const rows = (taskType) => {
         
@@ -164,8 +165,8 @@ const TaskCardContent = (props) => {
                                     )
                                 }
                             </Flex>
-                        
-                            <Link className='text-overflow m-0 d-flex ps-1' to={{ pathname: '/home/modal' }} state={{ background: location }} 
+                                {/*  '/home/modal' */}
+                            <Link className='text-overflow m-0 d-flex ps-1' state={{ background: location }} 
                                 onClick={(e) => OpenTaskDetailsModal(e, taskType, index)} >
                                 <Flex direction='column' w='100%' >
                                     <button className='task-name-link' >

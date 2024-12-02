@@ -47,12 +47,6 @@ const useCases = [
 ]
 
 const MainContent = () => {
-    let navigate = useNavigate(); 
-
-    const routeChange = (route) =>{ 
-        navigate(route);
-    }
-
     const [scrollPosition, setScrollPosition] = useState(0);
     const handleScroll = () => {
         const position = window.scrollY;

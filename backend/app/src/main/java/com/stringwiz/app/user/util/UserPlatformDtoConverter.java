@@ -74,6 +74,7 @@ public class UserPlatformDtoConverter {
                     space.getName(),
                     space.getIcon(),
                     space.getDescription(),
+                    space.getSlug(),
                     space.getVisibility()
             ));
         }

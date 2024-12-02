@@ -61,7 +61,7 @@ const Hero = () => {
                                     >
                                         <HeroGetStartedButton routeChange={routeChange} />
                                         <Button className='visit-community-button' p='11px 30px' fz='1.07rem' bg='transparent' ff='Inter' radius={12} fw={600}>Visit the community
-                                            <span className='visit-community-icon' style={{padding: "0 10px 0 8px",}}>{Icons('IconChevronRight',14,14)}</span>
+                                            <span className='visit-community-icon' style={{padding: "0 10px 0 8px"}}>{Icons('IconChevronRight',14,14)}</span>
                                         </Button>
                                     </Flex>
                                 </Flex>

@@ -53,7 +53,7 @@ public class TaskService {
     public List<Task> getBySpace(User user, String spaceName) throws NoSuchElementException {
         Optional<Space> optionalSpace = spaceRepository.findByNameAndUsers(spaceName,user);
 
-        if (!optionalSpace.isPresent()) {
+        if (optionalSpace.isEmpty()) {
             throw new NoSuchElementException("Space not found with name: " + spaceName);
         }
 

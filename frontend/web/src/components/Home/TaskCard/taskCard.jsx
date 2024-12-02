@@ -14,10 +14,37 @@ import checklist from '../../../assets/illustrations/home/checklist.png';
 
 import './taskCard.css'
 
+const TaskSegment = ({ active, tasks, isCompleted, renderTaskContent }) => {
+    if (!active) return null;
+  
+    return (
+        <Box h='22rem' className="overflow-auto" mx={16} py={16}>
+            {isCompleted ? (
+                tasks.length > 0 ? (
+                    <Table>
+                    <Table.Tbody>{renderTaskContent(tasks, true)}</Table.Tbody>
+                    </Table>
+                ) : (
+                    <Flex justify="center" direction="column" p={0} align="center">
+                    <Image w="14rem" src={checklist} alt="" />
+                    <div className="fafafa-color pt-3 lato-font">
+                        Your completed tasks will appear here ✅
+                    </div>
+                    </Flex>
+                )
+                ) : (
+                <Table>
+                    <Table.Tbody>{renderTaskContent(tasks, false)}</Table.Tbody>
+                </Table>
+            )}
+        </Box>
+    );
+};
+
 const TaskCard = (props) => {
 
     const { userFullName, initials, userEmail, taskData, setTaskData, ongoingTasks, today, overdueTasks,
-        completedTasks,userProfileDto,userProfilePicture,colorScheme,themeColors,spaceId } = props; 
+        completedTasks,userProfileDto,userProfilePicture,colorScheme,themeColors,spaceData } = props; 
     const [currentIndex, setCurrentIndex] = useState(null);
 
     //task attributes
@@ -65,28 +92,29 @@ const TaskCard = (props) => {
 
     const renderTaskContent = (taskType,isCompleted) => (
         <TaskCardContent 
-          today={today}
-          taskType={taskType}
-          currentTaskDueDate={currentTaskDueDate}
-          currentTaskDueDateTime={currentTaskDueDateTime}
-          currentIndex={currentIndex}
-          setCurrentIndex={setCurrentIndex}
-          setCurrentTaskDueDate={setCurrentTaskDueDate}
-          setCurrentTaskDueDateTime={setCurrentTaskDueDateTime}
-          getTagInfo={getTagInfo}
-          setCurrentTaskTags={setCurrentTaskTags}
-          setModalShow={setModalShow}
-          setCurrentTaskName={setCurrentTaskName}
-          setCurrentTaskCreationDate={setCurrentTaskCreationDate}
-          setCurrentTaskDescriptionHtml={setCurrentTaskDescriptionHtml}
-          setCurrentTaskLastUpdatedOn={setCurrentTaskLastUpdatedOn}
-          setCurrentTaskStatus={setCurrentTaskStatus}
-          setCurrentTaskPriority={setCurrentTaskPriority}
-          setTaskType={setTaskType}
-          isTaskTabCompleted={isCompleted}
-          handleTaskUpdateNew={handleTaskUpdateNew}
-          colorScheme={colorScheme}
-          themeColors={themeColors}
+            today={today}
+            taskType={taskType}
+            currentTaskDueDate={currentTaskDueDate}
+            currentTaskDueDateTime={currentTaskDueDateTime}
+            currentIndex={currentIndex}
+            setCurrentIndex={setCurrentIndex}
+            setCurrentTaskDueDate={setCurrentTaskDueDate}
+            setCurrentTaskDueDateTime={setCurrentTaskDueDateTime}
+            getTagInfo={getTagInfo}
+            setCurrentTaskTags={setCurrentTaskTags}
+            setModalShow={setModalShow}
+            setCurrentTaskName={setCurrentTaskName}
+            setCurrentTaskCreationDate={setCurrentTaskCreationDate}
+            setCurrentTaskDescriptionHtml={setCurrentTaskDescriptionHtml}
+            setCurrentTaskLastUpdatedOn={setCurrentTaskLastUpdatedOn}
+            setCurrentTaskStatus={setCurrentTaskStatus}
+            setCurrentTaskPriority={setCurrentTaskPriority}
+            setTaskType={setTaskType}
+            isTaskTabCompleted={isCompleted}
+            handleTaskUpdateNew={handleTaskUpdateNew}
+            colorScheme={colorScheme}
+            themeColors={themeColors}
+            spaceSlug={spaceData.slug}
         />
       );
     const [openTaskCreateModal, setOpenTaskCreateModal] = useState(false);
@@ -123,54 +151,26 @@ const TaskCard = (props) => {
                         <span>New issue</span>
                     </div>
                 </Button>
-                
             </Flex>
-            <Card className='task-card-card'  bd={`1.7px solid ${colorScheme === 'dark' ? '#323539' : '#c6c6c6'}`} >
-                
+
+            <Card w='100%' radius={10} p={0}  bd={`1.7px solid ${colorScheme === 'dark' ? '#323539' : '#c6c6c6'}`} >
                 <Box bg={themeColors.bg[4]}>
-                    <div>
-                        {activeSegment === '1' && (
-                            <div className='table-container-wrapper mx-3 py-3'>
-                                <Table>
-                                    <Table.Tbody>
-                                        {renderTaskContent(ongoingTasks,false)}
-                                    </Table.Tbody>
-                                </Table>
-                            </div>
-                        )}
-
-                        {activeSegment === '2' && (
-                            <div className='table-container-wrapper mx-3 py-3'>
-                                <Table>
-                                    <Table.Tbody>
-                                    
-                                        {renderTaskContent(overdueTasks,false)}
-
-                                    </Table.Tbody>
-                                </Table>
-                            </div>
-                        )}
-
-                        {activeSegment === '3' && (
-                            <div className='table-container-wrapper mx-3 py-3'>
-                                {completedTasks.length > 0 ? (
-                                    <Table>
-                                        <Table.Tbody>
-                                            {renderTaskContent(completedTasks,true)}
-                                        </Table.Tbody>
-                                    </Table>
-                                ) : (
-                                    <Flex justify='center' direction='column' p={0} align='center' >
-                                        <Image w='14rem' src={checklist} alt="" />
-                                        <div className='fafafa-color pt-3 lato-font'>Your completed tasks will appear here ✅</div>
-                                    </Flex>
-                                )}
-                            </div>
-                        )}
-                    </div>
+                    {['1', '2', '3'].map(segment => (
+                        <TaskSegment
+                            key={segment}
+                            active={activeSegment === segment}
+                            tasks={
+                            segment === '1'
+                                ? ongoingTasks
+                                : segment === '2'
+                                ? overdueTasks
+                                : completedTasks
+                            }
+                            isCompleted={segment === '3'}
+                            renderTaskContent={renderTaskContent}
+                        />
+                    ))}
                 </Box>
-
-                
             </Card>
 
             <TaskDetailsModal
@@ -213,7 +213,7 @@ const TaskCard = (props) => {
                 setTaskData={setTaskData}
                 colorScheme={colorScheme}
                 themeColors={themeColors}
-                spaceId={spaceId}
+                spaceId={spaceData.id}
             />
         </Box>
     );

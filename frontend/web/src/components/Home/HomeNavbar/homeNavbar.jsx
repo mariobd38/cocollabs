@@ -86,7 +86,7 @@ const HomeNavbar = (props) => {
                                                 placeholder="Search"
                                                 className={`home-navbar-search-input ${colorScheme}`}
                                                 leftSection={Icons('IconSearch',16,16,themeColors.text[1])}
-                                                rightSection={<Flex className='home-navbar-search-input-right-section' bg={inputRightSection} bd={`.1px solid ${findButtonBdColor}`} >
+                                                rightSection={<Flex p='2px 9px' me={30} h={28} bg={inputRightSection} style={{borderRadius: "5px"}} bd={`.1px solid ${findButtonBdColor}`} >
                                                     <Flex align='center' pb={1} >
                                                         {Icons('IconCommand',15,15,themeColors.text[3])}
                                                     </Flex>

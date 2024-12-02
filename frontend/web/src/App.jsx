@@ -2,7 +2,7 @@ import React from 'react';
 import { Routes, Route, useLocation } from "react-router-dom";
 
 import PrivateRoute from "@/PrivateRoute/privateRoute";
-import { AuthProvider } from "@/AuthContext/authProvider";
+import { AuthProvider } from "@/hooks/authProvider";
 
 import Home from "@/components/Home/home";
 import TaskDetailsModal from "@/components/Home/TaskDetailsModal/taskDetailsModal";
@@ -23,28 +23,35 @@ function App() {
     return (
         <AuthProvider>
             <Routes>
-                <Route path="/home" location={background || location} 
+                {/* <Route path="/home" location={background || location} 
                     element={
                         <PrivateRoute>
-                        {/* <Suspense fallback={<LoadingFallback />}> */}
-                            <Home />
-                        {/* </Suspense> */}
+                            <Home />z
                         </PrivateRoute>
                     }
                 >
                     <Route path='/home/modal' element={<TaskDetailsModal />} />
                     
+                </Route> */}
+
+                <Route path="/:slug" location={background || location} 
+                    element={
+                        <PrivateRoute>
+                            <Home />
+                        </PrivateRoute>
+                    }
+                >
+                    {/* <Route path='/home/modal' element={<TaskDetailsModal />} /> */}
+                    
                 </Route>
           
-                {background && (
+                {/* {background && (
                     <Route path="/home/modal" element={
                     <PrivateRoute>
-                        {/* <Suspense fallback={null}> */}
                         <TaskDetailsModal/>
-                        {/* </Suspense> */}
                     </PrivateRoute>
                 } />
-                )}
+                )} */}
 
 
                 <Route path="/login" element={<Login/> } />
@@ -52,9 +59,10 @@ function App() {
                 <Route path="/oauth2/redirect" element={<OAuth2RedirectHandler />} />
 
                 <Route path="/onboarding" element={
-                    // <PrivateRoute>
+                    // todo: might have to comment out PrivateRoute
+                    <PrivateRoute> 
                         <Onboarding />
-                    // </PrivateRoute>
+                    </PrivateRoute>
                 }/>
 
 
