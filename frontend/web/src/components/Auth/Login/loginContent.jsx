@@ -13,7 +13,7 @@ import { VerifyEmailRegex } from '@/utils/emailRegexFormat';
 import { isOAuthUser } from '@/api/Users/isOAuthUser';
 import { authStatusInfo } from '@/api/Auth/status';
 import { getLastActiveSpaceInfo } from '@/api/Spaces/getLastActiveSpace';
-import { UseLastActiveSpace } from '@/hooks/UseLastActiveSpace';
+import { UseLastActiveSpace } from '@/hooks/useLastActiveSpace';
 import AuthSideBlock from '@/components/Auth/authSideBlock';
 
 const validatePassword = (value) => {

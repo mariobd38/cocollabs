@@ -2,7 +2,7 @@ import React from 'react';
 import { Navigate, useParams } from 'react-router-dom';
 import { UseAuth } from '@/hooks/authProvider';
 import { useUserSpaces } from '@/hooks/useUserSpaces';
-import { UseLastActiveSpace } from '@/hooks/UseLastActiveSpace';
+import { UseLastActiveSpace } from '@/hooks/useLastActiveSpace';
 
 const PrivateRoute = ({ children }) => {
     const { slug } = useParams();
