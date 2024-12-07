@@ -12,7 +12,7 @@ import classes from './homeSidebar.module.css';
 import './homeSidebar.css';
 
 const HomeSidebar = (props) => {
-    const { userEmail, userFullName, openSidebarToggle, setOpenSidebarToggle,spaceName,spaceIcon,themeColors,colorScheme } = props;
+    const { profileInfo, openSidebarToggle, setOpenSidebarToggle,spaceData,themeColors,colorScheme } = props;
 
     const links = [
         { icon: 'IconHome', label: 'Home' },
@@ -27,13 +27,13 @@ const HomeSidebar = (props) => {
         <div className={openSidebarToggle ? 'home-sidebar-profile-parent-div active' : 'home-sidebar-profile-parent-div'}>
             <UnstyledButton className={`flex justify-start ${!openSidebarToggle ?  classes.mainLink : 'px-3'} ${classes.profile}`} >
                 <Flex gap={openSidebarToggle && 10} align='center'>
-                    <Avatar className='profile-avatar' color={spaceIcon && spaceIcon.color} radius={spaceIcon && spaceIcon.radius}>
-                        {spaceIcon && spaceIcon.children}
+                    <Avatar className='profile-avatar' color={spaceData.icon && spaceData.icon.color} radius={spaceData.icon && spaceData.icon.radius}>
+                        {spaceData.icon && spaceData.icon.children}
                     </Avatar>
 
                     <Text maw={165} ps={3} c={themeColors.text[3]} fw={550} ff='Lato'
                     style={{whiteSpace: 'nowrap',overflow: 'hidden',textOverflow: 'ellipsis'}}>
-                        {openSidebarToggle && spaceName}
+                        {openSidebarToggle && spaceData.name}
                     </Text>
                 </Flex>
             </UnstyledButton>
@@ -145,7 +145,7 @@ const HomeSidebar = (props) => {
                         width={240}
                         dropdown={
                             <HomeSidebarSpaceOptions 
-                                spaceName={spaceName} 
+                                spaceName={spaceData.name} 
                                 setOpenSpaceCreateModal={setOpenSpaceCreateModal}
                                 themeColors={themeColors}
                                 colorScheme={colorScheme}
@@ -163,7 +163,7 @@ const HomeSidebar = (props) => {
                 <SpaceCreationModal 
                     openSpaceCreateModal={openSpaceCreateModal}
                     setOpenSpaceCreateModal={setOpenSpaceCreateModal}
-                    userFullName={userFullName}
+                    userFullName={profileInfo.fullName}
                     themeColors={themeColors}
                     colorScheme={colorScheme}
                 />

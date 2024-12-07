@@ -80,6 +80,12 @@ public class TaskController {
         }
     }
 
+    @GetMapping("getById")
+    public ResponseEntity<?> getTaskById(@RequestParam("taskId") Long taskId) {
+        Task task = taskService.getById(taskId);
+        return ResponseEntity.ok(task);
+    }
+
     @PutMapping("/put")
     public ResponseEntity<?> updateTask(@RequestBody Task task) {
         Task myTask = taskService.update(task);

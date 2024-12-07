@@ -4,7 +4,7 @@ import { Image,Title,Flex } from '@mantine/core';
 
 import { ContainerScroll } from '@/components/ui/ContainerScrollAnimation/container-scroll-animation';
 
-import home_screenshot from '../../../assets/images/home-screenshot.png';
+import home_screenshot from '@/assets/images/home-screenshot.png';
 
 const ContainerScrollAnimationComp = () => {
     return (

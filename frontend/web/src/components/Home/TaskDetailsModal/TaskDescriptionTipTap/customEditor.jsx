@@ -8,7 +8,6 @@ import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
 import { createLowlight } from 'lowlight';
 import BulletList from '@tiptap/extension-bullet-list';
 import ListItem from '@tiptap/extension-list-item';
-import ListKeymap from '@tiptap/extension-list-keymap';
 import Paragraph from '@tiptap/extension-paragraph';
 import Highlight from '@tiptap/extension-highlight';
 import StarterKit from '@tiptap/starter-kit';

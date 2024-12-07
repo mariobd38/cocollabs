@@ -5,12 +5,12 @@ import { Table,Card,Text,SegmentedControl,Flex,Button,Box,Image } from '@mantine
 import TaskDetailsModal from '@/components/Home/TaskDetailsModal/taskDetailsModal';
 import TaskCardContent from '@/components/Home/TaskCard/TaskCardContent/taskCardContent';
 import TaskCreationModal from '@/components/Home/taskCreationModal/taskCreationModal';
-import {Icons} from '@/components/icons/icons';
+import { Icons } from '@/components/icons/icons';
 
 import { getTagInfo } from '@/api/Tags/getTags';
 import { UpdateTaskInfoNew } from '@/api/Tasks/updateTaskNew';
 
-import checklist from '../../../assets/illustrations/home/checklist.png';
+import checklist from '@/assets/illustrations/home/checklist.png';
 
 import './taskCard.css'
 
@@ -22,14 +22,14 @@ const TaskSegment = ({ active, tasks, isCompleted, renderTaskContent }) => {
             {isCompleted ? (
                 tasks.length > 0 ? (
                     <Table>
-                    <Table.Tbody>{renderTaskContent(tasks, true)}</Table.Tbody>
+                        <Table.Tbody>{renderTaskContent(tasks, true)}</Table.Tbody>
                     </Table>
                 ) : (
                     <Flex justify="center" direction="column" p={0} align="center">
-                    <Image w="14rem" src={checklist} alt="" />
-                    <div className="fafafa-color pt-3 lato-font">
-                        Your completed tasks will appear here ✅
-                    </div>
+                        <Image w="14rem" src={checklist} alt="" />
+                        <div className="fafafa-color pt-3 lato-font">
+                            Your completed tasks will appear here ✅
+                        </div>
                     </Flex>
                 )
                 ) : (
@@ -42,9 +42,8 @@ const TaskSegment = ({ active, tasks, isCompleted, renderTaskContent }) => {
 };
 
 const TaskCard = (props) => {
-
-    const { userFullName, initials, userEmail, taskData, setTaskData, ongoingTasks, today, overdueTasks,
-        completedTasks,userProfileDto,userProfilePicture,colorScheme,themeColors,spaceData } = props; 
+    const { profileInfo, taskData, setTaskData, ongoingTasks, today, overdueTasks,
+        completedTasks,colorScheme,themeColors,spaceData } = props; 
     const [currentIndex, setCurrentIndex] = useState(null);
 
     //task attributes
@@ -159,13 +158,7 @@ const TaskCard = (props) => {
                         <TaskSegment
                             key={segment}
                             active={activeSegment === segment}
-                            tasks={
-                            segment === '1'
-                                ? ongoingTasks
-                                : segment === '2'
-                                ? overdueTasks
-                                : completedTasks
-                            }
+                            tasks={ segment === '1' ? ongoingTasks : segment === '2' ? overdueTasks : completedTasks }
                             isCompleted={segment === '3'}
                             renderTaskContent={renderTaskContent}
                         />
@@ -174,11 +167,9 @@ const TaskCard = (props) => {
             </Card>
 
             <TaskDetailsModal
-                userFullName={userFullName}
+                profileInfo={profileInfo}
                 colorScheme={colorScheme}
                 themeColors={themeColors}
-                initials={initials}
-                userEmail={userEmail}
                 show={modalShow}
                 onHide={() => setModalShow(false)}
                 currentIndex={currentIndex}
@@ -201,8 +192,6 @@ const TaskCard = (props) => {
                 setCurrentTaskDescriptionHtml={setCurrentTaskDescriptionHtml}
                 setCurrentTaskTags={setCurrentTaskTags}
                 setCurrentTaskStatus={setCurrentTaskStatus}
-                userProfileDto={userProfileDto}
-                userProfilePicture={userProfilePicture}
                 handleTaskUpdateNew={(element,value, attribute, taskType,setTaskType,index) => handleTaskUpdateNew(element,value, attribute, taskType,setTaskType,index)}
             />
 

@@ -8,7 +8,6 @@ import com.stringwiz.app.userSpace.repository.UserSpaceActivityRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,12 +37,5 @@ public class UserSpaceActivityController {
         } catch (Exception e) {
             return ResponseEntity.ok(new Space());
         }
-    }
-
-    @GetMapping("/getLastActive")
-    @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<?> getLastActive(@AuthenticationPrincipal User user) {
-        Optional<Space> lastActiveSpace = userSpaceActivityRepository.findLastActiveSpaceForUser(user.getId());
-        return lastActiveSpace.map(ResponseEntity::ok).orElse(ResponseEntity.ok(new Space()));
     }
 }

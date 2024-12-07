@@ -11,8 +11,7 @@ import SpaceCreationModal from '@/components/Home/SpaceCreationModal/spaceCreati
 import './homeNavbar.css';
 
 const HomeNavbar = (props) => {
-    const { themeColors,colorScheme, setColorScheme,userFullName, initials,userEmail,userProfilePicture,userProfileDto
-        , setOpenSidebarToggle, openSidebarToggle,storedUserInfo,setStoredUserInfo
+    const { themeColors,colorScheme, setColorScheme,profileInfo, setOpenSidebarToggle, openSidebarToggle,storedUserInfo,setStoredUserInfo
      } = props;
 
     //user button
@@ -118,10 +117,10 @@ const HomeNavbar = (props) => {
                             </Flex>
 
                             <HomeNavbarUserMenu 
-                                userProfileDto={userProfileDto}
-                                userProfilePicture={userProfilePicture}
-                                userFullName={userFullName}
-                                initials={initials}
+                                userProfileDto={profileInfo.profileDto}
+                                userProfilePicture={profileInfo.picture}
+                                userFullName={profileInfo.fullName}
+                                initials={profileInfo.initials}
                                 colorScheme={colorScheme}
                                 themeColors={themeColors}
                                 setColorScheme={setColorScheme}
@@ -132,7 +131,7 @@ const HomeNavbar = (props) => {
                             <SpaceCreationModal 
                                 openSpaceCreateModal={openSpaceCreateModal}
                                 setOpenSpaceCreateModal={setOpenSpaceCreateModal}
-                                userFullName={userFullName}
+                                userFullName={profileInfo.fullName}
                                 themeColors={themeColors}
                                 colorScheme={colorScheme}
                             />

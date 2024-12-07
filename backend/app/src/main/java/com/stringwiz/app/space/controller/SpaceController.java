@@ -5,9 +5,8 @@ import com.stringwiz.app.user.model.User;
 import com.stringwiz.app.space.service.SpaceService;
 import com.stringwiz.app.user.repository.UserRepository;
 import com.stringwiz.app.user.util.UserPlatformDtoConverter;
+import com.stringwiz.app.userSpace.repository.UserSpaceActivityRepository;
 import jakarta.transaction.Transactional;
-import org.apache.coyote.Response;
-import org.hibernate.Hibernate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -20,17 +19,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Optional;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/api/spaces")
 public class SpaceController {
     private final SpaceService spaceService;
     private final UserRepository userRepository;
+    private final UserSpaceActivityRepository userSpaceActivityRepository;
 
-    public SpaceController(SpaceService spaceService, UserRepository userRepository) {
+    public SpaceController(SpaceService spaceService,
+                           UserRepository userRepository,
+                           UserSpaceActivityRepository userSpaceActivityRepository) {
         this.spaceService = spaceService;
         this.userRepository = userRepository;
+        this.userSpaceActivityRepository = userSpaceActivityRepository;
     }
 
     @PostMapping("/create")
@@ -72,6 +74,13 @@ public class SpaceController {
         } catch (Exception e) {
             return ResponseEntity.ok(new Space());
         }
+    }
+
+    @GetMapping("/getLastActive")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<?> getLastActive(@AuthenticationPrincipal User user) {
+        Optional<Space> lastActiveSpace = userSpaceActivityRepository.findLastActiveSpaceForUser(user.getId());
+        return lastActiveSpace.map(ResponseEntity::ok).orElse(ResponseEntity.ok(new Space()));
     }
 
     /*@PutMapping("/api/spaces/linkTasks")

@@ -1,50 +1,50 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
-import {  Box, Text, ThemeIcon } from '@mantine/core';
+import {  Box } from '@mantine/core';
 // import { Carousel } from '@mantine/carousel';
 
-import { Icons } from '@/components/icons/icons';
+// import { Icons } from '@/components/icons/icons';
 import NavbarContent from '@/components/Landing/NavbarContent/NavbarContent';
 import Hero from '@/components/Landing/MainContent/Hero/hero';
 
-import engineering_team from '../../../assets/illustrations/landing/engineering_team.png';
-import marketing_team from '../../../assets/illustrations/landing/marketing_team.png';
-import product_team from '../../../assets/illustrations/landing/product_team.png';
-import design_team from '../../../assets/illustrations/landing/design_team.png';
+// import engineering_team from '../../../assets/illustrations/landing/engineering_team.png';
+// import marketing_team from '../../../assets/illustrations/landing/marketing_team.png';
+// import product_team from '../../../assets/illustrations/landing/product_team.png';
+// import design_team from '../../../assets/illustrations/landing/design_team.png';
 
 import '@mantine/carousel/styles.css';
 import './MainContent.css'
 
-const features = [
-    {
-        icon: 'IconSTurnRight',
-        title: 'Automation at its finest',
-        description: 'Reduce costs and time with effective no-code automation',
-    },
-    {
-        icon: 'IconApps',
-        title: 'Integrate with ease',
-        description: 'All your workspace apps moved into a single interactive platform',
-    },
-    {
-        icon: 'IconWorld',
-        title: 'Keep track of your endless goals',
-        description: 'Enhance success with easy management of your goals and milestones',
-    },
-    {
-        icon: 'IconBulb',
-        title: 'Capture and share ideas',
-        description: 'Whiteboards is the easiest way to share brilliant ideas with your team',
-    },
-];
+// const features = [
+//     {
+//         icon: 'IconSTurnRight',
+//         title: 'Automation at its finest',
+//         description: 'Reduce costs and time with effective no-code automation',
+//     },
+//     {
+//         icon: 'IconApps',
+//         title: 'Integrate with ease',
+//         description: 'All your workspace apps moved into a single interactive platform',
+//     },
+//     {
+//         icon: 'IconWorld',
+//         title: 'Keep track of your endless goals',
+//         description: 'Enhance success with easy management of your goals and milestones',
+//     },
+//     {
+//         icon: 'IconBulb',
+//         title: 'Capture and share ideas',
+//         description: 'Whiteboards is the easiest way to share brilliant ideas with your team',
+//     },
+// ];
 
-const useCases = [
-    { team: 'Engineering', illustration: engineering_team, width: 180, badgeColor: "blue", description: "Ship more, worry less. Build and plan things better, together, and one step at a time with powerful features." },
-    { team: 'Marketing', illustration: marketing_team, width: 165, badgeColor: "pink", description: "Boost your brand, create impactful campaigns and engage your audience with the best tools and insights" },
-    { team: 'Product', illustration: product_team, width: 285, badgeColor: "teal", description: "Transform ideas into reality. Strategize, develop, and manage products effectively with collaborative tools." },
-    { team: 'Design', illustration: design_team, width: 155, badgeColor: "violet", description: "Collaborate, create, and refine designs seamlessly with intuitive tools and innovative features." },
-]
+// const useCases = [
+//     { team: 'Engineering', illustration: engineering_team, width: 180, badgeColor: "blue", description: "Ship more, worry less. Build and plan things better, together, and one step at a time with powerful features." },
+//     { team: 'Marketing', illustration: marketing_team, width: 165, badgeColor: "pink", description: "Boost your brand, create impactful campaigns and engage your audience with the best tools and insights" },
+//     { team: 'Product', illustration: product_team, width: 285, badgeColor: "teal", description: "Transform ideas into reality. Strategize, develop, and manage products effectively with collaborative tools." },
+//     { team: 'Design', illustration: design_team, width: 155, badgeColor: "violet", description: "Collaborate, create, and refine designs seamlessly with intuitive tools and innovative features." },
+// ]
 
 const MainContent = () => {
     const [scrollPosition, setScrollPosition] = useState(0);
@@ -61,24 +61,23 @@ const MainContent = () => {
         };
     }, [scrollPosition]);
     
-    const items = features.map((feature,index) => (
-        <div key={index} style={{color: "#121212"}}>
-            <ThemeIcon
-                size={44}
-                radius="md"
-                bg='#468189'
-            >
-                {Icons(feature.icon, 26, 26, '#fafafa')}
-                {/* <feature.icon style={{ width: rem(26), height: rem(26) }} stroke={1.5} /> */}
-            </ThemeIcon>
-            <Text fz="lg" mt="sm" fw={500}>
-                {feature.title}
-            </Text>
-            <Text fz="sm" style={{color: "#737373"}}>
-                {feature.description}
-            </Text>
-        </div>
-    ));
+    // const items = features.map((feature,index) => (
+    //     <div key={index} style={{color: "#121212"}}>
+    //         <ThemeIcon
+    //             size={44}
+    //             radius="md"
+    //             bg='#468189'
+    //         >
+    //             {Icons(feature.icon, 26, 26, '#fafafa')}
+    //         </ThemeIcon>
+    //         <Text fz="lg" mt="sm" fw={500}>
+    //             {feature.title}
+    //         </Text>
+    //         <Text fz="sm" style={{color: "#737373"}}>
+    //             {feature.description}
+    //         </Text>
+    //     </div>
+    // ));
 
 
     return (

@@ -31,10 +31,10 @@ import './taskDetailsModal.css';
 
 const TaskDetailsModal = (props) => {
     const {
-        userFullName, initials,userEmail, currentIndex, currentTaskName, currentTaskPriority, currentTaskDueDate, currentTaskStatus, currentTaskCreationDate, currentTaskLastUpdatedOn,
+        profileInfo, currentIndex, currentTaskName, currentTaskPriority, currentTaskDueDate, currentTaskStatus, currentTaskCreationDate, currentTaskLastUpdatedOn,
         setCurrentTaskName, setCurrentTaskDueDate, setCurrentIndex, setCurrentTaskPriority, currentTaskTags, setCurrentTaskTags,setCurrentTaskDescriptionHtml,
         taskType, setTaskType, currentTaskDueDateTime, setCurrentTaskDueDateTime,onHide, show,setCurrentTaskStatus, currentTaskDescriptionHtml,themeColors, colorScheme,
-        userProfileDto,userProfilePicture,handleTaskUpdateNew
+        handleTaskUpdateNew
     } = props;
 
     const content = currentTaskDescriptionHtml;
@@ -66,17 +66,6 @@ const TaskDetailsModal = (props) => {
         }
     };
 
-    // useEffect(() => {
-    //     if (location.pathname === '/home/modal' && !show) {
-
-    //         const timeout = setTimeout(() => {
-    //             navigate('/home');
-    //         }, 300);
-    //         return () => clearTimeout(timeout);
-    //     }
-    // }, [location.pathname, show, navigate]);
-
-
     //task due date
     const handleDueDatePopoverClick = (event, index) => {
         setCurrentIndex(index);
@@ -96,15 +85,15 @@ const TaskDetailsModal = (props) => {
             <Flex align='center' className='user-home-task-details-modal-assignee-div'>
                 <Box me={10}>
                     <UserAvatar
-                        userProfileDto={userProfileDto}
-                        userProfilePicture={userProfilePicture}
-                        initials={initials}
+                        userProfileDto={profileInfo.profileDto}
+                        userProfilePicture={profileInfo.picture}
+                        initials={profileInfo.initials}
                         multiplier={2.2}
                         fontSize={1.1}
                     />
                 </Box>
                 <Text ff='Lato' c={modalTextColor}>
-                    {userFullName}
+                    {profileInfo.fullName}
                 </Text>
             </Flex>
          </div>
@@ -133,11 +122,8 @@ const TaskDetailsModal = (props) => {
     const [openTagDeletionModal,setOpenTagDeletionModal] = useState(false);
 
     const handleUpdateTaskName = (e) => {
-        if (e.currentTarget.value === '') {
-            handleTaskUpdateNew(taskType[currentIndex], originalTaskName, "name", taskType, setTaskType, currentIndex);
-        } else {
-            handleTaskUpdateNew(taskType[currentIndex], e.currentTarget.value, "name", taskType, setTaskType, currentIndex);
-        }
+        handleTaskUpdateNew(taskType[currentIndex], e.currentTarget.value === '' ? originalTaskName : e.currentTarget.value, 
+            "name", taskType, setTaskType, currentIndex);
     }
 
     const buttonRefs = useRef([]);
@@ -213,7 +199,7 @@ const TaskDetailsModal = (props) => {
             closeIcon
         >
             <TaskDetailsModalHeader
-                userFullName={userFullName}
+                userFullName={profileInfo.fullName}
                 handleTaskDetailsModalClose={handleTaskDetailsModalClose}
                 colorScheme={colorScheme}
                 themeColors={themeColors}
@@ -237,11 +223,7 @@ const TaskDetailsModal = (props) => {
                             <Flex fz='1.06rem' className='user-home-task-details-modal-head-property-group' >
                                 <Text className={`user-home-task-details-modal-property-lefttext ${colorScheme}`} c={modalTextColor}>Assignee</Text>
                                 <ProfileCard
-                                    userFullName={userFullName}
-                                    initials={initials}
-                                    userEmail={userEmail}
-                                    userProfileDto={userProfileDto}
-                                    userProfilePicture={userProfilePicture}
+                                    profileInfo={profileInfo}
                                     target={<div>{assigneeContent}</div>}
                                     themeColors={themeColors}
                                 />

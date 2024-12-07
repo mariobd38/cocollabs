@@ -12,7 +12,6 @@ import HomeSidebar from '@/components/Home/HomeSidebar/homeSidebar';
 
 import { getUserProfileInfo } from '@/api/Users/getUserProfileInfo';
 import { getLastActiveSpaceInfo } from '@/api/Spaces/getLastActiveSpace';
-// import { getTaskInfo } from './../../DataManagement/Tasks/getTasks';
 // import { getPersonalSpaceInfo } from '@/api/Spaces/getPersonalSpaceInfo';
 import { getTaskInfoBySpace } from '@/api/Tasks/getTasksBySpace';
 // import { getAllUserSpacesInfo } from '@/api/Spaces/getAllUserSpaces';
@@ -44,7 +43,7 @@ const Home = () => {
     const [userProfileDto, setUserProfileDto] = useState('');
     const [initials, setInitials] = useState(passedUserInfo?.fullName || '');
     const [spaceData, setSpaceData] = useState(passedSpaceInfo || []);
-    const [userSpaces, setUserSpaces] = useState([]);
+    // const [userSpaces, setUserSpaces] = useState([]);
 
     useEffect(() => {
         async function fetchSpaceData() {
@@ -135,10 +134,14 @@ const Home = () => {
     },[taskData,dayjs]);
 
     useEffect(() => {
-        if (spaceData && spaceData.name) {
-            getTaskInfoBySpace(setTaskData, spaceData.name);
+        async function fetchTaskSpaceData() {
+            const data = await getTaskInfoBySpace(spaceData.name);
+            // console.log(data);
+            setTaskData(data);
             processTaskData();
         }
+
+        fetchTaskSpaceData();
     }, [processTaskData, spaceData]);
 
     const [openSidebarToggle, setOpenSidebarToggle] = useState(false);
@@ -159,11 +162,7 @@ const Home = () => {
                 themeColors={themeColors}
                 colorScheme={colorScheme}
                 setColorScheme={setColorScheme}
-                userFullName={userFullName}
-                initials={initials}
-                userEmail={userEmail}
-                userProfilePicture={userProfilePicture}
-                userProfileDto={userProfileDto}
+                profileInfo={{fullName: userFullName,initials: initials,email: userEmail,picture: userProfilePicture,profileDto: userProfileDto}}
                 openSidebarToggle={openSidebarToggle}
                 setOpenSidebarToggle={setOpenSidebarToggle}
                 storedUserInfo={storedAppInfo}
@@ -171,15 +170,13 @@ const Home = () => {
             />}
             <div className='container m-0 p-0'>
                 {userFullName &&
-                <HomeSidebar className='user-home-sidebar p-0'
-                    userFullName={userFullName}
+                <HomeSidebar className='user-home-sidebar'
+                    profileInfo={{fullName: userFullName, email: userEmail}}
                     themeColors={themeColors}
                     colorScheme={colorScheme}
-                    userEmail={userEmail}
                     openSidebarToggle={openSidebarToggle}
                     setOpenSidebarToggle={setOpenSidebarToggle}
-                    spaceName={spaceData.name}
-                    spaceIcon={spaceData.icon}
+                    spaceData={{name: spaceData.name, icon: spaceData.icon}}
                 />}
             </div>
 
@@ -205,50 +202,36 @@ const Home = () => {
                         <div className='user-home-all-content-left-spacing'>
                             {/* <Button onClick={getSpaceTasks}>get personal tasks</Button> */}
                             {/* <Button onClick={getUserSpace}>get personal tasks</Button> */}
-                            <div>
+                            <Box>
                                 {userFullName &&
                                 <TaskCard 
                                     colorScheme={colorScheme}
                                     themeColors={themeColors}
-                                    userFullName={userFullName}
-                                    initials={initials}
-                                    userEmail={userEmail}
+                                    profileInfo={{fullName: userFullName, initials: initials, email: userEmail, picture: userProfilePicture, profileDto: userProfileDto}}
                                     taskData={taskData} 
                                     setTaskData={setTaskData} 
                                     today={today} 
                                     ongoingTasks={ongoingTasks}
                                     overdueTasks={overdueTasks}
                                     completedTasks={completedTasks}
-                                    userProfileDto={userProfileDto}
-                                    userProfilePicture={userProfilePicture}
                                     spaceData={{ id: spaceData.id, slug: spaceData.slug }}
-
                                 />}
                                 {/* {userFullName &&
                                 <TaskCard 
                                     colorScheme={colorScheme}
                                     themeColors={themeColors}
-                                    userFullName={userFullName}
-                                    initials={initials}
-                                    userEmail={userEmail}
+                                    profileInfo={{fullName: userFullName, initials: initials, email: userEmail, picture: userProfilePicture, profileDto: userProfileDto}}
                                     taskData={taskData} 
                                     setTaskData={setTaskData} 
                                     today={today} 
                                     ongoingTasks={ongoingTasks}
                                     overdueTasks={overdueTasks}
                                     completedTasks={completedTasks}
-                                    userProfileDto={userProfileDto}
-                                    userProfilePicture={userProfilePicture}
                                     spaceData={{ id: spaceData.id, slug: spaceData.slug }}
                                 />} */}
                                 
-                            </div>
+                            </Box>
                         </div>
-
-                        {/* <div className='d-flex justify-content-between py-2 user-home-all-content-left-spacing'>
-                            <ProjectCard 
-                            />
-                        </div> */}
                     </div>
                 </Box>
             </Flex>

@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import {Title,Flex,Box,TextInput,PasswordInput,Text,Paper,Group,Button,Divider,Anchor } from '@mantine/core';
@@ -13,7 +13,7 @@ import { VerifyEmailRegex } from '@/utils/emailRegexFormat';
 import { isOAuthUser } from '@/api/Users/isOAuthUser';
 import { authStatusInfo } from '@/api/Auth/status';
 import { getLastActiveSpaceInfo } from '@/api/Spaces/getLastActiveSpace';
-import { UseLastActiveSpace } from '@/hooks/useLastActiveSpace';
+// import { UseLastActiveSpace } from '@/hooks/useLastActiveSpace';
 import AuthSideBlock from '@/components/Auth/authSideBlock';
 
 const validatePassword = (value) => {

@@ -48,7 +48,7 @@ const TaskDescriptionTipTap = (props) => {
     }, [content]);
 
 
-    const handleChange = () => {
+    const openOptionsDropdown = () => {
         const currentLine = getCurrentLine();
         if (currentLine) {
             const textContent = currentLine.textContent.trim();
@@ -130,7 +130,7 @@ const TaskDescriptionTipTap = (props) => {
     return (
         <>
         <div className="rich-text-editor-wrapper" ref={editorRef} >
-            <RichTextEditor editor={editor} onInput={handleChange}
+            <RichTextEditor editor={editor} onInput={openOptionsDropdown}
                 style={{border: tiptapBd, paddingBottom: `${handleTaskUpdateNew && !expanded && isSpoilerButtonVisible ? '50px' : '0'}`, borderRadius: '8px'}} 
                 className={`rte ${(handleTaskUpdateNew && !expanded && isSpoilerButtonVisible) && `not-expanded ${colorScheme}`}`} 
                 bg={tiptapBg} ff='Inter' pos='relative' 

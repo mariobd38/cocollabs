@@ -10,7 +10,7 @@ import {Icons} from "@/components/icons/icons";
 import "./profileCard.css";
 
 export const ProfileCard = (props) => {
-    const { userFullName, initials, userEmail,userProfileDto, userProfilePicture, target,themeColors } = props;
+    const { profileInfo,target,themeColors } = props;
 
     const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     const currentTime = new Date().toLocaleTimeString('en-US', { timeZone: timeZone, hour: 'numeric', minute: '2-digit' });
@@ -18,7 +18,7 @@ export const ProfileCard = (props) => {
     const [emailCopied, setEmailCopied] = useState(false);
 
     const handleEmailCopyClick = () => {
-        navigator.clipboard.writeText(userEmail);
+        navigator.clipboard.writeText(profileInfo.email);
         setEmailCopied(true);
         // const originalCurrentTaskIdNumber = event.target.innerText
         // event.target.innerText = "Copied!";
@@ -41,9 +41,9 @@ export const ProfileCard = (props) => {
                     <Flex justify='space-between'>
                         <div className="me-2">
                             <UserAvatar 
-                                userProfileDto={userProfileDto}
-                                userProfilePicture={userProfilePicture}
-                                initials={initials}
+                                userProfileDto={profileInfo.profileDto}
+                                userProfilePicture={profileInfo.picture}
+                                initials={profileInfo.initials}
                                 multiplier={4.8}
                                 fontSize={2.3}
                             />
@@ -55,13 +55,13 @@ export const ProfileCard = (props) => {
 
                     <div>
                             <div className="mt-3 nunito-sans-font" style={{fontSize: "1.15rem"}}>
-                                <span className="nunito-sans-font-600">{userFullName}</span> (you)
+                                <span className="nunito-sans-font-600">{profileInfo.fullName}</span> (you)
                             </div>
                             
                             <div className="mt-2 d-flex align-items-center">
                                 <span>{Icons('IconMail',20,20)}</span>
                                 <span className="ps-3 nunito-sans-font" style={{maxWidth: "210px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap"}}>
-                                    {userEmail}
+                                    {profileInfo.email}
                                 </span>
                                 <span className="ps-2">
                                     { emailCopied ?

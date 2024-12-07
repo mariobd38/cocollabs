@@ -7,10 +7,7 @@ function updateTaskAttribute(task,value, attribute) {
             task.descriptionHtml = value;
             break;
         case "priority":
-            if (value === 'None')
-                task.priority = null;
-            else
-                task.priority = value;
+            task.priority = (value === 'None') ? null : value;
             break;
         case "status":
             task.status = value;
@@ -24,7 +21,6 @@ function updateTaskAttribute(task,value, attribute) {
             break;
         case "due date time":
             task.dueDateTime = value;
-            console.log(task.dueDateTime);
             break;
         default:
             break;
@@ -62,7 +58,8 @@ async function UpdateTaskInfoNew(
     index,
   ) {
     updateTaskAttribute(task,value,attribute);
-    const taskInfo = {
+    
+    const updatedTask = await saveTaskInfo({
         id: task.id,
         name: task.name,
         description: task.description,
@@ -71,11 +68,10 @@ async function UpdateTaskInfoNew(
         dueDate: task.dueDate,
         dueDateTime: task.dueDateTime,
         descriptionHtml: task.descriptionHtml
-    };
+    });
     
-    const updatedTask = await saveTaskInfo(taskInfo);
     if (updatedTask) {
-        let updatedTaskType = [...taskType];
+        const updatedTaskType = [...taskType];
         updatedTaskType[index] = updatedTask;
         setTaskType(updatedTaskType);
     }
