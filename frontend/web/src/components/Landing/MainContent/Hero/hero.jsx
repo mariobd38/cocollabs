@@ -79,13 +79,10 @@ const Hero = () => {
                         </Container> */}
                         
                         </Container>
-                        
-
-                        
                     </Box>
                 }
             />
-            <Flex justify='center'>
+            <Flex justify='center' >
 
                 <Divider size='xs' my={65} w={{base: '100%', md: '90%'}}  bd='.1px solid #202038'/>
             </Flex>

@@ -1,16 +1,13 @@
 .quick-actions-button {
-    display: flex !important;
-    justify-content: flex-start !important;
-    width:100% !important;
-    border-radius: 12px !important;
-    background-color: transparent !important;
-    padding: 15px 25px !important;
-    font-weight: 400 !important;
-    font-size: 16px !important;
     transition: transform .33s ease-in-out, box-shadow .33s ease-in-out !important;
 }
 .quick-actions-button:hover {
     transform: translateY(-4px) !important;
     /* box-shadow: 0 10px 34px rgba(0, 0, 0, 0.35) !important; */
+}
+.quick-actions-button.dark:hover {
     box-shadow: 0 5px 28px #04636636 !important;
+}
+.quick-actions-button.light:hover {
+    box-shadow: 0 5px 28px #06b5bb36 !important;
 }

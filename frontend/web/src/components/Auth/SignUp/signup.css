@@ -1,8 +1,6 @@
 .auth-content-wrapper-paper {
     /* background: #12141f !important; */
-    background: #121212;
-    background: -webkit-linear-gradient(to left, #0d1620, #121212);
-    background: linear-gradient(to left, #0d1620, #121212);
+    background: hsl(222.2 84% 4.9%);
 }
 .auth-content-wrapper-paper-divider .mantine-Divider-label {
     /* color: #12b886; */

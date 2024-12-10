@@ -121,7 +121,7 @@ const NavbarContent = (props) => {
                 </Drawer>
             </Box> */}
             <Box pb={0} className={"sticky-top"}>
-                <Box className={classes.header} bg='linear-gradient(0.25turn,#101216, #0e1523)' 
+                <Box className={classes.header} bg='hsl(222.2 84% 4.9%)' 
                     style={() => ({
                         boxShadow: scrollPosition > 40 ? '#162a53a0 0px 12px 70px 6px' : 'none',
                         transition: 'padding 0.4s ease-in-out, box-shadow 0.3s ease-in-out'
@@ -182,7 +182,7 @@ const NavbarContent = (props) => {
                         },
                     }}
                 >
-                    <ScrollArea h='480px' w='100%' bg='linear-gradient(0.25turn,#101216, #0e1523)'>
+                    <ScrollArea h='480px' w='100%' bg='hsl(222.2 84% 4.9%)'>
                         <Divider mb="35" bd='.1px solid #c5c5c5' />
 
                         <Flex align='center' direction='column' pt={15} pb={5} gap={10}>

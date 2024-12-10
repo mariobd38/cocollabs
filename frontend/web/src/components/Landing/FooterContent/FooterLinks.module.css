@@ -3,7 +3,7 @@
     /* padding-top: calc(var(--mantine-spacing-xl) * 2) !important; */
     padding-bottom: calc(var(--mantine-spacing-xl) * 2) !important;
     /* background-color: #fafafa !important; */
-    background: linear-gradient(0.25turn,#101216, #0e1523) !important;
+    background: hsl(222.2 84% 4.9%);
 }
   
 .logo {

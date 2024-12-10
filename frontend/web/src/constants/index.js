@@ -1,4 +1,4 @@
-const keys = require("../config/dev");
+import keys from "../config/dev.js";
 
 export const OAUTH2_REDIRECT_URI = keys.redirectUri;
 

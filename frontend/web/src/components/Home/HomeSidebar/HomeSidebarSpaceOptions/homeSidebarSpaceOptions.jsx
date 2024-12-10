@@ -1,6 +1,8 @@
 import React from 'react';
 
-import { Divider, Menu, Box } from '@mantine/core';
+import { Divider, Menu, Box,Flex } from '@mantine/core';
+import { DropdownMenuLabel,DropdownMenuItem,DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
+
 
 import { Icons } from '@/components/icons/icons';
 
@@ -15,11 +17,11 @@ const HomeSidebarSpaceOptions = (props) => {
 
     return (
         <Box my={5}>
-            <Menu.Label w='225' h={25} mb={8} fz={12.3} c={`${colorScheme==='dark' ? '#999999' : '#6b6b6b'}`}
-            style={{overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{spaceName}</Menu.Label>
+            <DropdownMenuLabel w='225' h={25} mb={8} fz={12.3} c={`${colorScheme==='dark' ? '#999999' : '#6b6b6b'}`}
+            style={{overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{spaceName}</DropdownMenuLabel>
 
             {menuItems.map((item) => (
-                <Menu.Item 
+                <DropdownMenuLabel 
                     key={item.name} 
                     c={themeColors.text[3]}
                     className={`home-button ${colorScheme}`}
@@ -28,22 +30,20 @@ const HomeSidebarSpaceOptions = (props) => {
                     w='calc(240px - 13.8%)' 
                     leftSection={Icons(item.icon,15,15,themeColors.text[3])}
                 >
-                    {item.name}
-                </Menu.Item>
+                    <Flex align='center' gap={12} fw={400}>{Icons(item.icon,15,15,themeColors.text[4])}{item.name}</Flex>
+                </DropdownMenuLabel>
             ))}
-            <Divider size="xs" bd='.1px solid #676869' my={5} />
-            <Menu.Item 
-                c={themeColors.text[3]}
+            <DropdownMenuSeparator size="xs" bd='.1px solid #676869' my={5} />
+            <DropdownMenuItem 
                 bg={themeColors.bg[12]}
                 className={`home-button ${colorScheme}`}
                 w='calc(240px - 13.8%)' 
-                leftSection={Icons('IconPlus',15,15,themeColors.text[3])} 
                 onClick={() => setTimeout(() => {
                     setOpenSpaceCreateModal(true);
                 },400)}
             >
-                New space
-            </Menu.Item>
+                <Flex align='center' gap={12} fw={400}>{Icons('IconPlus',15,15,themeColors.text[4])}New space</Flex>
+            </DropdownMenuItem>
         </Box>
     );
 };

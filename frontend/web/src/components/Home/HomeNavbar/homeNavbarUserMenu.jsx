@@ -3,10 +3,12 @@ import React from 'react';
 import { updateThemeInfo } from '@/api/Users/updateTheme';
 import { userLogout } from '@/api/Users/logout';
 
-import { Text,Menu,Flex,Group,Box,Paper } from '@mantine/core';
+import { Text,Flex,Box } from '@mantine/core';
+import { DropdownMenuLabel,DropdownMenuItem,DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
+import CustomDropdown from '@/components/customDropdown';
+
 import {Icons} from '@/components/icons/icons';
 import UserAvatar from '@/components/Home/UserAvatar/userAvatar';
-import { MantineDropdown } from '@/components/models/ModelDropdown2/mantineDropdown';
 
 const HomeNavbarUserMenu = (props) => {
     const {userProfileDto,userProfilePicture, userFullName, initials,colorScheme,setColorScheme,themeColors,
@@ -41,7 +43,6 @@ const HomeNavbarUserMenu = (props) => {
         { name: 'Profile',icon: 'IconUser', marginTop: '20', action: () => console.log("profile")},
         { name: 'Settings',icon: 'IconSettings', action: () => console.log("settings")},
         { name: 'Notification Settings',icon: 'IconBell', action: () => console.log("notification settings")},
-        // { name: 'Themes',icon: 'IconBrush', action: () => setColorScheme(colorScheme === 'dark' ? 'light' : 'dark')},
         { name: 'Themes',icon: 'IconBrush', action: handleThemeUpdate},
         { name: 'Archive',icon: 'IconArchive', action: () => console.log("archive")},
         { name: 'Trash',icon: 'IconTrash', action: () => console.log("trash")},
@@ -50,8 +51,8 @@ const HomeNavbarUserMenu = (props) => {
 
     return (
         <>
-            <MantineDropdown 
-                target={
+            <CustomDropdown 
+                trigger={
                     <Flex align='center' p='5.5px 8px' className={`cursor-pointer home-button ${colorScheme}`} style={{borderRadius: "6px"}}>
                         <UserAvatar 
                             userProfileDto={userProfileDto}
@@ -60,16 +61,12 @@ const HomeNavbarUserMenu = (props) => {
                             multiplier={2.075}
                             fontSize={1}
                         />
-                        {/* <span className='ps-1'>
-                            {Icons('IconChevronDown',15,15,themeColors.text[1])}
-                        </span> */}
                     </Flex>
                 }
-                width={300}
                 dropdown={
-                    <div>
-                        <Menu.Label>
-                            <div className='d-flex gap-3 align-items-center'>
+                    <Box>
+                        <DropdownMenuLabel className='mb-2.5'>
+                            <Flex align='center' gap={16}>
                                 <UserAvatar 
                                     userProfileDto={userProfileDto}
                                     userProfilePicture={userProfilePicture}
@@ -82,21 +79,26 @@ const HomeNavbarUserMenu = (props) => {
                                     <Text c={themeColors.text[2]} fz={17} fw={650} className='home-navbar-menu-fullnamedesc'>{userFullName}</Text>
                                     <Text c={colorScheme === 'dark' ? '#cccccc' : '#616161'} fz={14} fw={200} className='home-navbar-menu-fullnamedesc'>Software Engineer</Text>
                                 </Flex>
-                            </div>
-                        </Menu.Label>
+                            </Flex>
+                        </DropdownMenuLabel>
 
                         {menuItems.map((item) => (
-                            <Menu.Item key={item.name} onClick={item.action} className={`home-button ${colorScheme}`} bg={themeColors.bg[12]} c={themeColors.text[4]} mt={item?.marginTop} w='91.5%' leftSection={Icons(item.icon,14,14,themeColors.text[4])}>
-                                {item.name}
-                            </Menu.Item>
+                            <DropdownMenuItem key={item.name} onClick={item.action} className={`home-button cursor-pointer ${colorScheme}`}>
+                                <Flex gap={12} align='center' >
+                                    {Icons(item.icon,14,14,themeColors.text[4])}
+                                    {item.name}
+                                </Flex>
+                            </DropdownMenuItem>
                         ))}
-                        <Menu.Divider size="xs" bd={`.1px solid ${colorScheme==='dark' ? '#484a4b' : '#d0d2d3'}`}/>
-                        <Menu.Item w='91.5%' className={`home-button ${colorScheme}`} bg={themeColors.bg[12]} c={themeColors.text[4]} onClick={handleUserLogout} leftSection={Icons('IconLogout',14,14,themeColors.text[4])}>
-                            Log out
-                        </Menu.Item>
-                    </div>
-                }
-                background={themeColors.bg[12]} position='bottom-end' colorScheme={colorScheme}
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem className={`home-button cursor-pointer ${colorScheme}`} onClick={handleUserLogout}>
+                            <Flex gap={12} align='center'>
+                                {Icons('IconLogout',14,14,themeColors.text[4])}
+                                Log out
+                            </Flex>
+                        </DropdownMenuItem>
+                    </Box>
+                } side='bottom' align='end' w={280}
             />
         </>
     );

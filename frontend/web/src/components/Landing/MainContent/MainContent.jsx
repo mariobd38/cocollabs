@@ -84,7 +84,7 @@ const MainContent = () => {
         <div>
             <main className='landing-header'>
                 <NavbarContent scrollPosition={scrollPosition}/>
-                <Box bg='linear-gradient(0.25turn,#101216, #0e1523)'>
+                <Box bg='hsl(222.2 84% 4.9%)'>
                     <Hero />
                 </Box>
 

@@ -5,9 +5,10 @@ import { useMantineTheme,useMantineColorScheme,Box,Flex } from '@mantine/core';
 import { useLocalStorage } from '@mantine/hooks';
 
 import HomeHeader from '@/components/Home/HomeHeader/homeHeader';
-import HomeNavbar from '@/components/Home/HomeNavbar/homeNavbar';
+// import HomeNavbar from '@/components/Home/HomeNavbar/homeNavbar';
+import HomeNavbarv2 from '../../components/Home/v2/HomeNavbar/homeNavbarv2';
 import TaskCard from '@/components/Home/TaskCard/taskCard';
-// import QuickActions from './QuickActions/quickActions';
+import QuickActions from '@/components/Home/unused/QuickActions/quickActions';
 import HomeSidebar from '@/components/Home/HomeSidebar/homeSidebar';
 
 import { getUserProfileInfo } from '@/api/Users/getUserProfileInfo';
@@ -16,14 +17,15 @@ import { getLastActiveSpaceInfo } from '@/api/Spaces/getLastActiveSpace';
 import { getTaskInfoBySpace } from '@/api/Tasks/getTasksBySpace';
 // import { getAllUserSpacesInfo } from '@/api/Spaces/getAllUserSpaces';
 // import { getGoogleTaskInfo } from '../../DataManagement/Tasks/getGoogleTasks';
+
 import dayjs from 'dayjs';
 
 import { getThemeColor } from '@/components/Themes/getThemeColor';
 import { getTextColor } from '@/components/Themes/getTextColor';
 
-// import './home.css';
+import '@/styles/home/home.css';
 
-const Home = () => {
+const Homev2 = () => {
     // const dayjs = require('dayjs');
     const theme = useMantineTheme();
     const { colorScheme, setColorScheme } = useMantineColorScheme();
@@ -111,39 +113,6 @@ const Home = () => {
         fetchProfileData();
       }, [passedUserInfo, storedAppInfo, setStoredAppInfo]);
 
-    const processTaskData = useCallback(() => {
-        const now = dayjs();
-        const overdue = [];
-        const completed = [];
-        const ongoing = [];
-
-        taskData.forEach((task) => {
-            const currentDueDate = task.dueDateTime ? dayjs(task.dueDateTime) : task.dueDate ? dayjs(task.dueDate) : null;
-            
-            if ((currentDueDate === null || currentDueDate.isAfter(now) || currentDueDate.isSame(now)) && task.status !== 'Completed') {
-                ongoing.push(task);
-            }
-            else if (currentDueDate && currentDueDate.isBefore(now) && task.status !== 'Completed') {
-                overdue.push(task);
-            } else if (task.status === 'Completed') {
-                completed.push(task);
-            } 
-        });
-        setOngoingTasks(ongoing);
-        setOverdueTasks(overdue);
-        setCompletedTasks(completed);
-    },[taskData,dayjs]);
-
-    useEffect(() => {
-        async function fetchTaskSpaceData() {
-            const data = await getTaskInfoBySpace(spaceData.name);
-            // console.log(data);
-            setTaskData(data);
-            processTaskData();
-        }
-
-        fetchTaskSpaceData();
-    }, [processTaskData, spaceData]);
 
     const [openSidebarToggle, setOpenSidebarToggle] = useState(false);
 
@@ -159,7 +128,7 @@ const Home = () => {
     return (
         <>
             {userFullName && 
-            <HomeNavbar 
+            <HomeNavbarv2 
                 themeColors={themeColors}
                 colorScheme={colorScheme}
                 setColorScheme={setColorScheme}
@@ -192,7 +161,6 @@ const Home = () => {
                     {/* ONLY FOR GOOGLE OAUTH USERS */}
                     {/* {userProfilePicture && <Button onClick={getGoogleTasks}>Access Google tasks</Button>} */}
 
-
                     {/* <QuickActions 
                         themeColors={themeColors}
                         colorScheme={colorScheme}
@@ -201,24 +169,13 @@ const Home = () => {
                     <div className="task-card-parent">
                         
                         <div className='user-home-all-content-left-spacing'>
-                            {/* <Button onClick={getSpaceTasks}>get personal tasks</Button> */}
-                            {/* <Button onClick={getUserSpace}>get personal tasks</Button> */}
                             <Box>
-                                {userFullName &&
-                                <TaskCard 
-                                    colorScheme={colorScheme}
+                                <QuickActions 
                                     themeColors={themeColors}
-                                    profileInfo={{fullName: userFullName, initials: initials, email: userEmail, picture: userProfilePicture, profileDto: userProfileDto}}
-                                    taskData={taskData} 
-                                    setTaskData={setTaskData} 
-                                    today={today} 
-                                    ongoingTasks={ongoingTasks}
-                                    overdueTasks={overdueTasks}
-                                    completedTasks={completedTasks}
-                                    spaceData={{ id: spaceData.id, slug: spaceData.slug }}
-                                />}
+                                    colorScheme={colorScheme}
+                                /> 
                                 {/* {userFullName &&
-                                <TaskCard 
+                                <TaskCard
                                     colorScheme={colorScheme}
                                     themeColors={themeColors}
                                     profileInfo={{fullName: userFullName, initials: initials, email: userEmail, picture: userProfilePicture, profileDto: userProfileDto}}
@@ -240,4 +197,4 @@ const Home = () => {
     );
 };
 
-export default Home;
+export default Homev2;

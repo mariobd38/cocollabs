@@ -65,25 +65,6 @@ export function NavigationMenuComp() {
             {isOpen && (
                     <NavigationMenuContent style={{background: "#121217"}}  >
                         <ul className="list-none grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-                            {/* <li className="row-span-3 fafafa-color">
-                                <NavigationMenuLink asChild>
-                                    <div className="d-flex">
-                                    <a
-                                        className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted  no-underline outline-none focus:shadow-md"
-                                        href="/"
-                                    >
-                                        <div className="mb-2 mt-4 text-lg font-medium">
-                                            shadcn/ui
-                                        </div>
-                                        <p className="text-sm leading-tight text-muted-foreground">
-                                            Beautifully designed components built with Radix UI and
-                                            Tailwind CSS.
-                                        </p>
-                                    </a>
-                                    <Divider orientation="vertical" className='h-full' style={{borderRadius: "8px"}} h='298px' bd='.1px solid #626267'></Divider>
-                                    </div>
-                                </NavigationMenuLink>
-                            </li> */}
                             <ListItem href="/docs" title="Introduction" className='fafafa-color nav-list-item'>
                                 Re-usable components built using Radix UI and Tailwind CSS.
                             </ListItem>

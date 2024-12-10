@@ -1,6 +1,8 @@
 import React, { useState, useRef,useEffect } from 'react';
 
-import {Avatar,Box,UnstyledButton,Badge,Tooltip,rem,Flex,Text} from '@mantine/core';
+import { Avatar,Box,UnstyledButton,Badge,Tooltip,rem,Flex,Text } from '@mantine/core';
+import CustomDropdown from '@/components/customDropdown';
+
 
 import {Icons} from '@/components/icons/icons';
 
@@ -140,18 +142,14 @@ const HomeSidebar = (props) => {
         >
 
                 <div className={classes.section} data-theme={colorScheme}>
-                    <MantineDropdown 
-                        target={<div className={classes.profile}>{profileLink}</div>}
-                        width={240}
-                        dropdown={
-                            <HomeSidebarSpaceOptions 
+                    <CustomDropdown 
+                        trigger={ <div className={classes.profile}>{profileLink}</div> }
+                        dropdown={ <HomeSidebarSpaceOptions 
                                 spaceName={spaceData.name} 
                                 setOpenSpaceCreateModal={setOpenSpaceCreateModal}
                                 themeColors={themeColors}
                                 colorScheme={colorScheme}
-                            />
-                        }
-                        background={themeColors.bg[12]} position='right-start' dmt={6}
+                        /> } side='right' align='start' w={200} 
                     />
                 </div>
                 <div className={classes.section} data-theme={colorScheme}>
