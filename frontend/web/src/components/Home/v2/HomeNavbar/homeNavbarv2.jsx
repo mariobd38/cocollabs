@@ -4,13 +4,12 @@ import { Icons } from '@/components/icons/icons';
 
 import { Divider,Input,Box,Text,Flex,Container,Grid} from '@mantine/core';
 import { Button } from '@/components/ui/button';
-// import { DropdownMenuTrigger,
-// } from "@/components/ui/dropdown-menu";
+import CustomCommand from '@/components/customCommand';
+
 import Logo2 from '@/components/Logo/logo2';
 
 import HomeNavbarUserMenu from '@/components/Home/HomeNavbar/homeNavbarUserMenu';
 import SpaceCreationModal from '@/components/Home/SpaceCreationModal/spaceCreationModal';
-// import CustomCommand from '@/components/customCommand';
 
 // import './homeNavbar.css';
 
@@ -167,10 +166,10 @@ const HomeNavbarv2 = (props) => {
                                 colorScheme={colorScheme}
                             />
 
-                            {/* <CustomCommand 
+                            <CustomCommand 
                                 open={openCommand}
                                 setOpen={setOpenCommand}
-                            /> */}
+                            />
 
                             
 
