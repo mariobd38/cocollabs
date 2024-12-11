@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Divider, Menu, Box,Flex } from '@mantine/core';
+import { Box,Flex } from '@mantine/core';
 import { DropdownMenuLabel,DropdownMenuItem,DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
 
 
@@ -21,22 +21,21 @@ const HomeSidebarSpaceOptions = (props) => {
             style={{overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{spaceName}</DropdownMenuLabel>
 
             {menuItems.map((item) => (
-                <DropdownMenuLabel 
+                <DropdownMenuItem 
                     key={item.name} 
                     c={themeColors.text[3]}
-                    className={`home-button ${colorScheme}`}
+                    className={`home-button cursor-pointer ${colorScheme}`}
                     bg={themeColors.bg[12]}
                     mt={item?.marginTop} 
                     w='calc(240px - 13.8%)' 
-                    leftSection={Icons(item.icon,15,15,themeColors.text[3])}
                 >
                     <Flex align='center' gap={12} fw={400}>{Icons(item.icon,15,15,themeColors.text[4])}{item.name}</Flex>
-                </DropdownMenuLabel>
+                </DropdownMenuItem>
             ))}
             <DropdownMenuSeparator size="xs" bd='.1px solid #676869' my={5} />
-            <DropdownMenuItem 
+            <DropdownMenuItem
                 bg={themeColors.bg[12]}
-                className={`home-button ${colorScheme}`}
+                className={`home-button ${colorScheme} cursor-pointer`}
                 w='calc(240px - 13.8%)' 
                 onClick={() => setTimeout(() => {
                     setOpenSpaceCreateModal(true);

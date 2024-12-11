@@ -8,7 +8,7 @@ import HomeHeader from '@/components/Home/HomeHeader/homeHeader';
 // import HomeNavbar from '@/components/Home/HomeNavbar/homeNavbar';
 import HomeNavbarv2 from '../../components/Home/v2/HomeNavbar/homeNavbarv2';
 import TaskCard from '@/components/Home/TaskCard/taskCard';
-import QuickActions from '@/components/Home/unused/QuickActions/quickActions';
+import QuickActions from '@/components/Home/QuickActions/quickActions';
 import HomeSidebar from '@/components/Home/HomeSidebar/homeSidebar';
 
 import { getUserProfileInfo } from '@/api/Users/getUserProfileInfo';
@@ -125,6 +125,14 @@ const Homev2 = () => {
     //     getGoogleTaskInfo();
     // }
 
+    const fullUserData = {
+        fullName: userFullName, 
+        initials: initials, 
+        email: userEmail, 
+        picture: userProfilePicture, 
+        profileDto: userProfileDto
+    };
+
     return (
         <>
             {userFullName && 
@@ -132,7 +140,7 @@ const Homev2 = () => {
                 themeColors={themeColors}
                 colorScheme={colorScheme}
                 setColorScheme={setColorScheme}
-                profileInfo={{fullName: userFullName,initials: initials,email: userEmail,picture: userProfilePicture,profileDto: userProfileDto}}
+                profileInfo={fullUserData}
                 openSidebarToggle={openSidebarToggle}
                 setOpenSidebarToggle={setOpenSidebarToggle}
                 storedUserInfo={storedAppInfo}
@@ -174,11 +182,11 @@ const Homev2 = () => {
                                     themeColors={themeColors}
                                     colorScheme={colorScheme}
                                 /> 
-                                {/* {userFullName &&
+                                {/* {fullUserData &&
                                 <TaskCard
                                     colorScheme={colorScheme}
                                     themeColors={themeColors}
-                                    profileInfo={{fullName: userFullName, initials: initials, email: userEmail, picture: userProfilePicture, profileDto: userProfileDto}}
+                                    profileInfo={fullUserData}
                                     taskData={taskData} 
                                     setTaskData={setTaskData} 
                                     today={today} 

@@ -30,7 +30,7 @@ const HomeHeader = ({spaceName,themeColors, colorScheme}) => {
                                     {spaceName}
                                 </Text>
                             </Flex>
-                        <Text ff='Inter' fw={400} fz='13.2' c={themeColors.text[8]}>{dayOfWeek}, {month} {date.getDate()}, {date.getFullYear()}</Text>
+                        <Text ff='Inter' fw={400} fz='13.2' className='text-muted-foreground'>{dayOfWeek}, {month} {date.getDate()}, {date.getFullYear()}</Text>
                     </Flex>
                 </Box>
                 

@@ -9,7 +9,7 @@ const CustomDropdown = ({trigger,dropdown,w,side,align}) => {
                 {trigger}
             </DropdownMenuTrigger>
 
-            <DropdownMenuContent style={{width: `${w}px`}} className={` cursor-pointer`} side={side} align={align} cursor='pointer'>
+            <DropdownMenuContent style={{width: `${w}px`, animationDuration: '200ms !important', animationName: 'enter'}} className={`cursor-pointer !duration-200 shadcn-dropdown`} side={side} align={align}>
                 {dropdown}
             </DropdownMenuContent>
         </DropdownMenu>

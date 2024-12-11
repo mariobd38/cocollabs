@@ -120,18 +120,18 @@ const TaskCard = (props) => {
 
     return (
 
-        <Box py={20} px={20} bg={themeColors.bg[4]} bd={`1px solid ${colorScheme === 'dark' ? '#323539' : '#b9b9b9'}`}
+        <Flex direction='column' gap={20} p={20}  bd={`1px solid ${colorScheme === 'dark' ? '#323539' : '#b9b9b9'}`}
+            
             style={{borderRadius: "10px", boxShadow: `0 2px 10px ${colorScheme==='dark' ? '#30314447' : '#70718457'}` }}>
             <div className='d-flex align-items-center justify-content-between pb-2'>
                 <Text fz='18'  c={themeColors.text[3]} ff='Lato'>My Issues</Text>
                 {Icons('IconDots',24,24,themeColors.text[3])}
             </div>
 
-            <Flex align='center' mt={10} mb={15} justify='space-between'>
+            {/* <Flex align='center' mt={10} mb={15} justify='space-between'>
                 <SegmentedControl
                     className={`task-card-segmented-control ${colorScheme}`}
                     bg={themeColors.bg[7]}
-                    // color={`${colorScheme==='dark' ? '#048369' : '#24b689e3'}`}
                     color={`${colorScheme==='dark' ? '#1e1f21' : '#fafafa'}`}
                     withItemsBorders={false}
                     data={segments}
@@ -150,20 +150,18 @@ const TaskCard = (props) => {
                         <span>New issue</span>
                     </div>
                 </Button>
-            </Flex>
+            </Flex> */}
 
-            <Card w='100%' radius={10} p={0}  bd={`1.7px solid ${colorScheme === 'dark' ? '#323539' : '#c6c6c6'}`} >
-                <Box bg={themeColors.bg[4]}>
-                    {['1', '2', '3'].map(segment => (
-                        <TaskSegment
-                            key={segment}
-                            active={activeSegment === segment}
-                            tasks={ segment === '1' ? ongoingTasks : segment === '2' ? overdueTasks : completedTasks }
-                            isCompleted={segment === '3'}
-                            renderTaskContent={renderTaskContent}
-                        />
-                    ))}
-                </Box>
+            <Card w='100%' radius={10} p={0} bg='transparent' bd={`1.7px solid ${colorScheme === 'dark' ? '#323539' : '#c6c6c6'}`} >
+                {['1', '2', '3'].map(segment => (
+                    <TaskSegment
+                        key={segment}
+                        active={activeSegment === segment}
+                        tasks={ segment === '1' ? ongoingTasks : segment === '2' ? overdueTasks : completedTasks }
+                        isCompleted={segment === '3'}
+                        renderTaskContent={renderTaskContent}
+                    />
+                ))}
             </Card>
 
             <TaskDetailsModal
@@ -204,7 +202,7 @@ const TaskCard = (props) => {
                 themeColors={themeColors}
                 spaceId={spaceData.id}
             />
-        </Box>
+        </Flex>
     );
 };
 

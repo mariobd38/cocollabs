@@ -1,6 +1,6 @@
 import tailwindAnimate from "tailwindcss-animate";
 import { nextui } from "@nextui-org/react";
-const defaultTheme = require("tailwindcss/defaultTheme");
+import defaultTheme from "tailwindcss/defaultTheme";
 
 
 /** @type {import('tailwindcss').Config} */
