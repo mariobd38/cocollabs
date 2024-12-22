@@ -33,6 +33,15 @@
 
         --radius: 0.5rem;
 
+        --sidebar-background: 220, 32%, 93%;
+        --sidebar-foreground: 240 5.3% 26.1%;
+        --sidebar-primary: 240 5.9% 10%;
+        --sidebar-primary-foreground: 0 0% 98%;
+        --sidebar-accent: 240 4.8% 95.9%;
+        --sidebar-accent-foreground: 240 5.9% 10%;
+        --sidebar-border: 0, 0%, 85%;
+        --sidebar-ring: 217.2 91.2% 59.8%;
+
         background-color: #fff;
 
     /* .border {
@@ -71,36 +80,23 @@
 
         --radius: 0.5rem;
 
-        background-color: #1e1f21;
-
-        .border {
-        border: 1px solid #424345 !important;
-        }
-        .bg-muted {
-        background-color: #424345 !important;
-        }
-    }
-    :root {
-        --sidebar-background: 0 0% 98%;
-        --sidebar-foreground: 240 5.3% 26.1%;
-        --sidebar-primary: 240 5.9% 10%;
-        --sidebar-primary-foreground: 0 0% 98%;
-        --sidebar-accent: 240 4.8% 95.9%;
-        --sidebar-accent-foreground: 240 5.9% 10%;
-        --sidebar-border: 220 13% 91%;
-        --sidebar-ring: 217.2 91.2% 59.8%;
-
-    }
-    .dark {
-        --sidebar-background: 240 5.9% 10%;
+        --sidebar-background: 214, 9%, 10%;
         --sidebar-foreground: 240 4.8% 95.9%;
         --sidebar-primary: 224.3 76.3% 48%;
         --sidebar-primary-foreground: 0 0% 100%;
         --sidebar-accent: 240 3.7% 15.9%;
         --sidebar-accent-foreground: 240 4.8% 95.9%;
-        --sidebar-border: 240 3.7% 15.9%;
+        --sidebar-border: 0, 0%, 16%;
         --sidebar-ring: 217.2 91.2% 59.8%;
 
+        background-color: #1e1f21;
+
+        .border {
+            border: 1px solid #424345 !important;
+        }
+        .bg-muted {
+            background-color: #424345 !important;
+        }
     }
   
 }

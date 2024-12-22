@@ -4,9 +4,9 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import PrivateRoute from "@/PrivateRoute/privateRoute";
 import { AuthProvider } from "@/hooks/authProvider";
 
-import Home from "@/components/Home/home";
+// import Home from "@/components/Home/home";
 import Homev2 from '@/pages/home/homev2';
-import TaskDetailsModal from "@/components/Home/TaskDetailsModal/taskDetailsModal";
+// import TaskDetailsModal from "@/components/Home/TaskDetailsModal/taskDetailsModal";
 import LandingPage from "@/components/Landing/LandingPage";
 import Login from "@/components/Auth/Login/login";
 import SignUp from "@/components/Auth/SignUp/signup"

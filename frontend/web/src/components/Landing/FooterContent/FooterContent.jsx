@@ -6,7 +6,6 @@ import { Icons } from '@/components/icons/icons';
 import Logo2 from '@/components/Logo/logo2';
 
 import classes from './FooterLinks.module.css';
-import './FooterContent.css';
 
 const data = [
         {

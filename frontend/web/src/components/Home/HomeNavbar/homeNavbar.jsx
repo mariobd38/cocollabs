@@ -8,7 +8,7 @@ import Logo2 from '@/components/Logo/logo2';
 import HomeNavbarUserMenu from '@/components/Home/HomeNavbar/homeNavbarUserMenu';
 import SpaceCreationModal from '@/components/Home/SpaceCreationModal/spaceCreationModal';
 
-import './homeNavbar.css';
+// import './homeNavbar.css';
 
 const HomeNavbar = (props) => {
     const { themeColors,colorScheme, setColorScheme,profileInfo, setOpenSidebarToggle, openSidebarToggle,storedUserInfo,setStoredUserInfo

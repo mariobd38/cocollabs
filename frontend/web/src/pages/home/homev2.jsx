@@ -10,6 +10,7 @@ import HomeNavbarv2 from '../../components/Home/v2/HomeNavbar/homeNavbarv2';
 import TaskCard from '@/components/Home/TaskCard/taskCard';
 import QuickActions from '@/components/Home/QuickActions/quickActions';
 import HomeSidebar from '@/components/Home/HomeSidebar/homeSidebar';
+import HomeSidebarv2 from '@/components/Home/v2/HomeSidebar/homeSidebarv2';
 
 import { getUserProfileInfo } from '@/api/Users/getUserProfileInfo';
 import { getLastActiveSpaceInfo } from '@/api/Spaces/getLastActiveSpace';
@@ -146,8 +147,10 @@ const Homev2 = () => {
                 storedUserInfo={storedAppInfo}
                 setStoredUserInfo={setStoredAppInfo}
             />}
-            <div className='container m-0 p-0'>
-                {userFullName &&
+            <Flex>
+
+            <div className=' m-0 p-0'>
+                {/* {userFullName &&
                 <HomeSidebar className='user-home-sidebar'
                     profileInfo={{fullName: userFullName, email: userEmail}}
                     themeColors={themeColors}
@@ -155,10 +158,17 @@ const Homev2 = () => {
                     openSidebarToggle={openSidebarToggle}
                     setOpenSidebarToggle={setOpenSidebarToggle}
                     spaceData={{name: spaceData.name, icon: spaceData.icon}}
-                />}
+                />} */}
+                <HomeSidebarv2 
+                    themeColors={themeColors}
+                    colorScheme={colorScheme}
+                    openSidebarToggle={openSidebarToggle}
+                    setOpenSidebarToggle={setOpenSidebarToggle}
+                    spaceData={{name: spaceData.name, icon: spaceData.icon}}
+                />
             </div>
 
-            <Flex direction='column' className={` user-home-all-content ${openSidebarToggle && 'open' }`}>
+            <Flex direction='column' className={`user-home-all-content ${openSidebarToggle && 'open' }`}>
                 <HomeHeader 
                     spaceName={spaceData.name}
                     themeColors={themeColors}
@@ -166,13 +176,6 @@ const Homev2 = () => {
                 />
 
                 <Box w='100%' >
-                    {/* ONLY FOR GOOGLE OAUTH USERS */}
-                    {/* {userProfilePicture && <Button onClick={getGoogleTasks}>Access Google tasks</Button>} */}
-
-                    {/* <QuickActions 
-                        themeColors={themeColors}
-                        colorScheme={colorScheme}
-                    /> */}
 
                     <div className="task-card-parent">
                         
@@ -182,24 +185,12 @@ const Homev2 = () => {
                                     themeColors={themeColors}
                                     colorScheme={colorScheme}
                                 /> 
-                                {/* {fullUserData &&
-                                <TaskCard
-                                    colorScheme={colorScheme}
-                                    themeColors={themeColors}
-                                    profileInfo={fullUserData}
-                                    taskData={taskData} 
-                                    setTaskData={setTaskData} 
-                                    today={today} 
-                                    ongoingTasks={ongoingTasks}
-                                    overdueTasks={overdueTasks}
-                                    completedTasks={completedTasks}
-                                    spaceData={{ id: spaceData.id, slug: spaceData.slug }}
-                                />} */}
                                 
                             </Box>
                         </div>
                     </div>
                 </Box>
+            </Flex>
             </Flex>
         </>
     );

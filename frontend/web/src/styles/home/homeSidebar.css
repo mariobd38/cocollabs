@@ -58,23 +58,21 @@ a {
 
 /* new */
 .resize-handle {
-    width: 4px; /* Handle width */
-    cursor: col-resize; /* Cursor change on hover */
+    width: 6px;
+    cursor: col-resize; 
     position: absolute;
     right: 0;
     top: 0;
     bottom: 0;
-    /* background-color: #666666f5; */
     opacity: 0.6;
-    transition: all 0.8s ease-in-out;
-  }
-  .resize-handle:hover {
-    /* right: 0 !important;
-    top: 0 !important;
-    bottom: 0 !important; */
-    background-color: #525559 !important;
-    
-  }
+    transition: all 0.6s ease-in-out;
+}
+.resize-handle.dark:hover {
+    background-color: hsl(0, 6%, 20%) !important;
+}
+.resize-handle.light:hover {
+    background-color: hsl(0, 4%, 76%) !important;
+}
   
 .home-sidebar-profile-parent-div.active button {
     width: 90%;

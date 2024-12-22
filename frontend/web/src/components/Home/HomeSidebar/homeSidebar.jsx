@@ -4,14 +4,14 @@ import { Avatar,Box,UnstyledButton,Badge,Tooltip,rem,Flex,Text } from '@mantine/
 import CustomDropdown from '@/components/customDropdown';
 
 
-import {Icons} from '@/components/icons/icons';
+import { Icons } from '@/components/icons/icons';
 
 import HomeSidebarSpaceOptions from '@/components/Home/HomeSidebar/HomeSidebarSpaceOptions/homeSidebarSpaceOptions';
 import SpaceCreationModal from '@/components/Home/SpaceCreationModal/spaceCreationModal';
-import { MantineDropdown } from '@/components/models/ModelDropdown2/mantineDropdown';
+// import { MantineDropdown } from '@/components/models/ModelDropdown2/mantineDropdown';
 
-import classes from './homeSidebar.module.css';
-import './homeSidebar.css';
+import classes from '@/styles/home/homeSidebar.module.css';
+// import './homeSidebar.css';
 
 const HomeSidebar = (props) => {
     const { profileInfo, openSidebarToggle, setOpenSidebarToggle,spaceData,themeColors,colorScheme } = props;

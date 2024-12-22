@@ -1,49 +1,38 @@
-.navbar {
+/* .navbar {
     height: 100%;
     z-index: 10;
     padding: var(--mantine-spacing-md);
     padding-top: 0;
     display: flex;
     flex-direction: column;
-    /* border-right: 1px solid #323539; */
     top: 64.2px;
     position: fixed;
-    /* background-color: #222529; */
     transition: width 0.23s linear;
     overflow: hidden; 
-  }
+  } */
   
   .section {
-    margin-left: calc(var(--mantine-spacing-md) * -1);
-    margin-right: calc(var(--mantine-spacing-md) * -1);
     margin-bottom: var(--mantine-spacing-md);
     background-color: transparent !important;
   }
-  .section[data-theme="light"]:not(:last-of-type) {
+  /* .section[data-theme="light"]:not(:last-of-type) {
     border-bottom: 1px solid #b9b9b9;
   }
   .section[data-theme="dark"]:not(:last-of-type) {
     border-bottom: 1px solid #323539;
-  }
-  
-  .searchCode {
-    font-weight: 700;
-    font-size: rem(10px);
-    background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-7));
-    border: rem(1px) solid light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-7));
-  }
+  } */
   
   .mainLinks {
-    padding-left: calc(var(--mantine-spacing-md) - var(--mantine-spacing-xs));
-    padding-right: calc(var(--mantine-spacing-md) - var(--mantine-spacing-xs));
+    /* padding-left: calc(var(--mantine-spacing-md) - var(--mantine-spacing-xs)); */
+    /* padding-right: calc(var(--mantine-spacing-md) - var(--mantine-spacing-xs)); */
     padding-bottom: var(--mantine-spacing-md);
   }
   
   .mainLink.active {
     width: 90% !important;
     /* padding: rem(8px) var(--mantine-spacing-xs); */
-    padding: rem(8px);
-    border-radius: 7px;
+    padding: 5.5px 8px;
+    border-radius: 6px;
     &:hover {
       background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));
       color: light-dark(var(--mantine-color-gray-7), var(--mantine-color-dark-0));
@@ -59,23 +48,28 @@
     border-radius: 6px;
     font-weight: 500;
     color: light-dark(var(--mantine-color-gray-7), var(--mantine-color-dark-0));
-    width: calc(2.075rem * var(--mantine-scale)) !important; 
-    min-width: calc(2.075rem * var(--mantine-scale)) !important; 
+    /* width: calc(2.075rem * var(--mantine-scale)) !important; 
+    min-width: calc(2.075rem * var(--mantine-scale)) !important;  */
     height: calc(2.075rem * var(--mantine-scale)) !important; 
     background-color: transparent !important;
   }
 
   .mainLink[data-theme="light"]:hover {
+      filter: brightness(0.98);
       background-color: #d8dadc !important;
-      color: light-dark(var(--mantine-color-gray-7), var(--mantine-color-dark-0));
+
+      .mainLinkIcon svg {
+        stroke: #181818 !important;
+      }
   }
   .mainLink[data-theme="dark"]:hover {
+    filter: brightness(1.2);
     background-color: #2e3135 !important;
-    color: light-dark(var(--mantine-color-gray-7), var(--mantine-color-dark-0));
+    .mainLinkIcon svg {
+      stroke: #fafafa !important;
+    }
   }
-  .mainLink:last-child {
-    margin-bottom: 0px;
-  }
+
   .mainLink.profile {
     padding: 8px 0px !important;
     background-color: transparent !important;
@@ -89,13 +83,6 @@
 .profile {
     margin: 0.29rem auto;
 }
-
-
-
-
-
-
-
 
   .mainLinkInner {
     position:relative;
@@ -121,17 +108,6 @@
     pointer-events: none;
   }
   
-  .collections {
-    padding-left: calc(var(--mantine-spacing-md) - rem(6px));
-    padding-right: calc(var(--mantine-spacing-md) - rem(6px));
-    padding-bottom: var(--mantine-spacing-md);
-  }
-  
-  .collectionsHeader {
-    padding-left: calc(var(--mantine-spacing-md) + rem(2px));
-    padding-right: var(--mantine-spacing-md);
-    margin-bottom: rem(5px);
-  }
   
   .collectionLink {
     display: block;
@@ -147,10 +123,6 @@
       background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));
       color: light-dark(var(--mantine-color-gray-7), var(--mantine-color-dark-0));
     }
-  }
-  
-  .iconWrapper {
-    position: relative; /* Ensures the badge is positioned relative to this container */
   }
   
   .badge {

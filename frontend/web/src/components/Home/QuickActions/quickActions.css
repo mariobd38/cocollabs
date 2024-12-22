@@ -1,13 +1,86 @@
 .quick-actions-button {
     transition: transform .33s ease-in-out, box-shadow .33s ease-in-out !important;
 }
+.quick-actions-button.dark {
+    box-shadow: rgba(20, 20, 20, 0.25) 0px 5px 15px;
+    transition: transform .33s ease-in-out, box-shadow .33s ease-in-out !important;
+
+}
+.quick-actions-button.light {
+    box-shadow: rgba(200, 200, 200, 0.25) 0px 5px 15px;
+}
 .quick-actions-button:hover {
     transform: translateY(-4px) !important;
-    /* box-shadow: 0 10px 34px rgba(0, 0, 0, 0.35) !important; */
 }
 .quick-actions-button.dark:hover {
-    box-shadow: 0 5px 28px #04636636 !important;
+    /* border-color: white !important; */
+    /* box-shadow: 0 5px 28px #04636636 !important; */
+    box-shadow: rgba(80, 80, 80, 0.25) 0px 5px 15px;
 }
 .quick-actions-button.light:hover {
-    box-shadow: 0 5px 28px #06b5bb36 !important;
+    /* box-shadow: 0 5px 28px #06b5bb36 !important; */
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 5px 15px;
+}
+.fade-effect {
+    position: relative;
+}
+  
+.fade-effect.previous-true::before,
+.fade-effect.next-true::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 50px;
+    pointer-events: none;
+    z-index: 2;
+}
+  
+.fade-effect.previous-true.dark::before {
+    left: 0;
+    /* background: linear-gradient(to right, #1e1f21ff, #1e1f218f,transparent); */
+    filter: drop-shadow(0 0 0.95rem #1c1d1f);
+    /* background: linear-gradient(to right, #1c1d1f, transparent); */
+    background: linear-gradient(to right, #1e1f21 0%, #1d1e20 0px, #1c1d1f calc(100% - 46px), transparent 100%);
+}
+  
+.fade-effect.next-true.dark::after {
+    right: 0;
+    /* background: linear-gradient(to left, #1e1f21f0, #1e1f218f, transparent); */
+    /* opacity:.8; */
+    /* background: linear-gradient(to left, #1e1f21 0%, #1e1f21 6px, #1d1e20 calc(100% - 46px), transparent 100%); */
+    filter: drop-shadow(0 0 0.95rem #1c1d1f);
+    background: linear-gradient(to left, #1e1f21 0%, #1d1e20 6px, #1c1d1f calc(100% - 46px), transparent 100%);
+}
+  
+.fade-effect.previous-true.light::before {
+    left: 0;
+    /* background: linear-gradient(to right, #fff, #ffffffaf,transparent); */
+    filter: drop-shadow(0 0 0.95rem #fdfdfd);
+    background: linear-gradient(to right, #fff 0%, #fdfdfd 6px, #fcfcfc calc(100% - 46px), transparent 100%);
+}
+  
+.fade-effect.next-true.light::after {
+    right: 0;
+    filter: drop-shadow(0 0 0.95rem #fdfdfd);
+    background: linear-gradient(to left, #fff 0%, #fdfdfd 6px, #fcfcfc calc(100% - 46px), transparent 100%);
+
+}
+
+
+.carousel-parent .mantine-Carousel-controls {
+    z-index: 3;
+}
+/* .carousel-control-icon {
+    transition: all .4s linear;
+    opacity: 0;
+} */
+.carousel-control-icon:hover {
+    /* color: #a0a0a0; */
+    filter: brightness(1.4);
+}
+.carousel-grandparent:hover .carousel-control-icon {
+    /* display: block !important; */
+    visibility: visible !important;
+    opacity: 1 !important;
 }
