@@ -205,12 +205,12 @@ const SignupContent = (props) => {
                             <Flex align='center' m='auto' direction='column' w={{xs: '80%'}}>
                                 <form noValidate style={{width: "100%"}} className='auth-user-info-block' onSubmit={form.onSubmit((values) => handleSignUpWithEmailRequest(values))}>
                                     <Flex align='center' justify='space-between' wrap='wrap' className='mb-4'>
-                                        <Box className='signup-back-arrow-icon' onClick={() => routeChange('/signup')}>
+                                        <Box className='rounded cursor-pointer hover:bg-[#282828] hover:brightness-125 transition-all duration-500 ease-linear' p='4px 4px 5px 4px' onClick={() => routeChange('/signup')}>
                                             {Icons('IconArrowBack',24,24, '#a6a7a9')}
                                         </Box>
 
                                         <Center flex={1} w='100%' >
-                                            <Button className='signup-user-info-block-email' radius="xl" fw={800} >
+                                            <Button className='px-[20px] py-[3px]' bg='#232529' c='#f0f0f0' radius="xl" fw={800} >
                                                 <Flex align='center'>
                                                     <Box me={10}>
                                                         {Icons('IconMail',18,18,'#f0f0f0',2)}

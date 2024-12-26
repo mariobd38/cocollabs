@@ -7,15 +7,15 @@ import { useLocalStorage } from '@mantine/hooks';
 import HomeHeader from '@/components/Home/HomeHeader/homeHeader';
 // import HomeNavbar from '@/components/Home/HomeNavbar/homeNavbar';
 import HomeNavbarv2 from '../../components/Home/v2/HomeNavbar/homeNavbarv2';
-import TaskCard from '@/components/Home/TaskCard/taskCard';
+// import TaskCard from '@/components/Home/TaskCard/taskCard';
 import QuickActions from '@/components/Home/QuickActions/quickActions';
-import HomeSidebar from '@/components/Home/HomeSidebar/homeSidebar';
+// import HomeSidebar from '@/components/Home/HomeSidebar/homeSidebar';
 import HomeSidebarv2 from '@/components/Home/v2/HomeSidebar/homeSidebarv2';
 
 import { getUserProfileInfo } from '@/api/Users/getUserProfileInfo';
 import { getLastActiveSpaceInfo } from '@/api/Spaces/getLastActiveSpace';
 // import { getPersonalSpaceInfo } from '@/api/Spaces/getPersonalSpaceInfo';
-import { getTaskInfoBySpace } from '@/api/Tasks/getTasksBySpace';
+// import { getTaskInfoBySpace } from '@/api/Tasks/getTasksBySpace';
 // import { getAllUserSpacesInfo } from '@/api/Spaces/getAllUserSpaces';
 // import { getGoogleTaskInfo } from '../../DataManagement/Tasks/getGoogleTasks';
 
@@ -31,10 +31,10 @@ const Homev2 = () => {
     const theme = useMantineTheme();
     const { colorScheme, setColorScheme } = useMantineColorScheme();
 
-    const [taskData, setTaskData] = useState([]);
-    const [overdueTasks, setOverdueTasks] = useState([]);
-    const [completedTasks, setCompletedTasks] = useState([]);
-    const [ongoingTasks, setOngoingTasks] = useState([]);
+    // const [taskData, setTaskData] = useState([]);
+    // const [overdueTasks, setOverdueTasks] = useState([]);
+    // const [completedTasks, setCompletedTasks] = useState([]);
+    // const [ongoingTasks, setOngoingTasks] = useState([]);
     const [today, setToday] = useState(dayjs());
 
     const location = useLocation();
@@ -47,7 +47,7 @@ const Homev2 = () => {
     const [userProfileDto, setUserProfileDto] = useState('');
     const [initials, setInitials] = useState(passedUserInfo?.fullName || '');
     const [spaceData, setSpaceData] = useState(passedSpaceInfo || []);
-    // const [userSpaces, setUserSpaces] = useState([]);
+    const [userSpaces, setUserSpaces] = useState([]);
 
     useEffect(() => {
         async function fetchSpaceData() {
@@ -68,7 +68,7 @@ const Homev2 = () => {
         }, 1000 * 5); // Check every 5 seconds
 
         return () => clearInterval(intervalId);
-    }, [today,dayjs]);
+    }, [today]);
 
 
     const [storedAppInfo, setStoredAppInfo] = useLocalStorage({
@@ -86,7 +86,7 @@ const Homev2 = () => {
             setUserEmail(storedAppInfo.user.email);
             setUserProfilePicture(storedAppInfo.user.picture);
             setUserProfileDto(storedAppInfo.profile);
-            // setUserSpaces(storedAppInfo.userSpace);
+            setUserSpaces(storedAppInfo.userSpace);
             setColorScheme(storedAppInfo.userPreference.theme);
             // const jsonData = { user: storedAppInfo };
           } else {
@@ -97,7 +97,7 @@ const Homev2 = () => {
                     user: data.userDto,
                     profile: data.profileDto,
                     userPreference: data.userPreferenceDto,
-                    // userSpace: data.userSpaceDto
+                    userSpace: data.userSpaceDto
                 }
                 setUserFullName(jsonData.user.fullName);
                 setInitials((jsonData.user.fullName.split(' ')[0][0] + jsonData.user.fullName.split(' ')[1][0]).toUpperCase());
@@ -105,7 +105,7 @@ const Homev2 = () => {
                 setUserProfilePicture(jsonData.user.picture);
                 setUserProfileDto(jsonData.profile);
                 setColorScheme(jsonData.userPreference.theme);
-                // setUserSpaces(jsonData.userSpace);
+                setUserSpaces(jsonData.userSpace);
 
                 setStoredAppInfo(jsonData);
             }
@@ -149,7 +149,7 @@ const Homev2 = () => {
             />}
             <Flex>
 
-            <div className=' m-0 p-0'>
+            <Box m={0} p={0}>
                 {/* {userFullName &&
                 <HomeSidebar className='user-home-sidebar'
                     profileInfo={{fullName: userFullName, email: userEmail}}
@@ -165,8 +165,9 @@ const Homev2 = () => {
                     openSidebarToggle={openSidebarToggle}
                     setOpenSidebarToggle={setOpenSidebarToggle}
                     spaceData={{name: spaceData.name, icon: spaceData.icon}}
+                    userFullName={userFullName}
                 />
-            </div>
+            </Box>
 
             <Flex direction='column' className={`user-home-all-content ${openSidebarToggle && 'open' }`}>
                 <HomeHeader 
@@ -179,15 +180,15 @@ const Homev2 = () => {
 
                     <div className="task-card-parent">
                         
-                        <div className='user-home-all-content-left-spacing'>
+                        {/* <div className='user-home-all-content-left-spacing'> */}
                             <Box>
                                 <QuickActions 
                                     themeColors={themeColors}
                                     colorScheme={colorScheme}
-                                /> 
+                                />
                                 
                             </Box>
-                        </div>
+                        {/* </div> */}
                     </div>
                 </Box>
             </Flex>

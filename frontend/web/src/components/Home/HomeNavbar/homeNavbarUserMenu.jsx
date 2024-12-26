@@ -83,7 +83,7 @@ const HomeNavbarUserMenu = (props) => {
                         </DropdownMenuLabel>
 
                         {menuItems.map((item) => (
-                            <DropdownMenuItem key={item.name} onClick={item.action} className={`home-button cursor-pointer ${colorScheme}`}>
+                            <DropdownMenuItem key={item.name} onClick={item.action} className={`cursor-pointer ${colorScheme}`}>
                                 <Flex gap={12} align='center' >
                                     {Icons(item.icon,14,14,themeColors.text[4])}
                                     {item.name}

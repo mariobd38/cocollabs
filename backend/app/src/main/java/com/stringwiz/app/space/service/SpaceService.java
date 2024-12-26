@@ -8,10 +8,10 @@ import com.stringwiz.app.space.repository.SpaceRepository;
 import com.stringwiz.app.user.repository.UserRepository;
 import com.stringwiz.app.userSpace.model.UserSpaceActivity;
 import com.stringwiz.app.userSpace.repository.UserSpaceActivityRepository;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -30,28 +30,33 @@ public class SpaceService {
 
     @Transactional
     public Space save(User user, Space space) {
-        try {
-            Optional<User> optionalUser = userRepository.findById(user.getId());
-            if (optionalUser.isPresent()) {
-                User currentUser = optionalUser.get();
-                //add new space to user
-                Space spaceDetails = new Space(space.getName(), space.getDescription(), space.getIcon(),
-                        space.getVisibility());
-                spaceDetails.setSlug(SpaceSlugGenerationUtil.generateSlug(space.getName()));
-                currentUser.addSpace(spaceDetails);
-
-                //save user-space activity details
-                UserSpaceActivity newActivity = new UserSpaceActivity(user,spaceDetails);
-                userSpaceActivityRepository.save(newActivity);
-
-                userRepository.save(currentUser);
-                return spaceDetails;
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        if (user == null || space == null) {
+            throw new IllegalArgumentException("User and Space cannot be null");
         }
-        throw new NoSuchElementException("User not found");
 
+        User currentUser = userRepository.findById(user.getId())
+                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + user.getId()));
+
+        try {
+            Space spaceDetails = new Space(space.getName(), space.getDescription(), space.getIcon(),
+                        space.getVisibility(),SpaceSlugGenerationUtil.generateSlug(space.getName()));
+
+            currentUser.addSpace(spaceDetails);
+
+            UserSpaceActivity newActivity = new UserSpaceActivity(user,spaceDetails);
+
+            spaceDetails = userRepository.save(currentUser).getSpaces()
+                    .stream()
+                    .filter(s -> s.getName().equals(space.getName()))
+                    .findFirst()
+                    .orElseThrow(() -> new RuntimeException("Failed to save space"));
+
+            userSpaceActivityRepository.save(newActivity);
+
+            return spaceDetails;
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to save space", e);
+        }
     }
 
     public Space getUserPersonalSpace(User user) {

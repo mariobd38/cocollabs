@@ -6,7 +6,7 @@ import { Carousel, useAnimationOffsetEffect } from '@mantine/carousel';
 import { Button } from '@/components/ui/button';
 import { Icons } from '@/components/icons/icons';
 
-import TaskCreationModal from '@/components/Home/TaskCreationModal/taskCreationModal';
+import TaskCreationModal from '@/components/Home/taskCreationModal/taskCreationModal';
 
 // import { Card, CardContent } from "@/components/ui/card"
 // import {
@@ -51,7 +51,6 @@ const QuickActions = ({themeColors, colorScheme}) => {
         // return containerWidth <= 640 ? '100%' : containerWidth <= 1024 ? '50%' : '33.333%';
         return containerWidth <= 500 ? '100%' : containerWidth <= 700 ? '50%' : containerWidth <= 1024 ? '33.333%' : '25%';
     }, [containerWidth]);
-    console.log(containerWidth);
 
     const onSelect = useCallback(() => {
         if (!embla) return;
@@ -189,12 +188,12 @@ const QuickActions = ({themeColors, colorScheme}) => {
                         >
                             {qaButtons.map((action) => (
                                 <Carousel.Slide py={15} key={action.title} >
-                                    <Flex direction='column' gap={20} h='170' bg={`${colorScheme==='dark' ? '#1c1d1f' : '#fdfdfd'}`} className={`quick-actions-button ${colorScheme} cursor-pointer py-4 px-[36px] border-solid border rounded-xl w-full`}>
+                                    <Flex direction='column' gap={20} h='162' bg={`${colorScheme==='dark' ? '#1c1d1f' : '#fdfdfd'}`} className={`quick-actions-button ${colorScheme} cursor-pointer py-4 px-[36px] border-solid border rounded-xl w-full`}>
                                         <Flex justify='space-between' className="gap-3 w-full">
                                             <Text className="text-xl font-bold" ff='Inter'>{action.title}</Text>
                                             <Flex>{Icons(action.icon,24,24,themeColors.text[1])}</Flex>
                                         </Flex>
-                                        <p className="text-sm text-muted-foreground text-start">{action.description}</p>
+                                        <p className="text-[12.8px] text-muted-foreground text-start mb-0">{action.description}</p>
                                     </Flex>
                                 </Carousel.Slide>
                             ))}

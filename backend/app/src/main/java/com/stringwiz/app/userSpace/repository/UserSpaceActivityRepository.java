@@ -11,6 +11,6 @@ import java.util.Optional;
 public interface UserSpaceActivityRepository extends JpaRepository<UserSpaceActivity, Long> {
     @Query("SELECT usa.space FROM UserSpaceActivity usa " +
             "WHERE usa.user.id = :userId " +
-            "ORDER BY usa.lastActiveAt DESC")
+            "ORDER BY usa.lastActiveAt DESC LIMIT 1")
     Optional<Space> findLastActiveSpaceForUser(@Param("userId") Long userId);
 }

@@ -78,11 +78,12 @@ public class Space {
     @ManyToMany(mappedBy = "spaces", fetch = FetchType.LAZY)
     private Set<User> users = new LinkedHashSet<>();
 
-    public Space(String name, String description, SpaceIcon icon, Visibility visibility) {
+    public Space(String name, String description, SpaceIcon icon, Visibility visibility, String slug) {
         this.name = name;
         this.description = description;
         this.icon = icon;
         this.visibility = visibility;
+        this.slug = slug;
         Timestamp currentTime = new Timestamp(new Date().getTime());
         this.createdOn = currentTime;
         this.lastUpdatedOn = currentTime;

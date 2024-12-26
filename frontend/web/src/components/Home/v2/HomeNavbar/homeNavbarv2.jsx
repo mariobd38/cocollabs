@@ -71,13 +71,13 @@ const HomeNavbarv2 = ({ themeColors,colorScheme,setColorScheme,profileInfo,setOp
             <Container w='100%' fluid >
                 <Grid align='center' h='100%' gutter={{ base: 5 }}>
                     <Grid.Col span={2} >
-                        <Flex align='center' gap={30}>
+                        <Flex align='center' gap={25}>
                             <Box w='fit-content' className={`navbar-menu-sidebar-icon home-button ${colorScheme}`} onClick={handleOpenSidebarToggle}>
                                 {Icons('IconMenu2',27,27,buttonColor)}
                             </Box>
 
                             <Flex align='center' pb={0} display={{base: 'none', sm: 'flex'}}>
-                                <Box w='9.2rem' >
+                                <Box w='8.7rem' >
                                     <Logo2 strokeColor={colorScheme === 'dark' ? '#f4fff6' : '#323335'}/>
                                 </Box>
                             </Flex>

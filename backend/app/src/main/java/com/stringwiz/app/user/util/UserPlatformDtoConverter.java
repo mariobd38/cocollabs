@@ -13,8 +13,10 @@ import com.stringwiz.app.profile.dto.ProfileFileDto;
 import com.stringwiz.app.user.dto.UserPlatformDto;
 import com.stringwiz.app.user.model.UserPreference;
 
+import java.util.Comparator;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class UserPlatformDtoConverter {
     public static UserPlatformDto convertToDto(User user) {
@@ -67,18 +69,16 @@ public class UserPlatformDtoConverter {
     }
 
     public static Set<UserSpaceDto> getUserSpacesDto(User user) {
-        Set<Space> spaces = user.getSpaces();
-        Set<UserSpaceDto> spaceDtos = new LinkedHashSet<>();
-        for (Space space : spaces) {
-            spaceDtos.add(new UserSpaceDto(
-                    space.getName(),
-                    space.getIcon(),
-                    space.getDescription(),
-                    space.getSlug(),
-                    space.getVisibility()
-            ));
-        }
-        return spaceDtos;
+        return user.getSpaces().stream()
+                .sorted(Comparator.comparing(Space::getCreatedOn))
+                .map(space -> new UserSpaceDto(
+                        space.getName(),
+                        space.getIcon(),
+                        space.getDescription(),
+                        space.getSlug(),
+                        space.getVisibility()
+                ))
+                .collect(Collectors.toCollection(LinkedHashSet::new));
     }
 
 }

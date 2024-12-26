@@ -1,9 +1,7 @@
 .auth-content-wrapper-paper {
-    /* background: #12141f !important; */
     background: hsl(222.2 84% 4.9%);
 }
 .auth-content-wrapper-paper-divider .mantine-Divider-label {
-    /* color: #12b886; */
     color: #898989;
     font-family: 'Nunito Sans';
     font-size: 14px;
@@ -19,7 +17,6 @@
 .auth-user-info-block {
     width: 100% !important;
     justify-content: space-between !important;
-    /* justify-content: center !important; */
     transition: width 0.5s ease;
 }
 @media(max-width: 480px) {
@@ -30,28 +27,6 @@
 
 .sign-up-oauth-button:hover {
     background-color: #252629 !important;
-}
-
-.signup-user-info-block-email {
-    display: flex;
-    justify-content: center;
-    padding: 3px 20px !important;
-    background-color:#232529 !important;
-    color: #f0f0f0 !important;
-    /* border: 2px solid #228be6 !important; */
-    /* font-size: 15px !important; */
-}
-
-.signup-back-arrow-icon {
-    color: #edfff1;
-    padding: 4px 4px 5px 4px  !important;
-    border-radius: 4px;
-    cursor: pointer !important;
-    transition: all 0.6s ease !important;
-}
-.signup-back-arrow-icon:hover {
-    background-color: #282828;
-    filter: brightness(1.1);
 }
 
 .signup-content-progress-bar .mantine-Progress-section {

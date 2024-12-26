@@ -27,28 +27,10 @@
         width: 100%;
     }
 }
-/* @media (min-width: 1200px) {
-    .user-home-right-side-block {
-      width: 39%;
-    }
-    .task-card-parent {
-        width: 61%;
-    }
-} */
 @media (min-width: 1210px) {
     .task-card-parent {
         /* width: 50%; */
         width: 100%;
-    }
-}
-@media (max-width: 991px) {
-    .calendar-block-parent, .milestone-block-parent {
-      width: 50%;
-    }
-}
-@media (max-width: 880px) {
-    .calendar-block-parent,.milestone-block-parent {
-      width: 100%;
     }
 }
 

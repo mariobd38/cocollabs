@@ -1,27 +1,3 @@
-/* .navbar {
-    height: 100%;
-    z-index: 10;
-    padding: var(--mantine-spacing-md);
-    padding-top: 0;
-    display: flex;
-    flex-direction: column;
-    top: 64.2px;
-    position: fixed;
-    transition: width 0.23s linear;
-    overflow: hidden; 
-  } */
-  
-  .section {
-    margin-bottom: var(--mantine-spacing-md);
-    background-color: transparent !important;
-  }
-  /* .section[data-theme="light"]:not(:last-of-type) {
-    border-bottom: 1px solid #b9b9b9;
-  }
-  .section[data-theme="dark"]:not(:last-of-type) {
-    border-bottom: 1px solid #323539;
-  } */
-  
   .mainLinks {
     /* padding-left: calc(var(--mantine-spacing-md) - var(--mantine-spacing-xs)); */
     /* padding-right: calc(var(--mantine-spacing-md) - var(--mantine-spacing-xs)); */
@@ -29,14 +5,10 @@
   }
   
   .mainLink.active {
-    width: 90% !important;
+    width: 90%;
     /* padding: rem(8px) var(--mantine-spacing-xs); */
     padding: 5.5px 8px;
     border-radius: 6px;
-    &:hover {
-      background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));
-      color: light-dark(var(--mantine-color-gray-7), var(--mantine-color-dark-0));
-    }
   }
   .mainLink {
     display: flex;
@@ -51,11 +23,11 @@
     /* width: calc(2.075rem * var(--mantine-scale)) !important; 
     min-width: calc(2.075rem * var(--mantine-scale)) !important;  */
     height: calc(2.075rem * var(--mantine-scale)) !important; 
-    background-color: transparent !important;
+    background-color: transparent;
   }
 
   .mainLink[data-theme="light"]:hover {
-      filter: brightness(0.98);
+      filter: brightness(0.98) !important;
       background-color: #d8dadc !important;
 
       .mainLinkIcon svg {
@@ -81,16 +53,15 @@
     height:auto !important;
 }
 .profile {
-    margin: 0.29rem auto;
+    /* margin: 0.29rem auto; */
 }
 
-  .mainLinkInner {
+  /* .mainLinkInner {
     position:relative;
     display: flex;
     align-items: center;
     flex: 1;
-    /* padding:10px; */
-  }
+  } */
   
   .mainLinkIcon.active {
     margin-right: var(--mantine-spacing-sm);
@@ -108,7 +79,6 @@
     pointer-events: none;
   }
   
-  
   .collectionLink {
     display: block;
     padding: rem(8px) var(--mantine-spacing-xs);
@@ -123,12 +93,4 @@
       background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));
       color: light-dark(var(--mantine-color-gray-7), var(--mantine-color-dark-0));
     }
-  }
-  
-  .badge {
-    position: absolute;
-    top: 0;
-    right: 0;
-    transform: translate(70%, -60%); /* Adjusts the badge position to be more accurate */
-    background-color: red; /* Optional: Adjust the background color as needed */
   }
