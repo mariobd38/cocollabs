@@ -1,4 +1,5 @@
 import React, {forwardRef} from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { Avatar,Box,UnstyledButton,Flex,Text } from '@mantine/core';
 import { readLocalStorageValue } from '@mantine/hooks';
@@ -9,6 +10,8 @@ import { SidebarMenu,SidebarMenuButton,SidebarMenuItem,useSidebar } from "@/comp
 import CustomDropdown from '@/components/customDropdown';
 import { Icons } from '@/components/icons/icons';
 
+import activateSpace from '@/api/UserSpaces/activateSpace';
+
 import classes from '@/styles/home/homeSidebar.module.css';
 import '@/styles/home/homeSidebar.css';
 
@@ -17,12 +20,10 @@ function getProfileWh(size) {
 }
 
 const HomeSidebarHeader = forwardRef((props, ref) => {
-    const { data, openSidebarToggle, themeColors, colorScheme, setOpenSpaceCreateModal, setDialogTrigger } = props;
+    const { data, openSidebarToggle, themeColors, colorScheme, setOpenSpaceCreateModal, setDialogTrigger,setSpaceSwitch } = props;
     const currentSpace = data.space.name;
-    // forwardRef(({ setDialogTrigger }, ref)
 
     const profileAvatar = (size,currSpace) => {
-        // console.log(currSpace);
         return (<Avatar className="ease-linear duration-500 transition-all hover:brightness-125" w={getProfileWh(size)} h={getProfileWh(size)} miw={getProfileWh(size)} 
             color={currSpace?.icon?.color} radius={currSpace?.icon?.radius} >
                 <span style={{ fontSize: `calc(${getProfileWh(size)} * 0.5)` }}>
@@ -34,16 +35,32 @@ const HomeSidebarHeader = forwardRef((props, ref) => {
     const { isMobile } = useSidebar();
 
     const app = readLocalStorageValue({ key: 'ApplicationStore' });
-    // const userSpaceNames = app.userSpace.map(item => item.name);
+    const navigate = useNavigate(); 
+    const routeChange = (path) => { 
+        navigate(path);
+    }
 
     const sortedSpaces = React.useMemo(() => {
         return [...app.userSpace].sort((a, b) => {
-          if (a.name === currentSpace) return -1;
-          if (b.name === currentSpace) return 1;
-          return 0;
+            if (a.name === currentSpace) return -1;
+            if (b.name === currentSpace) return 1;
+            return 0;
         });
-      }, [app.userSpace, currentSpace]);
+    }, [app.userSpace, currentSpace]);
 
+    const activateCurrentSpace = async (space) => {
+        if (space === currentSpace) return;
+        try {
+            const response = await activateSpace(space);
+            if (response && response.ok) {
+                setSpaceSwitch((prev) => prev + 1);
+                const slug = app.userSpace.filter(item => item.name === space)[0].slug;
+                slug && routeChange(`/${slug}`);
+            }
+        } catch (error) {
+            console.error("Failed to activate space:", error);
+        }
+    }
 
     return (
         <SidebarMenu>
@@ -89,7 +106,7 @@ const HomeSidebarHeader = forwardRef((props, ref) => {
                                 <DropdownMenuPortal>
                                     <DropdownMenuSubContent className='w-56'>
                                         {sortedSpaces.map((space, index) => (
-                                            <DropdownMenuItem key={index} className="cursor-pointer">
+                                            <DropdownMenuItem key={index} className="cursor-pointer" onClick={() => activateCurrentSpace(space.name)}>
                                             <Flex justify="space-between" align="center" w="100%">
                                                 <Flex gap={5} className="min-w-0">
                                                 {profileAvatar(1.3, space)}
@@ -119,7 +136,7 @@ const HomeSidebarHeader = forwardRef((props, ref) => {
                                 <Flex align='center' justify='center'  className="size-6 rounded-sm border">
                                     {Icons('IconPlus')}
                                 </Flex>
-                                <Box ref={ref} onClick={() => setDialogTrigger(ref)}>New space</Box>
+                                <Box ref={ref} onClick={() => setDialogTrigger(ref)}>Create or join space</Box>
                             </DropdownMenuItem>
                         </Box>
                     } side={isMobile ? "bottom" : "right"} align='start' w={240} 

@@ -88,7 +88,7 @@ public class UserController {
                 // Create and save UserPreference first
                 userPreference = new UserPreference(newTheme);
                 userPreference = userPreferenceRepository.save(userPreference);
-                user.setUserPreference(userPreference); // Link saved preference to user
+                user.setUserPreference(userPreference);
             } else {
                 // Update the existing UserPreference
                 userPreference.setTheme(newTheme);

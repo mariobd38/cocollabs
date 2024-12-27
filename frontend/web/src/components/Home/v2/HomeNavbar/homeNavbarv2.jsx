@@ -9,7 +9,7 @@ import CustomCommand from '@/components/customCommand';
 import Logo2 from '@/components/Logo/logo2';
 
 import HomeNavbarUserMenu from '@/components/Home/HomeNavbar/homeNavbarUserMenu';
-import SpaceCreationModal from '@/components/Home/SpaceCreationModal/spaceCreationModal';
+// import SpaceCreationModal from '@/components/Home/SpaceCreationModal/spaceCreationModal';
 
 import '@/styles/home/homeNavbar.css';
 
@@ -155,13 +155,13 @@ const HomeNavbarv2 = ({ themeColors,colorScheme,setColorScheme,profileInfo,setOp
                                 setStoredUserInfo={setStoredUserInfo}
                             />
 
-                            <SpaceCreationModal 
+                            {/* <SpaceCreationModal 
                                 openSpaceCreateModal={openSpaceCreateModal}
                                 setOpenSpaceCreateModal={setOpenSpaceCreateModal}
                                 userFullName={profileInfo.fullName}
                                 themeColors={themeColors}
                                 colorScheme={colorScheme}
-                            />
+                            /> */}
 
                             <CustomCommand 
                                 open={openCommand}

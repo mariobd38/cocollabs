@@ -50,7 +50,8 @@
     }
 
     :root[data-mantine-color-scheme="dark"] body {
-        --background: 222.2 84% 4.9%;
+        /* --background: 22.2 84% 8.9%; */
+        --background: 0 0% 7%;
         --foreground: 210 40% 98%;
 
         --card: 222.2 84% 4.9%;

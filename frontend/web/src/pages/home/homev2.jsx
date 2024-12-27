@@ -48,6 +48,7 @@ const Homev2 = () => {
     const [initials, setInitials] = useState(passedUserInfo?.fullName || '');
     const [spaceData, setSpaceData] = useState(passedSpaceInfo || []);
     const [userSpaces, setUserSpaces] = useState([]);
+    const [spaceSwitch, setSpaceSwitch] = useState(0);
 
     useEffect(() => {
         async function fetchSpaceData() {
@@ -56,7 +57,7 @@ const Homev2 = () => {
         }
 
         fetchSpaceData();
-    }, []);
+    }, [spaceSwitch]);
 
     useEffect(() => {
         const intervalId = setInterval(() => {
@@ -166,6 +167,7 @@ const Homev2 = () => {
                     setOpenSidebarToggle={setOpenSidebarToggle}
                     spaceData={{name: spaceData.name, icon: spaceData.icon}}
                     userFullName={userFullName}
+                    setSpaceSwitch={setSpaceSwitch}
                 />
             </Box>
 

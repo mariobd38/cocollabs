@@ -8,14 +8,10 @@ import HomeSidebarHeader from "./homeSidebarHeader";
 import SpaceCreationModal from '@/components/Home/SpaceCreationModal/spaceCreationModal';
 import CustomDialog from "@/components/customDialog";
 
-import { Button } from "@/components/ui/button"
-import { DialogDescription,DialogFooter,DialogHeader,DialogTitle } from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-
 import '@/styles/home/homeSidebar.css';
 
-const HomeSidebarv2 = ({openSidebarToggle, themeColors, colorScheme, setOpenSidebarToggle, spaceData,userFullName}) => {
+const HomeSidebarv2 = (props) => {
+    const {openSidebarToggle, themeColors, colorScheme, setOpenSidebarToggle, spaceData,userFullName,setSpaceSwitch} = props;
 
     const sidebarRef = useRef(null);
     const [width, setWidth] = useState(210);
@@ -89,8 +85,6 @@ const HomeSidebarv2 = ({openSidebarToggle, themeColors, colorScheme, setOpenSide
     const [dialogTrigger, setDialogTrigger] = useState(null);
 
     useEffect(() => {
-        document.body.style.pointerEvents = !openSpaceCreateModal ? '' : 'none';
-
         return () => {
             document.body.style.pointerEvents = '';
         };
@@ -108,6 +102,7 @@ const HomeSidebarv2 = ({openSidebarToggle, themeColors, colorScheme, setOpenSide
                         colorScheme={colorScheme}
                         setOpenSpaceCreateModal={setOpenSpaceCreateModal}
                         setDialogTrigger={setDialogTrigger}
+                        setSpaceSwitch={setSpaceSwitch}
                     />
                 </SidebarHeader>
                     <SidebarContent >
@@ -130,49 +125,17 @@ const HomeSidebarv2 = ({openSidebarToggle, themeColors, colorScheme, setOpenSide
             /> */}
             <CustomDialog 
                 trigger={dialogTrigger}
-                content={<><DialogHeader>
-                    <DialogTitle>Create space</DialogTitle>
-                    <DialogDescription>
-                        Make changes to your profile here. Click save when you&apos;re done.
-                    </DialogDescription>
-                    </DialogHeader>
-                    <div className="grid gap-4 py-4">
-                        <div className="grid grid-cols-4 items-center gap-4">
-                            <Label htmlFor="name" className="text-right">
-                                Name
-                            </Label>
-                            <Input
-                                id="name"
-                                defaultValue="Pedro Duarte"
-                                className="col-span-3"
-                            />
-                        </div>
-                        <div className="grid grid-cols-4 items-center gap-4">
-                            <Label htmlFor="slug" className="text-right">
-                                Slug
-                            </Label>
-                            <Input
-                                id="slug"
-                                defaultValue="Pedro Duarte"
-                                className="col-span-3"
-                            />
-                        </div>
-                        <div className="grid grid-cols-4 items-center gap-4">
-                            <Label htmlFor="username" className="text-right">
-                            Username
-                            </Label>
-                            <Input
-                            id="username"
-                            defaultValue="@peduarte"
-                            className="col-span-3"
-                            />
-                        </div>
-                    </div>
-                    <DialogFooter>
-                        <Button type="submit">Create space</Button>
-                    </DialogFooter></>}
+                content={
+                    <SpaceCreationModal 
+                    openSpaceCreateModal={openSpaceCreateModal}
+                    setOpenSpaceCreateModal={setOpenSpaceCreateModal}
+                    userFullName={data.user.name}
+                    themeColors={themeColors}
+                    colorScheme={colorScheme}
+                />}
                 open={openSpaceCreateModal} 
                 setOpen={setOpenSpaceCreateModal} 
+                width={535}
             />
             
         </>
