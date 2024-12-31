@@ -29,7 +29,7 @@ const Hero = () => {
             <MeteorsComp 
                 num={45}
                 target={
-                    <Box w='100%' m={0} p={0} pb={{base: '0', sm: '60'}}>
+                    <Box w='100%' m={0} p={0} pb={{base: '0', sm: '60'}} bg='hsl(222.2 84% 4.9%)'>
                 
                         <Container px={{sm: '10', md: '0'}}>
                             <Flex gap={70} direction='column' py={30} px={10}>

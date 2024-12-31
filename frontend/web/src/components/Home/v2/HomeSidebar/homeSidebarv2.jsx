@@ -1,4 +1,4 @@
-import React, { useRef,useState,useCallback,useEffect } from "react";
+import React, { useRef,useState,useCallback,useEffect,lazy,Suspense } from "react";
  
 import { Sidebar,SidebarContent,SidebarHeader } from "@/components/ui/sidebar"
 import { SidebarProvider } from "@/components/ui/sidebar"
@@ -6,9 +6,10 @@ import { SidebarProvider } from "@/components/ui/sidebar"
 import HomeSidebarContent from "./homeSidebarContent";
 import HomeSidebarHeader from "./homeSidebarHeader";
 import SpaceCreationModal from '@/components/Home/SpaceCreationModal/spaceCreationModal';
-import CustomDialog from "@/components/customDialog";
 
 import '@/styles/home/homeSidebar.css';
+const CustomDialog = lazy(() => import('@/components/customDialog'));
+const LoadingFallback = () => <>...</>;
 
 const HomeSidebarv2 = (props) => {
     const {openSidebarToggle, themeColors, colorScheme, setOpenSidebarToggle, spaceData,userFullName,setSpaceSwitch} = props;
@@ -83,13 +84,14 @@ const HomeSidebarv2 = (props) => {
 
     const [openSpaceCreateModal, setOpenSpaceCreateModal] = useState(false);
     const [dialogTrigger, setDialogTrigger] = useState(null);
+    const [openIconPopover, setOpenIconPopover] = useState(false);
 
     useEffect(() => {
         return () => {
             document.body.style.pointerEvents = '';
         };
     }, [openSpaceCreateModal]);
-
+        
     return (
         <>
             <SidebarProvider openSidebarToggle={openSidebarToggle} currentWidth={width}>
@@ -116,27 +118,24 @@ const HomeSidebarv2 = (props) => {
                 </Sidebar>
             </SidebarProvider>
 
-            {/* <SpaceCreationModal 
-                openSpaceCreateModal={openSpaceCreateModal}
-                setOpenSpaceCreateModal={setOpenSpaceCreateModal}
-                userFullName={data.user.name}
-                themeColors={themeColors}
-                colorScheme={colorScheme}
-            /> */}
-            <CustomDialog 
-                trigger={dialogTrigger}
-                content={
-                    <SpaceCreationModal 
-                    openSpaceCreateModal={openSpaceCreateModal}
-                    setOpenSpaceCreateModal={setOpenSpaceCreateModal}
-                    userFullName={data.user.name}
-                    themeColors={themeColors}
-                    colorScheme={colorScheme}
-                />}
-                open={openSpaceCreateModal} 
-                setOpen={setOpenSpaceCreateModal} 
-                width={535}
-            />
+            
+            <Suspense fallback={<LoadingFallback />}>
+                <CustomDialog 
+                    trigger={dialogTrigger}
+                    content={
+                        <SpaceCreationModal 
+                        openSpaceCreateModal={openSpaceCreateModal}
+                        setOpenSpaceCreateModal={setOpenSpaceCreateModal}
+                        userFullName={data.user.name}
+                        colorScheme={colorScheme}
+                        setOpenIconPopover={setOpenIconPopover}
+                    />}
+                    open={openSpaceCreateModal} 
+                    setOpen={setOpenSpaceCreateModal} 
+                    width={835}
+                    openIconPopover={openIconPopover}
+                />
+            </Suspense>
             
         </>
     )

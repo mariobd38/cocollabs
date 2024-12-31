@@ -2,10 +2,11 @@ import React from 'react';
 
 import { Dialog,DialogContent,DialogTrigger } from "@/components/ui/dialog"
 
-const CustomDialog = ({trigger,content, open, setOpen, width}) => {
+
+const CustomDialog = ({trigger,content, open, setOpen, width,openIconPopover}) => {
  
     return (
-        <Dialog open={open} onOpenChange={setOpen} >
+        <Dialog open={open} >
             <DialogTrigger asChild>
                 {trigger}
             </DialogTrigger>
@@ -13,7 +14,8 @@ const CustomDialog = ({trigger,content, open, setOpen, width}) => {
                 setOpen={setOpen}
                 className={`sm:max-w-[${width}px]`}
                 onEscapeKeyDown={() => setOpen(false)}
-                onPointerDownOutside={() => setOpen(false)}
+                // onPointerDownOutside={() => setOpen(false)}
+                openIconPopover={openIconPopover}
             >
                 {content}
             </DialogContent>

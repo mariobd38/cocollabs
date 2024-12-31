@@ -10,8 +10,8 @@ import '@/styles/home/homeSidebar.css';
 
 
 const links = [
-    { icon: 'IconWorldSearch', label: 'Explore' },
     { icon: 'IconHome', label: 'Home' },
+    { icon: 'IconWorldSearch', label: 'Discover' },
     { icon: 'IconInbox', label: 'Inbox' },
     { icon: 'IconFolder', label: 'Projects' },
     { icon: 'IconFile', label: 'Docs' },

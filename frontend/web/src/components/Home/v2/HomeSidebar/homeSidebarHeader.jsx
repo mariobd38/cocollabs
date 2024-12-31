@@ -1,4 +1,4 @@
-import React, {forwardRef} from 'react';
+import React, { forwardRef, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Avatar,Box,UnstyledButton,Flex,Text } from '@mantine/core';
@@ -11,36 +11,32 @@ import CustomDropdown from '@/components/customDropdown';
 import { Icons } from '@/components/icons/icons';
 
 import activateSpace from '@/api/UserSpaces/activateSpace';
+import getProfileSize from '@/utils/calculateProfileIconSize';
 
 import classes from '@/styles/home/homeSidebar.module.css';
 import '@/styles/home/homeSidebar.css';
 
-function getProfileWh(size) {
-    return `calc(${size}rem * var(--mantine-scale))`;
-}
-
 const HomeSidebarHeader = forwardRef((props, ref) => {
     const { data, openSidebarToggle, themeColors, colorScheme, setOpenSpaceCreateModal, setDialogTrigger,setSpaceSwitch } = props;
     const currentSpace = data.space.name;
+    const { isMobile } = useSidebar();
+    const navigate = useNavigate(); 
+    const app = readLocalStorageValue({ key: 'ApplicationStore' }) ?? { userSpace: [] };
 
     const profileAvatar = (size,currSpace) => {
-        return (<Avatar className="ease-linear duration-500 transition-all hover:brightness-125" w={getProfileWh(size)} h={getProfileWh(size)} miw={getProfileWh(size)} 
+        return (<Avatar className="ease-linear duration-500 transition-all hover:brightness-125" w={getProfileSize(size)} h={getProfileSize(size)} miw={getProfileSize(size)} 
             color={currSpace?.icon?.color} radius={currSpace?.icon?.radius} >
-                <span style={{ fontSize: `calc(${getProfileWh(size)} * 0.5)` }}>
+                <span style={{ fontSize: `calc(${getProfileSize(size)} * 0.5)` }}>
                     {currSpace?.icon?.children}
                 </span>
         </Avatar>);
     }
 
-    const { isMobile } = useSidebar();
-
-    const app = readLocalStorageValue({ key: 'ApplicationStore' });
-    const navigate = useNavigate(); 
     const routeChange = (path) => { 
         navigate(path);
     }
 
-    const sortedSpaces = React.useMemo(() => {
+    const sortedSpaces = useMemo(() => {
         return [...app.userSpace].sort((a, b) => {
             if (a.name === currentSpace) return -1;
             if (b.name === currentSpace) return 1;

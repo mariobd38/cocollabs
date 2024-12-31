@@ -1,14 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react';
 
 // import { Text,Textarea,Box,Flex,Divider,TextInput,Grid,Radio, Group,Stack,Avatar } from '@mantine/core';
-import { Text,Radio, Group,Avatar } from '@mantine/core';
+import { Text,Radio, Group,Avatar,Flex,Box } from '@mantine/core';
 // import { Modal } from "antd";
 
 // import { Icons } from '@/components/icons/icons';
-// import SpaceCreationIconsPopover from '@/components/Home/SpaceCreationModal/spaceCreationIconsPopover';
+import SpaceCreationIconsPopover from '@/components/Home/SpaceCreationModal/spaceCreationIconsPopover';
 
 import { Button } from "@/components/ui/button"
 import { DialogDescription,DialogFooter,DialogHeader,DialogTitle } from "@/components/ui/dialog"
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Textarea } from "@/components/ui/textarea"
 import { Input } from "@/components/ui/input"
@@ -25,14 +26,16 @@ const visibilityOptions = [
     { name: 'Public', description: 'Anyone can request to join or be invited to join this space.' },
     // { name: 'Global', description: 'Space is accessible to you and anyone.' },
 ];
-
 const SpaceCreationModal = (props) => {
-    const {openSpaceCreateModal,setOpenSpaceCreateModal,userFullName,themeColors,colorScheme} = props;
+    const { openSpaceCreateModal,setOpenSpaceCreateModal,userFullName,colorScheme,setOpenIconPopover } = props;
 
     const [spaceName, setSpaceName] = useState('');
-    const firstLetter = userFullName.substring(0, 1).toUpperCase(); 
+    const [spaceUrl, setSpaceUrl] = useState('');
+    const firstLetter = userFullName.substring(0, 1).toUpperCase();
     const [color, setColor] = useState('#ffffff');
-    const [spaceIcon, setSpaceIcon] = useState(<Avatar color={color} bg='#343537' radius="md" h='inherit'>{firstLetter}</Avatar>);
+    // TODO
+    const [spaceIcon, setSpaceIcon] = useState(<Avatar color={color} radius='calc(0.25rem * 1)' className='placeholder:italic'>
+        {firstLetter}</Avatar>);
     const [spaceDescription, setSpaceDescription] = useState('');
     const textareaRef = useRef(null);
     const spaceNameDisabled = spaceName.trim() === '';
@@ -95,8 +98,9 @@ const SpaceCreationModal = (props) => {
     //         console.error("Error creating task:", error);
     //     }
     // };
+    const [tabChange,setTabChange] = useState(false);
 
-    const createContent = <>
+    const createContent = <Box ff='Inter' className={`${tabChange && 'animate-fade-left'}`}>
         <DialogHeader>
             <DialogTitle>Create space</DialogTitle>
             <DialogDescription>
@@ -104,60 +108,110 @@ const SpaceCreationModal = (props) => {
             </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
-            <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="name" className="text-right">
-                    Name
-                </Label>
-                <Input
-                    id="name"
-                    defaultValue=""
-                    className="col-span-3"
-                />
-            </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                    <Label htmlFor="icon" className="text-right">
+                        Icon & Name
+                    </Label>
+                    <div className='col-span-3 flex items-center gap-3 '>
+
+                        <SpaceCreationIconsPopover 
+                            color={color}
+                            setColor={setColor}
+                            spaceIcon={spaceIcon}
+                            setSpaceIcon={setSpaceIcon}
+                            firstLetter={firstLetter}
+                            colorMode={colorScheme}
+                            setOpenIconPopover={setOpenIconPopover}
+                        />
+                        <Input
+                            id="name"
+                            defaultValue=""
+                            className="col-span-3"
+                            autoComplete='off'
+                            type='text'
+                            value={spaceName}
+                            onChange={(e) => {
+                                const updatedName = e.target.value;
+                                setSpaceName(e.currentTarget.value);
+                                const sanitizedUrl = updatedName
+                                    .toLowerCase()
+                                    .replace(/[^a-zA-Z0-9\s-]/g, '')
+                                    .replace(/\s+/g, '-')
+                                    .replace(/-+/g, '-');
+
+                                setSpaceUrl(sanitizedUrl);
+                            }}
+                        />
+                    </div>
+                </div>
             <div className="grid grid-cols-4 items-center gap-4">
                 <Label htmlFor="url" className="text-right">
                     URL
                 </Label>
-                <Input
+                
+                <div className='col-span-3 relative'>
+                    <div className='absolute top-2.5 left-4 text-sm text-muted-foreground'>
+                        cocollabs.dev/
+                    </div>
+                    <Input
                     id="url"
                     defaultValue="Pedro Duarte"
-                    className="col-span-3"
+                    autoComplete='off'
+                    className="!pl-[6.9rem] !pb-[0.52rem] text-sm"
+                    type='text'
+                    value={spaceUrl}
+                    onChange={(e) => {
+                        const updatedName = e.target.value;
+                        // setSpaceName(updatedName); // Update the spaceName
+                        setSpaceUrl(updatedName.replace(/\s+/g, '-')); // Replace spaces with hyphens
+                      }}
                 />
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="icon" className="text-right">
-                    Icon
-                </Label>
-                <Input
-                    id="icon"
-                    defaultValue="Pedro Duarte"
-                    className="col-span-3"
-                />
+
+                </div>
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
                 <Label htmlFor="description" className="text-right">
                     Description
                 </Label>
-                <Textarea className='w-full col-span-3 ' placeholder="Type your message here." />
+                <Textarea className='w-full col-span-3 ' placeholder="Type your message here." 
+                autoComplete='off'
+                type='text'
+                value={spaceDescription}
+                onChange={(event) => setSpaceDescription(event.currentTarget.value) } />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="username" className="text-right">
-                Username
+                <Label htmlFor="visibility" className="text-right">
+                    Visibility
                 </Label>
-                <Input
-                id="username"
-                defaultValue="@peduarte"
-                className="col-span-3"
-                />
+                <RadioGroup  id='visibility' className='col-span-3'>
+                    <Flex gap={20} justify='space-between' direction={{ base: 'column', xs: 'row' }}>
+
+                        <Flex align='center' className="cursor-pointer space-x-4 w-[45%] border rounded-md hover:bg-neutral-900" >
+                            {/* <RadioGroupItem value="option-one" id="option-one" /> */}
+                            <Flex direction='column' gap={10} p='20px 10px' >
+                                <Label htmlFor="option-one" className='font-bold text-md'>Private</Label>
+                                <Text className='text-xs text-muted-foreground'>Accessible to invited members only.</Text>
+                            </Flex>
+
+                        </Flex>
+                        <Flex align='center' className="cursor-pointer space-x-4 w-[45%] border rounded-md hover:bg-neutral-900">
+                            {/* <RadioGroupItem value="option-two" id="option-two" /> */}
+                            <Flex direction='column' gap={10} p='20px 10px'>
+                                <Label htmlFor="option-two" className='font-bold text-md'>Public</Label>
+                                <Text className='text-xs text-muted-foreground'>Anyone can request to join or be invited to join this space.</Text>
+                            </Flex>
+                        </Flex>
+                    </Flex>
+                </RadioGroup>
             </div>
         </div>
         <DialogFooter>
             <Button type="submit">Create space</Button>
         </DialogFooter>
-    </>;
+    </Box>;
 
 
-    const joinContent = <>
+    const joinContent = <Box ff='Inter' className={`${tabChange && 'animate-fade-left'}`}>
         <DialogHeader>
             <DialogTitle>Join space</DialogTitle>
             <DialogDescription>
@@ -173,6 +227,7 @@ const SpaceCreationModal = (props) => {
                     id="name"
                     defaultValue="Pedro Duarte"
                     className="col-span-3"
+                    
                 />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
@@ -199,7 +254,7 @@ const SpaceCreationModal = (props) => {
         <DialogFooter>
             <Button type="submit">Create space</Button>
         </DialogFooter>
-    </>;
+    </Box>;
     
     return (
         // <Modal styles={{ body: { backgroundColor: themeColors.bg[12]} }} open={openSpaceCreateModal} onCancel={() => {setOpenSpaceCreateModal(false) }} className='space-creation-modal' width={650} >
@@ -311,16 +366,16 @@ const SpaceCreationModal = (props) => {
         //         </Box>
         //     </Box>
         // </Modal>
-        <Tabs defaultValue="create">
+        <Tabs defaultValue="create" onValueChange={() => setTabChange(true)} className='space-creation-tabs'>
             <TabsList>
                 <TabsTrigger value="create">Create</TabsTrigger>
                 <TabsTrigger value="join">Join</TabsTrigger>
             </TabsList>
-            <TabsContent value="create">
+            <TabsContent value="create" className='pt-4'>
                 {createContent}
             </TabsContent>
 
-            <TabsContent value="join">
+            <TabsContent value="join" className='pt-4'>
                 {joinContent}
             </TabsContent>
         </Tabs>
