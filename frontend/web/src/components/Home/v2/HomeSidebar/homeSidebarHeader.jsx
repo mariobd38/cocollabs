@@ -132,7 +132,7 @@ const HomeSidebarHeader = forwardRef((props, ref) => {
                                 <Flex align='center' justify='center'  className="size-6 rounded-sm border">
                                     {Icons('IconPlus')}
                                 </Flex>
-                                <Box ref={ref} onClick={() => setDialogTrigger(ref)}>Create or join space</Box>
+                                <Box ref={ref} onClick={() => setDialogTrigger(ref)}>New space</Box>
                             </DropdownMenuItem>
                         </Box>
                     } side={isMobile ? "bottom" : "right"} align='start' w={240} 

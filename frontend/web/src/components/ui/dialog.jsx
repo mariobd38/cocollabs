@@ -19,27 +19,35 @@ const DialogOverlay = React.forwardRef(({ className, ...props }, ref) => (
     ref={ref}
     className={cn(
       "fixed inset-0 z-50 bg-black/70  data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
+      // "h-auto left-[0%] top-[0%] bottom-[0%] right-[0%] flex justify-center items-center absolute inset-0 !overflow-y-auto !overflow-x-hidden z-50 bg-black/70  data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
       className
     )}
+    
     {...props} />
 ))
 DialogOverlay.displayName = DialogPrimitive.Overlay.displayName
 
 const DialogContent = React.forwardRef(({ className, children, ...props }, ref) => (
-  <DialogPortal>
+  // <DialogPortal className='absolute inset-0 !overflow-y-auto !overflow-x-hidden max-h-[750px]'>
+  <DialogPortal >
     <DialogOverlay />
     <DialogPrimitive.Content
       ref={ref}
       className={cn(
-        `fixed left-[50%] top-[50%] z-50 grid w-full max-w-[600px] translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:rounded-lg ${
-          props.openIconPopover ? '!pointer-events-none' : '!pointer-events-auto'}`,
+        // current `fixed left-[50%] top-[50%] z-50 grid w-full overflow-y-auto max-h-[750px] max-w-[600px] translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:rounded-lg 
+        // new 
+        // `absolute left-[0%]  right-[0%]  z-50 grid w-full !overflow-y-auto max-h-[750px] max-w-[600px] mx-auto mb-2 mt-4 gap-4 border bg-background p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:rounded-lg
+        // old
+            `!overflow-y-auto !max-h-[calc(90vh-20px)] fixed left-[50%] top-[50%] z-50 grid w-[97%] max-w-[600px] translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95  data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] rounded-lg
+        ${props.openIconPopover ? '!pointer-events-none' : '!pointer-events-auto'}`,
         className
       )}
+      
       {...props}
     >
       {children}
       <DialogPrimitive.Close
-        onClick={() => props.setOpen(false)}
+        onClick={() => props.setOpen && props.setOpen(false)}
         className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 data-[state=open]:bg-accent data-[state=open]:text-muted-foreground"
       >
         <X className="h-4 w-4" />

@@ -1,88 +1,127 @@
-import React, { useMemo, isValidElement, useState } from 'react';
+import React, { useMemo,isValidElement,useState,useRef,useCallback,useEffect } from 'react';
 
-import { Flex,Divider,Avatar,ColorInput,Group,ColorSwatch } from '@mantine/core';
+import { Flex,Divider,Avatar,ColorSwatch } from '@mantine/core';
 
 import {Icons} from '@/components/icons/icons';
 import { IconsFilled, GetAllFilledIcons } from '@/components/icons/iconsFilled';
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+import { Popover,PopoverContent,PopoverTrigger } from "@/components/ui/popover"
 
 import getProfileSize from '@/utils/calculateProfileIconSize';
 
-import { Popover,PopoverContent,PopoverTrigger } from "@/components/ui/popover"
+// const HexColorInput = ({ value, onChange, spaceIcon, setSpaceIcon, setColor, firstLetter, iconBg,colorMode, ...props }) => {
+//     const handleChange = (newValue) => {
+//         let updatedValue = newValue.startsWith('#') ? newValue : `#${newValue}`;
+//         updatedValue = updatedValue.slice(0, 7).replace(/[^#0-9A-Fa-f]/g, '');
 
-const HexColorInput = ({ value, onChange, spaceIcon, setSpaceIcon, setColor, firstLetter, iconBg,colorMode, ...props }) => {
-    const handleChange = (newValue) => {
-        let updatedValue = newValue.startsWith('#') ? newValue : `#${newValue}`;
-        updatedValue = updatedValue.slice(0, 7).replace(/[^#0-9A-Fa-f]/g, '');
+//         const avatarContent = isValidElement(spaceIcon.props.children)
+//             ? (
+//                 <svg 
+//                 xmlns={spaceIcon.props.children.props.xmlns} 
+//                 width={spaceIcon.props.children.props.width} 
+//                 height={spaceIcon.props.children.props.height} 
+//                 viewBox={spaceIcon.props.children.props.viewBox} 
+//                 fill={updatedValue} 
+//                 className={spaceIcon.props.children.props.className}
+//                 >
+//                 {spaceIcon.props.children.props.children}
+//                 </svg>
+//             )
+//             : firstLetter;
 
-        const avatarContent = isValidElement(spaceIcon.props.children)
-            ? (
-                <svg 
-                xmlns={spaceIcon.props.children.props.xmlns} 
-                width={spaceIcon.props.children.props.width} 
-                height={spaceIcon.props.children.props.height} 
-                viewBox={spaceIcon.props.children.props.viewBox} 
-                fill={updatedValue} 
-                className={spaceIcon.props.children.props.className}
-                >
-                {spaceIcon.props.children.props.children}
-                </svg>
-            )
-            : firstLetter;
+//         setSpaceIcon(
+//         <Avatar 
+//             color={updatedValue} 
+//             variant="light" 
+//             radius='calc(0.25rem * 1)' 
+//             w={18}
+//         >
+//             {avatarContent}
+//         </Avatar>
+//         );
 
-        setSpaceIcon(
-        <Avatar 
-            color={updatedValue} 
-            variant="light" 
-            radius='calc(0.25rem * 1)' 
-            w={18}
-        >
-            {avatarContent}
-        </Avatar>
-        );
-
-        onChange(updatedValue);
-    };
+//         onChange(updatedValue);
+//     };
   
-    return (
-        <ColorInput
-            className={`space-creation-color-input ${colorMode}`}
-            value={value}
-            w='140'
-            onChange={handleChange}
-            withPicker={false}
-            withEyeDropper={false}
-            {...props}
-        />
-    );
-};
+//     return (
+//         <ColorInput
+//             className={`space-creation-color-input ${colorMode}`}
+//             value={value}
+//             w='140'
+//             onChange={handleChange}
+//             withPicker={false}
+//             withEyeDropper={false}
+//             {...props}
+//         />
+//     );
+// };
 
-const MemoizedIconButtons = ({ filledIcons, color, handleSpaceIconClick,activeIndex,colorMode }) => {
+
+const InfiniteScrollIconButtons = ({ 
+    filledIcons, 
+    color, 
+    handleSpaceIconClick, 
+    activeIndex, 
+    colorMode,
+    itemsPerLoad = 20
+}) => {
+    const [displayedItems, setDisplayedItems] = useState(itemsPerLoad);
+    const containerRef = useRef(null);
+  
+    const handleScroll = useCallback((e) => {
+        const container = e.target;
+        const { scrollTop, scrollHeight, clientHeight } = container;
+        
+        if (scrollHeight - scrollTop <= clientHeight + 20) {
+            if (displayedItems < filledIcons.length) {
+                setDisplayedItems(prev => Math.min(prev + itemsPerLoad, filledIcons.length));
+            }
+        }
+    }, [displayedItems, filledIcons.length, itemsPerLoad]);
+
+    useEffect(() => {
+        const container = containerRef.current;
+        if (!container) return;
+
+        container.addEventListener('scroll', handleScroll);
+        
+        return () => {
+            container.removeEventListener('scroll', handleScroll);
+        };
+    }, [handleScroll]);
+
     const memoizedButtons = useMemo(() => {
-      return filledIcons.map((icon,index) => (
-        <Avatar 
-            key={icon.key} 
-            onClick={() => handleSpaceIconClick(icon.key,index)} 
-            variant={`${index === activeIndex ? 'outline' : 'transparent'}`}  
-            color={color}  
-            radius='md'
-            w={18}
-            className={`cursor-pointer ${activeIndex !== index && `space-creation-icon-button ${colorMode}`}`}
-        >
-            {IconsFilled(icon.key, 18, 18, color)}
-        </Avatar>
-      ));
-    }, [filledIcons, color, handleSpaceIconClick,activeIndex,colorMode]);
-  
-    return <>{memoizedButtons}</>;
+        return filledIcons
+            .slice(0, displayedItems)
+            .map((icon, index) => (
+                <Avatar 
+                    key={icon.key} 
+                    onClick={() => handleSpaceIconClick(icon.key, index)} 
+                    variant={index === activeIndex ? 'outline' : 'transparent'}  
+                    color={color}  
+                    radius="md"
+                    // bg='red'
+                    w={18}
+                    size='35'
+                    className={`cursor-pointer ${activeIndex !== index && `space-creation-icon-button ${colorMode}`}`}
+                >
+                    {IconsFilled(icon.key, 18, 18, color)}
+                </Avatar>
+            ));
+    }, [filledIcons, color, handleSpaceIconClick, activeIndex, colorMode, displayedItems]);
+
+    return (
+        <Flex wrap="wrap" ref={containerRef} justify='space-between' rowGap={2} columnGap={1} h={158} className='overflow-y-auto'>
+            {memoizedButtons}
+        </Flex>
+    );
+
 };
 
 const SpaceCreationIconsPopover = (props) => {
     const { color, setColor, spaceIcon, setSpaceIcon,firstLetter,colorMode,setOpenIconPopover } = props;
 
-    const [colorSwatchActive, setColorSwatchActive] = useState(false);
+    // const [colorSwatchActive, setColorSwatchActive] = useState(false);
     const [activeIndex, setActiveIndex] = useState(-1);
     const filledIcons = useMemo(() => GetAllFilledIcons(), []);
 
@@ -95,7 +134,7 @@ const SpaceCreationIconsPopover = (props) => {
         const size = 3 * 0.5 * profileSize * 16;
         const icon = key ? IconsFilled(key,size, size,color) : firstLetter;
         
-        setTimeout(() => setSpaceIcon(<Avatar color={color} variant='light' radius='calc(0.25rem * 1)' w={18}><span className="text-[14px]">{icon}</span></Avatar>),30);
+        setTimeout(() => setSpaceIcon(<Avatar color={color} variant='light' radius='calc(0.25rem * 1)' w={18}>{icon}</Avatar>),30);
     }
 
     const handleIconColorChange = (newColor) => {
@@ -106,11 +145,12 @@ const SpaceCreationIconsPopover = (props) => {
                 <svg xmlns={props.xmlns} width={props.width} height={props.height} viewBox={props.viewBox}  fill={newColor} className={props.className}>{props.children}</svg>
             </Avatar>),30);
         } 
-        // else {
-        //     setTimeout(() => setSpaceIcon(<Avatar color={newColor} variant='light' radius='calc(0.25rem * 1)' w={18}>{firstLetter}</Avatar>),30);
-        // }
+        else {
+            setTimeout(() => setSpaceIcon(<Avatar color={newColor} variant='light' radius='calc(0.25rem * 1)' w={18}>{firstLetter}</Avatar>),30);
+        }
         setColor(newColor);
     }
+    console.log(spaceIcon);
 
     const colorSwatchList = 
         {
@@ -182,102 +222,39 @@ const SpaceCreationIconsPopover = (props) => {
         // </Popover>
         <Popover open={isOpen} onOpenChange={(isOpen) => {setIsOpen(isOpen);setOpenIconPopover(isOpen);}}>
             <PopoverTrigger asChild>
-                {/* <Button variant="outline">Open popover</Button> */}
-                <Button radius='calc(0.25rem * 1)' p={0} bg='transparent'>
+                <Button radius='calc(0.25rem * 1)' className='p-0' variant='ghost'>
                     {spaceIcon}
                  </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-[26rem]" onClose={() => setIsOpen(false)} side='bottom' align='center' >
-                {/* <div className="grid gap-4">
-                <div className="space-y-2">
-                    <h4 className="font-medium leading-none">Dimensions</h4>
-                    <p className="text-sm text-muted-foreground">
-                    Set the dimensions for the layer.
-                    </p>
-                </div>
-                <div className="grid gap-2">
-                    <div className="grid grid-cols-3 items-center gap-4">
-                    <Label htmlFor="width">Width</Label>
-                    <Input
-                        id="width"
-                        defaultValue="100%"
-                        className="col-span-2 h-8"
-                    />
-                    </div>
-                    <div className="grid grid-cols-3 items-center gap-4">
-                    <Label htmlFor="maxWidth">Max. width</Label>
-                    <Input
-                        id="maxWidth"
-                        defaultValue="300px"
-                        className="col-span-2 h-8"
-                    />
-                    </div>
-                    <div className="grid grid-cols-3 items-center gap-4">
-                    <Label htmlFor="height">Height</Label>
-                    <Input
-                        id="height"
-                        defaultValue="25px"
-                        className="col-span-2 h-8"
-                    />
-                    </div>
-                    <div className="grid grid-cols-3 items-center gap-4">
-                    <Label htmlFor="maxHeight">Max. height</Label>
-                    <Input
-                        id="maxHeight"
-                        defaultValue="none"
-                        className="col-span-2 h-8"
-                    />
-                    </div>
-                </div>
-                </div> */}
-                <Flex mb={10} w='97%' justify='space-between' >
-                     {colorSwatchActive ? 
-                        <>
-                            <Group>
-                            {colorSwatchList.dark.map((swatch) => (
-                                <ColorSwatch 
-                                    key={swatch}
-                                    className='cursor-pointer'
-                                    color={swatch}
-                                    size={18} 
-                                    onClick={() => handleIconColorChange(swatch)}
-                                />
-                            ))}
-                                
-                            </Group>
-                            <Divider size="sm" orientation="vertical" h={30} ms='14' m='auto' bd={`.1 solid ${colorMode==='dark' ? '#e7e7e7' : '#898989'}`} />
-                        </>
-                        :
-                        <HexColorInput value={color} onChange={setColor} spaceIcon={spaceIcon} setSpaceIcon={setSpaceIcon} setColor={setColor} firstLetter={firstLetter} iconBg={iconBg} 
-                        colorMode={colorMode} />
-                    }
-                    <Flex align='center'>
-                        <Button h={30} p='2px 6px' bg='transparent' bd={`1px solid ${colorMode==='dark' ? '#e7e7e7' : '#898989'}`}
-                        className={`space-creation-color-swatch-button ${colorMode}`}
-                        onClick={() => setColorSwatchActive(!colorSwatchActive)}>
-                            {Icons(colorSwatchActive ? 'IconHash' : 'IconColorFilter', 21, 21, colorMode==='dark' ? '#fafafa' : '#505050')}
-                        </Button>
+            <PopoverContent className="absolute w-[20rem]" onClose={() => setIsOpen(false)} side='bottom' align='center' >
+                <Flex mb={10} w='97%' >
+                    <Flex direction='column' justify='flex-start' w='100%'>
+                        <span className="text-sm text-muted-foreground mb-2">
+                            Avatar color
+                        </span>
+                        <Flex gap={10} w='100%'>
+                        {colorSwatchList.dark.map((swatch) => (
+                            <ColorSwatch 
+                                key={swatch}
+                                className='cursor-pointer'
+                                color={swatch}
+                                size={18} 
+                                onClick={() => handleIconColorChange(swatch)}
+                            />
+                        ))}
+                        </Flex>
+                        {/* <Divider size="sm" orientation="vertical" h={30} ms='14' m='auto' bd={`.1 solid ${colorMode==='dark' ? '#e7e7e7' : '#898989'}`} /> */}
                     </Flex>
                 </Flex>
 
-                <Flex wrap='wrap' justify='center' h={280} className='overflow-y-auto' >
-                    {/* <Avatar 
-                        onClick={() => handleSpaceIconClick(null,-1)} 
-                        variant={`${activeIndex === -1 ? 'light' : 'transparent'}`}   
-                        color={color}  
-                        radius='md'
-                        w={18}
-                        className={`cursor-pointer space-creation-icon-button ${colorMode}`}
-                    >
-                        {firstLetter}
-                    </Avatar> */}
-
-                    <MemoizedIconButtons
+                <Flex maxH={270} className='overflow-y-auto' >
+                    <InfiniteScrollIconButtons
                         filledIcons={filledIcons}
                         color={color}
                         handleSpaceIconClick={handleSpaceIconClick}
                         activeIndex={activeIndex}
                         colorMode={colorMode}
+                        itemsPerLoad={70}
                     />
                 </Flex>
             </PopoverContent>

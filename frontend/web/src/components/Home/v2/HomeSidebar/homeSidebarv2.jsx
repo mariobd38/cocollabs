@@ -120,7 +120,7 @@ const HomeSidebarv2 = (props) => {
 
             
             <Suspense fallback={<LoadingFallback />}>
-                <CustomDialog 
+                <CustomDialog
                     trigger={dialogTrigger}
                     content={
                         <SpaceCreationModal 

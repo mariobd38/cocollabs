@@ -107,7 +107,7 @@ const HomeNavbarv2 = ({ themeColors,colorScheme,setColorScheme,profileInfo,setOp
                                             />
                                         </form>
                                 } */}
-                                <Button className={`flex py-1 ps-3 pe-2.5 rounded gap-32 border-solid border-[${searchBdColor}] navbar-search-button ${colorScheme} hover:all transition-all duration-300 ease-linear`} 
+                                <Button size='auto' variant='ghost' className={`flex py-1 ps-3 pe-2.5 rounded gap-32 border-solid border-[${searchBdColor}] navbar-search-button ${colorScheme} hover:all transition-all duration-300 ease-linear`} 
                                 style={{border: `1px solid ${searchBdColor}`, backgroundColor: `${searchBgColor}`}} onClick={() => setOpenCommand((open) => !open)}>
                                     <Flex ff='Inter' fz={13.5} align='center' className='text-muted-foreground kbd'>Search
                                         <Box ps={4} className='hidden md:block'> anything</Box>...</Flex>
