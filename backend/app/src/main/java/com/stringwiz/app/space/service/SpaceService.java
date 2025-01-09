@@ -10,6 +10,7 @@ import com.stringwiz.app.userSpace.model.UserSpaceActivity;
 import com.stringwiz.app.userSpace.repository.UserSpaceActivityRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -19,6 +20,8 @@ public class SpaceService {
     private final SpaceRepository spaceRepository;
     private final UserRepository userRepository;
     private final UserSpaceActivityRepository userSpaceActivityRepository;
+    @Value("${COCOLLABS_BASE_URL}")
+    private String baseUrl;
 
     public SpaceService(SpaceRepository spaceRepository,
                         UserRepository userRepository,
@@ -38,9 +41,7 @@ public class SpaceService {
                 .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + user.getId()));
 
         try {
-            Space spaceDetails = new Space(space.getName(), space.getDescription(), space.getIcon(),
-                        space.getVisibility(),SpaceSlugGenerationUtil.generateSlug(space.getName()));
-
+            Space spaceDetails = new Space(space.getName(), space.getIcon(), baseUrl, space.getSlug(),space.getVisibility());
             currentUser.addSpace(spaceDetails);
 
             UserSpaceActivity newActivity = new UserSpaceActivity(user,spaceDetails);

@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-// import { Text,Textarea,Box,Flex,Divider,TextInput,Grid,Radio, Group,Stack,Avatar } from '@mantine/core';
-import { Text,Radio,Group,Avatar,Flex,Box } from '@mantine/core';
-// import { Modal } from "antd";
+import { Text,Avatar,Flex,Box } from '@mantine/core';
 
-// import { Icons } from '@/components/icons/icons';
+import { Icons } from '@/components/icons/icons';
+import { IconsFilled } from '@/components/icons/iconsFilled';
+
 import SpaceCreationIconsPopover from '@/components/Home/SpaceCreationModal/spaceCreationIconsPopover';
 
 import { Button } from "@/components/ui/button"
@@ -24,13 +24,24 @@ import { generateSpaceIconJson } from '@/utils/generateSpaceIconJson';
 import './spaceCreationModal.css';
 
 const visibilityOptions = [
-    { name: 'Private', description: 'Space is accessible to invited members only.' },
-    { name: 'Public', description: 'Anyone can request to join or be invited to join this space.' },
+    { name: 'Private', icon: 'IconLock', description: 'Space is accessible to invited members only.' },
+    { name: 'Public', icon: 'IconUsersGroup', description: 'Anyone can request or be invited to join this space.' },
     // { name: 'Global', description: 'Space is accessible to you and anyone.' },
 ];
 
-const SpaceContent = ({tabChange, description, content, buttonText}) => {
-    return (<Box ff='Inter' className={`${tabChange && 'animate-fade-left'}`}>
+const SpaceContent = ({tabChange, description, content, buttonInfo,spaceData}) => {
+
+    const handleSpaceCreation = async () => {
+        try {
+            const newSpace = createSpaceInfo(spaceData);
+            // setOpenSpaceCreateModal(false);
+    
+        } catch (error) {
+            console.error("Error creating space:", error);
+        }
+    };
+
+    return <Box ff='Inter' className={`${tabChange && 'animate-fade-left'}`}>
         <DialogHeader>
             <VisuallyHidden.Root><DialogTitle>Create space</DialogTitle></VisuallyHidden.Root>
             <DialogDescription>
@@ -40,26 +51,29 @@ const SpaceContent = ({tabChange, description, content, buttonText}) => {
         <Flex className="grid gap-4 px-4 pt-4 pb-0">
             {content}
             <DialogFooter>
-                {/* <Button type="submit">{type} space</Button> */}
-                <Button className="size-auto px-3"  variant="default">{buttonText}</Button>
+                <Button onClick={handleSpaceCreation} className="size-auto px-3 text-[#fafafa] bg-teal-600" disabled={buttonInfo.isDisabled} variant="default">{buttonInfo.text}</Button>
             </DialogFooter>
         </Flex>
-    </Box>);
+    </Box>;
 }
+const profileSize = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--mantine-scale')) || 1;
+const size = 3 * 0.5 * profileSize * 16;
 
 const SpaceCreationModal = (props) => {
     const { openSpaceCreateModal,setOpenSpaceCreateModal,userFullName,colorScheme,setOpenIconPopover } = props;
 
     const [spaceName, setSpaceName] = useState('');
-    const [spaceUrl, setSpaceUrl] = useState('');
-    const firstLetter = userFullName.substring(0, 1).toUpperCase();
-    const [color, setColor] = useState('#ffffff');
-    // TODO
-    const [spaceIcon, setSpaceIcon] = useState(<Avatar color={color} radius='calc(0.25rem * 1)' className='placeholder:italic'>
-        {firstLetter}</Avatar>);
-    const [spaceDescription, setSpaceDescription] = useState('');
+    const [createSpaceSlug, setCreateSpaceSlug] = useState('');
+    const [joinSpaceSlug, setJoinSpaceSlug] = useState('');
+    // const firstLetter = userFullName.substring(0, 1).toUpperCase();
+    const [color, setColor] = useState('#848484');
+    // TODO radius='calc(0.25rem * 1)'
+    
+    const [spaceIcon, setSpaceIcon] = useState(<Avatar bg={color} variant='light' radius='calc(0.25rem * 1)' >
+        {IconsFilled('IconUserFilled', size, size, '#fafafa')}</Avatar>);
+    // const [spaceDescription, setSpaceDescription] = useState('');
     const textareaRef = useRef(null);
-    const spaceNameDisabled = spaceName.trim() === '';
+    // const spaceNameDisabled = spaceName.trim() === '';
     const [spaceVisibility, setSpaceVisibility] = useState('Private');
     const [tabChange,setTabChange] = useState(false);
 
@@ -71,34 +85,13 @@ const SpaceCreationModal = (props) => {
         }
     }, [openSpaceCreateModal]);
 
-
-    const cards = visibilityOptions.map((item) => (
-        <Radio.Card bg='transparent' bd='none' pos='relative' p='10px 0' radius="md" value={item.name} key={item.name} >
-            <Group wrap="nowrap" align="flex-start">
-                <Radio.Indicator />
-                <div>
-                    <Text fw='bold' ff='Inter' fz={14} lh={1.2} c={colorScheme === 'dark' ? '#e5e5e5' : '#3a3a3a'}>{item.name}</Text>
-                    <Text mt={8} fz={12} c={colorScheme === 'dark' ? '#c3c3c3' : '#696969'}>{item.description}</Text>
-                </div>
-            </Group>
-        </Radio.Card>
-    ));
-
-    const handleSpaceCreation = async () => {
-        try {
-            const spaceIconJson = generateSpaceIconJson(spaceIcon);
-            const newSpace = createSpaceInfo(
-                spaceName,
-                spaceDescription,
-                spaceIconJson,
-                spaceVisibility
-            );
-            setOpenSpaceCreateModal(false);
-    
-        } catch (error) {
-            console.error("Error creating task:", error);
-        }
-    };
+    const getSanitizedUrl = (url) => {
+        return url.toLowerCase()
+            .replace(/[^a-zA-Z0-9\s-]/g, '')
+            .replace(/\s+/g, '-')
+            .replace(/-+/g, '-')
+            .replace(/^-|-$/g, '');
+    }
 
     // const personalSpaceCreation = async () => {
     //     try {
@@ -137,7 +130,6 @@ const SpaceCreationModal = (props) => {
                         setColor={setColor}
                         spaceIcon={spaceIcon}
                         setSpaceIcon={setSpaceIcon}
-                        firstLetter={firstLetter}
                         colorMode={colorScheme}
                         setOpenIconPopover={setOpenIconPopover}
                     />
@@ -145,19 +137,14 @@ const SpaceCreationModal = (props) => {
                         id="name"
                         defaultValue=""
                         autoComplete='off'
-                        placeholder="DevNation, RepoCentral, etc.." 
+                        placeholder={`${userFullName.split(' ')[0]}'s ML space, RepoCentral, etc.. `} 
                         type='text'
                         value={spaceName}
                         onChange={(e) => {
                             const updatedName = e.target.value;
-                            setSpaceName(e.currentTarget.value);
-                            const sanitizedUrl = updatedName
-                                .toLowerCase()
-                                .replace(/[^a-zA-Z0-9\s-]/g, '')
-                                .replace(/\s+/g, '-')
-                                .replace(/-+/g, '-');
+                            setSpaceName(updatedName);
 
-                            setSpaceUrl(sanitizedUrl);
+                            setCreateSpaceSlug(getSanitizedUrl(updatedName));
                         }}
                     />
                 </Flex>
@@ -167,20 +154,19 @@ const SpaceCreationModal = (props) => {
                     URL
                 </Label>
                 
-                <div className='col-span-3 relative'>
+                <div className='relative'>
                     <div className='absolute top-2.5 left-4 text-sm text-muted-foreground'>
                         cocollabs.dev/
                     </div>
                     <Input
                         id="url"
-                        defaultValue="Pedro Duarte"
                         autoComplete='off'
                         className="!pl-[6.9rem] !pb-[0.52rem] text-sm"
                         type='text'
-                        value={spaceUrl}
+                        value={createSpaceSlug}
                         onChange={(e) => {
                             const updatedName = e.target.value;
-                            setSpaceUrl(updatedName.replace(/\s+/g, '-'));
+                            setCreateSpaceSlug(getSanitizedUrl(updatedName));
                         }}
                     />
 
@@ -217,11 +203,13 @@ const SpaceCreationModal = (props) => {
                             >
                                 <Flex align="center">
                                     <RadioGroupItem value={option.name} id={option.name} />
-                                    <Label htmlFor={option.name} className="ml-2 font-bold">
+                                    <Label htmlFor={option.name} className="ml-2 font-bold flex items-center gap-1.5">
+                                        {Icons(option.icon,15,15)}
                                         {option.name}
                                     </Label>
                                 </Flex>
                                 <Flex align="center" className="pl-[26px]">
+                                    
                                     <Text className="text-[12px] text-muted-foreground">
                                         {option.description}
                                     </Text>
@@ -233,7 +221,8 @@ const SpaceCreationModal = (props) => {
             </Flex>
             </>
         }
-        buttonText='Create space'
+        buttonInfo={{text: 'Create space', isDisabled: !(createSpaceSlug && spaceName)}}
+        spaceData={{name:spaceName, slug: createSpaceSlug, icon: generateSpaceIconJson(spaceIcon), visibility: spaceVisibility.toUpperCase()}}
     />
 
     const joinContent = <SpaceContent 
@@ -242,147 +231,37 @@ const SpaceCreationModal = (props) => {
         content={
             <>
             <Flex direction='column' className="gap-2.5">
-                <Label htmlFor="name">
-                    Name
-                </Label>
-                <Input
-                    id="name"
-                    defaultValue="Pedro Duarte"
-                    className="col-span-3"
-                />
-            </Flex>
-            <Flex direction='column' className="gap-2.5">
                 <Label htmlFor="url">
                     URL
                 </Label>
-                <Input
-                    id="url"
-                    defaultValue="Pedro Duarte"
-                    className="col-span-3"
-                />
+                
+                <div className='col-span-3 relative'>
+                    <div className='absolute top-2.5 left-4 text-sm text-muted-foreground'>
+                        cocollabs.dev/
+                    </div>
+                    <Input
+                        id="url"
+                        autoComplete='off'
+                        className="!pl-[6.9rem] !pb-[0.52rem] text-sm"
+                        type='text'
+                        value={joinSpaceSlug}
+                        onChange={(e) => {
+                            const updatedName = e.target.value;
+                            setJoinSpaceSlug(updatedName.replace(/\s+/g, '-'));
+                        }}
+                    />
+
+                </div>
             </Flex>
             </>
         }
-        buttonText='Request to join'
+        buttonInfo={{text: 'Request to join', isDisabled: !joinSpaceSlug}}
+        spaceData={{url: joinSpaceSlug}}
     />
 
     return (
-        // <Modal styles={{ body: { backgroundColor: themeColors.bg[12]} }} open={openSpaceCreateModal} onCancel={() => {setOpenSpaceCreateModal(false) }} className='space-creation-modal' width={650} >
-            
-        //     <Box m='auto' w='100%' >
-                
-        //         <Box p='30px 35px' w='100%'>
-        //             <Box mb={24}>
-        //                 <Text fw={600} c={themeColors.text[2]} fz='20'>Create a space</Text>
-        //             </Box>
-
-        //             <Flex gap={24} direction='column'>
-
-        //                 <Grid grow>
-        //                     <Grid.Col span={2}>
-        //                         <label className='space-creation-input-field-label' style={{color: themeColors.text[3]}}>Icon</label>
-
-        //                         <Flex align='flex-start' justify='center' h='50' direction='column' >
-        //                             <SpaceCreationIconsPopover 
-        //                                 color={color}
-        //                                 setColor={setColor}
-        //                                 spaceIcon={spaceIcon}
-        //                                 setSpaceIcon={setSpaceIcon}
-        //                                 firstLetter={firstLetter}
-        //                                 colorMode={colorScheme}
-        //                             />
-        //                         </Flex>
-        //                     </Grid.Col>
-
-        //                     <Grid.Col span={10} >
-        //                         <Flex direction='column'>
-        //                             <label className='space-creation-input-field-label' style={{color: themeColors.text[3]}}>Name</label>
-                                    
-        //                             <TextInput
-        //                                 placeholder='e.g. Development, Design, Machine Learning'
-        //                                 type="text"
-        //                                 autoComplete='off'
-        //                                 className={`space-creation-input-field ${colorScheme}`}
-        //                                 bg='transparent'
-        //                                 size="lg"
-        //                                 radius="md"
-        //                                 value={spaceName}
-        //                                 onChange={(event) => {
-        //                                     setSpaceName(event.currentTarget.value);
-        //                                 }}
-        //                             />
-        //                         </Flex> 
-
-        //                     </Grid.Col>
-        //                 </Grid>
-
-
-        //                 <Textarea
-        //                     label={
-        //                         <span>
-        //                             Description <span style={{ fontWeight: "400", fontSize: "12.8px", color: `${colorScheme==='dark' ? '#c8c8c8' : '#686868'}` }}>(Optional)</span>
-        //                         </span>
-        //                     }
-        //                     placeholder=''
-        //                     autoComplete='off'
-        //                     className={`space-creation-input-field ${colorScheme}`}
-        //                     c={themeColors.text[3]}
-        //                     type="text"
-        //                     radius={0}
-        //                     p={0}
-        //                     variant="filled"
-        //                     m={0}
-        //                     w='100%'
-        //                     minRows={1}
-        //                     autosize
-        //                     value={spaceDescription}
-        //                     onChange={(event) => {
-        //                         setSpaceDescription(event.currentTarget.value);
-        //                     }}
-        //                 />
-
-        //                 <Flex direction='column'>
-                            
-        //                     <>
-        //                         <Radio.Group
-        //                             value={spaceVisibility}
-        //                             onChange={setSpaceVisibility}
-        //                             label={ <label className='space-creation-input-field-label' style={{color: themeColors.text[3]}}>Visibility</label> }
-        //                         >
-        //                             <Stack gap={0} className='space-creation-visibility-radio-stack'>
-        //                                 {cards}
-        //                             </Stack>
-        //                         </Radio.Group>
-        //                     </>
-        //                 </Flex> 
-        //             </Flex>
-    
-        //         </Box>
-        //         <Divider size={1} color='#57585a'/>
-        //         <Box m='auto' w='100%' >
-        //             <Box p='13px 20px' w='100%'>
-        //                 <Flex justify='end' align='center'>
-        //                     <Button disabled={spaceNameDisabled} bd={`1px solid ${spaceNameDisabled ? '#434446 ' : '#048369'}`} onClick={handleSpaceCreation}
-        //                     className={`${spaceName && 'task-card-create-task-button'}`} radius={8} p='0px 12px' c={spaceNameDisabled ? '#838486 ' : '#fafafa'} bg={spaceNameDisabled ? '#434446 ' : '#048369'} >
-        //                         <Flex align='center'>
-        //                             <Box me={5} >
-        //                                 {Icons('IconPlus',14,14)}
-        //                             </Box>
-        //                             <span>Create</span>
-        //                         </Flex>
-        //                     </Button>
-        //                 </Flex>
-        //             </Box>
-        //         </Box>
-        //     </Box>
-        // </Modal>
-
-        <Tabs
-        defaultValue="create" onValueChange={() => setTabChange(true)}
-        className="gap-2"
-        >
+        <Tabs defaultValue="create" onValueChange={() => setTabChange(true)} className="gap-2">
             <Flex justify='center'>
-
                 <TabsList className="flex gap-2">
                     <TabsTrigger value="create">Create</TabsTrigger>
                     <TabsTrigger value="join">Join</TabsTrigger>

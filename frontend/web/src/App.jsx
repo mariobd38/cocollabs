@@ -6,6 +6,7 @@ import { AuthProvider } from "@/hooks/authProvider";
 
 // import Home from "@/components/Home/home";
 import Homev2 from '@/pages/home/homev2';
+import Explore from '@/pages/explore';
 // import TaskDetailsModal from "@/components/Home/TaskDetailsModal/taskDetailsModal";
 import LandingPage from "@/components/Landing/LandingPage";
 import Login from "@/components/Auth/Login/login";
@@ -43,7 +44,15 @@ function App() {
                     }
                 >
                     {/* <Route path='/home/modal' element={<TaskDetailsModal />} /> */}
-                    
+                </Route>
+                <Route path="/:slug/explore" location={background || location} 
+                    element={
+                        <PrivateRoute>
+                            <Explore />
+                        </PrivateRoute>
+                    }
+                >
+                    {/* <Route path='/home/modal' element={<TaskDetailsModal />} /> */}
                 </Route>
           
                 {/* {background && (

@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { readLocalStorageValue } from '@mantine/hooks';
 import * as DialogPrimitive from "@radix-ui/react-dialog"
 import { X } from "lucide-react"
 
@@ -14,17 +15,26 @@ const DialogPortal = DialogPrimitive.Portal
 
 const DialogClose = DialogPrimitive.Close
 
-const DialogOverlay = React.forwardRef(({ className, ...props }, ref) => (
-  <DialogPrimitive.Overlay
-    ref={ref}
-    className={cn(
-      "fixed inset-0 z-50 bg-black/70  data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
-      // "h-auto left-[0%] top-[0%] bottom-[0%] right-[0%] flex justify-center items-center absolute inset-0 !overflow-y-auto !overflow-x-hidden z-50 bg-black/70  data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
-      className
-    )}
-    
-    {...props} />
-))
+const DialogOverlay = React.forwardRef(({ className, ...props }, ref) => {
+  const [currentTheme, setCurrentTheme] = React.useState('light');
+
+  React.useEffect(() => {
+    const app = readLocalStorageValue({ key: 'ApplicationStore' });
+    setCurrentTheme(app?.userPreference?.theme || 'light');
+  }, []);
+
+  return (
+    <DialogPrimitive.Overlay
+      ref={ref}
+      className={cn(
+        "fixed inset-0 z-50 bg-black/25 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
+        currentTheme === 'dark' && 'bg-black/40',
+        className
+      )}
+      {...props}
+    />
+  );
+});
 DialogOverlay.displayName = DialogPrimitive.Overlay.displayName
 
 const DialogContent = React.forwardRef(({ className, children, ...props }, ref) => (

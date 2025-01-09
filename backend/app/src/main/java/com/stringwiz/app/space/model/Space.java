@@ -55,6 +55,9 @@ public class Space {
     @Column(unique = true,nullable = false)
     private String slug;
 
+    @Column(unique = true,nullable = false)
+    private String url;
+
     @Convert(converter = SpaceIconConverter.class)
     @Column(columnDefinition = "TEXT")
     private SpaceIcon icon;
@@ -78,12 +81,13 @@ public class Space {
     @ManyToMany(mappedBy = "spaces", fetch = FetchType.LAZY)
     private Set<User> users = new LinkedHashSet<>();
 
-    public Space(String name, String description, SpaceIcon icon, Visibility visibility, String slug) {
+    public Space(String name, SpaceIcon icon, String baseUrl, String slug, Visibility visibility) {
         this.name = name;
-        this.description = description;
+        this.description = "";
         this.icon = icon;
         this.visibility = visibility;
         this.slug = slug;
+        this.url = baseUrl + "/" + slug;
         Timestamp currentTime = new Timestamp(new Date().getTime());
         this.createdOn = currentTime;
         this.lastUpdatedOn = currentTime;

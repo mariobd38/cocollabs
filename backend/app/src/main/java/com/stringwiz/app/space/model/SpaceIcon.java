@@ -14,6 +14,5 @@ public class SpaceIcon {
     private String background;
     private String color;
     private String radius;
-    //private String children;
     private JsonNode children;
 }

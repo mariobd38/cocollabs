@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 
 import { Icons } from '@/components/icons/icons';
 
-import { Divider,Box,Text,Flex,Container,Grid} from '@mantine/core';
+import { Divider,Box,Text,Flex,Container,Grid,Image } from '@mantine/core';
 import { Button } from '@/components/ui/button';
 import CustomCommand from '@/components/customCommand';
 
+import Coconut from '@/components/Logo/coconut';
 import Logo2 from '@/components/Logo/logo2';
 
 import HomeNavbarUserMenu from '@/components/Home/HomeNavbar/homeNavbarUserMenu';
@@ -14,19 +15,6 @@ import HomeNavbarUserMenu from '@/components/Home/HomeNavbar/homeNavbarUserMenu'
 import '@/styles/home/homeNavbar.css';
 
 const HomeNavbarv2 = ({ themeColors,colorScheme,setColorScheme,profileInfo,setOpenSidebarToggle,openSidebarToggle,storedUserInfo,setStoredUserInfo } ) => {
-    //user button
-    // const [isSmallScreen, setIsSmallScreen] = useState(false);
-    const [openSpaceCreateModal,setOpenSpaceCreateModal] = useState(false);
-
-    // const closeOffcanvasIfLargeScreen = () => {
-    //     const screenWidth = window.innerWidth;
-    //     if (screenWidth < 840) {
-    //         setIsSmallScreen(true);
-    //     } else {
-    //         setIsSmallScreen(false);
-    //     }
-    // };
-
     const handleOpenSidebarToggle = () => {
         setOpenSidebarToggle(!openSidebarToggle);
         if (openSidebarToggle) {
@@ -65,11 +53,11 @@ const HomeNavbarv2 = ({ themeColors,colorScheme,setColorScheme,profileInfo,setOp
       }, [])
 
     return (
-        <nav className="navbar w-full fixed h-16	top-0" style={{zIndex: "11", backgroundColor: themeColors.bg[2],
+        <nav className="navbar w-full fixed h-16 top-0" style={{zIndex: "11", backgroundColor: themeColors.bg[2],
             borderBottom: `1px solid ${colorScheme==='dark' ? '#292929' : '#d8d8d8'}`
         }}>
             <Container w='100%' fluid >
-                <Grid align='center' h='100%' gutter={{ base: 5 }}>
+                <Grid align='center' h='100%' gutter={5}>
                     <Grid.Col span={2} >
                         <Flex align='center' gap={25}>
                             <Box w='fit-content' className={`navbar-menu-sidebar-icon home-button ${colorScheme}`} onClick={handleOpenSidebarToggle}>
@@ -77,8 +65,9 @@ const HomeNavbarv2 = ({ themeColors,colorScheme,setColorScheme,profileInfo,setOp
                             </Box>
 
                             <Flex align='center' pb={0} display={{base: 'none', sm: 'flex'}}>
-                                <Box w='8.7rem' >
+                                <Box w='8.5rem' >
                                     <Logo2 strokeColor={colorScheme === 'dark' ? '#f4fff6' : '#323335'}/>
+                                    {/* <Coconut strokeColor={colorScheme === 'dark' ? '#fafafa' : '#323335'}/> */}
                                 </Box>
                             </Flex>
                         </Flex>
@@ -110,11 +99,11 @@ const HomeNavbarv2 = ({ themeColors,colorScheme,setColorScheme,profileInfo,setOp
                                 <Button size='auto' variant='ghost' className={`flex py-1 ps-3 pe-2.5 rounded gap-32 border-solid border-[${searchBdColor}] navbar-search-button ${colorScheme} hover:all transition-all duration-300 ease-linear`} 
                                 style={{border: `1px solid ${searchBdColor}`, backgroundColor: `${searchBgColor}`}} onClick={() => setOpenCommand((open) => !open)}>
                                     <Flex ff='Inter' fz={13.5} align='center' className='text-muted-foreground kbd'>Search
-                                        <Box ps={4} className='hidden md:block'> anything</Box>...</Flex>
+                                        <Box ps={4} className='hidden md:block'> anything</Box>...
+                                    </Flex>
+
                                     <Flex ms={10} p='2px 9px' gap={3} align='center' h={28} bg={kdbBdColor} className='rounded-md font-mono' bd={`1px solid ${searchBdColor}`} >
-                                        
                                         <span className="text-[18px] kbd pt-0.5 text-muted-foreground">⌘</span>
-                                        
                                         <Text m='auto' className='text-muted-foreground kbd'  fw={400} fz={13}>K</Text>
                                     </Flex>
                                 </Button>
@@ -130,18 +119,16 @@ const HomeNavbarv2 = ({ themeColors,colorScheme,setColorScheme,profileInfo,setOp
                                 <Divider size="xs" orientation="vertical" ms={8} me={10} m='auto' h={28} bd={`.1px solid ${colorScheme==='dark' ? '#676869' : '#878889'}`}/>
                             </Flex>
 
-                            <Flex m='auto 20px auto 0px' gap={6}>
+                            <Flex m='auto 20px auto 0' gap={6}>
                                 <div className={`user-home-navbar-icon-apps home-button ${colorScheme}`}>
-                                    {Icons('IconBell',23,23,buttonColor)}
+                                    {Icons('IconBell',22,22,buttonColor)}
                                 </div>
 
                                 <div className={`user-home-navbar-icon-apps home-button ${colorScheme}`}>
-                                    {Icons('IconApps',23,23,buttonColor)}
+                                    {Icons('IconApps',22,22,buttonColor)}
                                 </div>
                             </Flex>
-
                             
-
                             {/* outside components */}
                             <HomeNavbarUserMenu 
                                 userProfileDto={profileInfo.profileDto}
@@ -155,20 +142,10 @@ const HomeNavbarv2 = ({ themeColors,colorScheme,setColorScheme,profileInfo,setOp
                                 setStoredUserInfo={setStoredUserInfo}
                             />
 
-                            {/* <SpaceCreationModal 
-                                openSpaceCreateModal={openSpaceCreateModal}
-                                setOpenSpaceCreateModal={setOpenSpaceCreateModal}
-                                userFullName={profileInfo.fullName}
-                                themeColors={themeColors}
-                                colorScheme={colorScheme}
-                            /> */}
-
                             <CustomCommand 
                                 open={openCommand}
                                 setOpen={setOpenCommand}
                             />
-
-                            
 
                         </Flex>
                     </Grid.Col>

@@ -35,9 +35,10 @@ const HomeHeader = ({spaceName,themeColors, colorScheme}) => {
                 </Box>
                 
                 <Box>
-                    <Button bd={`.1px solid ${colorScheme==='dark' ? '#048369' : '#24b689e3'}`}
+                    <Button 
+                    bd={`.1px solid ${colorScheme==='dark' ? '#048369' : '#24b689e3'}`}
                     radius={8} p='1px 13px' color={`${colorScheme==='dark' ? '#048369' : '#24b689e3'}`}
-                    c='#fafafa' className='home-header-customize-button' bg='#24b689df'
+                    c='#fafafa' className='bg-teal-600' 
                     >
                         <Flex align='center'>
                             <Box me={8} >

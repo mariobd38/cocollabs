@@ -1,23 +1,14 @@
-import React, { useState, useEffect,useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import { useMantineTheme,useMantineColorScheme,Box,Flex } from '@mantine/core';
 import { useLocalStorage } from '@mantine/hooks';
 
-import HomeHeader from '@/components/Home/HomeHeader/homeHeader';
-// import HomeNavbar from '@/components/Home/HomeNavbar/homeNavbar';
 import HomeNavbarv2 from '@/components/Home/v2/HomeNavbar/homeNavbarv2';
-// import TaskCard from '@/components/Home/TaskCard/taskCard';
-import QuickActions from '@/components/Home/QuickActions/quickActions';
-// import HomeSidebar from '@/components/Home/HomeSidebar/homeSidebar';
 import HomeSidebarv2 from '@/components/Home/v2/HomeSidebar/homeSidebarv2';
 
 import { getUserProfileInfo } from '@/api/Users/getUserProfileInfo';
 import { getLastActiveSpaceInfo } from '@/api/Spaces/getLastActiveSpace';
-// import { getPersonalSpaceInfo } from '@/api/Spaces/getPersonalSpaceInfo';
-// import { getTaskInfoBySpace } from '@/api/Tasks/getTasksBySpace';
-// import { getAllUserSpacesInfo } from '@/api/Spaces/getAllUserSpaces';
-// import { getGoogleTaskInfo } from '../../DataManagement/Tasks/getGoogleTasks';
 
 import dayjs from 'dayjs';
 
@@ -26,15 +17,11 @@ import { getTextColor } from '@/components/Themes/getTextColor';
 
 import '@/styles/home/home.css';
 
-const Homev2 = () => {
+const Explore = () => {
     // const dayjs = require('dayjs');
     const theme = useMantineTheme();
     const { colorScheme, setColorScheme } = useMantineColorScheme();
 
-    // const [taskData, setTaskData] = useState([]);
-    // const [overdueTasks, setOverdueTasks] = useState([]);
-    // const [completedTasks, setCompletedTasks] = useState([]);
-    // const [ongoingTasks, setOngoingTasks] = useState([]);
     const [today, setToday] = useState(dayjs());
 
     const location = useLocation();
@@ -123,10 +110,6 @@ const Homev2 = () => {
         text: Array.from({ length: 13 }, (_, index) => getTextColor(colorScheme, theme, index))
     };
 
-    // const getGoogleTasks = () => {
-    //     getGoogleTaskInfo();
-    // }
-
     const fullUserData = {
         fullName: userFullName, 
         initials: initials, 
@@ -150,53 +133,29 @@ const Homev2 = () => {
             />}
             <Flex>
 
-            <Box m={0} p={0}>
-                {/* {userFullName &&
-                <HomeSidebar className='user-home-sidebar'
-                    profileInfo={{fullName: userFullName, email: userEmail}}
-                    themeColors={themeColors}
-                    colorScheme={colorScheme}
-                    openSidebarToggle={openSidebarToggle}
-                    setOpenSidebarToggle={setOpenSidebarToggle}
-                    spaceData={{name: spaceData.name, icon: spaceData.icon}}
-                />} */}
-                <HomeSidebarv2 
-                    themeColors={themeColors}
-                    colorScheme={colorScheme}
-                    openSidebarToggle={openSidebarToggle}
-                    setOpenSidebarToggle={setOpenSidebarToggle}
-                    spaceData={{name: spaceData.name, icon: spaceData.icon}}
-                    userFullName={userFullName}
-                    setSpaceSwitch={setSpaceSwitch}
-                />
-            </Box>
-
-            <Flex direction='column' className={`user-home-all-content ${openSidebarToggle && 'open' }`}>
-                <HomeHeader 
-                    spaceName={spaceData.name}
-                    themeColors={themeColors}
-                    colorScheme={colorScheme}
-                />
-
-                <Box w='100%' >
-
-                    <div className="task-card-parent">
-                        
-                        {/* <div className='user-home-all-content-left-spacing'> */}
-                            <Box>
-                                <QuickActions 
-                                    themeColors={themeColors}
-                                    colorScheme={colorScheme}
-                                />
-                                
-                            </Box>
-                        {/* </div> */}
-                    </div>
+                <Box m={0} p={0}>
+                    <HomeSidebarv2 
+                        themeColors={themeColors}
+                        colorScheme={colorScheme}
+                        openSidebarToggle={openSidebarToggle}
+                        setOpenSidebarToggle={setOpenSidebarToggle}
+                        spaceData={{name: spaceData.name, icon: spaceData.icon}}
+                        userFullName={userFullName}
+                        setSpaceSwitch={setSpaceSwitch}
+                    />
                 </Box>
-            </Flex>
+
+                {/* <Flex direction='column' className={`user-home-all-content ${openSidebarToggle && 'open' }`}>
+                    <HomeHeader 
+                        spaceName={spaceData.name}
+                        themeColors={themeColors}
+                        colorScheme={colorScheme}
+                    />
+                    
+                </Flex> */}
             </Flex>
         </>
     );
 };
 
-export default Homev2;
+export default Explore;

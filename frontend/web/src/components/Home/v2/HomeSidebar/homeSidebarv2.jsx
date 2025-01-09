@@ -97,7 +97,7 @@ const HomeSidebarv2 = (props) => {
             <SidebarProvider openSidebarToggle={openSidebarToggle} currentWidth={width}>
                 <Sidebar className='top-[64.2px] h-full' ref={sidebarRef} >
                 <SidebarHeader className='h-[55px]'>
-                    <HomeSidebarHeader 
+                    {data && <HomeSidebarHeader 
                         data={data} 
                         openSidebarToggle={openSidebarToggle}
                         themeColors={themeColors}
@@ -105,7 +105,7 @@ const HomeSidebarv2 = (props) => {
                         setOpenSpaceCreateModal={setOpenSpaceCreateModal}
                         setDialogTrigger={setDialogTrigger}
                         setSpaceSwitch={setSpaceSwitch}
-                    />
+                    />}
                 </SidebarHeader>
                     <SidebarContent >
                         <HomeSidebarContent 

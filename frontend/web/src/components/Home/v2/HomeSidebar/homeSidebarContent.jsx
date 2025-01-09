@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { Box,UnstyledButton,Badge,Tooltip,Flex,Text } from '@mantine/core';
 
@@ -10,8 +11,8 @@ import '@/styles/home/homeSidebar.css';
 
 
 const links = [
-    { icon: 'IconHome', label: 'Home' },
-    { icon: 'IconWorldSearch', label: 'Discover' },
+    { icon: 'IconHome', label: 'Home', redirect: '/:slug' },
+    { icon: 'IconWorldSearch', label: 'Explore', redirect: '/:slug/explore' },
     { icon: 'IconInbox', label: 'Inbox' },
     { icon: 'IconFolder', label: 'Projects' },
     { icon: 'IconFile', label: 'Docs' },
@@ -20,10 +21,11 @@ const links = [
 ];
 
 const HomeSidebarContent = ({ openSidebarToggle,themeColors,colorScheme }) => {
+    const navigate = useNavigate(); 
     const mainLinks = links.map((link) => (
         <React.Fragment key={link.label} >
             {openSidebarToggle ? 
-                <UnstyledButton key={link.label} className={`${classes.mainLink} last:mb-0 ${classes.active}`} data-theme={colorScheme} >
+                <UnstyledButton onClick={() => console.log('ds')} key={link.label} className={`${classes.mainLink} last:mb-0 ${classes.active}`} data-theme={colorScheme} >
                     <Flex>
                         <div className={`${classes.mainLinkIcon} ${classes.active}`}>
                             {Icons(link.icon, 20, 20, themeColors.text[10])}
@@ -50,7 +52,7 @@ const HomeSidebarContent = ({ openSidebarToggle,themeColors,colorScheme }) => {
                 openDelay={100} 
                 offset={{ mainAxis: 10 }}
             >
-                <UnstyledButton key={link.label} className={`${classes.mainLink} px-[5px] last:mb-0` } data-theme={colorScheme}>
+                <UnstyledButton onClick={() => navigate(link.redirect)} key={link.label} className={`${classes.mainLink} px-[5px] last:mb-0` } data-theme={colorScheme}>
                     <Flex align='center' pos='relative' flex={1} justify='center'>
                         <Box mb={2}>
                             {Icons(link.icon, 20, 20, themeColors.text[10],1.7)}

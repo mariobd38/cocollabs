@@ -24,12 +24,37 @@ const HomeSidebarHeader = forwardRef((props, ref) => {
     const app = readLocalStorageValue({ key: 'ApplicationStore' }) ?? { userSpace: [] };
 
     const profileAvatar = (size,currSpace) => {
-        return (<Avatar className="ease-linear duration-500 transition-all hover:brightness-125" w={getProfileSize(size)} h={getProfileSize(size)} miw={getProfileSize(size)} 
-            color={currSpace?.icon?.color} radius={currSpace?.icon?.radius} >
-                <span style={{ fontSize: `calc(${getProfileSize(size)} * 0.5)` }}>
-                    {currSpace?.icon?.children}
-                </span>
-        </Avatar>);
+        const iconChildren = currSpace?.icon?.children;
+        // console.log(currSpace?.icon);
+        
+        if (iconChildren?.type === 'svg') {
+            return (
+                <Avatar 
+                    className="ease-linear duration-500 transition-all hover:brightness-110" 
+                    w={getProfileSize(size)} 
+                    h={getProfileSize(size)} 
+                    miw={getProfileSize(size)} 
+                    bg={currSpace?.icon?.background} 
+                    radius={currSpace?.icon?.radius}
+                >
+                    <svg
+                        xmlns={iconChildren.props.xmlns}
+                        width={iconChildren.props.width}
+                        height={iconChildren.props.height}
+                        viewBox={iconChildren.props.viewBox}
+                        fill={iconChildren.props.fill}
+                        className={iconChildren.props.className}
+                    >
+                        {iconChildren.props.paths?.map((pathData, index) => (
+                            <path 
+                                key={index}
+                                {...pathData}
+                            />
+                        ))}
+                    </svg>
+                </Avatar>
+            );
+        }
     }
 
     const routeChange = (path) => { 
@@ -89,11 +114,9 @@ const HomeSidebarHeader = forwardRef((props, ref) => {
                                     <Box fz={13} className=''>{currentSpace}</Box>
                                     <Box fz={11} className='text-muted-foreground'>1 contributor</Box>
                                 </Flex>
-                                {/* {spaceData.name}kafshfhahffjjhsfsjkh */}
                             </DropdownMenuLabel>
                             <DropdownMenuSub className="focus:bg-gray-100">
                                 <DropdownMenuSubTrigger className="gap-2 p-2 cursor-pointer " >
-                                    {/* <UserPlus /> */}
                                     <Flex align='center' justify='center' className="size-6 rounded-sm border">
                                             {Icons('IconSwitchHorizontal')}
                                     </Flex>
@@ -120,7 +143,7 @@ const HomeSidebarHeader = forwardRef((props, ref) => {
                                 </DropdownMenuPortal>
                             </DropdownMenuSub>
                             {data.options.map((option) => (
-                                <DropdownMenuItem key={option.name} className="gap-2 p-2 cursor-pointer" >
+                                <DropdownMenuItem key={option.name} className="gap-2 px-2 py-[7px] cursor-pointer" >
                                     <Flex align='center' justify='center' className="size-6 rounded-sm border">
                                         {Icons(option.icon)}
                                     </Flex>
@@ -128,7 +151,7 @@ const HomeSidebarHeader = forwardRef((props, ref) => {
                                 </DropdownMenuItem>
                             ))}
                             <DropdownMenuSeparator />
-                            <DropdownMenuItem className="gap-2 p-2 cursor-pointer" onClick={() => setOpenSpaceCreateModal(true)}>
+                            <DropdownMenuItem className="gap-2 px-2 py-1.5 cursor-pointer" onClick={() => setOpenSpaceCreateModal(true)}>
                                 <Flex align='center' justify='center'  className="size-6 rounded-sm border">
                                     {Icons('IconPlus')}
                                 </Flex>
