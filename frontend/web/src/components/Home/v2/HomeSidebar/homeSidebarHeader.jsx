@@ -126,17 +126,17 @@ const HomeSidebarHeader = forwardRef((props, ref) => {
                                     <DropdownMenuSubContent className='w-56'>
                                         {sortedSpaces.map((space, index) => (
                                             <DropdownMenuItem key={index} className="cursor-pointer" onClick={() => activateCurrentSpace(space.name)}>
-                                            <Flex justify="space-between" align="center" w="100%">
-                                                <Flex gap={5} className="min-w-0">
-                                                {profileAvatar(1.3, space)}
-                                                <span className="pl-[2px] max-w-[85%] min-w-0 whitespace-nowrap overflow-hidden text-ellipsis">
-                                                    {space.name}
-                                                </span>
+                                                <Flex justify="space-between" align="center" w="100%">
+                                                    <Flex gap={5} className="min-w-0">
+                                                        {profileAvatar(1.3, space)}
+                                                        <span className="pl-[2px] max-w-[85%] min-w-0 whitespace-nowrap overflow-hidden text-ellipsis">
+                                                            {space.name}
+                                                        </span>
+                                                    </Flex>
+                                                    <Flex className="shrink-0">
+                                                        {space.name === currentSpace && Icons('IconCheck')}
+                                                    </Flex>
                                                 </Flex>
-                                                <Flex className="shrink-0">
-                                                {space.name === currentSpace && Icons('IconCheck')}
-                                                </Flex>
-                                            </Flex>
                                             </DropdownMenuItem>
                                         ))}
                                     </DropdownMenuSubContent>

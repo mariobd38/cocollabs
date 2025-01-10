@@ -52,7 +52,8 @@ const HomeSidebarContent = ({ openSidebarToggle,themeColors,colorScheme }) => {
                 openDelay={100} 
                 offset={{ mainAxis: 10 }}
             >
-                <UnstyledButton onClick={() => navigate(link.redirect)} key={link.label} className={`${classes.mainLink} px-[5px] last:mb-0` } data-theme={colorScheme}>
+                <UnstyledButton onClick={(event) => {event.preventDefault(); navigate(link.redirect);}}  
+                    key={link.label} className={`${classes.mainLink} px-[5px] last:mb-0` } data-theme={colorScheme}>
                     <Flex align='center' pos='relative' flex={1} justify='center'>
                         <Box mb={2}>
                             {Icons(link.icon, 20, 20, themeColors.text[10],1.7)}

@@ -61,6 +61,7 @@
     "@tiptap/pm": "^2.4.0",
     "@tiptap/react": "^2.4.0",
     "@tiptap/starter-kit": "^2.4.0",
+    "@types/jest": "^29.5.14",
     "@use-gesture/react": "^10.3.1",
     "antd": "^5.16.2",
     "antd-img-crop": "^4.22.0",
@@ -92,6 +93,7 @@
     "sockjs-client": "^1.6.1",
     "tailwind-merge": "^2.5.4",
     "tailwindcss-animate": "^1.0.7",
+    "typescript": "^5.7.3",
     "vite-plugin-require": "^1.1.14",
     "vite-plugin-svgr": "^4.2.0",
     "web-vitals": "^2.1.4",
@@ -118,7 +120,9 @@
     ]
   },
   "devDependencies": {
-    "@types/node": "^22.8.7",
+    "@types/node": "^22.10.5",
+    "@types/react": "^19.0.4",
+    "@types/react-dom": "^19.0.2",
     "@vitejs/plugin-react": "^4.2.1",
     "autoprefixer": "^10.4.20",
     "concurrently": "^8.2.2",

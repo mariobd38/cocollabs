@@ -6,7 +6,8 @@ import { AuthProvider } from "@/hooks/authProvider";
 
 // import Home from "@/components/Home/home";
 import Homev2 from '@/pages/home/homev2';
-import Explore from '@/pages/explore';
+import Explore from '@/pages/home/explore';
+import AppLayout from '@/pages/home/appLayout';
 // import TaskDetailsModal from "@/components/Home/TaskDetailsModal/taskDetailsModal";
 import LandingPage from "@/components/Landing/LandingPage";
 import Login from "@/components/Auth/Login/login";
@@ -25,34 +26,16 @@ function App() {
     return (
         <AuthProvider>
             <Routes>
-                {/* <Route path="/home" location={background || location} 
-                    element={
-                        <PrivateRoute>
-                            <Home />z
-                        </PrivateRoute>
-                    }
-                >
-                    <Route path='/home/modal' element={<TaskDetailsModal />} />
-                    
-                </Route> */}
-
-                <Route path="/:slug" location={background || location} 
-                    element={
-                        <PrivateRoute>
-                            <Homev2 />
-                        </PrivateRoute>
-                    }
-                >
-                    {/* <Route path='/home/modal' element={<TaskDetailsModal />} /> */}
-                </Route>
-                <Route path="/:slug/explore" location={background || location} 
-                    element={
-                        <PrivateRoute>
-                            <Explore />
-                        </PrivateRoute>
-                    }
-                >
-                    {/* <Route path='/home/modal' element={<TaskDetailsModal />} /> */}
+                <Route
+                path="/:slug"
+                location={background || location} 
+                element={
+                    <PrivateRoute>
+                        <AppLayout />
+                    </PrivateRoute>
+                }>
+                    <Route index element={<Homev2 />} /> {/* Default route for /:slug */}
+                    <Route path="explore" element={<Explore />} /> {/* Route for /:slug/explore */}
                 </Route>
           
                 {/* {background && (

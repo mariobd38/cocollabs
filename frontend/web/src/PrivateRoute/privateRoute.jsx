@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navigate, useParams } from 'react-router-dom';
+import { Navigate, useParams, useLocation, Link, useNavigate } from 'react-router-dom';
 import { UseAuth } from '@/hooks/authProvider';
 import { useUserSpaces } from '@/hooks/useUserSpaces';
 import { UseLastActiveSpace } from '@/hooks/useLastActiveSpace';
@@ -7,7 +7,9 @@ import { UseLastActiveSpace } from '@/hooks/useLastActiveSpace';
 const PrivateRoute = ({ children }) => {
     const { slug } = useParams();
     const { userSpaces } = useUserSpaces();
+    const location = useLocation();
     const { activeSpaceSlug } = UseLastActiveSpace();
+    const navigate = useNavigate();
 
     const { isAuthenticated,isOnboarded,pending } = UseAuth();
     
@@ -33,8 +35,15 @@ const PrivateRoute = ({ children }) => {
     const isPermittedSpace = userSpaces.some(space => space.slug === slug);
 
     if (!isPermittedSpace && isAuthenticated && isOnboarded) {
-        // Redirect to a default active space
-        return <Navigate to={`/${activeSpaceSlug}`} replace />;
+        // Avoid unnecessary re-renders by checking the pathname only once
+        const targetPath = location.pathname.endsWith('/explore')
+            ? `/${activeSpaceSlug}/explore`
+            : `/${activeSpaceSlug}`;
+
+        // Redirect the user only if the target path is different from the current path
+        if (location.pathname !== targetPath) {
+            navigate(targetPath, { replace: true });
+        }
     }
 
     return children;
