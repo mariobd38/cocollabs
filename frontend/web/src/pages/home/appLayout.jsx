@@ -5,7 +5,6 @@ import { useMantineTheme,useMantineColorScheme,Box,Flex } from '@mantine/core';
 import { useLocalStorage } from '@mantine/hooks';
 
 import HomeNavbarv2 from '@/components/Home/v2/HomeNavbar/homeNavbarv2';
-// import TaskCard from '@/components/Home/TaskCard/taskCard';
 import HomeSidebarv2 from '@/components/Home/v2/HomeSidebar/homeSidebarv2';
 
 import { getUserProfileInfo } from '@/api/Users/getUserProfileInfo';
@@ -68,6 +67,22 @@ const AppLayout = ({content}) => {
         fetchSpaceData();
     }, [slug])
 
+    // const [visible, setVisible] = useState(false);
+
+    // Visibility effect
+    // useEffect(() => {
+    //     // if (spaceData) {
+    //         const timer = setTimeout(() => {
+    //             setVisible(true);
+    //         }, 1500);
+    //         // setVisible(false);
+    //         return () => clearTimeout(timer);
+    //     // } else {
+    //         // setVisible(false);
+    //     // }
+    //     console.log(visible);
+    // }, [visible]);
+
 
     useEffect(() => {
         const fetchProfileData = async () => {
@@ -106,6 +121,17 @@ const AppLayout = ({content}) => {
         fetchProfileData();
       }, [passedUserInfo, storedAppInfo, setStoredAppInfo]);
 
+    const [activePage, setActivePage] = useState("Home");
+
+    useEffect(() => {
+        const path = location.pathname;
+        if (path.includes("explore")) {
+            setActivePage("Explore");
+        } else {
+            setActivePage("Home");
+        }
+    }, [location.pathname]);
+
 
     return (
         <>
@@ -120,7 +146,6 @@ const AppLayout = ({content}) => {
                 storedUserInfo={storedAppInfo}
                 setStoredUserInfo={setStoredAppInfo}
             />}
-                {/* {currentSpace && */}
             <Flex>
                 <Box>
                     {/* {userFullName &&
@@ -137,12 +162,16 @@ const AppLayout = ({content}) => {
                         colorScheme={colorScheme}
                         openSidebarToggle={openSidebarToggle}
                         setOpenSidebarToggle={setOpenSidebarToggle}
-                        spaceData={{name: currentSpace?.name, icon: currentSpace?.icon}}
+                        spaceData={{name: currentSpace?.name, icon: currentSpace?.icon,slug: currentSpace?.slug}}
                         userFullName={userFullName}
+                        activePage={activePage}
                     />
                 </Box>
                 <Flex direction='column' className={`user-home-all-content ${openSidebarToggle && 'open' }`}>
-                    <Outlet context={{themeColors,spaceData,colorScheme,currentSpace}}/>
+                    {/* <Box className={`transition-opacity duration-300 ease-linear ${visible ? 'opacity-100' : 'opacity-0'}`}> */}
+                    
+                        <Outlet context={{themeColors,spaceData,colorScheme,currentSpace}}/>
+                    {/* </Box> */}
                 </Flex>
             </Flex>
         </>

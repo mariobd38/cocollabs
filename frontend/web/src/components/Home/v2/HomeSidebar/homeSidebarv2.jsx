@@ -12,7 +12,7 @@ const CustomDialog = lazy(() => import('@/components/customDialog'));
 const LoadingFallback = () => <>...</>;
 
 const HomeSidebarv2 = (props) => {
-    const {openSidebarToggle, themeColors, colorScheme, setOpenSidebarToggle, spaceData,userFullName} = props;
+    const {openSidebarToggle, themeColors, colorScheme, setOpenSidebarToggle, spaceData,userFullName,activePage} = props;
 
     const sidebarRef = useRef(null);
     const [width, setWidth] = useState(210);
@@ -107,10 +107,12 @@ const HomeSidebarv2 = (props) => {
                     />}
                 </SidebarHeader>
                     <SidebarContent >
-                        <HomeSidebarContent 
+                        <HomeSidebarContent
+                            spaceSlug={spaceData.slug}
                             openSidebarToggle={openSidebarToggle}
                             themeColors={themeColors}
                             colorScheme={colorScheme}
+                            activePage={activePage}
                         />
                         <div ref={resizeHandleRef} className={`resize-handle ${colorScheme}`} onMouseDown={startResize} />
                     </SidebarContent>

@@ -20,14 +20,24 @@ const links = [
     // { icon: 'IconDotsCircleHorizontal', label: 'More' },
 ];
 
-const HomeSidebarContent = ({ openSidebarToggle,themeColors,colorScheme }) => {
+const HomeSidebarContent = ({ spaceSlug,openSidebarToggle,themeColors,colorScheme,activePage }) => {
     const navigate = useNavigate(); 
+
+    const redirectToSpace = (e,link) => {
+        e.preventDefault(); 
+        if (link.label !== activePage) {
+            const path = link.redirect.replace(':slug', spaceSlug); // Replace :slug with actual value
+            navigate(path);
+        }
+    }
+
     const mainLinks = links.map((link) => (
         <React.Fragment key={link.label} >
             {openSidebarToggle ? 
-                <UnstyledButton onClick={(event) => {event.preventDefault(); navigate(link.redirect);}}  key={link.label} className={`${classes.mainLink} last:mb-0 ${classes.active}`} data-theme={colorScheme} >
+                <UnstyledButton onClick={(e) => redirectToSpace(e,link)}  key={link.label} 
+                    className={`${classes.mainLink} last:mb-0 ${classes.active} ${activePage === link.label && classes.activeSpace }`} data-theme={colorScheme} >
                     <Flex>
-                        <div className={`${classes.mainLinkIcon} ${classes.active}`}>
+                        <div className={`${classes.mainLinkIcon} ${classes.sidebarOpen}`}>
                             {Icons(link.icon, 20, 20, themeColors.text[10])}
                         </div>
                         <Text ff='Inter' fz={15} c={themeColors.text[5]} className="label">
@@ -52,11 +62,13 @@ const HomeSidebarContent = ({ openSidebarToggle,themeColors,colorScheme }) => {
                 openDelay={100} 
                 offset={{ mainAxis: 10 }}
             >
-                <UnstyledButton onClick={(event) => {event.preventDefault(); navigate(link.redirect);}}  
-                    key={link.label} className={`${classes.mainLink} px-[5px] last:mb-0` } data-theme={colorScheme}>
+                <UnstyledButton onClick={(e) => redirectToSpace(e,link)}  
+                    key={link.label} className={`${classes.mainLink} px-[5px] last:mb-0 ${activePage === link.label && classes.activeSpace }` } data-theme={colorScheme}>
                     <Flex align='center' pos='relative' flex={1} justify='center'>
                         <Box mb={2}>
+                            <div className={`${classes.mainLinkIcon}`}>
                             {Icons(link.icon, 20, 20, themeColors.text[10],1.7)}
+                            </div>
                             {link.notifications && (
                                 <Badge circle size="xs" color="blue" className={classes.badge + ' translate-y-[-65%] translate-x-[55%]'} ff='Inter' pos='absolute' top={0} right={0} >
                                     {link.notifications}

@@ -1,0 +1,56 @@
+import React, { useState, useEffect } from 'react';
+import { useOutletContext } from 'react-router-dom';
+
+import { Box } from '@mantine/core';
+
+import '@/styles/home/home.css';
+
+
+interface SpaceData { name: string; [key: string]: any; }
+interface ThemeColors { bg: string[]; text: string[]; }
+
+interface CurrentSpace {
+    name: string;
+    slug: string;
+    description: string;
+    visibility: string;
+    icon: any;
+}
+
+interface OutletContext {
+    themeColors: ThemeColors;
+    spaceData: SpaceData;
+    colorScheme: string;
+    currentSpace: CurrentSpace;
+}
+
+const Explore: React.FC = () => {
+    const { themeColors,spaceData,colorScheme,currentSpace } = useOutletContext<OutletContext>();
+
+
+    const [visible, setVisible] = useState(false);
+
+    // Visibility effect
+    useEffect(() => {
+        if (spaceData?.name) {
+            const timer = setTimeout(() => {
+                setVisible(true);
+            }, 15);
+            return () => clearTimeout(timer);
+        } else {
+            setVisible(false);
+        }
+    }, [spaceData?.name]);
+
+    return (
+        <>
+            <Box className={`transition-opacity duration-300 ease-linear ${visible ? 'opacity-100' : 'opacity-0'}`}>
+                <Box w='100%' >
+                    this is the explore page!
+                </Box>
+            </Box>
+        </>
+    );
+};
+
+export default Explore;

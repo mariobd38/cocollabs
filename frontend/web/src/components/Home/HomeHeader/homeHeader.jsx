@@ -37,14 +37,14 @@ const HomeHeader = ({spaceName,themeColors, colorScheme}) => {
                 <Box>
                     <Button 
                     bd={`.1px solid ${colorScheme==='dark' ? '#048369' : '#24b689e3'}`}
-                    radius={8} p='1px 13px' color={`${colorScheme==='dark' ? '#048369' : '#24b689e3'}`}
-                    c='#fafafa' className='bg-teal-600' 
+                    radius={8} p='1px 13px' 
+                    c='#fafafa' className='bg-teal-600 transition-all duration-300 ease-linear hover:bg-teal-500' classNames=''
                     >
                         <Flex align='center'>
                             <Box me={8} >
                                 {Icons('IconFidgetSpinner',18,18,'#fafafa')}
                             </Box>
-                            <span>Customize</span>
+                            <Box>Customize</Box>
                         </Flex>
                     </Button>
                 </Box>
