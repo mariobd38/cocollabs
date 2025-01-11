@@ -1,15 +1,11 @@
-import React, { useState, useEffect,useCallback } from 'react';
-import { useLocation, Outlet } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useLocation, useParams, Outlet } from 'react-router-dom';
 
 import { useMantineTheme,useMantineColorScheme,Box,Flex } from '@mantine/core';
 import { useLocalStorage } from '@mantine/hooks';
 
-import HomeHeader from '@/components/Home/HomeHeader/homeHeader';
-// import HomeNavbar from '@/components/Home/HomeNavbar/homeNavbar';
 import HomeNavbarv2 from '@/components/Home/v2/HomeNavbar/homeNavbarv2';
 // import TaskCard from '@/components/Home/TaskCard/taskCard';
-import QuickActions from '@/components/Home/QuickActions/quickActions';
-// import HomeSidebar from '@/components/Home/HomeSidebar/homeSidebar';
 import HomeSidebarv2 from '@/components/Home/v2/HomeSidebar/homeSidebarv2';
 
 import { getUserProfileInfo } from '@/api/Users/getUserProfileInfo';
@@ -19,20 +15,17 @@ import { getLastActiveSpaceInfo } from '@/api/Spaces/getLastActiveSpace';
 // import { getAllUserSpacesInfo } from '@/api/Spaces/getAllUserSpaces';
 // import { getGoogleTaskInfo } from '../../DataManagement/Tasks/getGoogleTasks';
 
-import dayjs from 'dayjs';
-
 import { getThemeColor } from '@/components/Themes/getThemeColor';
 import { getTextColor } from '@/components/Themes/getTextColor';
 
-import '@/styles/home/home.css';
+// import '@/styles/home/home.css';
+
 
 const AppLayout = ({content}) => {
     // const dayjs = require('dayjs');
     const theme = useMantineTheme();
     const { colorScheme, setColorScheme } = useMantineColorScheme();
-
     const location = useLocation();
-
     const passedUserInfo = location.state?.userInfo;
     const passedSpaceInfo = location.state?.spaceInfo;
     const [userFullName, setUserFullName] = useState(passedUserInfo?.fullName || '');
@@ -42,8 +35,9 @@ const AppLayout = ({content}) => {
     const [initials, setInitials] = useState(passedUserInfo?.fullName || '');
     const [spaceData, setSpaceData] = useState(passedSpaceInfo || []);
     const [userSpaces, setUserSpaces] = useState([]);
-    const [spaceSwitch, setSpaceSwitch] = useState(0);
     const [openSidebarToggle, setOpenSidebarToggle] = useState(false);
+    const { slug } = useParams();
+    const currentSpace = userSpaces.find(item => item.slug === slug);
 
     const themeColors = {
         bg: Array.from({ length: 13 }, (_, index) => getThemeColor(colorScheme, theme, index)),
@@ -55,10 +49,6 @@ const AppLayout = ({content}) => {
         getInitialValueInEffect: true, // fetch value lazily on first render
     });
 
-    // const getGoogleTasks = () => {
-    //     getGoogleTaskInfo();
-    // }
-
     const fullUserData = {
         fullName: userFullName, 
         initials: initials, 
@@ -67,14 +57,16 @@ const AppLayout = ({content}) => {
         profileDto: userProfileDto
     };
 
+    
     useEffect(() => {
         async function fetchSpaceData() {
             const data = await getLastActiveSpaceInfo();
-            setSpaceData(data);
+            setTimeout(() => {
+                setSpaceData(data);
+            },250)
         }
-
         fetchSpaceData();
-    }, [spaceSwitch]);
+    }, [slug])
 
 
     useEffect(() => {
@@ -128,8 +120,8 @@ const AppLayout = ({content}) => {
                 storedUserInfo={storedAppInfo}
                 setStoredUserInfo={setStoredAppInfo}
             />}
+                {/* {currentSpace && */}
             <Flex>
-
                 <Box>
                     {/* {userFullName &&
                     <HomeSidebar className='user-home-sidebar'
@@ -145,13 +137,12 @@ const AppLayout = ({content}) => {
                         colorScheme={colorScheme}
                         openSidebarToggle={openSidebarToggle}
                         setOpenSidebarToggle={setOpenSidebarToggle}
-                        spaceData={{name: spaceData.name, icon: spaceData.icon}}
+                        spaceData={{name: currentSpace?.name, icon: currentSpace?.icon}}
                         userFullName={userFullName}
-                        setSpaceSwitch={setSpaceSwitch}
                     />
                 </Box>
                 <Flex direction='column' className={`user-home-all-content ${openSidebarToggle && 'open' }`}>
-                    <Outlet />
+                    <Outlet context={{themeColors,spaceData,colorScheme,currentSpace}}/>
                 </Flex>
             </Flex>
         </>

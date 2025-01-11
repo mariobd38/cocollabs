@@ -69,6 +69,7 @@ public class UserPlatformDtoConverter {
     }
 
     public static Set<UserSpaceDto> getUserSpacesDto(User user) {
+        //TODO: change logic to extract most popular spaces rather than oldest spaces
         return user.getSpaces().stream()
                 .sorted(Comparator.comparing(Space::getCreatedOn))
                 .map(space -> new UserSpaceDto(

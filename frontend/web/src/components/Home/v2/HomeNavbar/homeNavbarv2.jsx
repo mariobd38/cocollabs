@@ -61,7 +61,11 @@ const HomeNavbarv2 = ({ themeColors,colorScheme,setColorScheme,profileInfo,setOp
                     <Grid.Col span={2} >
                         <Flex align='center' gap={25}>
                             <Box w='fit-content' className={`navbar-menu-sidebar-icon home-button ${colorScheme}`} onClick={handleOpenSidebarToggle}>
-                                {Icons('IconMenu2',27,27,buttonColor)}
+                                {/* {Icons('IconMenu2',27,27,buttonColor)} */}
+                                {Icons('IconSquare',25,25,buttonColor)}
+                                <Box left={openSidebarToggle ? 22 : 14.5} top={17} className='absolute transition-all duration-200 ease-linear'>
+                                    {Icons('IconMinusVertical',30,30,buttonColor,1.25)}
+                                </Box>
                             </Box>
 
                             <Flex align='center' pb={0} display={{base: 'none', sm: 'flex'}}>

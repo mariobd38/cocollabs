@@ -10,23 +10,6 @@
     /* padding: 0 0.75rem 3rem 0.75rem !important; */
 }
 
-
-/* calendar */
-.task-card-parent {
-    transition: width 0.35s ease;
-}
-@media (min-width: 992px) {
-    .task-card-parent {
-        width: 100%;
-    }
-}
-@media (min-width: 1210px) {
-    .task-card-parent {
-        /* width: 50%; */
-        width: 100%;
-    }
-}
-
 .user-home-tooltip {
     border: .1px solid #898989;
     padding: 5px 12px !important;

@@ -38,16 +38,16 @@ const SidebarProvider = React.forwardRef((
         className,
         style,
         children,
+        openSidebarToggle,
+        currentWidth,
         ...props
     },
     ref
     ) => {
-    // console.log(props.test)
     // const SIDEBAR_WIDTH = props.openSidebarToggle ? "256px" : "50px";
-    // console.log(props.currentWidth);
-    const SIDEBAR_WIDTH = props.openSidebarToggle ? `${props.currentWidth}px` : "3rem";
+    const SIDEBAR_WIDTH = openSidebarToggle ? `${currentWidth}px` : "3rem";
 
-    const isMobile = useIsMobile(props.openSidebarToggle)
+    const isMobile = useIsMobile(openSidebarToggle)
     const [openMobile, setOpenMobile] = React.useState(false)
 
     // This is the internal state of the sidebar.

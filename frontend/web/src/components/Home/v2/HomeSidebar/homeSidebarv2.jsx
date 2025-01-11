@@ -12,7 +12,7 @@ const CustomDialog = lazy(() => import('@/components/customDialog'));
 const LoadingFallback = () => <>...</>;
 
 const HomeSidebarv2 = (props) => {
-    const {openSidebarToggle, themeColors, colorScheme, setOpenSidebarToggle, spaceData,userFullName,setSpaceSwitch} = props;
+    const {openSidebarToggle, themeColors, colorScheme, setOpenSidebarToggle, spaceData,userFullName} = props;
 
     const sidebarRef = useRef(null);
     const [width, setWidth] = useState(210);
@@ -104,7 +104,6 @@ const HomeSidebarv2 = (props) => {
                         colorScheme={colorScheme}
                         setOpenSpaceCreateModal={setOpenSpaceCreateModal}
                         setDialogTrigger={setDialogTrigger}
-                        setSpaceSwitch={setSpaceSwitch}
                     />}
                 </SidebarHeader>
                     <SidebarContent >

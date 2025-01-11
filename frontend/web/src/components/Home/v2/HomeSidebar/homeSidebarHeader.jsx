@@ -17,7 +17,7 @@ import classes from '@/styles/home/homeSidebar.module.css';
 import '@/styles/home/homeSidebar.css';
 
 const HomeSidebarHeader = forwardRef((props, ref) => {
-    const { data, openSidebarToggle, themeColors, colorScheme, setOpenSpaceCreateModal, setDialogTrigger,setSpaceSwitch } = props;
+    const { data, openSidebarToggle, themeColors, colorScheme, setOpenSpaceCreateModal, setDialogTrigger } = props;
     const currentSpace = data.space.name;
     const { isMobile } = useSidebar();
     const navigate = useNavigate(); 
@@ -25,7 +25,6 @@ const HomeSidebarHeader = forwardRef((props, ref) => {
 
     const profileAvatar = (size,currSpace) => {
         const iconChildren = currSpace?.icon?.children;
-        // console.log(currSpace?.icon);
         
         if (iconChildren?.type === 'svg') {
             return (
@@ -74,7 +73,6 @@ const HomeSidebarHeader = forwardRef((props, ref) => {
         try {
             const response = await activateSpace(space);
             if (response && response.ok) {
-                setSpaceSwitch((prev) => prev + 1);
                 const slug = app.userSpace.filter(item => item.name === space)[0].slug;
                 slug && routeChange(`/${slug}`);
             }
@@ -155,7 +153,7 @@ const HomeSidebarHeader = forwardRef((props, ref) => {
                                 <Flex align='center' justify='center'  className="size-6 rounded-sm border">
                                     {Icons('IconPlus')}
                                 </Flex>
-                                <Box ref={ref} onClick={() => setDialogTrigger(ref)}>New space</Box>
+                                <Box onClick={() => setDialogTrigger(ref)}>New space</Box>
                             </DropdownMenuItem>
                         </Box>
                     } side={isMobile ? "bottom" : "right"} align='start' w={240} 

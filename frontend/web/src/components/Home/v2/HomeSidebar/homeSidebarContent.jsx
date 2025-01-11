@@ -25,7 +25,7 @@ const HomeSidebarContent = ({ openSidebarToggle,themeColors,colorScheme }) => {
     const mainLinks = links.map((link) => (
         <React.Fragment key={link.label} >
             {openSidebarToggle ? 
-                <UnstyledButton onClick={() => console.log('ds')} key={link.label} className={`${classes.mainLink} last:mb-0 ${classes.active}`} data-theme={colorScheme} >
+                <UnstyledButton onClick={(event) => {event.preventDefault(); navigate(link.redirect);}}  key={link.label} className={`${classes.mainLink} last:mb-0 ${classes.active}`} data-theme={colorScheme} >
                     <Flex>
                         <div className={`${classes.mainLinkIcon} ${classes.active}`}>
                             {Icons(link.icon, 20, 20, themeColors.text[10])}

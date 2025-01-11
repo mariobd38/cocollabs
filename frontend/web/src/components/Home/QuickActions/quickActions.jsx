@@ -164,7 +164,7 @@ const QuickActions = ({themeColors, colorScheme}) => {
                         >
                             {qaButtons.map((action) => (
                                 <Carousel.Slide py={15} key={action.title} >
-                                    <Flex direction='column' gap={20} h='162' bg={`${colorScheme==='dark' ? '#1c1d1f' : '#fdfdfd'}`} className={`quick-actions-button ${colorScheme} cursor-pointer py-4 px-[36px] border-solid border rounded-xl w-full`}>
+                                    <Flex direction='column' gap={20} h='142' bg={`${colorScheme==='dark' ? '#1c1d1f' : '#fdfdfd'}`} className={`quick-actions-button ${colorScheme} cursor-pointer p-[20px] border-solid border rounded-xl w-full`}>
                                         <Flex justify='space-between' className="gap-3 w-full">
                                             <Text className="text-xl font-bold" ff='Inter'>{action.title}</Text>
                                             <Flex>{Icons(action.icon,24,24,themeColors.text[1])}</Flex>

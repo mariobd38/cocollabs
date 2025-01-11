@@ -14,7 +14,7 @@ async function getUserProfileInfo() {
         return data;
     } catch (error) {
         console.error('Failed to fetch user info:', error);
-        return null;
+        return '';
     }
 }
 
