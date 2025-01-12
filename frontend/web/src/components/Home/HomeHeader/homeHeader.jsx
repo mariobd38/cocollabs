@@ -24,7 +24,7 @@ const HomeHeader = ({spaceName,themeColors, colorScheme}) => {
                     <Flex direction={{ base: 'column' }} gap={5}>
                             <Flex align='center' gap={8}>
                                 <Flex align='center' justify='center' >
-                                    {Icons('IconHome', 24,24,themeColors.text[3])}
+                                    {Icons('IconHome', 20,20,themeColors.text[3])}
                                 </Flex>
                                 <Text ff='Inter' fw={700} fz='18.4' c={themeColors.text[3]} >
                                     {spaceName}
@@ -38,7 +38,7 @@ const HomeHeader = ({spaceName,themeColors, colorScheme}) => {
                     <Button 
                     bd={`.1px solid ${colorScheme==='dark' ? '#048369' : '#24b689e3'}`}
                     radius={8} p='1px 13px' 
-                    c='#fafafa' className='bg-teal-600 transition-all duration-300 ease-linear hover:bg-teal-500' classNames=''
+                    c='#fafafa' className='bg-teal-500 transition-all duration-200 ease-linear hover:bg-teal-600' classNames=''
                     >
                         <Flex align='center'>
                             <Box me={8} >

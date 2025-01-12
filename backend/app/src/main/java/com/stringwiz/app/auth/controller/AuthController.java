@@ -151,20 +151,26 @@ public class AuthController {
     @GetMapping("/status")
     public ResponseEntity<?> checkAuthStatus(@CookieValue(name = "${JWT_COOKIE_ATTRIBUTE_NAME}", required = false) String jwt) {
         if (jwt == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Authentication required");
+            return ResponseEntity.ok(Map.of(
+                "isAuthenticated", false,
+                "isOnboarded", false
+        ));
         }
         try {
             String email = jwtUtil.getUserEmailFromToken(jwt);
             UserDetails userDetails = userDetailsService.loadUserByUsername(email);
 
             Optional<User> optionalUser = userRepository.findByEmail(email);
-            if (optionalUser.isPresent()) {
-                boolean isOnboarded = optionalUser.get().isOnboardingComplete();
-                boolean isAuthenticated = jwtUtil.validateToken(jwt,userDetails);
-                return ResponseEntity.ok(Map.of("isAuthenticated", isAuthenticated, "isOnboarded", isOnboarded));
-            } else {
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("User not found");
+
+            if (optionalUser.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not found");
             }
+            boolean isOnboarded = optionalUser.get().isOnboardingComplete();
+            boolean isAuthenticated = jwtUtil.validateToken(jwt,userDetails);
+            return ResponseEntity.ok(Map.of(
+                    "isAuthenticated", isAuthenticated,
+                    "isOnboarded", isOnboarded
+            ));
         } catch(Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("isAuthenticated", false, "isOnboarded",false));
         }
