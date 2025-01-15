@@ -18,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,22 +36,25 @@ public class UserController {
     private final UserRepository userRepository;
     private final UserPreferenceRepository userPreferenceRepository;
     private final JwtUtil jwtUtil;
+    private final PasswordEncoder passwordEncoder;
     private final UserTokenRepository userTokenRepository;
 
     public UserController(
             UserRepository userRepository,
             UserPreferenceRepository userPreferenceRepository,
             JwtUtil jwtUtil,
+            PasswordEncoder passwordEncoder,
             UserTokenRepository userTokenRepository) {
         this.userRepository = userRepository;
         this.userPreferenceRepository = userPreferenceRepository;
         this.jwtUtil = jwtUtil;
+        this.passwordEncoder = passwordEncoder;
         this.userTokenRepository = userTokenRepository;
     }
 
     @GetMapping("/getInfo")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<?> getUserInfo(@CookieValue(name = "${JWT_COOKIE_ATTRIBUTE_NAME}", required = false) String jwt) {
+    public ResponseEntity<?> getUserInfo(@CookieValue(name = "${APP_ACCESS_TOKEN_NAME}", required = false) String jwt) {
         if (jwt == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Authentication required");
         }
@@ -122,22 +126,5 @@ public class UserController {
         return ResponseEntity.ok(userRepository.findByEmail(email)
                 .map(User::isOnboardingComplete)
                 .orElse(false));
-    }
-
-    @GetMapping("/logout")
-    @Transactional
-    @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<?> logout(@AuthenticationPrincipal User user, HttpServletRequest request, HttpServletResponse response) {
-        String sessionId = request.getSession().getId();
-
-        // Delete token and invalidate session atomically
-        userTokenRepository.findByUserIdAndSessionId(user.getId(), sessionId)
-            .ifPresent(token -> {
-                userTokenRepository.deleteByUserIdAndSessionId(user.getId(), sessionId);
-                request.getSession().invalidate();
-            });
-
-        CookieUtil.deleteAllCookies(request,response);
-        return ResponseEntity.noContent().build();
     }
 }

@@ -25,14 +25,19 @@ public class UserToken {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false, nullable = false)
     private Long id;
+
     @Column(name = "user_id")
     private Long userId;
+
     @Column(name = "access_token", columnDefinition = "LONGTEXT")
     private String accessToken;
+
     @Column(name = "refresh_token", columnDefinition = "LONGTEXT")
     private String refreshToken;
+
     @Column(name = "session_id")
     private String sessionId;
+
     @CreationTimestamp
     @Column(name="created_on")
     private Timestamp createdOn;

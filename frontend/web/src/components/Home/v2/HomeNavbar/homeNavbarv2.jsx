@@ -44,7 +44,6 @@ const HomeNavbarv2 = ({ themeColors,colorScheme,setColorScheme,profileInfo,setOp
         const down = (e) => {
           if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
             e.preventDefault()
-            console.log("skdjs");
             setOpenCommand((open) => !open)
           }
         }

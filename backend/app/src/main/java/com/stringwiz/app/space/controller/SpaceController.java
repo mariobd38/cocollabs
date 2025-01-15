@@ -1,5 +1,6 @@
 package com.stringwiz.app.space.controller;
 
+import com.stringwiz.app.auth.controller.AuthController;
 import com.stringwiz.app.space.model.Space;
 import com.stringwiz.app.user.model.User;
 import com.stringwiz.app.space.service.SpaceService;
@@ -7,6 +8,8 @@ import com.stringwiz.app.user.repository.UserRepository;
 import com.stringwiz.app.user.util.UserPlatformDtoConverter;
 import com.stringwiz.app.userSpace.repository.UserSpaceActivityRepository;
 import jakarta.transaction.Transactional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,12 +20,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/spaces")
 public class SpaceController {
+    private final Logger logger = LoggerFactory.getLogger(AuthController.class);
     private final SpaceService spaceService;
     private final UserRepository userRepository;
     private final UserSpaceActivityRepository userSpaceActivityRepository;
@@ -61,6 +66,8 @@ public class SpaceController {
                     .orElseThrow(() -> new RuntimeException("User not found"));
 
             return ResponseEntity.ok(UserPlatformDtoConverter.getUserSpacesDto(user));
+        } catch(HttpClientErrorException.Unauthorized e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized to retrieve user spaces");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Error fetching user spaces: " + e.getMessage());
@@ -79,8 +86,14 @@ public class SpaceController {
     @GetMapping("/getLastActive")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> getLastActive(@AuthenticationPrincipal User user) {
-        Optional<Space> lastActiveSpace = userSpaceActivityRepository.findLastActiveSpaceForUser(user.getId());
-        return lastActiveSpace.map(ResponseEntity::ok).orElse(ResponseEntity.ok(new Space()));
+        try {
+            Optional<Space> lastActiveSpace = userSpaceActivityRepository.findLastActiveSpaceForUser(user.getId());
+            return lastActiveSpace.map(ResponseEntity::ok).orElse(ResponseEntity.ok(new Space()));
+        } catch (Exception e) {
+            logger.error("Error fetching user last active space");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error fetching user last active space");
+        }
     }
 
     /*@PutMapping("/api/spaces/linkTasks")

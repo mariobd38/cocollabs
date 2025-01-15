@@ -1,7 +1,7 @@
 
 function userLogout() {
 
-    fetch("/api/user/logout", {
+    fetch("/api/auth/logout", {
         method: "GET",
         headers: {
             "Content-Type": "application/json",

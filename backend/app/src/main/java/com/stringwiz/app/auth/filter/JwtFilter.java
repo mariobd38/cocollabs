@@ -1,4 +1,4 @@
-package com.stringwiz.app.user.filter;
+package com.stringwiz.app.auth.filter;
 
 import com.stringwiz.app.auth.util.JwtUtil;
 import com.stringwiz.app.user.service.CustomUserService;
@@ -34,7 +34,7 @@ public class JwtFilter extends OncePerRequestFilter {
     public JwtFilter(
             JwtUtil jwtUtil,
             UserDetailsService userDetailsService,
-            @Value("${JWT_COOKIE_ATTRIBUTE_NAME}") String jwtCookieName) {
+            @Value("${APP_ACCESS_TOKEN_NAME}") String jwtCookieName) {
         this.jwtUtil = jwtUtil;
         this.userDetailsService = userDetailsService;
         this.jwtCookieName = jwtCookieName;

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { updateThemeInfo } from '@/api/Users/updateTheme';
-import { userLogout } from '@/api/Users/logout';
+import { userLogout } from '@/api/Auth/logout';
 
 import { Text,Flex,Box } from '@mantine/core';
 import { DropdownMenuLabel,DropdownMenuItem,DropdownMenuSeparator } from "@/components/ui/dropdown-menu";

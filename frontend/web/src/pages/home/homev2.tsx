@@ -6,8 +6,6 @@ import HomeHeader from '@/components/Home/HomeHeader/homeHeader';
 import QuickActions from '@/components/Home/QuickActions/quickActions';
 
 // import { getUserProfileInfo } from '@/api/Users/getUserProfileInfo';
-// import { getLastActiveSpaceInfo } from '@/api/Spaces/getLastActiveSpace';
-
 // import dayjs, { Dayjs } from 'dayjs';
 
 import '@/styles/home/home.css';

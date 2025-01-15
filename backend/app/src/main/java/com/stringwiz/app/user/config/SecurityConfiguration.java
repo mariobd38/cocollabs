@@ -1,6 +1,6 @@
 package com.stringwiz.app.user.config;
 
-import com.stringwiz.app.user.filter.JwtFilter;
+import com.stringwiz.app.auth.filter.JwtFilter;
 import jakarta.servlet.http.HttpServletResponse;
 import kong.unirest.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;

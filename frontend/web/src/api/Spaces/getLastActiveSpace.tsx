@@ -10,6 +10,7 @@ async function getLastActiveSpaceInfo(): Promise<SpaceResponse> {
             headers: {
                 "Content-Type": "application/json",
             },
+            credentials: "include"
         });
 
         if (!response.ok) {
@@ -19,7 +20,7 @@ async function getLastActiveSpaceInfo(): Promise<SpaceResponse> {
         const data: SpaceResponse = await response.json();
         return data;
     } catch (error) {
-        console.error("Error fetching space info:", error);
+        console.error("Error fetching last active space info:", error);
         throw error;
     }
 }

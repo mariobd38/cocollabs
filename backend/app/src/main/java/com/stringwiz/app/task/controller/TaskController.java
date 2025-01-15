@@ -45,7 +45,7 @@ public class TaskController {
     }
 
     @GetMapping("/get")
-    public ResponseEntity<?> getTasks(@CookieValue(name = "${JWT_COOKIE_ATTRIBUTE_NAME}", required = false) String jwt) {
+    public ResponseEntity<?> getTasks(@CookieValue(name = "${APP_ACCESS_TOKEN_NAME}", required = false) String jwt) {
         if (jwt == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("JWT token not found in cookie");
         }
@@ -62,7 +62,7 @@ public class TaskController {
     }
 
     @GetMapping("/getBySpace")
-    public ResponseEntity<?> getTasksBySpace(@CookieValue(name = "${JWT_COOKIE_ATTRIBUTE_NAME}", required = false) String jwt, @RequestParam("spaceName") String spaceName) {
+    public ResponseEntity<?> getTasksBySpace(@CookieValue(name = "${APP_ACCESS_TOKEN_NAME}", required = false) String jwt, @RequestParam("spaceName") String spaceName) {
         if (jwt == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("JWT token not found in cookie");
         }

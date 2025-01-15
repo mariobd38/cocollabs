@@ -11,7 +11,7 @@ import org.springframework.web.socket.server.support.HttpSessionHandshakeInterce
 import java.util.Map;
 
 public class JwtHandshakeInterceptor extends HttpSessionHandshakeInterceptor {
-    @Value("${JWT_COOKIE_ATTRIBUTE_NAME}")
+    @Value("${APP_ACCESS_TOKEN_NAME}")
     private String JWT_COOKIE_NAME;
 
     @Override
