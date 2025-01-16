@@ -79,7 +79,8 @@ public class SpaceController {
         try {
             return ResponseEntity.ok(spaceService.getByUser(user, spaceName));
         } catch (Exception e) {
-            return ResponseEntity.ok(new Space());
+            logger.error("Error space with name: {}", spaceName);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error fetching space by name" );
         }
     }
 

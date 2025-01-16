@@ -39,6 +39,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.HtmlUtils;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -170,42 +171,37 @@ public class AuthController {
     }
 
     @GetMapping("/status")
-    public ResponseEntity<?> checkAuthStatus(@CookieValue(name = "${APP_ACCESS_TOKEN_NAME}", required = false) String jwt) {
+    public ResponseEntity<?> getAuthStatus(@CookieValue(name = "${APP_ACCESS_TOKEN_NAME}", required = false) String jwt) {
+        Map<String, Boolean> statusResponse = new HashMap<>();
+
         if (jwt == null) {
-            logger.info("No JWT found..");
-//            return ResponseEntity.ok(Map.of(
-//                    "isAuthenticated", false,
-//                    "isOnboarded", false
-//            ));
-//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of(
-//                    "isAuthenticated", false,
-//                    "isOnboarded", false
-//            ));
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("JWT not found");
+            logger.info("No JWT found, returning unauthenticated status");
+            statusResponse.put("isAuthenticated", false);
+            statusResponse.put("isOnboarded", false);
+            return ResponseEntity.ok(statusResponse);
         }
+
         try {
-            String email = jwtUtil.getUserEmailFromToken(jwt);
-            UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+            // Validate JWT and get user details
+            String userEmail = jwtUtil.getUserEmailFromToken(jwt);
+            Optional<User> user = userRepository.findByEmail(userEmail);
 
-            Optional<User> optionalUser = userRepository.findByEmail(email);
-
-            if (optionalUser.isEmpty()) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not found");
-            }
-            boolean isOnboarded = optionalUser.get().isOnboardingComplete();
-            if (!jwtUtil.validateToken(jwt, userDetails)) {
-                // Return 401 specifically for expired token
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                        .body(Map.of("error", "Token expired"));
+            if (user.isEmpty() || !jwtUtil.validateToken(jwt, user.get())) {
+                statusResponse.put("isAuthenticated", false);
+                statusResponse.put("isOnboarded", false);
+                return ResponseEntity.ok(statusResponse);
             }
 
-            return ResponseEntity.ok(Map.of(
-                    "isAuthenticated", true,
-                    "isOnboarded", isOnboarded
-            ));
-        } catch(Exception e) {
-            logger.error("Error occurred while checking authentication status");
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("isAuthenticated", false, "isOnboarded",false));
+            // User is authenticated, check onboarding status
+            statusResponse.put("isAuthenticated", true);
+            statusResponse.put("isOnboarded", user.get().isOnboardingComplete()); // Assuming you have this field
+            return ResponseEntity.ok(statusResponse);
+
+        } catch (Exception e) {
+            logger.error("Error validating JWT", e);
+            statusResponse.put("isAuthenticated", false);
+            statusResponse.put("isOnboarded", false);
+            return ResponseEntity.ok(statusResponse);
         }
     }
 

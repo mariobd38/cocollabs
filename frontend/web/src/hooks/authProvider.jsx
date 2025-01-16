@@ -36,55 +36,43 @@ export const AuthProvider = ({ children }) => {
                 credentials: 'include'
             });
             
-            // Log the response status
-            //console.log('Auth status response:', response.status);
+            const data = await response.json();
             
-            if (response.status === 401) {
-                //console.log("Token expired or missing, attempting refresh");
-                
-                const refreshResponse = await fetch('/api/auth/refresh', {
-                    method: 'POST',
-                    credentials: 'include'
-                });
-                
-                //console.log('Refresh response status:', refreshResponse.status);
-                
-                if (!refreshResponse.ok) {
-                    const errorText = await refreshResponse.text();
-                    //console.log('Refresh failed:', errorText);
-                    throw new Error(`Refresh failed: ${errorText}`);
+            // If not authenticated, try refresh
+            if (!data.isAuthenticated) {
+                try {
+                    const refreshResponse = await fetch('/api/auth/refresh', {
+                        method: 'POST',
+                        credentials: 'include'
+                    });
+                    
+                    if (!refreshResponse.ok) {
+                        return { isAuthenticated: false, isOnboarded: false };
+                    }
+                    
+                    // After successful refresh, retry auth status
+                    const newResponse = await fetch('/api/auth/status', {
+                        credentials: 'include'
+                    });
+                    
+                    return newResponse.json();
+                } catch (error) {
+                    return { isAuthenticated: false, isOnboarded: false };
                 }
-                
-                // After successful refresh, retry auth status
-                //console.log('Refresh successful, retrying auth status');
-                const newResponse = await fetch('/api/auth/status', {
-                    credentials: 'include'
-                });
-                
-                //console.log('New auth status response:', newResponse.status);
-                return newResponse.json();
             }
             
-            return response.json();
+            return data;
         } catch (error) {
-            console.error('Auth error:', error);
-            throw error;
+            return { isAuthenticated: false, isOnboarded: false };
         }
     };
     
     const checkAuthStatus = useCallback(async () => {
         try {
             const response = await authStatusInfo();
-            setAuthState({
-                isAuthenticated: response.isAuthenticated,
-                isOnboarded: response.isOnboarded,
-            });
+            setAuthState({ isAuthenticated: response.isAuthenticated, isOnboarded: response.isOnboarded });
         } catch (error) {
-            console.error('Auth check failed:', error);
-            setAuthState({
-                isAuthenticated: false,
-                isOnboarded: false,
-            });
+            setAuthState({ isAuthenticated: false, isOnboarded: false });
         } finally {
             setPending(false);
         }
