@@ -1,9 +1,12 @@
 package com.stringwiz.app.auth.service;
 
+import com.stringwiz.app.auth.controller.AuthController;
 import com.stringwiz.app.auth.model.CustomJwt;
 import com.stringwiz.app.auth.repository.CustomJwtRepository;
 import com.stringwiz.app.user.model.User;
 import jakarta.transaction.Transactional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
@@ -14,6 +17,7 @@ import java.util.Optional;
 @Service
 @Transactional
 public class CustomJwtService {
+    private final Logger logger = LoggerFactory.getLogger(AuthController.class);
     private final CustomJwtRepository customJwtRepository;
     private static final long CLEANUP_INTERVAL = 86400L;
 
@@ -39,6 +43,7 @@ public class CustomJwtService {
     }
 
     public void revokeToken(CustomJwt token) {
+        logger.info("Revoking token: {}", token.getId());
         token.setRevoked(true);
         customJwtRepository.save(token);
     }

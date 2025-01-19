@@ -59,7 +59,6 @@ public class TaskWebSocketController {
     @MessageMapping("/message")
     @SendTo("/topic/messages")
     public String handleMessage(String message) {
-        System.out.println("message");
         // Just echo the received message for simplicity
         return "Echo: " + message;
     }

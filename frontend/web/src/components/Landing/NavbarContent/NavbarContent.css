@@ -1,20 +1,17 @@
 .landing-nav-button {
-    font-size: 1em !important;
+    font-size: .95em !important;
     font-family: 'Inter' !important;
     border-radius: 10px !important;
-    letter-spacing: .18px;
-    padding: 3px 18px !important;
+    /* letter-spacing: .25px; */
+    padding: 0 14px !important;
     transform: none !important;
     transition: all 0.2s ease-in-out;
-    
 }
 .landing-nav-button.item {
-    background-color: transparent !important;
     border: 1px solid transparent !important;
 }
 .landing-nav-button.item:hover {
     background-color: #1b2246 !important;
-    border-color: #2b3266 !important;
 }
 .landing-nav-button.signup {
     background-color: #fafafa !important;

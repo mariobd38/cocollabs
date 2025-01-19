@@ -80,7 +80,7 @@ export function FooterContent() {
 
             <Container className={classes.afterFooter}>
                 <Text c="gray" size="sm">
-                    © 2024 Cocollabs. All rights reserved.
+                    © 2025 Cocollabs. All rights reserved.
                 </Text>
 
                 <Group gap={0} className={classes.social} justify="flex-end" wrap="nowrap">

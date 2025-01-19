@@ -37,8 +37,8 @@ const Hero = () => {
                                     animate={animate}
                                     target={<>
                                         <Flex align='center' c='#fafafa'> 
-                                            <Flex display={{base: 'none', xs: 'flex'}}>🎉 
-                                            <Divider mx='10' orientation="vertical" m='auto' size='xs' h='18' style={{borderRadius: "10px"}}  bd='.5px solid #363636'/>
+                                            <Flex display={{base: 'none', xs: 'flex'}}>🚀 
+                                                <Divider mx='10' orientation="vertical" m='auto' size='xs' h='18' style={{borderRadius: "10px"}}  bd='.5px solid #363636'/>
                                             </Flex>
                                             Introducing a new way to build solutions together
                                             <span className='ps-2 transition-transform duration-300 ease-in-out group-hover:translate-x-0.5'>
