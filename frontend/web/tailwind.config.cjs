@@ -143,35 +143,6 @@ const config = {
 				sm: "calc(var(--radius) - 4px)",
 			},
 			keyframes: {
-				"accordion-down": {
-					from: {
-						height: "0",
-					},
-					to: {
-						height: "var(--radix-accordion-content-height)",
-					},
-					},
-					"accordion-up": {
-					from: {
-						height: "var(--radix-accordion-content-height)",
-					},
-					to: {
-						height: "0",
-					},
-				},
-				meteor: {
-					'0%': {
-						transform: 'rotate(215deg) translateX(0)',
-						opacity: '1'
-					},
-					'70%': {
-						opacity: '1'
-					},
-					'100%': {
-						transform: 'rotate(215deg) translateX(-500px)',
-						opacity: '0'
-					}
-				},
 				gradient: {
 					to: {
 						backgroundPosition: 'var(--bg-size) 0'
@@ -183,17 +154,11 @@ const config = {
 				"accordion-up": "accordion-up 0.2s ease-out",
 				meteor: 'meteor 5s linear infinite',
 				gradient: 'gradient 8s linear infinite'
-			},
-			fontFamily: {
-				sans: ['Lato', 'Nunito Sans', 'Inter', 'Poppins', 'Open Sans', 'sans-serif',...defaultTheme.fontFamily.sans]
-			},
+			}
 		},
 	  },
 	  plugins: [tailwindAnimate],
 	darkMode: ['class'],
-	corePlugins: {
-		preflight: false,
-	},
 };
 
 export default config;

@@ -81,7 +81,7 @@ a {
     }
 }
 
-@keyframes floatDown {
+/* @keyframes floatDown {
     0% {
       transform: translateY(-50px);
       opacity: 0;
@@ -90,8 +90,18 @@ a {
       transform: translateY(0);
       opacity: 1;
     }
+} */
+@keyframes floatUp {
+    0% {
+      transform: translateY(50px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
 }
   
-.float-down {
-    animation: floatDown 1.5s ease-out forwards;
+.float-up {
+    animation: floatUp 1s ease-out forwards;
 }

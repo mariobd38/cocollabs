@@ -3,10 +3,10 @@ import { useNavigate } from "react-router-dom";
 
 import { Button,Flex, Box,Container, Title, Divider } from '@mantine/core';
 
-import MeteorsComp from '@/components/ui/Meteors/meteorsComp';
+// import MeteorsComp from '@/components/ui/Meteors/meteorsComp';
 import AnimatedGradientTextComp from '@/components/ui/AnimatedGradientText/animatedGradientTextComp';
 import HeroGetStartedButton from '@/components/Landing/MainContent/Hero/heroGetStartedButton';
-import TypingAnimationComp from '@/components/ui/TypingAnimation/typingAnimationComp';
+// import TypingAnimationComp from '@/components/ui/TypingAnimation/typingAnimationComp';
 import ContainerScrollAnimationComp from '@/components/ui/ContainerScrollAnimation/containerScrollAnimationComp';
 import { CardHoverEffectComp } from '@/components/ui/CardHoverEffect/cardHoverEffectComp';
 import { Icons } from '@/components/icons/icons';
@@ -26,15 +26,14 @@ const Hero = () => {
 
     return (
         <>
-            <MeteorsComp 
+            {/* <MeteorsComp 
                 num={45}
-                target={
-                    <Box w='100%' m={0} p={0} pb={{base: '0', sm: '60'}} bg='hsl(222.2 84% 4.9%)'>
+                target={ */}
+                    <Box w='100%' m={0} p={0} pb={{base: '0', sm: '60'}} bg='hsl(240 10% 3.9%)'>
                 
                         <Container px={{sm: '10', md: '0'}}>
-                            <Flex gap={70} direction='column' py={30} px={10}>
+                            <Flex gap={70} direction='column' py={50} px={10} className={`${animate ? 'float-up' : ''}`}>
                                 <AnimatedGradientTextComp
-                                    animate={animate}
                                     target={<>
                                         <Flex align='center' c='#fafafa'> 
                                             <Flex display={{base: 'none', xs: 'flex'}}>🚀 
@@ -47,23 +46,30 @@ const Hero = () => {
                                         </Flex>
                                     </>}
                                 />
+                                <Flex px={10} direction='column' gap={40}>
 
-                                <TypingAnimationComp text={'Collab like never before.'} duration={55} />
+                                
+
+                                {/* <TypingAnimationComp text={'Collab like never before'} duration={55} /> */}
+                                <Box>
+                                    <h1 className='font-bold text-white text-6xl sm:text-7xl tracking-tight sm:tracking-normal text-wrap text-center'>Connecting developers to projects</h1>
+                                </Box>
 
                                 <Flex gap={70} direction='column'>
                                     
-                                    <Title order={3} fz={{ base: '1.12rem', sm: '1.2rem', xl: '1.3rem'}} style={{transition: "font-size 0.4s ease"}}
-                                        fw={500} c="#d0d3d6" ff='Lato' textWrap="balance" ta='center' className={`${animate ? 'float-down' : ''}`}>
+                                    <p className='text-gray-200 text-lg sm:text-xl tracking-tight sm:tracking-normal text-wrap text-center'>
                                         Accelerate project growth, discover a wide developer community, and unlock your full development potential with seamless tools and integrations.
-                                    </Title>
+
+                                    </p>
                                     
-                                    <Flex align='center' m='auto' gap={50} direction={{ base: 'column', sm: 'row' }} className={`${animate ? 'float-down' : ''}`}
+                                    <Flex align='center' m='auto' gap={50} direction={{ base: 'column', sm: 'row' }} 
                                     >
                                         <HeroGetStartedButton routeChange={routeChange} />
                                         <Button className='visit-community-button' p='11px 30px' fz='1.07rem' bg='transparent' ff='Inter' radius={12} fw={600}>Visit the community
-                                            <span className='visit-community-icon' style={{padding: "0 0 0 8px"}}>{Icons('IconChevronRight',14,14)}</span>
+                                            <span className='visit-community-icon pl-2'>{Icons('IconChevronRight',14,14)}</span>
                                         </Button>
                                     </Flex>
+                                </Flex>
                                 </Flex>
                             </Flex>
 
@@ -80,8 +86,8 @@ const Hero = () => {
                         
                         </Container>
                     </Box>
-                }
-            />
+                {/* }
+            /> */}
             <Flex justify='center' >
 
                 <Divider size='xs' my={65} w={{base: '100%', md: '90%'}}  bd='.1px solid #202038'/>

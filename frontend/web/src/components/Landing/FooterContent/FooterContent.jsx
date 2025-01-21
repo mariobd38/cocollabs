@@ -7,36 +7,33 @@ import Logo2 from '@/components/Logo/logo2';
 
 import classes from './FooterLinks.module.css';
 
-const data = [
-        {
-            title: 'About',
-            links: [
-                { label: 'Features', link: '#' },
-                { label: 'Pricing', link: '#' },
-                { label: 'Support', link: '#' },
-                { label: 'Forums', link: '#' },
-            ],
-        },
-        {
-            title: 'Project',
-            links: [
-                { label: 'Contribute', link: '#' },
-                { label: 'Media assets', link: '#' },
-                { label: 'Changelog', link: '#' },
-                { label: 'Releases', link: '#' },
-            ],
-        },
-        {
-            title: 'Community',
-            links: [
-                { label: 'Join Discord', link: '#' },
-                { label: 'Follow on Twitter', link: '#' },
-                { label: 'Email newsletter', link: '#' },
-                { label: 'GitHub discussions', link: '#' },
-            ],
-        },
-    
-    ];
+const data = [{
+        title: 'About',
+        links: [
+            { label: 'Features', link: '#' },
+            { label: 'Pricing', link: '#' },
+            { label: 'Support', link: '#' },
+            { label: 'Forums', link: '#' },
+        ],
+    },
+    {
+        title: 'Project',
+        links: [
+            { label: 'Contribute', link: '#' },
+            { label: 'Media assets', link: '#' },
+            { label: 'Changelog', link: '#' },
+            { label: 'Releases', link: '#' },
+        ],
+    },
+    {
+        title: 'Community',
+        links: [
+            { label: 'Join Discord', link: '#' },
+            { label: 'Follow on Twitter', link: '#' },
+            { label: 'Email newsletter', link: '#' },
+            { label: 'GitHub discussions', link: '#' },
+        ],
+}];
 
 export function FooterContent() {
     const groups = data.map((group) => {

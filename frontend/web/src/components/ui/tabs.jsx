@@ -8,7 +8,9 @@ const Tabs = TabsPrimitive.Root;
 
 const TabsList = ({ className, ...props }) => {
   const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, top: 0, width: 0, height: 0 });
+  const [tabChangeCount, setTabChangeCount] = useState(0);
   const tabsListRef = useRef(null);
+  const previousActiveTab = useRef(null);
 
   useEffect(() => {
     const updateIndicator = () => {
@@ -24,6 +26,12 @@ const TabsList = ({ className, ...props }) => {
             width: activeRect.width,
             height: activeRect.height,
           });
+
+          // Check if the active tab has changed
+          if (previousActiveTab.current !== activeTab) {
+            setTabChangeCount((prevCount) => prevCount + 1);
+            previousActiveTab.current = activeTab;
+          }
         }
       }
     };
@@ -54,7 +62,7 @@ const TabsList = ({ className, ...props }) => {
         {...props}
       />
       <div
-        className="absolute rounded-md bg-background shadow-sm transition-all duration-300 ease-in-out"
+        className={`absolute rounded-md bg-background shadow-sm ${tabChangeCount>1 && 'transition-all duration-300 ease-in-out'}}`}
         style={indicatorStyle}
       />
     </div>

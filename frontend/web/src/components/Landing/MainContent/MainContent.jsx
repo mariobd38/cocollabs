@@ -53,13 +53,13 @@ const MainContent = () => {
         setScrollPosition(position);
     };
 
-    useEffect(() => {
-        window.addEventListener('scroll', handleScroll, { passive: true });
+    // useEffect(() => {
+    //     window.addEventListener('scroll', handleScroll, { passive: true });
         
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-        };
-    }, [scrollPosition]);
+    //     return () => {
+    //         window.removeEventListener('scroll', handleScroll);
+    //     };
+    // }, [scrollPosition]);
     
     // const items = features.map((feature,index) => (
     //     <div key={index} style={{color: "#121212"}}>
@@ -82,9 +82,9 @@ const MainContent = () => {
 
     return (
         <div>
-            <main className='landing-header'>
+            <main>
                 <NavbarContent scrollPosition={scrollPosition}/>
-                <Box bg='hsl(222.2 84% 4.9%)'>
+                <Box bg='hsl(240 10% 3.9%)'>
                     <Hero />
                 </Box>
 

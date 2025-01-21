@@ -11,15 +11,17 @@ const ContainerScrollAnimationComp = () => {
         <Flex direction='column' px={{base: 0, sm: 20}}>
             <ContainerScroll
                 titleComponent={
-                    <Flex direction='column' pt={{base: 30, sm: 40}} gap={10} w='95%' m='auto'>
-                        <Title order={1} fz={{ base: '2.2rem', xs: "2.5rem", sm: '3.1rem' }} style={{transition: "font-size 0.4s ease"}}
-                            fw={550} c="#c0c3c6" ff='Helvetica' textWrap="balance" ta='center'>
-                                Your Projects, Tools, and Teams
-                        </Title>
-                        <Title order={1} fz={{ base: '2.2rem', xs: "2.5rem", sm: '3.1rem' }} style={{transition: "font-size 0.4s ease"}}
-                            fw={550} c="#c0c3c6" ff='Helvetica' textWrap="balance" ta='center'>
-                                All in One Place
-                        </Title>
+                    <Flex direction='column' pt={{base: 30, sm: 40}} pb={22} gap={10} w='95%' m='auto'>
+                        <h1 order={1} 
+                        className='font-bold text-gray-200 text-3xl sm:text-5xl tracking-tight sm:tracking-normal text-wrap text-center
+                        transition-all ease duration-500'>
+                            Your Projects, Tools, and Teams
+                        </h1>
+                        <h1 order={1}
+                        className='font-bold text-gray-200 text-3xl sm:text-5xl tracking-tight sm:tracking-normal text-wrap text-center
+                        transition-all ease duration-500'>
+                            All in One Place
+                        </h1>
                     </Flex>
                 }
             >

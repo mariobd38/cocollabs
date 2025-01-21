@@ -129,13 +129,13 @@ module.exports = {
       		},
       		fontFamily: {
       			sans: [
-      				'Lato',
-      				'Nunito Sans',
-      				'Inter',
-      				'Poppins',
-      				'Open Sans',
-      				'sans-serif',
-                        ...defaultTheme.fontFamily.sans
+      				// 'Lato',
+      				// 'Nunito Sans',
+      				// 'Inter',
+      				// 'Poppins',
+      				// 'Open Sans',
+      				// 'sans-serif',
+                    //     ...defaultTheme.fontFamily.sans
                     ]
       		}
       	}
@@ -143,6 +143,6 @@ module.exports = {
       plugins: [require('tailwindcss-animate')],
       darkMode: ["class", 'class'],
       corePlugins: {
-        preflight: false,
+        // preflight: false,
       },
   };

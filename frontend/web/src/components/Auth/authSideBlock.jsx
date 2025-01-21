@@ -23,8 +23,8 @@ const AuthSideBlock = ({isLogin}) => {
                         <Title order={2} c='#fafafa' ff='Nunito Sans' ta='center'>Simplify your development workflow, meet your project goals.</Title>
 
                         <Text order={2} c='#d5d5d5' ff='Nunito Sans' ta='center'>
-                            Cocollabs is designed to ease the project experience for professionals.
-                            With advanced AI capabilities, discover how you can take your project from 0 to 1.
+                            Cocollabs is designed to simplify project discovery and collaboration for professionals.
+                            Discover how you can match with other devs with similar interests and take your project from 0 to 1.
                         </Text>
 
                     </Flex>
@@ -41,9 +41,9 @@ const AuthSideBlock = ({isLogin}) => {
                                     {IconsFilled('IconPhotoFilled',50,50, '#353535')}
                                 </span>
                                 <Flex direction='column'>
-                                    <Title order={5} fw={600} ff='Lato'>
+                                    <h1 className='text-gray-900 lato-font font-bold text-medium'>
                                         Invite to project
-                                    </Title>
+                                    </h1>
 
                                     <Text fz={13} c='#797979' ff='Lato'>
                                         Collaborate with members on this project
@@ -70,9 +70,9 @@ const AuthSideBlock = ({isLogin}) => {
                                     <Image src={profile} radius={50}/>
                                 </Box>
                                 <Flex direction='column'>
-                                    <Title order={4} fw={600} ff='Lato'>
+                                    <h1 className='text-gray-900 lato-font font-bold text-medium'>
                                         Oscar Martinez
-                                    </Title>
+                                    </h1>
                                     
                                     <Text fz={13} c='#797979'>
                                         Software Engineer

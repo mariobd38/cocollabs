@@ -30,7 +30,7 @@ export default function WordPullUp({
       variants={wrapperFramerProps}
       initial="hidden"
       animate="show"
-      style={{textWrap: "balance"}}
+      className="text-balance"
       >
       {words.split(" ").map((word, i) => (
         <MotionTitle
@@ -55,15 +55,6 @@ export default function WordPullUp({
       >
         {word === "" ? <span>&nbsp;</span> : word}
       </MotionTitle>
-
-        // <motion.span
-        // key={i}
-        // variants={framerProps}
-        // style={{ display: "inline-block", paddingRight: "8px", fontFamily: "Helvetica", textWrap: "balance",
-        //   color: "#d0d3d6", sx={{sm: ""}}
-        //  }}>
-        // {word === "" ? <span>&nbsp;</span> : word}
-        // </motion.span>
       ))}
     </motion.span>)
   );

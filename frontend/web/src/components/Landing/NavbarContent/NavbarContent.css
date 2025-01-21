@@ -4,18 +4,15 @@
     border-radius: 10px !important;
     /* letter-spacing: .25px; */
     padding: 0 14px !important;
+    font-family: 'Geist' !important;
     transform: none !important;
     transition: all 0.2s ease-in-out;
 }
-.landing-nav-button.item {
-    border: 1px solid transparent !important;
-}
 .landing-nav-button.item:hover {
-    background-color: #1b2246 !important;
+    /* background-color: #1b2246 !important; */
 }
 .landing-nav-button.signup {
-    background-color: #fafafa !important;
-    border: 1px solid #fafafa !important;
+    /* border: 1px solid #fafafa !important; */
     color: #202020 !important
 }
 .landing-nav-button.signup:hover {
@@ -29,9 +26,6 @@
     border-radius: 20px;
 }
 
-.drawer-parent .mantine-Drawer-close:hover {
-    background-color: #e1e1e1;
-}
 
 .navbar-drawer-nav-item {
     padding: 6px 0px !important;
@@ -43,7 +37,6 @@
     letter-spacing: 0.18px;
     border-radius: 10px !important;
     transition: all 0.3s ease !important;
-    display: flex !important;
 }
 .navbar-drawer-nav-item:hover {
     background-color: #1b2246 !important;

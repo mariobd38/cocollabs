@@ -27,11 +27,9 @@ export default function TypingAnimation({
   }, [duration, i]);
 
   return (
-    (
     <Title order={1} pb={0} fz={{ base: '3.6rem', sm: '3.9rem', xl: '4.3rem'}} style={{transition: "font-size 0.4s ease", letterSpacing: "1px"}}
     ff='Lato' textWrap="balance" c='#fafafa' ta='center' >
         {displayedText ? displayedText : text}
     </Title>
-  )
   );
 }
