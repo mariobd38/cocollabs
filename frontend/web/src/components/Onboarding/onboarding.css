@@ -7,7 +7,6 @@
     border: 3px dashed #d5d7dbfa;
     border-radius: 50%;
     color: #b5b7bbfa;
-    background-color: white;
     transition: all 0.5s ease;
 }
 .onboarding-add-new-profile-button:hover {
@@ -95,10 +94,6 @@
     text-overflow:ellipsis;
     width: 125px;
 }
-.onboarding-steps-inner-content {
-    background-color: #f9f9f9 !important;
-    border:none !important;
-}
 .onboarding-bottom-button {
     transition: all 1.2s ease;
 }
@@ -133,4 +128,18 @@
 .onboarding-input .mantine-InputWrapper-label {
     display: flex;
     padding-bottom: 25px;
+}
+
+@media (max-width: 640px) {
+    div[data-radix-popper-content-wrapper] {
+        /* background-color: red !important; */
+        top: 110% !important; 
+        right: 100% !important;
+        transform: translate(50%,-50%) !important;
+        position: absolute !important;
+        /* transform: translateY(50%) translateX(50%) !important; */
+    }
+    /* .visit-community-button {
+        padding: 11px 26px !important;
+    } */
 }

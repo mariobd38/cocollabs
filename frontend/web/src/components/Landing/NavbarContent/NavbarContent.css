@@ -56,3 +56,7 @@
 .navbar-drawer-nav-login-signup:hover {
     filter: brightness(1.25);
 }
+
+.mantine-Drawer-content {
+    height: 100% !important;
+}

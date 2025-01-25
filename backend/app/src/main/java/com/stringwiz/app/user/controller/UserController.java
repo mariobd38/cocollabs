@@ -5,20 +5,16 @@ import com.stringwiz.app.user.model.User;
 import com.stringwiz.app.user.model.UserPreference;
 import com.stringwiz.app.user.repository.UserPreferenceRepository;
 import com.stringwiz.app.user.repository.UserRepository;
-import com.stringwiz.app.user.repository.UserTokenRepository;
-import com.stringwiz.app.auth.util.CookieUtil;
 import com.stringwiz.app.auth.util.JwtUtil;
 import com.stringwiz.app.user.util.UserPlatformDtoConverter;
 import com.stringwiz.app.user.dto.UserPlatformDto;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.Email;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,23 +29,18 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
+    private final Logger logger = LoggerFactory.getLogger(UserController.class);
     private final UserRepository userRepository;
     private final UserPreferenceRepository userPreferenceRepository;
     private final JwtUtil jwtUtil;
-    private final PasswordEncoder passwordEncoder;
-    private final UserTokenRepository userTokenRepository;
 
     public UserController(
             UserRepository userRepository,
             UserPreferenceRepository userPreferenceRepository,
-            JwtUtil jwtUtil,
-            PasswordEncoder passwordEncoder,
-            UserTokenRepository userTokenRepository) {
+            JwtUtil jwtUtil) {
         this.userRepository = userRepository;
         this.userPreferenceRepository = userPreferenceRepository;
         this.jwtUtil = jwtUtil;
-        this.passwordEncoder = passwordEncoder;
-        this.userTokenRepository = userTokenRepository;
     }
 
     @GetMapping("/getInfo")

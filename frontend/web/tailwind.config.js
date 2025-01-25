@@ -1,5 +1,3 @@
-import defaultTheme from "tailwindcss/defaultTheme";
-
 /** @type {import('tailwindcss').Config} */
 module.exports = {
     content: [
@@ -67,7 +65,12 @@ module.exports = {
       				'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
       				border: 'hsl(var(--sidebar-border))',
       				ring: 'hsl(var(--sidebar-ring))'
-      			}
+      			},
+      			// // 'color-1': 'hsl(var(--color-1))',
+      			// // 'color-2': 'hsl(var(--color-2))',
+      			// // 'color-3': 'hsl(var(--color-3))',
+      			// // 'color-4': 'hsl(var(--color-4))',
+      			// // 'color-5': 'hsl(var(--color-5))'
       		},
       		borderRadius: {
       			lg: 'var(--radius)',
@@ -107,37 +110,35 @@ module.exports = {
       			gradient: {
       				to: {
       					backgroundPosition: 'var(--bg-size) 0'
-      				}
+      				},
+					'0%': { backgroundPosition: '0% 50%' },
+					'50%': { backgroundPosition: '100% 50%' },
+					'100%': { backgroundPosition: '0% 50%' },
+					
       			},
-				'fade-left': {
-					"0%": {
-						opacity: "0",
-						transform: "translateX(1.5rem)"
-					},
-					"100%": {
-						opacity: "1",
-						transform: "translateX(0)"
-					}
-				}
+      			'fade-left': {
+      				'0%': {
+      					opacity: '0',
+      					transform: 'translateX(1.5rem)'
+      				},
+      				'100%': {
+      					opacity: '1',
+      					transform: 'translateX(0)'
+      				}
+      			}
       		},
       		animation: {
       			'accordion-down': 'accordion-down 0.2s ease-out',
       			'accordion-up': 'accordion-up 0.2s ease-out',
       			meteor: 'meteor 5s linear infinite',
-      			gradient: 'gradient 8s linear infinite',
-				"fade-left": "fade-left 0.3s ease"
+      			// gradient: 'gradient 8s linear infinite',
+				gradient: 'gradient 6s ease-in-out infinite',
+
+      			'fade-left': 'fade-left 0.3s ease'
       		},
       		fontFamily: {
-      			sans: [
-      				// 'Lato',
-      				// 'Nunito Sans',
-      				// 'Inter',
-      				// 'Poppins',
-      				// 'Open Sans',
-      				// 'sans-serif',
-                    //     ...defaultTheme.fontFamily.sans
-                    ]
-      		}
+      			sans: []
+      		},
       	}
       },
       plugins: [require('tailwindcss-animate')],

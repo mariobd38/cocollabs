@@ -26,4 +26,8 @@ public interface CustomJwtRepository extends JpaRepository<CustomJwt, Long> {
     @Modifying
     @Query("DELETE FROM CustomJwt t WHERE t.expiryDate < :now")
     void deleteExpiredTokens(@Param("now") Timestamp now);
+
+    @Modifying
+    @Query("DELETE FROM CustomJwt t WHERE t.revoked = true AND t.issuedAt < :cutoffTime")
+    void deleteRevokedTokens(@Param("cutoffTime") Timestamp cutoffTime);
 }

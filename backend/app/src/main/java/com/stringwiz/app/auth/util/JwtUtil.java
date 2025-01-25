@@ -1,11 +1,14 @@
 package com.stringwiz.app.auth.util;
 
 //import com.stringwiz.app.services.GooglePublicKeysService;
+import com.stringwiz.app.auth.controller.AuthController;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -19,7 +22,8 @@ import java.util.function.Function;
 
 @Component
 public class JwtUtil {
-    private static final long ACCESS_TOKEN_VALIDITY = 5 * 60L; // 5 minutes
+    private final Logger logger = LoggerFactory.getLogger(JwtUtil.class);
+    private static final long ACCESS_TOKEN_VALIDITY = 24 * 60 * 60L; // 5 minutes
     private static final long REFRESH_TOKEN_VALIDITY = 7 * 24 * 60 * 60L; // 7 days
     private static final long JWT_TOKEN_VALIDITY = 30 * 24 * 60 * 60L;
     private static final String ISSUER = "cocollabs-app";
@@ -97,6 +101,7 @@ public class JwtUtil {
             return tokenType != null && (tokenType.equals(TokenType.ACCESS.name()) ||
                     tokenType.equals(TokenType.REFRESH.name()));
         } catch (JwtException | IllegalArgumentException e) {
+            logger.warn("Toke validation failed", e);
             return false;
         }
     }

@@ -50,7 +50,7 @@ const PrivateRoute = ({ children }) => {
         return <Navigate to="/login" replace />;
     }
 
-    if (isAuthenticated && !isOnboarded) {
+    if (isAuthenticated && !isOnboarded && location.pathname !== '/onboarding') {
         return <Navigate to="/onboarding" replace />;
     }
 

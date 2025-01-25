@@ -115,8 +115,8 @@ const NavbarContent = (props) => {
         
         
 
-        <Box pb={0} className="sticky-top border-b border-b-gray-800" h={70} bg='hsl(240 10% 3.9%)' px={{base: 25, xs: 40}}>
-            <Box className='' h="100%">
+        <Box pb={0} className="sticky-top border-b border-b-gray-800" h={65} bg='hsl(240 10% 3.9%)' px={{base: 25, xs: 40}}>
+            <Box h="100%">
             
                 <Group justify="space-between" h="100%" >
                     <Flex gap={50} align='center' >
@@ -137,7 +137,6 @@ const NavbarContent = (props) => {
                     <Group visibleFrom="sm" >
 
                         <Flex align='center' gap={12} >
-
                              <Button variant='ghost' className='h-9 landing-nav-button font-medium item text-white border-solid border-[transparent] hover:bg-zinc-900' onClick={() => routeChange('/login')}>
                                  Login
                              </Button>
@@ -167,7 +166,7 @@ const NavbarContent = (props) => {
                     timingFunction: 'cubic-bezier(0.4, 0, 0.2, .4)'
                 }}
             >
-                <ScrollArea h='480px' w='100%' bg='hsl(240 10% 3.9%)'>
+                <ScrollArea h='100%' w='100%'  bg='hsl(240 10% 3.9%)'>
                     <Divider mb="35" bd='.1px solid #c5c5c5' />
 
                     <Flex align='center' direction='column' pt={5} pb={5} gap={5} >
@@ -180,7 +179,7 @@ const NavbarContent = (props) => {
                         ))}
                     </Flex>
 
-                    <Group m='auto' w='90%' justify="center" grow gap={30} h={150} >
+                    <Group m='auto' w='90%' justify="center" grow gap={30} h='100%' >
                         <Flex display={{base: 'flex', sm: 'none'}} direction='column' gap={30} justify='space-between' grow >
                             <Button onClick={() => routeChange('/login')} bg='#162a53'  w={{base: 'auto', sm: '100%'}} className='h-8 navbar-drawer-nav-login-signup'>Login</Button>
                             <Button onClick={() => routeChange('/signup')} bg='#eaeaea' c='#202' w={{base: 'auto', sm: '100%'}} className='h-8 navbar-drawer-nav-login-signup'>Sign up</Button>

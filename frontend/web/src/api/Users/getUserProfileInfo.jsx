@@ -13,7 +13,6 @@ async function getUserProfileInfo() {
         const data = await response.json();
         return data;
     } catch (error) {
-        console.error('Failed to fetch user info:', error);
         return '';
     }
 }

@@ -25,7 +25,7 @@ interface OutletContext {
 }
 
 const Explore: React.FC = () => {
-    const { themeColors,spaceData,colorScheme,currentSpace } = useOutletContext<OutletContext>();
+    const { spaceData } = useOutletContext<OutletContext>();
 
 
     const [visible, setVisible] = useState(false);

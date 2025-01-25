@@ -1,8 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import { useNavigate } from "react-router-dom";
 
-import { Button,Flex, Box,Container, Title, Divider } from '@mantine/core';
+import { Flex, Box,Container, Title, Divider } from '@mantine/core';
+import { Button } from '@/components/ui/button';
 
+import AuroraTextComp from '@/components/ui/AuroraText/auroraTextComp';
 // import MeteorsComp from '@/components/ui/Meteors/meteorsComp';
 import AnimatedGradientTextComp from '@/components/ui/AnimatedGradientText/animatedGradientTextComp';
 import HeroGetStartedButton from '@/components/Landing/MainContent/Hero/heroGetStartedButton';
@@ -26,71 +28,60 @@ const Hero = () => {
 
     return (
         <>
-            {/* <MeteorsComp 
-                num={45}
-                target={ */}
-                    <Box w='100%' m={0} p={0} pb={{base: '0', sm: '60'}} bg='hsl(240 10% 3.9%)'>
-                
-                        <Container px={{sm: '10', md: '0'}}>
-                            <Flex gap={70} direction='column' py={50} px={10} className={`${animate ? 'float-up' : ''}`}>
-                                <AnimatedGradientTextComp
-                                    target={<>
-                                        <Flex align='center' c='#fafafa'> 
-                                            <Flex display={{base: 'none', xs: 'flex'}}>🚀 
-                                                <Divider mx='10' orientation="vertical" m='auto' size='xs' h='18' style={{borderRadius: "10px"}}  bd='.5px solid #363636'/>
-                                            </Flex>
-                                            Introducing a new way to build solutions together
-                                            <span className='ps-2 transition-transform duration-300 ease-in-out group-hover:translate-x-0.5'>
-                                            {Icons('IconChevronRight',13,13)}
-                                            </span>
-                                        </Flex>
-                                    </>}
-                                />
-                                <Flex px={10} direction='column' gap={40}>
-
-                                
-
-                                {/* <TypingAnimationComp text={'Collab like never before'} duration={55} /> */}
-                                <Box>
-                                    <h1 className='font-bold text-white text-6xl sm:text-7xl tracking-tight sm:tracking-normal text-wrap text-center'>Connecting developers to projects</h1>
-                                </Box>
-
-                                <Flex gap={70} direction='column'>
-                                    
-                                    <p className='text-gray-200 text-lg sm:text-xl tracking-tight sm:tracking-normal text-wrap text-center'>
-                                        Accelerate project growth, discover a wide developer community, and unlock your full development potential with seamless tools and integrations.
-
-                                    </p>
-                                    
-                                    <Flex align='center' m='auto' gap={50} direction={{ base: 'column', sm: 'row' }} 
-                                    >
-                                        <HeroGetStartedButton routeChange={routeChange} />
-                                        <Button className='visit-community-button' p='11px 30px' fz='1.07rem' bg='transparent' ff='Inter' radius={12} fw={600}>Visit the community
-                                            <span className='visit-community-icon pl-2'>{Icons('IconChevronRight',14,14)}</span>
-                                        </Button>
+            <Box w='100%' m={0} p={0} pb={{base: '0', sm: '60'}} bg='hsl(240 10% 3.9%)'>
+        
+                <Container px={{sm: '10', md: '0'}}>
+                    <Flex gap={70} direction='column' py={50} px={10} className={`${animate ? 'float-up' : ''}`}>
+                        <AnimatedGradientTextComp
+                            target={<>
+                                <Flex align='center' c='#fafafa'> 
+                                    <Flex display={{base: 'none', xs: 'flex'}}>🚀 
+                                        <Divider mx='10' orientation="vertical" m='auto' size='xs' h='18' style={{borderRadius: "10px"}}  bd='.5px solid #363636'/>
                                     </Flex>
+                                    Introducing a new way to build solutions together
+                                    <span className='ps-2 transition-transform duration-300 ease-in-out group-hover:translate-x-0.5'>
+                                    {Icons('IconChevronRight',13,13)}
+                                    </span>
                                 </Flex>
-                                </Flex>
-                            </Flex>
+                            </>}
+                        />
+                        <Flex px={10} direction='column' gap={40}>
 
-                            {/* <Divider  size='xs' my={45} w='100%' />
-
-                            <ContainerScrollAnimationComp />
-
-                            <Container my={100} px={{sm: '20', md: '0'}}>
-                                <Title c='#fafafa'>Features</Title>
-                                <CardHoverEffectComp />
-                                
-                            </Container>
-                        </Container> */}
                         
-                        </Container>
-                    </Box>
-                {/* }
-            /> */}
-            <Flex justify='center' >
 
-                <Divider size='xs' my={65} w={{base: '100%', md: '90%'}}  bd='.1px solid #202038'/>
+                        {/* <TypingAnimationComp text={'Collab like never before'} duration={55} /> */}
+                        <Box ff='Helvetica'>
+                            <h1 className='font-bold text-white text-6xl sm:text-7xl tracking-tight sm:tracking-normal text-balance sm:text-wrap text-center !leading-[4.6rem] w-11/12 m-auto'>Connecting developers to  <AuroraTextComp>success</AuroraTextComp>
+                            </h1>
+                            
+                        </Box>
+
+                        <Flex direction='column' gap={60}>
+                            <Flex direction='column' gap={10}>
+
+                                {/* <p className='text-gray-200 text-lg sm:text-xl tracking-tight sm:tracking-normal text-wrap text-center'>
+                                    Your projects, tools, and teams all in one place
+                                </p> */}
+                                <p className='text-gray-300 text-md sm:text-lg tracking-tight sm:tracking-normal text-balance text-center w-11/12 m-auto'>
+                                Meet the platform made for project and developer growth. Discover a wide developer community, and unlock your full development potential with seamless tools and integrations.
+                                </p>
+                            </Flex>
+                            
+                            <Flex align='center' m='auto' gap={50} direction={{ base: 'column', sm: 'row' }} ff='Inter'
+                            >
+                                <HeroGetStartedButton routeChange={routeChange} />
+                                <Button className='visit-community-button bg-white font-bold rounded-xl text-base px-4 py-2 hover:brightness-90'>Visit the community
+                                    <span className='visit-community icon'>{Icons('IconChevronRight',16,16)}</span>
+                                </Button>
+                            </Flex>
+                        </Flex>
+                        </Flex>
+                    </Flex>
+                
+                </Container>
+            </Box>
+            <Flex justify='center' >
+                <Divider size='xs' my={65} w={{base: '100%', md: '100%'}}  bd='.1px solid #202038'/>
             </Flex>
 
             <ContainerScrollAnimationComp />

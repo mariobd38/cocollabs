@@ -19,7 +19,9 @@ import java.util.Optional;
 public class CustomJwtService {
     private final Logger logger = LoggerFactory.getLogger(AuthController.class);
     private final CustomJwtRepository customJwtRepository;
-    private static final long CLEANUP_INTERVAL = 86400L;
+    private static final long EXPIRED_CLEANUP_INTERVAL = 24 * 60 * 60L;
+    private static final long REVOKED_CLEANUP_INTERVAL = 60 * 60L; // 1 hour
+    private static final long REVOKED_TOKEN_RETENTION = 24 * 60 * 60L; // Keep revoked tokens for 24 hours
 
     public CustomJwtService(CustomJwtRepository customJwtRepository) {
         this.customJwtRepository = customJwtRepository;
@@ -52,9 +54,16 @@ public class CustomJwtService {
         customJwtRepository.revokeAllUserTokens(user);
     }
 
-    @Scheduled(fixedRate = CLEANUP_INTERVAL * 1000)
+    @Scheduled(fixedRate = EXPIRED_CLEANUP_INTERVAL * 1000)
     public void cleanupExpiredTokens() {
         customJwtRepository.deleteExpiredTokens(new Timestamp(System.currentTimeMillis()));
+    }
+
+    @Scheduled(fixedRate = REVOKED_CLEANUP_INTERVAL * 1000)
+    public void cleanupRevokedTokens() {
+        Timestamp cutoffTime = new Timestamp(System.currentTimeMillis() - (REVOKED_TOKEN_RETENTION * 1000));
+        logger.info("Cleaning up revoked tokens older than: {}", cutoffTime);
+        customJwtRepository.deleteRevokedTokens(cutoffTime);
     }
 
     private String hashToken(String token) {
