@@ -224,7 +224,6 @@ const SignupContent = (props) => {
                                     <Stack className='flex align-center'>
                                         <Box ref={fullNameRef} className='w-full'>
                                             <TextInput
-                                                // onClick={() => setSignupClicked(false)}
                                                 required
                                                 label="Full name"
                                                 placeholder={isFullNameFocused ? '' : 'John Doe'}
@@ -239,7 +238,7 @@ const SignupContent = (props) => {
                                             />
                                         </Box>
 
-                                        <div ref={passwordRef} className='w-full'>
+                                        <Box ref={passwordRef} className='w-full'>
                                             <PasswordInput
                                                 required
                                                 // onClick={() => setSignupClicked(false)}
@@ -254,7 +253,7 @@ const SignupContent = (props) => {
                                                 key={form.key('password')}
                                                 {...form.getInputProps('password')}
                                             />
-                                        </div>
+                                        </Box>
                                     </Stack>
 
                                     {!signupClicked && form.values.password && form.values.password.length > 0 && <>

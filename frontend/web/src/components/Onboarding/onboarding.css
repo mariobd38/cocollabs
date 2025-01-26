@@ -60,10 +60,6 @@
     border-color: #228be6 !important;
     color: #228be6 !important;
 }
-.ant-upload-list-item-container, .ant-upload-select {
-    width: 85px !important;
-    height: 85px !important;
-}
 .ant-upload-list-item .ant-upload-list-item-actions {
     display: flex;
     justify-content: center;
@@ -88,15 +84,6 @@
     padding: 25px 40px 30px 40px;
     box-shadow: rgba(137, 59, 151, 0.25) 0px 5px 25px 5px, rgba(17, 59, 151, 0.25) 0px 10px 10px;
 }
-.text-name {
-    white-space: nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
-    width: 125px;
-}
-.onboarding-bottom-button {
-    transition: all 1.2s ease;
-}
 
 @media(max-width: 360px) {
     .onboarding-profile-options-parent {
@@ -118,10 +105,6 @@
     .onboarding-new-profile {
         font-size: 33px;
     }
-    .onboarding-bottom-button {
-        width: 150px !important;
-    }
-
 }
 
 /* new */
@@ -132,14 +115,10 @@
 
 @media (max-width: 640px) {
     div[data-radix-popper-content-wrapper] {
-        /* background-color: red !important; */
         top: 110% !important; 
         right: 100% !important;
         transform: translate(50%,-50%) !important;
         position: absolute !important;
         /* transform: translateY(50%) translateX(50%) !important; */
     }
-    /* .visit-community-button {
-        padding: 11px 26px !important;
-    } */
 }

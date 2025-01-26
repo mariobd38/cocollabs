@@ -33,7 +33,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedHashSet;
@@ -64,6 +63,9 @@ public class User implements UserDetails {
 
     @Column(nullable = false,unique = true)
     private String email;
+
+    @Column(unique = true)
+    private String username;
 
     @JsonIgnore
     @Column(length = 60)
@@ -119,8 +121,8 @@ public class User implements UserDetails {
     private Set<Space> spaces = new LinkedHashSet<>();
 
 
-    public User(String fullName, String email, String password, String picture) {
-        setFullName(fullName);
+    public User(String email, String password, String picture) {
+        //setFullName(fullName);
         this.email = email;
         this.password = password;
         this.picture = picture;
@@ -130,7 +132,7 @@ public class User implements UserDetails {
         this.isOnboardingComplete = false;
     }
 
-    private void setFullName(String fullName) {
+    public void setFullName(String fullName) {
         this.fullName = fullName;
         String[] names = fullName.split(" ");
         this.firstName = names.length > 0 ? names[0] : "";

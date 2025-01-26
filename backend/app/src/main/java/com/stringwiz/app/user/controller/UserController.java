@@ -1,13 +1,17 @@
 package com.stringwiz.app.user.controller;
 
+import com.stringwiz.app.user.dto.UserOnboardingProfileDto;
+import com.stringwiz.app.user.error.OnboardingProfileErrorResponse;
 import com.stringwiz.app.user.model.ThemePreference;
 import com.stringwiz.app.user.model.User;
 import com.stringwiz.app.user.model.UserPreference;
 import com.stringwiz.app.user.repository.UserPreferenceRepository;
 import com.stringwiz.app.user.repository.UserRepository;
 import com.stringwiz.app.auth.util.JwtUtil;
+import com.stringwiz.app.user.service.CustomUserService;
 import com.stringwiz.app.user.util.UserPlatformDtoConverter;
 import com.stringwiz.app.user.dto.UserPlatformDto;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,14 +37,17 @@ public class UserController {
     private final UserRepository userRepository;
     private final UserPreferenceRepository userPreferenceRepository;
     private final JwtUtil jwtUtil;
+    private final CustomUserService customUserService;
 
     public UserController(
             UserRepository userRepository,
             UserPreferenceRepository userPreferenceRepository,
-            JwtUtil jwtUtil) {
+            JwtUtil jwtUtil,
+            CustomUserService customUserService) {
         this.userRepository = userRepository;
         this.userPreferenceRepository = userPreferenceRepository;
         this.jwtUtil = jwtUtil;
+        this.customUserService = customUserService;
     }
 
     @GetMapping("/getInfo")
@@ -64,6 +71,35 @@ public class UserController {
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body("An error occurred while processing the request");
+        }
+    }
+
+    @PutMapping("/createProfile")
+    public ResponseEntity<?> createProfile(@AuthenticationPrincipal User user, @Valid @RequestBody UserOnboardingProfileDto onboardingProfileDto) {
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not found");
+        }
+        try {
+            if (!customUserService.isValidUsername(onboardingProfileDto.getUsername())) {
+                return ResponseEntity.badRequest().body(new OnboardingProfileErrorResponse("Invalid username format", "username"));
+            }
+            if (userRepository.existsByUsername(onboardingProfileDto.getUsername())) {
+                return ResponseEntity.badRequest().body(new OnboardingProfileErrorResponse("Username already taken", "username"));
+            }
+
+            String fullName = onboardingProfileDto.getFullName();
+            if (customUserService.getFullNameValidationErrors(fullName) != null) {
+                return ResponseEntity.badRequest().body(customUserService.getFullNameValidationErrors(fullName));
+            }
+
+            user.setFullName(customUserService.transformFullName(fullName));
+            user.setUsername(onboardingProfileDto.getUsername());
+            userRepository.save(user);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            logger.error("Profile creation failed for user {}: {}", user.getId(), e.getMessage());
+            return ResponseEntity.internalServerError().body(new OnboardingProfileErrorResponse("Unexpected error, please try again later", "username"));
+
         }
     }
 
@@ -94,7 +130,7 @@ public class UserController {
             userRepository.save(user);
 
             return ResponseEntity.ok().build();
-        } catch(Exception e) {
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("An error occurred while updating the theme preference");
         }

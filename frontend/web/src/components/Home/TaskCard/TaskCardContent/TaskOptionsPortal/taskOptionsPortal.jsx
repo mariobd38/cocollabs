@@ -6,8 +6,6 @@ import {Icons} from '@/components/icons/icons';
 
 import { deleteTaskInfo } from '@/api/Tasks/deleteTask';
 
-import './taskOptionsPortal.css';
-
 const TaskOptionsPortal = forwardRef((props, ref) => {
     const { contextMenuPosition,showContextMenu,setShowContextMenu,openMenuIndex,setOpenMenuIndex,
         enableScroll,setShowInnerContextMenu,setOpenRenameModal,taskType,setTaskType,currentIndex,

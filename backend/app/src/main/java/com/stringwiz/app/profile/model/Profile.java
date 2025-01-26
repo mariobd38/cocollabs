@@ -35,6 +35,9 @@ public class Profile {
     @Column
     private String color;
 
+    @Column(nullable = false, columnDefinition = "TEXT")
+    private String svg;
+
     @JoinColumn(name = "file_id", referencedColumnName = "id", nullable = true)
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnore
@@ -43,7 +46,6 @@ public class Profile {
     @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-//    @OneToOne(mappedBy = "profile")
     private User user;
 
     public Profile(String type, String color, ProfileFile profileFile, User user) {

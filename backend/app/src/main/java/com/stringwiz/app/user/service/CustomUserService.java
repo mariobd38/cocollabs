@@ -2,18 +2,22 @@ package com.stringwiz.app.user.service;
 
 import com.stringwiz.app.role.model.RoleNames;
 import com.stringwiz.app.role.model.Role;
+import com.stringwiz.app.user.error.OnboardingProfileErrorResponse;
 import com.stringwiz.app.user.model.User;
 import com.stringwiz.app.role.repository.RoleRepository;
 import com.stringwiz.app.user.repository.UserRepository;
 import com.stringwiz.app.role.util.RoleSelectorUtil;
+import com.stringwiz.app.user.util.OnboardingProfileValidationUtil;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CustomUserService extends User implements UserService {
@@ -55,4 +59,21 @@ public class CustomUserService extends User implements UserService {
     public boolean existsByEmail(String email) {
         return userRepository.findByEmail(email).isPresent();
     }
+
+    public String transformFullName(String fullName) {
+        return Arrays.stream(fullName.trim().split("\\s+"))
+                .map(word -> Character.toUpperCase(word.charAt(0)) + word.substring(1).toLowerCase())
+                .collect(Collectors.joining(" "));
+    }
+
+    public OnboardingProfileErrorResponse getFullNameValidationErrors(String fullName) {
+        return OnboardingProfileValidationUtil.validateFullName(fullName);
+    }
+
+    public boolean isValidUsername(String username) {
+        return username != null &&
+                username.matches("^[a-zA-Z0-9._-]{4,40}$") &&
+                !username.equals("admin");
+    }
+
 }

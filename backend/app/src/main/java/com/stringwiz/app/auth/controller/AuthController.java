@@ -4,7 +4,6 @@ import com.stringwiz.app.auth.model.CustomJwt;
 import com.stringwiz.app.auth.service.CustomJwtService;
 import com.stringwiz.app.auth.util.AuthValidationUtil;
 import com.stringwiz.app.user.repository.UserRepository;
-import com.stringwiz.app.user.repository.UserTokenRepository;
 import com.stringwiz.app.user.service.CustomUserService;
 import com.stringwiz.app.auth.util.CookieUtil;
 import com.stringwiz.app.auth.util.JwtUtil;
@@ -13,7 +12,6 @@ import com.stringwiz.app.user.dto.UserAuthenticationDto;
 import com.stringwiz.app.user.dto.UserRegistrationDto;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.slf4j.Logger;
@@ -27,9 +25,6 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import com.stringwiz.app.user.model.User;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -53,9 +48,7 @@ public class AuthController {
     private final CustomUserService customUserService;
     private final CustomJwtService customJwtService;
     private final PasswordEncoder passwordEncoder;
-    private final UserDetailsService userDetailsService;
     private final UserRepository userRepository;
-    private final UserTokenRepository userTokenRepository;
 
     @Value("${APP_ACCESS_TOKEN_NAME}")
     private String APP_ACCESS_TOKEN_NAME;
@@ -66,17 +59,13 @@ public class AuthController {
             CustomUserService customUserService,
             CustomJwtService customJwtService,
             PasswordEncoder passwordEncoder,
-            UserDetailsService userDetailsService,
-            UserRepository userRepository,
-            UserTokenRepository userTokenRepository ) {
+            UserRepository userRepository ) {
         this.authenticationManager = authenticationManager;
         this.jwtUtil = jwtUtil;
         this.customUserService = customUserService;
         this.customJwtService = customJwtService;
         this.passwordEncoder = passwordEncoder;
-        this.userDetailsService = userDetailsService;
         this.userRepository = userRepository;
-        this.userTokenRepository = userTokenRepository;
     }
 
     @PostMapping("/login")
@@ -152,7 +141,7 @@ public class AuthController {
             String encodedPassword = passwordEncoder.encode(requestBody.getPassword());
 
             User user = new User(
-                    AuthValidationUtil.capitalizeName(sanitizedFullName),
+                    //AuthValidationUtil.capitalizeName(sanitizedFullName),
                     sanitizedEmail,
                     encodedPassword,
                     null
