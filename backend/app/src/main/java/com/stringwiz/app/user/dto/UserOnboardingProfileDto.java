@@ -10,4 +10,5 @@ import lombok.NoArgsConstructor;
 public class UserOnboardingProfileDto {
     private String fullName;
     private String username;
+    private String avatar;
 }

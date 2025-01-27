@@ -80,11 +80,15 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not found");
         }
         try {
-            if (!customUserService.isValidUsername(onboardingProfileDto.getUsername())) {
-                return ResponseEntity.badRequest().body(new OnboardingProfileErrorResponse("Invalid username format", "username"));
+//            if (!customUserService.isValidUsername(onboardingProfileDto.getUsername())) {
+//                return ResponseEntity.badRequest().body(new OnboardingProfileErrorResponse("Invalid username format", "username"));
+//            }
+
+            if (customUserService.getUsernameValidationErrors(onboardingProfileDto.getUsername()) != null) {
+                return ResponseEntity.badRequest().body(customUserService.getUsernameValidationErrors(onboardingProfileDto.getUsername()));
             }
             if (userRepository.existsByUsername(onboardingProfileDto.getUsername())) {
-                return ResponseEntity.badRequest().body(new OnboardingProfileErrorResponse("Username already taken", "username"));
+                return ResponseEntity.badRequest().body(new OnboardingProfileErrorResponse("Username is not available", "username"));
             }
 
             String fullName = onboardingProfileDto.getFullName();

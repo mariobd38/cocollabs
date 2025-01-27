@@ -37,8 +37,7 @@ public class CustomUserService extends User implements UserService {
             String roleName = names.name();
             Role role = roleRepository.findByName(roleName);
             if (role == null) {
-                Role r = new Role();
-                r.setName(roleName);
+                Role r = new Role(roleName);
                 roleRepository.save(r);
                 roleList.add(r);
             } else {
@@ -70,10 +69,8 @@ public class CustomUserService extends User implements UserService {
         return OnboardingProfileValidationUtil.validateFullName(fullName);
     }
 
-    public boolean isValidUsername(String username) {
-        return username != null &&
-                username.matches("^[a-zA-Z0-9._-]{4,40}$") &&
-                !username.equals("admin");
+    public OnboardingProfileErrorResponse getUsernameValidationErrors(String username) {
+        return OnboardingProfileValidationUtil.validateUsername(username);
     }
 
 }

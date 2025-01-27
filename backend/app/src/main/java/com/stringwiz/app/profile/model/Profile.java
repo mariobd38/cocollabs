@@ -38,7 +38,7 @@ public class Profile {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String svg;
 
-    @JoinColumn(name = "file_id", referencedColumnName = "id", nullable = true)
+    @JoinColumn(name = "file_id", referencedColumnName = "id")
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnore
     private ProfileFile profileFile;
@@ -54,4 +54,10 @@ public class Profile {
         this.profileFile = profileFile;
         this.user = user;
     }
+
+    public Profile(String type, String svg) {
+        this.type = type;
+        this.svg = svg;
+    }
+
 }

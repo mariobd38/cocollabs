@@ -13,7 +13,7 @@ async function handleProfileCreation(profileData,form) {
             form.setError(error.field, { message: error.message });
             throw new Error(error.message);
         }
-        return response.json();
+        return response;
     } catch (error) {
         console.log(error);
     }

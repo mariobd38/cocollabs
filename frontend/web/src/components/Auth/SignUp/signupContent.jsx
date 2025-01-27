@@ -222,7 +222,7 @@ const SignupContent = (props) => {
                                     </Flex>
 
                                     <Stack className='flex align-center'>
-                                        <Box ref={fullNameRef} className='w-full'>
+                                        {/* <Box ref={fullNameRef} className='w-full'>
                                             <TextInput
                                                 required
                                                 label="Full name"
@@ -236,7 +236,7 @@ const SignupContent = (props) => {
                                                 key={form.key('fullName')}
                                                 {...form.getInputProps('fullName')}
                                             />
-                                        </Box>
+                                        </Box> */}
 
                                         <Box ref={passwordRef} className='w-full'>
                                             <PasswordInput
