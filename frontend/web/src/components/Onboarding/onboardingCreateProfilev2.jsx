@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { FormProvider,useForm } from "react-hook-form";
 
 import { Icons } from '@/components/icons/icons';
@@ -18,14 +18,16 @@ import { handleProfileCreation } from '@/api/Users/handleProfileCreation';
 const avatars = import.meta.glob('@/assets/avatars/*.svg', { eager: true });
 const avatarList = Object.entries(avatars)
     .sort(([a], [b]) => {
-    // Extract numbers from file names to ensure correct order
+        // Extract numbers from file names to ensure correct order
         const numA = parseInt(a.match(/\d+/)?.[0] || 0, 10);
         const numB = parseInt(b.match(/\d+/)?.[0] || 0, 10);
         return numA - numB;
     })
-    .map(([, avatar]) => ({
-        svg: avatar.default,
+    .map(([path, avatar]) => ({
+        name: path.split('/').pop(), // Extract file name
+        svg: avatar.default, // Actual SVG content
     }));
+
 
 const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
 //image validation
@@ -33,27 +35,47 @@ const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/web
 //full name and username validation
 const formSchema = z.object({
     fullName: z.string()
-    .refine((value) => value.trim().split(/\s+/).length >= 2, {
-        message: "Full name must include first and last name.",
-    }),
-    username: z.string().min(3, {
-        message: "Username must be at least 3 characters.",
-    }).max(40, {
-        message: "Username is too long (maximum 40 characters).",
-    }),
-    avatar: z.any().nullable().refine(value => value !== null, {
-        message: "Please select an avatar.",
-    }),
-    images: z.any()
-        .refine(files => {return Array.from(files).every(file => file instanceof File)}, { message: "Expected a file" })
-        .refine(files => Array.from(files).every(file => ACCEPTED_IMAGE_TYPES.includes(file.type)), "Only these types are allowed .jpg, .jpeg, .png and .webp")
+        .refine((value) => value.trim().split(/\s+/).length >= 2, {
+            message: "Full name must include first and last name.",
+        }),
+    username: z.string()
+        .min(3, {
+            message: "Username must be at least 3 characters.",
+        })
+        .max(40, {
+            message: "Username is too long (maximum 40 characters).",
+        }),
+    // avatar: z.any().nullable().refine(value => value !== null, {
+    //     message: "Please select an avatar.",
+    // }),
+    // image: z.instanceof(File).refine(file => ACCEPTED_IMAGE_TYPES.includes(file.type), {
+    //     message: "Only these types are allowed: .jpg, .jpeg, .png, and .webp",
+    // }).nullable(),
+    avatar: z.any().nullable(),  // Can be null
+    image: z.union([
+        z.instanceof(File).refine((file) => ACCEPTED_IMAGE_TYPES.includes(file.type), {
+            message: "Only these types are allowed: .jpg, .jpeg, .png, and .webp",
+        }),
+        z.null(),
+    ]),
+    }).refine(
+        (data) => data.avatar !== null || data.image !== null,
+        {
+            message: "Please select an avatar.",
+            path: ["avatar"], // ✅ Attach error message to avatar field
 
-});
+        }
+);
 
-export const OnboardingCreateProfilev2 = ({data,stepNum,setStepNum}) => {
-    const [activeProfile, setActiveProfile] = useState(null);
-    // const [stepNum, setStepNum] = useState(0);
-    const [isAvatarPopoverOpen, setIsAvatarPopoverOpen] = useState(false);
+ const OnboardingCreateProfilev2 = ({data, stepNumProps, imageCropperProps, avatarPopoverProps, profileProps}) => {
+    const { stepNum, setStepNum } = stepNumProps;
+    const { setOpenImageCropper, setImageToCrop, previewUrl, setPreviewUrl,croppedFile,setCroppedFile } = imageCropperProps;
+    const { isAvatarPopoverOpen, setIsAvatarPopoverOpen } = avatarPopoverProps;
+    const { activeProfile, setActiveProfile } = profileProps;
+    // const [activeProfile, setActiveProfile] = useState(null);
+    // const [previewUrl, setPreviewUrl] = useState(null);
+    // const [openImageCropper, setOpenImageCropper] = useState(false);
+    //const [isAvatarPopoverOpen, setIsAvatarPopoverOpen] = useState(false);
     // const form = useForm({
     //     resolver: zodResolver(FormSchema)
     // });
@@ -65,20 +87,22 @@ export const OnboardingCreateProfilev2 = ({data,stepNum,setStepNum}) => {
             username: "",
             avatar: null,
             picture: null,
-            images: [],
+            image: null,
         },
-        
     });
+    const imageRef = onboardingForm.register("file");
+
+
     const onSubmit = async (data) => {
-        // console.log(onboardingForm.getValues('avatar'));
+        console.log(croppedFile);
         try {
             switch(stepNum) {
                 case 0: {
                     const response = await handleProfileCreation({
                         fullName: onboardingForm.getValues('fullName'),
                         username: onboardingForm.getValues('username'),
-                        avatar: onboardingForm.getValues('avatar'),
-                    }, onboardingForm);
+                        avatarName: onboardingForm.getValues('avatar'),
+                    }, onboardingForm,croppedFile);
                     if (response && response.status === 200) {
                         setStepNum(stepNum + 1);
                     }
@@ -109,8 +133,15 @@ export const OnboardingCreateProfilev2 = ({data,stepNum,setStepNum}) => {
             <form onSubmit={onboardingForm.handleSubmit(onSubmit)} >
                 <Flex align={{base: 'start', xs: 'start'}}  gap={{base: 50, xs: 65}} direction={{base: 'column', xs: 'row'}}> 
 
-                    <Flex justify='center' align='center' className={`relative h-36 w-36 bg-transparent ${activeProfile ? 'border-solid' : 'border-dotted'} border-2 border-gray-200 rounded-full text-white`}>
-                        {activeProfile ? <img src={activeProfile.svg} alt="avatar" className="w-full h-full rounded-full" /> : Icons('IconUser',44,44,'#c0c0c0')}
+                    <Flex justify='center' align='center' className={`relative h-36 w-36 bg-transparent ${(activeProfile || previewUrl) ? 'border-solid' : 'transition-all duration-500 linear border-dashed hover:border-gray-100'} border-1 border-gray-700 rounded-full text-white`}>
+                        {activeProfile ? <img src={activeProfile.svg} alt="avatar" className="w-full h-full rounded-full" /> 
+                        : previewUrl ? 
+                        <img src={previewUrl} alt="Preview" className="w-full h-full rounded-full object-cover"/>
+                        // <img src={previewUrl} alt="avatar" className="w-full h-full rounded-full" />
+                        : <Flex justify='center' align='center' className="h-32 w-32 rounded-full bg-neutral-800 ">
+
+                            {Icons('IconUser',40,40,'#c0c0c0')}
+                        </Flex>}
                         {/* {Icons('IconUser',44,44,'#c0c0c0')} */}
                         <Popover open={isAvatarPopoverOpen} onOpenChange={(isOpen) => {setIsAvatarPopoverOpen(isOpen);}}>
                             <PopoverTrigger asChild>
@@ -157,9 +188,10 @@ export const OnboardingCreateProfilev2 = ({data,stepNum,setStepNum}) => {
                                                                 onClick={async () => {
                                                                     try {
                                                                         setActiveProfile(item);
-                                                                        const response = await fetch(item.svg);
-                                                                        const svgContent = await response.text();
-                                                                        onChange(svgContent); // Store the SVG content as a string in form state
+                                                                        onChange(item.name);
+                                                                        setPreviewUrl(null);
+                                                                        onboardingForm.setValue('image', null);
+                                                                        setCroppedFile(null);
                                                                     } catch (error) {
                                                                         console.error("Error fetching SVG content:", error);
                                                                     }
@@ -178,7 +210,7 @@ export const OnboardingCreateProfilev2 = ({data,stepNum,setStepNum}) => {
                                         />
                                         <FormField
                                             control={onboardingForm.control}
-                                            name="picture"
+                                            name="image"
                                             render={({ field: { value, onChange, ...fieldProps } }) => (
                                                 <FormItem>
                                                     <FormLabel className='text-gray-100'>Picture</FormLabel>
@@ -186,13 +218,30 @@ export const OnboardingCreateProfilev2 = ({data,stepNum,setStepNum}) => {
                                                     <FormControl>
                                                         <Input
                                                             {...fieldProps}
+                                                            {...imageRef}
                                                             placeholder="Picture"
                                                             type="file"
                                                             accept="image/*"
                                                             className='cursor-pointer h-9 py-1.5 text-muted-foreground'
-                                                            onChange={(event) =>
-                                                                onChange(event.target.files && event.target.files[0])
-                                                            }
+                                                            onChange={(event) => {
+                                                                // onChange(event.target.files && event.target.files[0])
+                                                                // console.log(event.target.files && event.target.files[0])
+                                                                const file = event.target.files?.[0];
+                                                                onChange(file);
+
+                                                                if (file) {
+                                                                const imageUrl = URL.createObjectURL(file);
+                                                                    //setPreviewUrl(imageUrl);
+                                                                    setIsAvatarPopoverOpen(false);
+                                                                    setImageToCrop(imageUrl);
+                                                                    // setActiveProfile(null);
+                                                                    setTimeout(() => {
+                                                                        
+                                                                        setOpenImageCropper(true);
+                                                                    },50);
+                                                                }
+                                                            }}
+                                                            
                                                         />
                                                     </FormControl>
                                                     
@@ -244,7 +293,7 @@ export const OnboardingCreateProfilev2 = ({data,stepNum,setStepNum}) => {
                                                             {...field} 
                                                         />
                                                         <FormDescription className='text-[13px]'>
-                                                            This is your public display name.
+                                                            This will be your public display name.
                                                         </FormDescription>
                                                         <FormMessage className='py-0 text-red-700 text-[13px]'/>
                                                     </FormItem>
@@ -281,7 +330,8 @@ export const OnboardingCreateProfilev2 = ({data,stepNum,setStepNum}) => {
                     </Flex>
                 </Flex>
                 <Flex direction='column' mt={20} gap={20}>
-                    <p className='text-red-700 text-[13px] font-medium'>{onboardingForm.formState.errors.avatar?.message}</p>
+                    {(onboardingForm.formState.errors.avatar || onboardingForm.formState.errors.image) &&
+                    <p className='text-red-700 text-[13px] font-medium'>{onboardingForm.formState.errors.avatar?.message}</p>}
                     {/* <Box>{onboardingForm.formState.errors.avatar?.message}</Box> */}
                     <Button type="submit" className='w-28 h-5 bg-gray-100' >Continue</Button>
                 </Flex>
@@ -296,6 +346,18 @@ export const OnboardingCreateProfilev2 = ({data,stepNum,setStepNum}) => {
         </Flex>
     );
 
-    return {main,illustration};
+    // return {main,illustration};
+    return (
+        <>
+        <Flex direction='column' gap={40} py={40} px={40}>
+            <Flex gap={20}>
+                {[...Array(3)].map((_, i) => <div key={i} className={`w-20 h-1 ${i < stepNum ? 'bg-green-700' : 'bg-gray-500'} rounded-full`} />)}
+            </Flex>
+            {main}
+        </Flex>
+        {illustration}
+        </>
+    );
 };
 
+export default OnboardingCreateProfilev2;

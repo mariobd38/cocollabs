@@ -12,6 +12,8 @@ import com.cocollabs.app.user.model.ThemePreference;
 import com.cocollabs.app.user.model.UserPreference;
 import com.cocollabs.app.user.model.User;
 import com.cocollabs.app.user.dto.UserPlatformDto;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Comparator;
 import java.util.LinkedHashSet;
@@ -19,12 +21,15 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class UserPlatformDtoConverter {
+    private static final Logger log = LoggerFactory.getLogger(UserPlatformDtoConverter.class);
+
     public static UserPlatformDto convertToDto(User user) {
         try {
             UserDto userDto = getUserDto(user);
             ProfileDto profileDto = getProfileDto(user.getProfile());
             UserPreferenceDto userPreferenceDto = getUserPreferenceDto(user.getUserPreference());
             Set<UserSpaceDto> userSpaceDtos = getUserSpacesDto(user);
+            log.info("UserPlatformDto created successfully");
 
             return new UserPlatformDto(
                 userDto,
@@ -43,23 +48,20 @@ public class UserPlatformDtoConverter {
 
 
     private static ProfileDto getProfileDto(Profile profile) {
-        ProfileDto profileDto = null;
+        if (profile == null) return null;
 
-        if (profile != null) {
-            ProfileFile profileFile = profile.getProfileFile();
-            ProfileFileDto profileFileDto = profileFile != null ? new ProfileFileDto(
-                    profileFile.getBase64Data(),
-                    profileFile.getName(),
-                    profileFile.getType()
-            ) : null;
+        ProfileFile profileFile = profile.getProfileFile();
+        ProfileFileDto profileFileDto = profileFile != null ? new ProfileFileDto(
+                profileFile.getBase64Data(),
+                profileFile.getName(),
+                profileFile.getType()
+        ) : null;
 
-            profileDto = new ProfileDto(
-                    profile.getColor(),
-                    profileFileDto,
-                    profile.getType()
-            );
-        }
-        return profileDto;
+        return new ProfileDto(
+                profile.getColor(),
+                profileFileDto,
+                profile.getType().toValue()
+        );
     }
 
     private static UserPreferenceDto getUserPreferenceDto(UserPreference userPreference) {

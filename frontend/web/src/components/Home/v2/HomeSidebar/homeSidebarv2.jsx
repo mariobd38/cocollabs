@@ -9,7 +9,7 @@ import SpaceCreationModal from '@/components/Home/SpaceCreationModal/spaceCreati
 
 import '@/styles/home/homeSidebar.css';
 const CustomDialog = lazy(() => import('@/components/customDialog'));
-const LoadingFallback = () => <>...</>;
+const LoadingFallback = () => <></>;
 
 const HomeSidebarv2 = (props) => {
     const {openSidebarToggle, themeColors, colorScheme, setOpenSidebarToggle, spaceData,userFullName,activePage} = props;

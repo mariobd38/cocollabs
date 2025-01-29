@@ -1,5 +1,6 @@
 package com.cocollabs.app.user.service;
 
+import com.cocollabs.app.aws.service.S3Service;
 import com.cocollabs.app.role.model.RoleNames;
 import com.cocollabs.app.role.repository.RoleRepository;
 import com.cocollabs.app.role.util.RoleSelectorUtil;
@@ -71,6 +72,10 @@ public class CustomUserService extends User implements UserService {
 
     public OnboardingProfileErrorResponse getUsernameValidationErrors(String username) {
         return OnboardingProfileValidationUtil.validateUsername(username);
+    }
+
+    public OnboardingProfileErrorResponse getAvatarNameValidationErrors(String avatarName) {
+        return OnboardingProfileValidationUtil.validateAvatarName(avatarName);
     }
 
 }

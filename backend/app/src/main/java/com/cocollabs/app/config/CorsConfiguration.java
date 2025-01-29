@@ -1,4 +1,4 @@
-package com.cocollabs.app.user.config;
+package com.cocollabs.app.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

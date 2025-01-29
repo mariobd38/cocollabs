@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,lazy,Suspense } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
-import {Text,Avatar,Box,Flex} from '@mantine/core';
+import {Box,Flex} from '@mantine/core';
 
-import {OnboardingCreateProfilev2} from '@/components/Onboarding/onboardingCreateProfilev2';
 // import OnboardingCreateSpace from '@/components/Onboarding/onboardingCreateSpace';
 import AuthHeader from '@/components/Auth/authHeader';
 
@@ -18,6 +17,11 @@ import { handleProfileCreation } from '@/api/Users/handleProfileCreation';
 
 import './onboarding.css';
 
+const LoadingFallback = () => <></>;
+const OnboardingCreateProfilev2 = lazy(() => import('@/components/Onboarding/onboardingCreateProfilev2'));
+const CustomDialog = lazy(() => import('@/components/customDialog'));
+const ImageCropperContent = lazy(() => import('@/components/imageCropperContent'));
+
 const Onboarding = () => {
     const { updateAuthStatus } = UseAuth();
     const [userInfo, setUserInfo] = useState({ email: '', fullName: '', picture: null, profile: null});
@@ -27,7 +31,15 @@ const Onboarding = () => {
     const [picture, setPicture] = useState(location.state?.data?.picture ?? null);
     const [missingProfileError, setMissingProfileError] = useState(false);
     const [missingSpaceNameError, setMissingSpaceNameError] = useState(false);
+    const [stepNum, setStepNum] = useState(0);
 
+    const [openImageCropper, setOpenImageCropper] = useState(false);
+    const [isAvatarPopoverOpen, setIsAvatarPopoverOpen] = useState(false);
+    const [imageToCrop, setImageToCrop] = useState(null);
+    const [previewUrl, setPreviewUrl] = useState(null);
+    const [activeProfile, setActiveProfile] = useState(null);
+    const [croppedFile, setCroppedFile] = useState(null);
+    
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -54,21 +66,31 @@ const Onboarding = () => {
         }
     }, [location.state]);
 
-    const [stepNum, setStepNum] = useState(0);
 
-    const { main, illustration } = OnboardingCreateProfilev2({ data,stepNum,setStepNum });
+    // OnboardingCreateProfilev2({ data,stepNum,setStepNum })
+    const comp = <Suspense fallback={<LoadingFallback />}>
+        <OnboardingCreateProfilev2 
+            data={data}
+            stepNumProps={{ stepNum, setStepNum }}
+            imageCropperProps={{ setOpenImageCropper, imageToCrop, setImageToCrop, previewUrl, setPreviewUrl, croppedFile,setCroppedFile }}
+            avatarPopoverProps={{ isAvatarPopoverOpen, setIsAvatarPopoverOpen }}
+            profileProps={{ activeProfile, setActiveProfile }}
+        />
+    </Suspense>;
 
+    const steps = [
+        {
+            profileStep: {
+                component: comp
 
-    const steps = [{
-        profileStep: {
-            main: main,
-            illustration: illustration
+            },
+            spaceStep: {
+                component: comp
+                // main: <ParentComponent data={data} stepNum={stepNum} setStepNum={setStepNum} />,
+                // illustration: <ParentComponent data={data} stepNum={stepNum} setStepNum={setStepNum} />,
+            },
         },
-        spaceStep: {
-            main: main,
-            illustration: illustration
-        }
-    }];
+    ];
 
     // const [profileOptions, setProfileOptions] = useState(picture ? [{
     //     option: (
@@ -184,24 +206,41 @@ const Onboarding = () => {
     return (
         <>
         {data?.user &&
-        <div className="w-full bg-background">
+        <Box className="w-full bg-background">
             <AuthHeader />
-            <Box className="w-full  bg-background" style={{minHeight: 'calc(100vh - 65px)'}}>
+            <Box className="w-full bg-background" style={{minHeight: 'calc(100vh - 65px)'}}>
                 <Flex gap={80} direction="column" ff="Geist" >
                     {steps.map((step, index) => (
                     <Flex justify='space-between' key={index}>
-                        <Flex direction='column' gap={40} py={40} px={40}>
+                        {/* <Flex direction='column' gap={40} py={40} px={40}>
                             <Flex gap={20}>
                                 {[...Array(3)].map((_, i) => <div key={i} className={`w-20 h-1 ${i < stepNum ? 'bg-green-700' : 'bg-gray-500'} rounded-full`} />)}
                             </Flex>
                             {step.profileStep.main}
                         </Flex>
-                        {step.profileStep.illustration}
+                        {step.profileStep.illustration} */}
+                        {step.profileStep.component}
                     </Flex>
                     ))}
                 </Flex>
             </Box>
-        </div>}
+        </Box>}
+        <Suspense fallback={<LoadingFallback />}>
+        {imageToCrop &&
+            <CustomDialog
+                trigger={openImageCropper}
+                content={
+                    <ImageCropperContent 
+                    imageCropperProps={{ imageToCrop, setImageToCrop,setCroppedFile }}
+                    setOpen={setOpenImageCropper}
+                    profileProps={{ setPreviewUrl,setActiveProfile }}
+                    />
+                }
+                open={openImageCropper} 
+                setOpen={setOpenImageCropper} 
+                width={800}
+            />}
+        </Suspense>
         </>
     );
 };

@@ -1,11 +1,18 @@
-async function handleProfileCreation(profileData,form) {
+async function handleProfileCreation(profileData,form,croppedFile) {
+    console.log(croppedFile);
+    const formData = new FormData();
+    formData.append('file', croppedFile);
+
+    const jsonBlob = new Blob([JSON.stringify(profileData)], { type: 'application/json' });
+    formData.append('onboardingProfileDto', jsonBlob);
+    
     try {
         const response = await fetch(`/api/user/createProfile`, {
             method: "PUT",
             headers: {
-                "Content-Type": "application/json",
+                'Accept': 'application/json',
             },
-            body: JSON.stringify(profileData),
+            body: formData,
         });
 
         if (!response.ok) {

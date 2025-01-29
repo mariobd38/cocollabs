@@ -2,6 +2,7 @@ package com.cocollabs.app.user.util;
 
 import com.cocollabs.app.user.error.OnboardingProfileErrorResponse;
 
+import java.util.Set;
 import java.util.regex.Pattern;
 
 public class OnboardingProfileValidationUtil {
@@ -12,6 +13,12 @@ public class OnboardingProfileValidationUtil {
     private static final int MAX_USERNAME_LENGTH = 40;
     private static final int MIN_USERNAME_LENGTH = 3;
     private static final Pattern VALID_USERNAME_PATTERN = Pattern.compile("^[a-zA-Z0-9._-]{3,40}");
+
+    private static final Set<String> ALLOWED_AVATAR_IDS = Set.of(
+        "avatar_01.svg", "avatar_02.svg", "avatar_03.svg", "avatar_04.svg", "avatar_05.svg", "avatar_06.svg", "avatar_07.svg",
+        "avatar_08.svg", "avatar_09.svg", "avatar_10.svg", "avatar_11.svg", "avatar_12.svg", "avatar_13.svg", "avatar_14.svg",
+        "avatar_15.svg", "avatar_16.svg", "avatar_17.svg", "avatar_18.svg", "avatar_19.svg", "avatar_20.svg", "avatar_21.svg"
+    );
 
     public static OnboardingProfileErrorResponse validateFullName(String fullName) {
         ProfileErrorType type = ProfileErrorType.fullName;
@@ -55,6 +62,14 @@ public class OnboardingProfileValidationUtil {
         }
         return null;
     }
+
+    public static OnboardingProfileErrorResponse validateAvatarName(String avatarName) {
+        ProfileErrorType type = ProfileErrorType.avatarName;
+        if (avatarName != null && !ALLOWED_AVATAR_IDS.contains(avatarName)) {
+            return new OnboardingProfileErrorResponse("Invalid avatar", type.toString());
+        }
+        return null;
+    }
 }
 
-enum ProfileErrorType { fullName, username }
+enum ProfileErrorType { fullName, username, avatarName }

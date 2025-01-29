@@ -1,4 +1,4 @@
-package com.cocollabs.app.user.config;
+package com.cocollabs.app.config;
 
 import com.cocollabs.app.auth.filter.JwtFilter;
 import jakarta.servlet.http.HttpServletResponse;

@@ -35,7 +35,7 @@ public class OnboardingController {
         this.spaceService = spaceService;
     }
 
-    @PostMapping("/complete")
+    /*@PostMapping("/complete")
     public ResponseEntity<?> completeOnboarding(@AuthenticationPrincipal User user, @RequestBody OnboardingDto onboardingDto) {
         try {
             ProfileDto profileData = onboardingDto.getProfileData();
@@ -51,13 +51,14 @@ public class OnboardingController {
         } catch(NullPointerException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-    }
+    }*/
 
     private void completeUserOnboarding(User user) {
         user.setOnboardingComplete(true);
         userRepository.save(user);
     }
 
+    /*
     private ResponseEntity<ProfileDto> uploadProfile(User user,ProfileDto profileDto) {
         String avatarType = profileDto.getAvatarType();
 
@@ -69,7 +70,7 @@ public class OnboardingController {
             return ResponseEntity.ok(profileService.handleColorChange(user, color));
         }
         return ResponseEntity.ok(profileService.handleFileUpload(user, profileDto));
-    }
+    }*/
 
     private ResponseEntity<SpaceDto> createPersonalSpace(User user, @Valid SpaceDto spaceData) {
         try {

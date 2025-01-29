@@ -1,4 +1,4 @@
-package com.cocollabs.app.user.config;
+package com.cocollabs.app.config;
 
 //@Configuration
 //@EnableWebSocketMessageBroker

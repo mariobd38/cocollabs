@@ -1,5 +1,7 @@
 package com.cocollabs.app.user.controller;
 
+import com.cocollabs.app.profile.model.Profile;
+import com.cocollabs.app.profile.service.ProfileService;
 import com.cocollabs.app.user.repository.UserPreferenceRepository;
 import com.cocollabs.app.user.dto.UserOnboardingProfileDto;
 import com.cocollabs.app.user.error.OnboardingProfileErrorResponse;
@@ -16,6 +18,7 @@ import jakarta.validation.constraints.Email;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -26,8 +29,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Nullable;
 import java.util.Optional;
 
 @RestController
@@ -38,16 +44,19 @@ public class UserController {
     private final UserPreferenceRepository userPreferenceRepository;
     private final JwtUtil jwtUtil;
     private final CustomUserService customUserService;
+    private final ProfileService profileService;
 
     public UserController(
             UserRepository userRepository,
             UserPreferenceRepository userPreferenceRepository,
             JwtUtil jwtUtil,
-            CustomUserService customUserService) {
+            CustomUserService customUserService,
+            ProfileService profileService) {
         this.userRepository = userRepository;
         this.userPreferenceRepository = userPreferenceRepository;
         this.jwtUtil = jwtUtil;
         this.customUserService = customUserService;
+        this.profileService = profileService;
     }
 
     @GetMapping("/getInfo")
@@ -74,30 +83,44 @@ public class UserController {
         }
     }
 
-    @PutMapping("/createProfile")
-    public ResponseEntity<?> createProfile(@AuthenticationPrincipal User user, @Valid @RequestBody UserOnboardingProfileDto onboardingProfileDto) {
+    @PutMapping(value = "/createProfile",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> createProfile(@AuthenticationPrincipal User user,
+                                           @RequestPart("onboardingProfileDto") @Valid UserOnboardingProfileDto onboardingProfileDto,
+                                           @RequestPart(value = "file", required = false) MultipartFile file) {
+        System.out.println("Received Profile Data: " + onboardingProfileDto);
+//        System.out.println("Received File: " + file.getOriginalFilename());
+        if (file == null || file.isEmpty()) {
+            System.out.println("No file uploaded. Proceeding without profile image.");
+        } else {
+            // Handle file upload logic
+            System.out.println("File received: " + file.getOriginalFilename());
+        }
         if (user == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not found");
         }
         try {
-//            if (!customUserService.isValidUsername(onboardingProfileDto.getUsername())) {
-//                return ResponseEntity.badRequest().body(new OnboardingProfileErrorResponse("Invalid username format", "username"));
-//            }
+            String fullName = onboardingProfileDto.getFullName();
+            String username = onboardingProfileDto.getUsername();
+            String avatarName = onboardingProfileDto.getAvatarName();
 
-            if (customUserService.getUsernameValidationErrors(onboardingProfileDto.getUsername()) != null) {
-                return ResponseEntity.badRequest().body(customUserService.getUsernameValidationErrors(onboardingProfileDto.getUsername()));
+            //validation checks
+            if (customUserService.getUsernameValidationErrors(username) != null) {
+                return ResponseEntity.badRequest().body(customUserService.getUsernameValidationErrors(username));
             }
-            if (userRepository.existsByUsername(onboardingProfileDto.getUsername())) {
+            if (userRepository.existsByUsername(username)) {
                 return ResponseEntity.badRequest().body(new OnboardingProfileErrorResponse("Username is not available", "username"));
             }
-
-            String fullName = onboardingProfileDto.getFullName();
             if (customUserService.getFullNameValidationErrors(fullName) != null) {
                 return ResponseEntity.badRequest().body(customUserService.getFullNameValidationErrors(fullName));
             }
+            if (customUserService.getAvatarNameValidationErrors(avatarName) != null) {
+                return ResponseEntity.badRequest().body(customUserService.getAvatarNameValidationErrors(avatarName));
+            }
 
             user.setFullName(customUserService.transformFullName(fullName));
-            user.setUsername(onboardingProfileDto.getUsername());
+            user.setUsername(username);
+            user.setProfile(profileService.handleAvatarCreation(user, avatarName));
+
             userRepository.save(user);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
