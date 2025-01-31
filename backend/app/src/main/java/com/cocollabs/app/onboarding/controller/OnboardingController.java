@@ -24,14 +24,11 @@ import org.springframework.web.server.ResponseStatusException;
 @RequestMapping("/api/onboarding")
 public class OnboardingController {
     private final UserRepository userRepository;
-    private final ProfileService profileService;
     private final SpaceService spaceService;
 
     public OnboardingController(UserRepository userRepository,
-                                ProfileService profileService,
                                 SpaceService spaceService) {
         this.userRepository = userRepository;
-        this.profileService = profileService;
         this.spaceService = spaceService;
     }
 

@@ -21,7 +21,7 @@ import java.util.function.Function;
 
 @Component
 public class JwtUtil {
-    private final Logger logger = LoggerFactory.getLogger(JwtUtil.class);
+    private final Logger log = LoggerFactory.getLogger(JwtUtil.class);
     private static final long ACCESS_TOKEN_VALIDITY = 24 * 60 * 60L; // 5 minutes
     private static final long REFRESH_TOKEN_VALIDITY = 7 * 24 * 60 * 60L; // 7 days
     private static final long JWT_TOKEN_VALIDITY = 30 * 24 * 60 * 60L;
@@ -100,7 +100,7 @@ public class JwtUtil {
             return tokenType != null && (tokenType.equals(TokenType.ACCESS.name()) ||
                     tokenType.equals(TokenType.REFRESH.name()));
         } catch (JwtException | IllegalArgumentException e) {
-            logger.warn("Toke validation failed", e);
+            log.warn("Toke validation failed", e);
             return false;
         }
     }

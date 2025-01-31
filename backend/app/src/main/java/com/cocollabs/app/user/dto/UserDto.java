@@ -1,5 +1,6 @@
 package com.cocollabs.app.user.dto;
 
+import com.cocollabs.app.user.model.User;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -16,4 +17,5 @@ public class UserDto {
     @Email
     private String email;
     private String picture;
+    private User.UserOnboardingStep onboardingStep;
 }

@@ -43,6 +43,9 @@ public class Profile {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String svg;
 
+    @Column(name = "s3_key")
+    private String s3Key;
+
     @JoinColumn(name = "file_id", referencedColumnName = "id")
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnore

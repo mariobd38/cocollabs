@@ -113,15 +113,14 @@
     padding-bottom: 25px;
 }
 
-@media (max-width: 640px) {
+/* @media (max-width: 640px) {
     div[data-radix-popper-content-wrapper] {
         top: 110% !important; 
         right: 100% !important;
         transform: translate(50%,-50%) !important;
         position: absolute !important;
-        /* transform: translateY(50%) translateX(50%) !important; */
     }
-}
+} */
 
 
 .crop-container {

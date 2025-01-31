@@ -43,7 +43,7 @@ public class UserPlatformDtoConverter {
     }
 
     private static UserDto getUserDto(User user) {
-        return new UserDto(user.getFullName(), user.getEmail(), user.getPicture());
+        return new UserDto(user.getFullName(), user.getEmail(), user.getPicture(),user.getOnboardingStep());
     }
 
 

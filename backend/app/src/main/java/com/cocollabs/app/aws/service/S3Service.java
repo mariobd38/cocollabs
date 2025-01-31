@@ -1,15 +1,25 @@
 package com.cocollabs.app.aws.service;
 
+import com.cocollabs.app.profile.service.ProfileService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
 import software.amazon.awssdk.services.s3.model.GetObjectRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
+import software.amazon.awssdk.services.s3.model.S3Exception;
+import software.amazon.awssdk.services.s3.presigner.S3Presigner;
+import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignRequest;
+import software.amazon.awssdk.services.s3.presigner.model.PresignedGetObjectRequest;
 
 import java.io.IOException;
+import java.time.Duration;
 
 @Service
 public class S3Service {
+    private final Logger log = LoggerFactory.getLogger(ProfileService.class);
     private final S3Client s3;
 
     public S3Service(S3Client s3) {
@@ -34,6 +44,38 @@ public class S3Service {
             return s3.getObject(getObjectRequest).readAllBytes();
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public void deleteObject(String bucket, String objectKey) {
+        try {
+            s3.deleteObject(DeleteObjectRequest.builder()
+                    .bucket(bucket)
+                    .key(objectKey)
+                    .build());
+            log.info("Successfully deleted object from S3 with key: " + objectKey);
+        } catch (S3Exception e) {
+            log.error("Error deleting object from S3: " + e.getMessage());
+        }
+    }
+
+    public String generatePreSignedUrl(String bucket, String objectKey) {
+        try (S3Presigner presigner = S3Presigner.create()) {
+            GetObjectRequest objectRequest = GetObjectRequest.builder()
+                    .bucket(bucket)
+                    .key(objectKey)
+                    .build();
+
+            GetObjectPresignRequest presignRequest = GetObjectPresignRequest.builder()
+                    .signatureDuration(Duration.ofMinutes(10))  // The URL will expire in 10 minutes.
+                    .getObjectRequest(objectRequest)
+                    .build();
+
+            PresignedGetObjectRequest presignedRequest = presigner.presignGetObject(presignRequest);
+            log.info("Presigned URL: [{}]", presignedRequest.url().toString());
+            log.info("HTTP method: [{}]", presignedRequest.httpRequest().method());
+
+            return presignedRequest.url().toExternalForm();
         }
     }
 }

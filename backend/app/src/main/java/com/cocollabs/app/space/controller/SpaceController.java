@@ -27,7 +27,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/spaces")
 public class SpaceController {
-    private final Logger logger = LoggerFactory.getLogger(AuthController.class);
+    private final Logger log = LoggerFactory.getLogger(AuthController.class);
     private final SpaceService spaceService;
     private final UserRepository userRepository;
     private final UserSpaceActivityRepository userSpaceActivityRepository;
@@ -79,7 +79,7 @@ public class SpaceController {
         try {
             return ResponseEntity.ok(spaceService.getByUser(user, spaceName));
         } catch (Exception e) {
-            logger.error("Error space with name: {}", spaceName);
+            log.error("Error space with name: {}", spaceName);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error fetching space by name" );
         }
     }
@@ -91,7 +91,7 @@ public class SpaceController {
             Optional<Space> lastActiveSpace = userSpaceActivityRepository.findLastActiveSpaceForUser(user.getId());
             return lastActiveSpace.map(ResponseEntity::ok).orElse(ResponseEntity.ok(new Space()));
         } catch (Exception e) {
-            logger.error("Error fetching user last active space");
+            log.error("Error fetching user last active space");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Error fetching user last active space");
         }

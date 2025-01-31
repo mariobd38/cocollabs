@@ -11,7 +11,7 @@ import org.springframework.http.ResponseCookie;
 import java.util.Arrays;
 
 public final class CookieUtil {
-    private static final Logger logger = LoggerFactory.getLogger(CookieUtil.class);
+    private static final Logger log = LoggerFactory.getLogger(CookieUtil.class);
 
     private CookieUtil() {
         throw new AssertionError("CookieUtil class should not be instantiated");
@@ -26,11 +26,11 @@ public final class CookieUtil {
                     .map(Cookie::getValue)
                     .findFirst()
                     .orElseGet(() -> {
-                        logger.debug("Cookie not found: {}", name);
+                        log.debug("Cookie not found: {}", name);
                         return null;
                     });
         }
-        logger.debug("No cookies found in the request");
+        log.debug("No cookies found in the request");
         return null;
     }
 

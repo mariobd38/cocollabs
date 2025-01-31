@@ -41,8 +41,7 @@ const ImageCropperContent = ({imageCropperProps, setOpen, profileProps}) => {
             const blob = await fetch(croppedImage).then(res => res.blob());
             
             // Do something with the cropped image (upload, store, etc.)
-            const uniqueFileName = `image-${uuidv4()}.jpg`;
-            const file = new File([blob], uniqueFileName, { type: "image/jpeg" });
+            const file = new File([blob], "", { type: "image/jpeg" });
             console.log(file);
             setCroppedFile(file);
             

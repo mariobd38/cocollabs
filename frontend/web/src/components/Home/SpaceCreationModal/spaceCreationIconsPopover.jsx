@@ -100,8 +100,8 @@ const SpaceCreationIconsPopover = (props) => {
             </PopoverTrigger>
             <PopoverContent className="absolute w-80" onClose={() => setIsOpen(false)} side='bottom' align='start' >
                 <Flex mb={10} >
-                    <Flex direction='column' justify='flex-start' w='100%'>
-                        <span className="text-[12px] font-bold tracking-wide text-muted-foreground mb-2">Avatar color</span>
+                    <Flex direction='column' justify='flex-start' w='100%' ff='Lato'>
+                        <span className="text-[12px] font-semibold tracking-wide text-muted-foreground mb-2">Avatar color</span>
                         <Flex gap={10} w='100%'>
                             {colorSwatchList.map((swatch) => ( <ColorSwatch 
                                 key={swatch}

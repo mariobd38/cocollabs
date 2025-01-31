@@ -39,7 +39,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
-    private final Logger logger = LoggerFactory.getLogger(UserController.class);
+    private final Logger log = LoggerFactory.getLogger(UserController.class);
     private final UserRepository userRepository;
     private final UserPreferenceRepository userPreferenceRepository;
     private final JwtUtil jwtUtil;
@@ -87,14 +87,6 @@ public class UserController {
     public ResponseEntity<?> createProfile(@AuthenticationPrincipal User user,
                                            @RequestPart("onboardingProfileDto") @Valid UserOnboardingProfileDto onboardingProfileDto,
                                            @RequestPart(value = "file", required = false) MultipartFile file) {
-        System.out.println("Received Profile Data: " + onboardingProfileDto);
-//        System.out.println("Received File: " + file.getOriginalFilename());
-        if (file == null || file.isEmpty()) {
-            System.out.println("No file uploaded. Proceeding without profile image.");
-        } else {
-            // Handle file upload logic
-            System.out.println("File received: " + file.getOriginalFilename());
-        }
         if (user == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not found");
         }
@@ -119,12 +111,17 @@ public class UserController {
 
             user.setFullName(customUserService.transformFullName(fullName));
             user.setUsername(username);
-            user.setProfile(profileService.handleAvatarCreation(user, avatarName));
+            if (file != null && !file.isEmpty()) {
+                user.setProfile(profileService.handleFileUpload(user, file));
+            } else {
+                user.setProfile(profileService.handleAvatarCreation(user, avatarName));
+            }
 
+            user.setOnboardingStep(User.UserOnboardingStep.SPACE);
             userRepository.save(user);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
-            logger.error("Profile creation failed for user {}: {}", user.getId(), e.getMessage());
+            log.error("Profile creation failed for user {}: {}", user.getId(), e.getMessage());
             return ResponseEntity.internalServerError().body(new OnboardingProfileErrorResponse("Unexpected error, please try again later", "username"));
 
         }

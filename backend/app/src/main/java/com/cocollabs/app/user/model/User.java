@@ -6,10 +6,14 @@ import com.cocollabs.app.role.model.Role;
 import com.cocollabs.app.space.model.Space;
 import com.cocollabs.app.tag.model.Tag;
 import com.cocollabs.app.task.model.Task;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonValue;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -99,6 +103,10 @@ public class User implements UserDetails {
 
     @Column(name="is_onboarding_complete")
     private boolean isOnboardingComplete = false;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private User.UserOnboardingStep onboardingStep;
 
     @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
@@ -194,5 +202,19 @@ public class User implements UserDetails {
     @Override
     public int hashCode() {
         return getClass().hashCode();
+    }
+
+    public enum UserOnboardingStep {
+        PROFILE, SPACE, COMPLETE;
+
+        @JsonCreator
+        public static User.UserOnboardingStep fromString(String value) {
+            return User.UserOnboardingStep.valueOf(value.toUpperCase());
+        }
+
+        @JsonValue
+        public String toValue() {
+            return name().toLowerCase(); // Optional: if you want to serialize it as lowercase
+        }
     }
 }

@@ -46,6 +46,7 @@ public class CustomUserService extends User implements UserService {
             }
         }
         user.setRoles(roleList);
+        user.setOnboardingStep(User.UserOnboardingStep.PROFILE);
         userRepository.save(user);
     }
 

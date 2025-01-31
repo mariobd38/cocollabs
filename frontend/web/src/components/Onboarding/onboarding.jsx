@@ -5,49 +5,45 @@ import {Box,Flex} from '@mantine/core';
 
 // import OnboardingCreateSpace from '@/components/Onboarding/onboardingCreateSpace';
 import AuthHeader from '@/components/Auth/authHeader';
+import { motion, AnimatePresence } from "framer-motion";
 
 import { UseAuth } from '@/hooks/authProvider';
 
 import { generateSpaceIconJson } from '@/utils/generateSpaceIconJson';
-
 import { getUserProfileInfo } from '@/api/Users/getUserProfileInfo';
 import { completeOnboarding } from '@/api/Users/completeOnboarding';
-import { handleProfileCreation } from '@/api/Users/handleProfileCreation';
 // import { authStatusInfo } from '@/api/Auth/status';
 
 import './onboarding.css';
 
 const LoadingFallback = () => <></>;
-const OnboardingCreateProfilev2 = lazy(() => import('@/components/Onboarding/onboardingCreateProfilev2'));
-const CustomDialog = lazy(() => import('@/components/customDialog'));
-const ImageCropperContent = lazy(() => import('@/components/imageCropperContent'));
+const OnboardingCreateProfile = lazy(() => import('@/components/Onboarding/onboardingCreateProfile'));
+const OnboardingCreateSpacev2 = lazy(() => import('@/components/Onboarding/onboardingCreateSpacev2'));
 
 const Onboarding = () => {
     const { updateAuthStatus } = UseAuth();
     const [userInfo, setUserInfo] = useState({ email: '', fullName: '', picture: null, profile: null});
     const [spaceInfo, setSpaceInfo] = useState({ name: '', icon: null, description: '', visibility: ''});
-    const navigate = useNavigate();
     const location = useLocation();
     const [picture, setPicture] = useState(location.state?.data?.picture ?? null);
-    const [missingProfileError, setMissingProfileError] = useState(false);
-    const [missingSpaceNameError, setMissingSpaceNameError] = useState(false);
-    const [stepNum, setStepNum] = useState(0);
+    const [stepNum, setStepNum] = useState(1);
 
     const [openImageCropper, setOpenImageCropper] = useState(false);
     const [isAvatarPopoverOpen, setIsAvatarPopoverOpen] = useState(false);
     const [imageToCrop, setImageToCrop] = useState(null);
     const [previewUrl, setPreviewUrl] = useState(null);
     const [activeProfile, setActiveProfile] = useState(null);
-    const [croppedFile, setCroppedFile] = useState(null);
     
+    const stepsObj = [
+        {name: 'profile', num: 1},
+        {name: 'space', num: 2},
+        {name: 'complete', num: 3}
+    ];
+    const stepDisplay = <Flex gap={20} className=' w-full'>
+        {[...Array(3)].map((_, i) => <div key={i} className={`w-full h-1 ${i < stepNum ? 'bg-green-700' : 'bg-gray-500'} rounded-full`} />)}
+    </Flex>;
 
-    useEffect(() => {
-        const fetchUserData = async () => {
-            setUserInfo(await getUserProfileInfo());
-        };
-        fetchUserData();
-    },[]);
-
+    
 
     const data = {
         user: {
@@ -55,10 +51,20 @@ const Onboarding = () => {
             fullName: userInfo?.userDto?.fullName,
             picture: userInfo?.userDto?.picture,
             profile: userInfo?.userDto?.profile,
-            initials: userInfo?.userDto?.fullName.split(' ')[0][0] + userInfo?.userDto?.fullName.split(' ')[1][0]
+            initials: userInfo?.userDto?.fullName.split(' ')[0][0] + userInfo?.userDto?.fullName.split(' ')[1][0],
         },
-        space: spaceInfo
+        space: spaceInfo,
+        onboardingStep: userInfo?.userDto?.onboardingStep
     }
+
+    useEffect(() => {
+        const fetchUserData = async () => {
+            setUserInfo(await getUserProfileInfo());
+        };
+        fetchUserData();
+        const step = stepsObj.find(step => step.name === data.onboardingStep);
+        //setStepNum(step?.num);
+    },[data?.onboardingStep]);
 
     useEffect(() => {
         if (location.state && location.state.picture) {
@@ -68,24 +74,31 @@ const Onboarding = () => {
 
 
     // OnboardingCreateProfilev2({ data,stepNum,setStepNum })
-    const comp = <Suspense fallback={<LoadingFallback />}>
-        <OnboardingCreateProfilev2 
+    const selectProfileContent = <Suspense fallback={<LoadingFallback />}>
+        <OnboardingCreateProfile 
             data={data}
-            stepNumProps={{ stepNum, setStepNum }}
-            imageCropperProps={{ setOpenImageCropper, imageToCrop, setImageToCrop, previewUrl, setPreviewUrl, croppedFile,setCroppedFile }}
+            stepNumProps={{ stepNum, setStepNum,stepDisplay }}
+            imageCropperProps={{ setOpenImageCropper, openImageCropper,imageToCrop, setImageToCrop, previewUrl, setPreviewUrl }}
             avatarPopoverProps={{ isAvatarPopoverOpen, setIsAvatarPopoverOpen }}
             profileProps={{ activeProfile, setActiveProfile }}
+        />
+    </Suspense>;
+
+    const selectSpaceContent = <Suspense fallback={<LoadingFallback />}>
+        <OnboardingCreateSpacev2 
+            stepNumProps={{ stepNum, setStepNum,stepDisplay }}
+            fullName={data?.user.fullName}
         />
     </Suspense>;
 
     const steps = [
         {
             profileStep: {
-                component: comp
+                component: selectProfileContent
 
             },
             spaceStep: {
-                component: comp
+                component: selectSpaceContent
                 // main: <ParentComponent data={data} stepNum={stepNum} setStepNum={setStepNum} />,
                 // illustration: <ParentComponent data={data} stepNum={stepNum} setStepNum={setStepNum} />,
             },
@@ -160,7 +173,6 @@ const Onboarding = () => {
     //         setActiveStep((current) => (current < 3 ? current + 1 : current))
     // };
 
-    //const prevStep = () => setActiveStep((current) => (current > 0 ? current - 1 : current));
     // const [spaceName, setSpaceName] = useState('Personal workspace');
     // const [spaceIcon, setSpaceIcon] = useState(null);
     // const [spaceDescription, setSpaceDescription] = useState('');
@@ -200,48 +212,57 @@ const Onboarding = () => {
                     setMissingSpaceNameError={setMissingSpaceNameError}
                 />
         }
-    ];*/   
+    ];*/ 
+    const transitionVariants = {
+        initial: { opacity: 0, x: 50 }, // Start position (offscreen)
+        animate: { opacity: 1, x: 0 }, // Animate to visible
+        exit: { opacity: 0, x: -50 }, // Exit position (slide out)
+    };
 
 
-    return (
-        <>
-        {data?.user &&
-        <Box className="w-full bg-background">
-            <AuthHeader />
-            <Box className="w-full bg-background" style={{minHeight: 'calc(100vh - 65px)'}}>
-                <Flex gap={80} direction="column" ff="Geist" >
-                    {steps.map((step, index) => (
-                    <Flex justify='space-between' key={index}>
-                        {/* <Flex direction='column' gap={40} py={40} px={40}>
-                            <Flex gap={20}>
-                                {[...Array(3)].map((_, i) => <div key={i} className={`w-20 h-1 ${i < stepNum ? 'bg-green-700' : 'bg-gray-500'} rounded-full`} />)}
-                            </Flex>
-                            {step.profileStep.main}
-                        </Flex>
-                        {step.profileStep.illustration} */}
-                        {step.profileStep.component}
+    return (<>
+        {data?.user && (
+    <Box className="w-full bg-background">
+      {/* <AuthHeader /> */}
+        <Flex gap={80} direction="column" ff="Geist" justify='center' className='min-h-screen'>
+          {steps.map((step, index) => (
+            <Flex key={index} >
+              <AnimatePresence mode="wait" >
+                {stepNum === 1 && (
+                  <motion.div
+                    className='w-full flex justify-between'
+                    key="profileStep"
+                    initial="initial"
+                    animate="animate"
+                    exit="exit"
+                    variants={transitionVariants}
+                    transition={{ duration: 0.5 }}
+                  >
+                    {step.profileStep.component}
+                  </motion.div>
+                )}
+                {stepNum === 2 && (
+                  <motion.div
+                    className='w-full'
+                    key="spaceStep"
+                    initial="initial"
+                    animate="animate"
+                    exit="exit"
+                    variants={transitionVariants}
+                    transition={{ duration: 0.5 }}
+                  >
+                    <Flex justify={{base: 'center', md: 'space-between'}} className='w-full'>
+                        {step.spaceStep.component}
                     </Flex>
-                    ))}
-                </Flex>
-            </Box>
-        </Box>}
-        <Suspense fallback={<LoadingFallback />}>
-        {imageToCrop &&
-            <CustomDialog
-                trigger={openImageCropper}
-                content={
-                    <ImageCropperContent 
-                    imageCropperProps={{ imageToCrop, setImageToCrop,setCroppedFile }}
-                    setOpen={setOpenImageCropper}
-                    profileProps={{ setPreviewUrl,setActiveProfile }}
-                    />
-                }
-                open={openImageCropper} 
-                setOpen={setOpenImageCropper} 
-                width={800}
-            />}
-        </Suspense>
-        </>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </Flex>
+          ))}
+        </Flex>
+    </Box>
+  )}
+  </>
     );
 };
 

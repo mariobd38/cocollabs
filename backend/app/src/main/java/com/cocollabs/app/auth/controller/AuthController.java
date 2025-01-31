@@ -41,7 +41,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
-    private final Logger logger = LoggerFactory.getLogger(AuthController.class);
+    private final Logger log = LoggerFactory.getLogger(AuthController.class);
     private static final String REFRESH_TOKEN_COOKIE_NAME = "refresh_token";
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
@@ -95,12 +95,12 @@ public class AuthController {
 
             return ResponseEntity.ok().body(UserPlatformDtoConverter.convertToDto(user));
         } catch (BadCredentialsException ex) {
-            logger.atError().log("Invalid user credentials");
+            log.atError().log("Invalid user credentials");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body("Invalid credentials");
         }
         catch (Exception ex) {
-            logger.atError().log("Unexpected error occurred during authentication");
+            log.atError().log("Unexpected error occurred during authentication");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("An error occurred during authentication");
         }
@@ -164,7 +164,7 @@ public class AuthController {
         Map<String, Boolean> statusResponse = new HashMap<>();
 
         if (jwt == null) {
-            logger.info("No JWT found, returning unauthenticated status");
+            log.info("No JWT found, returning unauthenticated status");
             statusResponse.put("isAuthenticated", false);
             statusResponse.put("isOnboarded", false);
             return ResponseEntity.ok(statusResponse);
@@ -187,7 +187,7 @@ public class AuthController {
             return ResponseEntity.ok(statusResponse);
 
         } catch (Exception e) {
-            logger.error("Error validating JWT", e);
+            log.error("Error validating JWT", e);
             statusResponse.put("isAuthenticated", false);
             statusResponse.put("isOnboarded", false);
             return ResponseEntity.ok(statusResponse);
@@ -196,11 +196,11 @@ public class AuthController {
 
     @PostMapping("/refresh")
     public ResponseEntity<?> refreshToken(HttpServletRequest request, HttpServletResponse response) {
-        logger.info("Received request to refresh token");
+        log.info("Received request to refresh token");
         try {
             String refreshToken = CookieUtil.getCookieValue(request, REFRESH_TOKEN_COOKIE_NAME);
             if (refreshToken == null) {
-                logger.warn("No refresh token found in request");
+                log.warn("No refresh token found in request");
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
             }
 
@@ -209,7 +209,7 @@ public class AuthController {
             Optional<User> user = userRepository.findByEmail(userEmail);
 
             if (user.isEmpty() || !jwtUtil.validateToken(refreshToken, user.get())) {
-                logger.warn("Invalid refresh token for user");
+                log.warn("Invalid refresh token for user");
                 CookieUtil.deleteAllCookies(request, response);
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid refresh token");
             }
@@ -217,11 +217,11 @@ public class AuthController {
             // Find and validate token in database
             Optional<CustomJwt> storedToken = customJwtService.findValidToken(refreshToken, user.get());
             if (storedToken.isEmpty()) {
-                logger.warn("Refresh token revoked or expired for user");
+                log.warn("Refresh token revoked or expired for user");
                 CookieUtil.deleteAllCookies(request, response);
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Refresh token revoked or expired");
             }
-            logger.info("Generating new tokens for user");
+            log.info("Generating new tokens for user");
 
             // Generate new tokens
             String newAccessToken = jwtUtil.generateAccessToken(user.get());
@@ -234,10 +234,10 @@ public class AuthController {
             CookieUtil.addCookie(response, APP_ACCESS_TOKEN_NAME, newAccessToken, jwtUtil.getAccessTokenValidityInSeconds());
             CookieUtil.addCookie(response, REFRESH_TOKEN_COOKIE_NAME, newRefreshToken, jwtUtil.getRefreshTokenValidityInSeconds());
 
-            logger.info("Successfully refreshed tokens for user");
+            log.info("Successfully refreshed tokens for user");
             return ResponseEntity.ok().build();
         } catch (Exception ex) {
-            logger.error("Error refreshing token", ex);
+            log.error("Error refreshing token", ex);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Error refreshing token");
         }

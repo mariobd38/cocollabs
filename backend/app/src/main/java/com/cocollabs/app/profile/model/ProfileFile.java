@@ -24,7 +24,7 @@ import java.util.Base64;
 public class ProfileFile {
     @Id
     @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
+    @GenericGenerator(name = "uuid")
     private String id;
 
     private String name;
@@ -35,22 +35,8 @@ public class ProfileFile {
     @Column(columnDefinition = "LONGBLOB")
     private byte[] data;
 
-    public ProfileFile(String name, String type, byte[] data) {
-        this.name = name;
-        this.type = type;
-        this.data = data;
-    }
-
-    public ProfileFile(String name, String type) {
-        this.name = name;
-        this.type = type;
-    }
-
     public String getBase64Data() {
         return Base64.getEncoder().encodeToString(this.data);
     }
 
-    public void setBase64Data(String base64Data) {
-        this.data = Base64.getDecoder().decode(base64Data);
-    }
 }

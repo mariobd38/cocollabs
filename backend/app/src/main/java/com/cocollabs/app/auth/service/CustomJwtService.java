@@ -17,7 +17,7 @@ import java.util.Optional;
 @Service
 @Transactional
 public class CustomJwtService {
-    private final Logger logger = LoggerFactory.getLogger(AuthController.class);
+    private final Logger log = LoggerFactory.getLogger(AuthController.class);
     private final CustomJwtRepository customJwtRepository;
     private static final long EXPIRED_CLEANUP_INTERVAL = 24 * 60 * 60L;
     private static final long REVOKED_CLEANUP_INTERVAL = 60 * 60L; // 1 hour
@@ -45,7 +45,7 @@ public class CustomJwtService {
     }
 
     public void revokeToken(CustomJwt token) {
-        logger.info("Revoking token: {}", token.getId());
+        log.info("Revoking token: {}", token.getId());
         token.setRevoked(true);
         customJwtRepository.save(token);
     }
@@ -62,7 +62,7 @@ public class CustomJwtService {
     @Scheduled(fixedRate = REVOKED_CLEANUP_INTERVAL * 1000)
     public void cleanupRevokedTokens() {
         Timestamp cutoffTime = new Timestamp(System.currentTimeMillis() - (REVOKED_TOKEN_RETENTION * 1000));
-        logger.info("Cleaning up revoked tokens older than: {}", cutoffTime);
+        log.info("Cleaning up revoked tokens older than: {}", cutoffTime);
         customJwtRepository.deleteRevokedTokens(cutoffTime);
     }
 
