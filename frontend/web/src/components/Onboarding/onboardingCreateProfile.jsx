@@ -15,20 +15,10 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
 import createProfileIllustration from '@/assets/illustrations/onboarding/createProfile.svg';
-import { handleProfileCreation } from '@/api/Users/handleProfileCreation';
+import { handleProfileCreation } from '@/api/onboarding/handleProfileCreation';
 
-const avatars = import.meta.glob('@/assets/avatars/*.svg', { eager: true });
-const avatarList = Object.entries(avatars)
-    .sort(([a], [b]) => {
-        // Extract numbers from file names to ensure correct order
-        const numA = parseInt(a.match(/\d+/)?.[0] || 0, 10);
-        const numB = parseInt(b.match(/\d+/)?.[0] || 0, 10);
-        return numA - numB;
-    })
-    .map(([path, avatar]) => ({
-        name: path.split('/').pop(), // Extract file name
-        svg: avatar.default, // Actual SVG content
-    }));
+import { getAvatars } from '@/utils/getProfileAvatarList';
+const avatarList = getAvatars();
 
 const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
 
@@ -78,11 +68,8 @@ const ImageCropperContent = lazy(() => import('@/components/imageCropperContent'
     // const [previewUrl, setPreviewUrl] = useState(null);
     // const [openImageCropper, setOpenImageCropper] = useState(false);
     //const [isAvatarPopoverOpen, setIsAvatarPopoverOpen] = useState(false);
-    // const form = useForm({
-    //     resolver: zodResolver(FormSchema)
-    // });
 
-    const onboardingForm = useForm({
+    const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
             fullName: "",
@@ -92,17 +79,17 @@ const ImageCropperContent = lazy(() => import('@/components/imageCropperContent'
             image: null,
         },
     });
-    const imageRef = onboardingForm.register("file");
+    const imageRef = form.register("file");
     // ✅ Disable button only if all fields are empty
-    const { formState: { isValid } } = onboardingForm;
+    const { formState: { isValid } } = form;
 
     const onSubmit = async (data) => {
         try {
             const response = await handleProfileCreation({
-                fullName: onboardingForm.getValues('fullName'),
-                username: onboardingForm.getValues('username'),
-                avatarName: onboardingForm.getValues('avatar'),
-            }, onboardingForm,croppedFile);
+                fullName: form.getValues('fullName'),
+                username: form.getValues('username'),
+                avatarName: form.getValues('avatar'),
+            }, form,croppedFile);
             if (response && response.status === 200) {
                 setStepNum(stepNum + 1);
             }
@@ -113,20 +100,20 @@ const ImageCropperContent = lazy(() => import('@/components/imageCropperContent'
 
     const main = <>
         <Flex direction="column" gap={10}>
-            <Box fz={{base: 26, xs: 30}} lh={{base: 32, xs: 36}}>
-                <h1 className="text-gray-100  text-wrap">
+            <Flex fz={{base: 26, xs: 30}} lh={{base: 32, xs: 36}}>
+                <h1 className="text-gray-100 w-full text-wrap text-left">
                 Complete your profile
                 </h1>
-            </Box>
+            </Flex>
             <Box fz={{base: 13, xs: 14}} lh={1}>
                 <p className="text-gray-400 text-wrap leading-5">
                 Add your name, username, and profile picture to personalize your experience
                 </p>
             </Box>
         </Flex>
-        <Form {...onboardingForm}>
-            <form onSubmit={onboardingForm.handleSubmit(onSubmit)} >
-                <Flex align={{base: 'start'}}  gap={{base: 50, xs: 65}} direction={{base: 'column', xs: 'row'}}> 
+        <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className='w-full'>
+                <Flex gap={{base: 50, xs: 65}} direction={{base: 'column', xs: 'row'}}> 
 
                     <Flex justify='center' align='center' className={`relative h-36 w-36 bg-transparent ${(activeProfile || previewUrl) ? 'border-solid' : 'border-dashed'} transition-all duration-500 linear hover:border-gray-100 border-1 border-gray-700 rounded-full text-white`}>
                         <Popover open={isAvatarPopoverOpen} onOpenChange={(isOpen) => {setIsAvatarPopoverOpen(isOpen);}}>
@@ -148,7 +135,7 @@ const ImageCropperContent = lazy(() => import('@/components/imageCropperContent'
                                 <div className="grid gap-4">
                                     <div className="space-y-2 grid gap-3">
                                         <FormField
-                                            control={onboardingForm.control}
+                                            control={form.control}
                                             name="avatar"
                                             render={({ field: { value, onChange, ...fieldProps } }) => (
                                                 <FormItem>
@@ -164,7 +151,7 @@ const ImageCropperContent = lazy(() => import('@/components/imageCropperContent'
                                                                         setActiveProfile(item);
                                                                         onChange(item.name);
                                                                         setPreviewUrl(null);
-                                                                        onboardingForm.setValue('image', null);
+                                                                        form.setValue('image', null);
                                                                         setCroppedFile(null);
                                                                     } catch (error) {
                                                                         console.error("Error fetching SVG content:", error);
@@ -182,7 +169,7 @@ const ImageCropperContent = lazy(() => import('@/components/imageCropperContent'
                                             )}
                                         />
                                         <FormField
-                                            control={onboardingForm.control}
+                                            control={form.control}
                                             name="image"
                                             render={({ field: { value, onChange, ...fieldProps } }) => (
                                                 <FormItem>
@@ -231,12 +218,13 @@ const ImageCropperContent = lazy(() => import('@/components/imageCropperContent'
                         <Flex direction='column' gap={20}>
                             <Flex direction='column' gap={15}>
                                 <FormField
-                                    control={onboardingForm.control}
+                                    control={form.control}
                                     name="fullName"
                                     render={({ field }) => (
                                         <FormItem >
                                             <FormLabel className='text-gray-200'>Full name <span className='text-muted-foreground'>*</span></FormLabel>
                                             <Input
+                                                autoComplete="off"
                                                 placeholder="John Doe"
                                                 className='h-9  pb-2 px-2.5 placeholder:text-muted-foreground text-gray-100'
                                                 {...field} 
@@ -248,12 +236,13 @@ const ImageCropperContent = lazy(() => import('@/components/imageCropperContent'
                                 />
 
                                 <FormField
-                                    control={onboardingForm.control}
+                                    control={form.control}
                                     name="username"
                                     render={({ field }) => (
                                         <FormItem >
                                             <FormLabel className='text-gray-200'>Username <span className='text-muted-foreground'>*</span></FormLabel>
                                             <Input
+                                                autoComplete="off"
                                                 placeholder="johndoe123"
                                                 className='h-9 px-2.5 placeholder:text-muted-foreground text-gray-100'
                                                 {...field} 
@@ -270,14 +259,14 @@ const ImageCropperContent = lazy(() => import('@/components/imageCropperContent'
                     </Flex>
                 </Flex>
                 <Flex direction='column' mt={40} gap={20}>
-                    {(onboardingForm.formState.errors.avatar || onboardingForm.formState.errors.image) &&
-                    <p className='text-red-700 text-[13px] font-medium'>{onboardingForm.formState.errors.avatar?.message}</p>}
+                    {(form.formState.errors.avatar || form.formState.errors.image) &&
+                    <p className='text-red-700 text-[13px] font-medium'>{form.formState.errors.avatar?.message}</p>}
                     <Button disabled={!isValid} type="submit" className='w-12 h-5 bg-gray-100 hover:bg-gray-300 transition-all duration-300' >Continue</Button>
                 </Flex>
 
             </form>
         </Form>
-        <Flex direction='column' fz={{base: 13, xs: 14}} lh={1} gap={6}>
+        <Flex direction='column' fz={{base: 13, xs: 14}} lh={1} gap={6} w='100%'>
             <p className="text-gray-400 text-wrap leading-5">
             You&apos;re signing up with email <span className='text-white'>{data?.user.email}</span>
             </p>
@@ -290,36 +279,36 @@ const ImageCropperContent = lazy(() => import('@/components/imageCropperContent'
         </>;
 
     const illustration = (
-        <Flex w='40%' justify='center' align='center' style={{minHeight: 'calc(100vh - 65px)'}} className='bg-cyan-700' display={{base: 'none', md: 'flex'}}>
+        <Flex w='40%' justify='center' align='center' className='min-h-screen bg-cyan-700' display={{base: 'none', md: 'flex'}}>
             <img src={createProfileIllustration} alt='create profile' className='w-3/4' />
         </Flex>
     );
 
-    // return {main,illustration};
     return (
         <>
-        <Flex direction='column' gap={40} py={40} px={40}>
-            {stepDisplay}
-            {main}
-        </Flex>
-        {illustration}
+        {/* <Flex direction='column' gap={40} py={40} px={40}> */}
+            <Flex direction='column' gap={40} py={120} px={{base: 20, xs: 40}} align={{base: 'center', md: 'start'}} >
+                {stepDisplay}
+                {main}
+            </Flex>
+            {illustration}
 
-        <Suspense fallback={<LoadingFallback />}>
-                {imageToCrop &&
-                    <CustomDialog
-                        trigger={openImageCropper}
-                        content={
-                            <ImageCropperContent 
-                            imageCropperProps={{ imageToCrop, setImageToCrop,setCroppedFile }}
-                            setOpen={setOpenImageCropper}
-                            profileProps={{ setPreviewUrl,setActiveProfile }}
-                            />
-                        }
-                        open={openImageCropper} 
-                        setOpen={setOpenImageCropper} 
-                        width={800}
-                    />}
-                </Suspense>
+            <Suspense fallback={<LoadingFallback />}>
+            {imageToCrop &&
+                <CustomDialog
+                    trigger={openImageCropper}
+                    content={
+                        <ImageCropperContent 
+                        imageCropperProps={{ imageToCrop, setImageToCrop,setCroppedFile }}
+                        setOpen={setOpenImageCropper}
+                        profileProps={{ setPreviewUrl,setActiveProfile }}
+                        />
+                    }
+                    open={openImageCropper} 
+                    setOpen={setOpenImageCropper} 
+                    width={800}
+                />}
+            </Suspense>
         </>
     );
 };

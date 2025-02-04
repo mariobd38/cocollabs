@@ -3,11 +3,13 @@ package com.cocollabs.app.user.dto;
 import com.cocollabs.app.profile.dto.ProfileDto;
 import com.cocollabs.app.space.dto.UserSpaceDto;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Set;
 
+@Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

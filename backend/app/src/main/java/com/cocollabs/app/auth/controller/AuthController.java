@@ -5,6 +5,7 @@ import com.cocollabs.app.auth.service.CustomJwtService;
 import com.cocollabs.app.auth.util.AuthValidationUtil;
 import com.cocollabs.app.auth.util.CookieUtil;
 import com.cocollabs.app.auth.util.JwtUtil;
+import com.cocollabs.app.profile.service.ProfileService;
 import com.cocollabs.app.user.dto.UserAuthenticationDto;
 import com.cocollabs.app.user.dto.UserRegistrationDto;
 import com.cocollabs.app.user.service.CustomUserService;
@@ -49,6 +50,8 @@ public class AuthController {
     private final CustomJwtService customJwtService;
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
+    private final ProfileService profileService;
+    private final UserPlatformDtoConverter userPlatform;
 
     @Value("${APP_ACCESS_TOKEN_NAME}")
     private String APP_ACCESS_TOKEN_NAME;
@@ -59,13 +62,18 @@ public class AuthController {
             CustomUserService customUserService,
             CustomJwtService customJwtService,
             PasswordEncoder passwordEncoder,
-            UserRepository userRepository ) {
+            UserRepository userRepository,
+            ProfileService profileService,
+            UserPlatformDtoConverter userPlatform
+    ) {
         this.authenticationManager = authenticationManager;
         this.jwtUtil = jwtUtil;
         this.customUserService = customUserService;
         this.customJwtService = customJwtService;
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
+        this.profileService = profileService;
+        this.userPlatform = userPlatform;
     }
 
     @PostMapping("/login")
@@ -93,17 +101,17 @@ public class AuthController {
             //CookieUtil.addCookie(response, jwtCookieName, jwtUtil.generateToken(user),jwtUtil.getTokenValidityInSeconds());
             //CookieUtil.addCookie(response, jwtCookieName, jwtUtil.generateAccessToken(user),jwtUtil.getTokenValidityInSeconds());
 
-            return ResponseEntity.ok().body(UserPlatformDtoConverter.convertToDto(user));
+            return ResponseEntity.ok().body(userPlatform.convertToDto(user));
         } catch (BadCredentialsException ex) {
             log.atError().log("Invalid user credentials");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body("Invalid credentials");
         }
-        catch (Exception ex) {
-            log.atError().log("Unexpected error occurred during authentication");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("An error occurred during authentication");
-        }
+//        catch (Exception ex) {
+//            log.atError().log("Unexpected error occurred during authentication");
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+//                    .body("An error occurred during authentication");
+//        }
     }
 
     @PostMapping("/signup")

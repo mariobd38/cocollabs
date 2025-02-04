@@ -94,7 +94,7 @@ const SpaceCreationIconsPopover = (props) => {
     }
 
     return (
-        <Popover open={isOpen} onOpenChange={(isOpen) => {setIsOpen(isOpen);setOpenIconPopover(isOpen);}}>
+        <Popover open={isOpen} onOpenChange={(isOpen) => {setIsOpen(isOpen);setOpenIconPopover && setOpenIconPopover(isOpen);}}>
             <PopoverTrigger asChild>
                 <Button className='p-0' variant='ghost'>{spaceIcon}</Button>
             </PopoverTrigger>

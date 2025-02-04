@@ -1,6 +1,5 @@
 package com.cocollabs.app.user.service;
 
-import com.cocollabs.app.aws.service.S3Service;
 import com.cocollabs.app.role.model.RoleNames;
 import com.cocollabs.app.role.repository.RoleRepository;
 import com.cocollabs.app.role.util.RoleSelectorUtil;
@@ -46,7 +45,7 @@ public class CustomUserService extends User implements UserService {
             }
         }
         user.setRoles(roleList);
-        user.setOnboardingStep(User.UserOnboardingStep.PROFILE);
+        user.setOnboardingStep(UserOnboardingStep.PROFILE);
         userRepository.save(user);
     }
 

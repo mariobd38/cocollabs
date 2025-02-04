@@ -1,6 +1,5 @@
 package com.cocollabs.app.aws.service;
 
-import com.cocollabs.app.profile.service.ProfileService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -19,7 +18,7 @@ import java.time.Duration;
 
 @Service
 public class S3Service {
-    private final Logger log = LoggerFactory.getLogger(ProfileService.class);
+    private final Logger log = LoggerFactory.getLogger(S3Service.class);
     private final S3Client s3;
 
     public S3Service(S3Client s3) {
@@ -67,7 +66,7 @@ public class S3Service {
                     .build();
 
             GetObjectPresignRequest presignRequest = GetObjectPresignRequest.builder()
-                    .signatureDuration(Duration.ofMinutes(10))  // The URL will expire in 10 minutes.
+                    .signatureDuration(Duration.ofMinutes(720))  // The URL will expire in 12 hours.
                     .getObjectRequest(objectRequest)
                     .build();
 

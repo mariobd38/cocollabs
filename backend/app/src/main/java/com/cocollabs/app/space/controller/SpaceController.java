@@ -1,5 +1,6 @@
 package com.cocollabs.app.space.controller;
 
+import com.cocollabs.app.space.dto.SpaceDto;
 import com.cocollabs.app.space.model.Space;
 import com.cocollabs.app.space.service.SpaceService;
 import com.cocollabs.app.userSpace.repository.UserSpaceActivityRepository;
@@ -31,18 +32,22 @@ public class SpaceController {
     private final SpaceService spaceService;
     private final UserRepository userRepository;
     private final UserSpaceActivityRepository userSpaceActivityRepository;
+    private final UserPlatformDtoConverter userPlatform;
 
     public SpaceController(SpaceService spaceService,
                            UserRepository userRepository,
-                           UserSpaceActivityRepository userSpaceActivityRepository) {
+                           UserSpaceActivityRepository userSpaceActivityRepository,
+                           UserPlatformDtoConverter userPlatform
+    ) {
         this.spaceService = spaceService;
         this.userRepository = userRepository;
         this.userSpaceActivityRepository = userSpaceActivityRepository;
+        this.userPlatform = userPlatform;
     }
 
     @PostMapping("/create")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<?> createSpace(@AuthenticationPrincipal User user, @RequestBody Space space) {
+    public ResponseEntity<?> createSpace(@AuthenticationPrincipal User user, @RequestBody SpaceDto space) {
         return ResponseEntity.ok(
             Optional.ofNullable(spaceService.save(user, space))
                     .orElseThrow(() -> new RuntimeException("Failed to create space")));
@@ -65,7 +70,7 @@ public class SpaceController {
             User user = userRepository.findById(authenticatedUser.getId())
                     .orElseThrow(() -> new RuntimeException("User not found"));
 
-            return ResponseEntity.ok(UserPlatformDtoConverter.getUserSpacesDto(user));
+            return ResponseEntity.ok(userPlatform.getUserSpacesDto(user));
         } catch(HttpClientErrorException.Unauthorized e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized to retrieve user spaces");
         } catch (Exception e) {

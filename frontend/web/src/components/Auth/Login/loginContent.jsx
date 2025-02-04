@@ -244,7 +244,7 @@ const LoginContent = (props) => {
                                             <Text c="#97999c" size="sm" ff='Nunito Sans'>
                                                 Don&apos;t have an account?
                                             </Text>
-                                            <Anchor onClick={() => routeChange('/signup')} ps={5} c="#2b93f0" size="sm" ff='Nunito Sans'>
+                                            <Anchor className='cursor-pointer' onClick={() => routeChange('/signup')} ps={5} c="#2b93f0" size="sm" ff='Nunito Sans'>
                                                 Sign up
                                             </Anchor>
                                         </Flex>

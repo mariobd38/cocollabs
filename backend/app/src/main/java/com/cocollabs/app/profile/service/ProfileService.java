@@ -76,22 +76,22 @@ public class ProfileService {
         return profileRepository.save(profile);
     }
 
-    public String getProfileImageUrl(User user) {
-        Profile profile = profileRepository.findByUser(user)
-                .orElseThrow(() -> new RuntimeException("Profile not found"));
+    public String getProfileImageUrl(Profile profile) {
+//        Profile profile = profileRepository.findByUser(user)
+//                .orElseThrow(() -> new RuntimeException("Profile not found"));
 
         if (profile.getS3Key() == null) {
-            throw new RuntimeException("No profile image found");
+            return null;
         }
 
         return s3Service.generatePreSignedUrl(bucketName, profile.getS3Key());
     }
 
-    public ProfileDto handleDefaultAvatar(User user) {
-        user.setProfile(null);
-        userRepository.save(user);
-        return new ProfileDto(null,null,"default");
-    }
+//    public ProfileDto handleDefaultAvatar(User user) {
+//        user.setProfile(null);
+//        userRepository.save(user);
+//        return new ProfileDto(null,null,"default");
+//    }
 
     private String getS3Key(User user, Profile profile) {
         String key = profile.getS3Key();

@@ -1,20 +1,16 @@
 package com.cocollabs.app.space.util;
 
-import java.text.Normalizer;
-import java.util.Locale;
-import java.util.regex.Pattern;
+import java.security.SecureRandom;
 
 public class SpaceSlugGenerationUtil {
-    private static final Pattern NONLATIN = Pattern.compile("[^\\w-]");
-    private static final Pattern WHITESPACE = Pattern.compile("\\s+");
-    private static final Pattern MULTIPLE_HYPHENS = Pattern.compile("-+");
+    private static final SecureRandom RANDOM = new SecureRandom();
+    private static final int SLUG_LENGTH = 10;
 
-    public static String generateSlug(String name) {
-        String nowhitespace = WHITESPACE.matcher(name.trim()).replaceAll("-");
-        String normalized = Normalizer.normalize(nowhitespace, Normalizer.Form.NFD);
-        String withoutNonLatin = NONLATIN.matcher(normalized).replaceAll("").toLowerCase(Locale.ENGLISH);
-        String slug = MULTIPLE_HYPHENS.matcher(withoutNonLatin).replaceAll("-");
-        return slug.replaceAll("^-|-$", "");
+    public static String generateSlug() {
+        StringBuilder sb = new StringBuilder(SLUG_LENGTH);
+        for (int i = 0; i < SLUG_LENGTH; i++) {
+            sb.append(RANDOM.nextInt(10)); // Generates a random digit (0-9)
+        }
+        return sb.toString();
     }
-
 }

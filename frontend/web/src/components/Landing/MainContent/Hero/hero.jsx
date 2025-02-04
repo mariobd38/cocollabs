@@ -51,7 +51,7 @@ const Hero = () => {
 
                         {/* <TypingAnimationComp text={'Collab like never before'} duration={55} /> */}
                         <Box ff='Helvetica'>
-                            <h1 className='font-bold text-white text-6xl sm:text-7xl tracking-tight sm:tracking-normal text-balance sm:text-wrap text-center !leading-[4.6rem] w-11/12 m-auto'>Connecting developers to  <AuroraTextComp>success</AuroraTextComp>
+                            <h1 className='font-bold text-white text-6xl sm:text-7xl tracking-tight sm:tracking-normal text-balance sm:text-wrap text-center !leading-[4.6rem] w-11/12 sm:w-full m-auto'>Connecting development to  <AuroraTextComp>success</AuroraTextComp>
                             </h1>
                             
                         </Box>
@@ -63,14 +63,14 @@ const Hero = () => {
                                     Your projects, tools, and teams all in one place
                                 </p> */}
                                 <p className='text-gray-300 text-md sm:text-lg tracking-tight sm:tracking-normal text-balance text-center w-11/12 m-auto'>
-                                Meet the platform made for project and developer growth. Discover a wide developer community, and unlock your full development potential with seamless tools and integrations.
+                                Meet the platform made for project and developer growth. Discover a wide developer community, and unlock your full development potential with advanced tools and integrations.
                                 </p>
                             </Flex>
                             
                             <Flex align='center' m='auto' gap={50} direction={{ base: 'column', sm: 'row' }} ff='Inter'
                             >
                                 <HeroGetStartedButton routeChange={routeChange} />
-                                <Button className='visit-community-button bg-white font-bold rounded-xl text-base px-4 py-2 hover:brightness-90'>Visit the community
+                                <Button className='visit-community-button bg-white text-black font-bold rounded-xl text-base px-4 py-2 hover:brightness-90'>Visit the community
                                     <span className='visit-community icon'>{Icons('IconChevronRight',16,16)}</span>
                                 </Button>
                             </Flex>
@@ -80,11 +80,11 @@ const Hero = () => {
                 
                 </Container>
             </Box>
-            <Flex justify='center' >
-                <Divider size='xs' my={65} w={{base: '100%', md: '100%'}}  bd='.1px solid #202038'/>
-            </Flex>
-
             <ContainerScrollAnimationComp />
+            {/* <Flex justify='center' >
+                <Divider size='xs' my={65} w={{base: '100%', md: '100%'}}  bd='.1px solid #202038'/>
+            </Flex> */}
+
 
             <Container pt={{base: 80, sm: 150, md: 210}} pb={{base: 80, sm: 150, md: 160}} px={{sm: '20', md: '0'}}>
                 <Flex gap={24} direction='column' px={10}>

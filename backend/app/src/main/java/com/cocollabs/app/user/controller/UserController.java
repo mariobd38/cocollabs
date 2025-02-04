@@ -1,12 +1,12 @@
 package com.cocollabs.app.user.controller;
 
-import com.cocollabs.app.profile.model.Profile;
 import com.cocollabs.app.profile.service.ProfileService;
 import com.cocollabs.app.user.repository.UserPreferenceRepository;
 import com.cocollabs.app.user.dto.UserOnboardingProfileDto;
 import com.cocollabs.app.user.error.OnboardingProfileErrorResponse;
 import com.cocollabs.app.user.model.ThemePreference;
 import com.cocollabs.app.user.model.User;
+import com.cocollabs.app.user.model.User.UserOnboardingStep;
 import com.cocollabs.app.user.model.UserPreference;
 import com.cocollabs.app.user.repository.UserRepository;
 import com.cocollabs.app.auth.util.JwtUtil;
@@ -25,6 +25,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,7 +34,6 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.Nullable;
 import java.util.Optional;
 
 @RestController
@@ -45,18 +45,22 @@ public class UserController {
     private final JwtUtil jwtUtil;
     private final CustomUserService customUserService;
     private final ProfileService profileService;
+    private final UserPlatformDtoConverter userPlatform;
 
     public UserController(
             UserRepository userRepository,
             UserPreferenceRepository userPreferenceRepository,
             JwtUtil jwtUtil,
             CustomUserService customUserService,
-            ProfileService profileService) {
+            ProfileService profileService,
+            UserPlatformDtoConverter userPlatform
+    ) {
         this.userRepository = userRepository;
         this.userPreferenceRepository = userPreferenceRepository;
         this.jwtUtil = jwtUtil;
         this.customUserService = customUserService;
         this.profileService = profileService;
+        this.userPlatform = userPlatform;
     }
 
     @GetMapping("/getInfo")
@@ -74,9 +78,7 @@ public class UserController {
                     .body("User not found");
             }
 
-            User user = optionalUser.get();
-            UserPlatformDto userPlatformDto = UserPlatformDtoConverter.convertToDto(user);
-            return ResponseEntity.ok(userPlatformDto);
+            return ResponseEntity.ok(userPlatform.convertToDto(optionalUser.get()));
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body("An error occurred while processing the request");
@@ -84,7 +86,7 @@ public class UserController {
     }
 
     @PutMapping(value = "/createProfile",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<?> createProfile(@AuthenticationPrincipal User user,
+    public ResponseEntity<?> createUserProfile(@AuthenticationPrincipal User user,
                                            @RequestPart("onboardingProfileDto") @Valid UserOnboardingProfileDto onboardingProfileDto,
                                            @RequestPart(value = "file", required = false) MultipartFile file) {
         if (user == null) {
@@ -117,7 +119,7 @@ public class UserController {
                 user.setProfile(profileService.handleAvatarCreation(user, avatarName));
             }
 
-            user.setOnboardingStep(User.UserOnboardingStep.SPACE);
+            user.setOnboardingStep(UserOnboardingStep.SPACE);
             userRepository.save(user);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
@@ -177,5 +179,21 @@ public class UserController {
         return ResponseEntity.ok(userRepository.findByEmail(email)
                 .map(User::isOnboardingComplete)
                 .orElse(false));
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/completeOnboarding")
+    public ResponseEntity<?> completeUserOnboarding(@AuthenticationPrincipal User user) {
+        user.setOnboardingComplete(true);
+        user.setOnboardingStep(UserOnboardingStep.COMPLETE);
+        userRepository.save(user);
+        Optional<User> user2 = userRepository.findById(user.getId());
+        user2.ifPresent(value -> System.out.println(value.getProfile().getType().toValue()));
+
+        return ResponseEntity.ok(userPlatform.convertToDto(user2.get()));
+//        return ResponseEntity.ok(UserPlatformDtoConverter.convertToDto(user)
+//                .map(User::isOnboardingComplete)
+//                .orElse(false));
+
     }
 }

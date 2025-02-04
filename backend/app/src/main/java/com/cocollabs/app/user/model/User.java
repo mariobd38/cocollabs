@@ -104,9 +104,10 @@ public class User implements UserDetails {
     @Column(name="is_onboarding_complete")
     private boolean isOnboardingComplete = false;
 
+    @Builder.Default
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private User.UserOnboardingStep onboardingStep;
+    @Column(nullable = false, columnDefinition = "VARCHAR(255) NOT NULL DEFAULT 'PROFILE'")
+    private UserOnboardingStep onboardingStep = UserOnboardingStep.PROFILE;
 
     @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
@@ -217,4 +218,5 @@ public class User implements UserDetails {
             return name().toLowerCase(); // Optional: if you want to serialize it as lowercase
         }
     }
+
 }

@@ -1,10 +1,10 @@
 import React, { useState, useEffect,lazy,Suspense } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useLocation,useNavigate } from 'react-router-dom';
 
-import {Box,Flex} from '@mantine/core';
+import { Box,Flex,Progress } from '@mantine/core';
 
 // import OnboardingCreateSpace from '@/components/Onboarding/onboardingCreateSpace';
-import AuthHeader from '@/components/Auth/authHeader';
+// import AuthHeader from '@/components/Auth/authHeader';
 import { motion, AnimatePresence } from "framer-motion";
 
 import { UseAuth } from '@/hooks/authProvider';
@@ -12,6 +12,7 @@ import { UseAuth } from '@/hooks/authProvider';
 import { generateSpaceIconJson } from '@/utils/generateSpaceIconJson';
 import { getUserProfileInfo } from '@/api/Users/getUserProfileInfo';
 import { completeOnboarding } from '@/api/Users/completeOnboarding';
+import { LoadingSpinner } from '@/components/ui/loading-spinner';
 // import { authStatusInfo } from '@/api/Auth/status';
 
 import './onboarding.css';
@@ -26,21 +27,42 @@ const Onboarding = () => {
     const [spaceInfo, setSpaceInfo] = useState({ name: '', icon: null, description: '', visibility: ''});
     const location = useLocation();
     const [picture, setPicture] = useState(location.state?.data?.picture ?? null);
-    const [stepNum, setStepNum] = useState(1);
+    const [stepNum, setStepNum] = useState(33);
+    const navigate = useNavigate();
 
     const [openImageCropper, setOpenImageCropper] = useState(false);
     const [isAvatarPopoverOpen, setIsAvatarPopoverOpen] = useState(false);
     const [imageToCrop, setImageToCrop] = useState(null);
     const [previewUrl, setPreviewUrl] = useState(null);
     const [activeProfile, setActiveProfile] = useState(null);
+    const [isOnboardingComplete, setIsOnboardingComplete] = useState(false);
+    
     
     const stepsObj = [
         {name: 'profile', num: 1},
         {name: 'space', num: 2},
         {name: 'complete', num: 3}
     ];
-    const stepDisplay = <Flex gap={20} className=' w-full'>
-        {[...Array(3)].map((_, i) => <div key={i} className={`w-full h-1 ${i < stepNum ? 'bg-green-700' : 'bg-gray-500'} rounded-full`} />)}
+
+    const totalSteps = stepsObj.length;
+    const progressPercentage = (stepNum / totalSteps) * 100;
+
+    const bars = <Progress
+        className='signup-content-progress-bar bg-zinc-800'
+        styles={{ section: { transition: 'all 1s ease-in-out' } }}
+        value={progressPercentage}
+        size={6}
+        color='teal'
+        radius='xl'
+    />
+
+
+    // const stepDisplay = <Flex gap={20} className=' w-full'>
+    //     {[...Array(3)].map((_, i) => <div key={i} className={`w-full h-1 ${i < stepNum ? 'bg-green-700' : 'bg-gray-500'} rounded-full`} />)}
+    // </Flex>;
+    const stepDisplay = <Flex gap={20} className='w-full' direction='column'>
+        {bars}
+        {/* {[...Array(3)].map((_, i) => <div key={i} className={`w-full h-1 ${i < stepNum ? 'bg-green-700' : 'bg-gray-500'} rounded-full`} />)} */}
     </Flex>;
 
     
@@ -63,7 +85,7 @@ const Onboarding = () => {
         };
         fetchUserData();
         const step = stepsObj.find(step => step.name === data.onboardingStep);
-        //setStepNum(step?.num);
+        setStepNum(step?.num);
     },[data?.onboardingStep]);
 
     useEffect(() => {
@@ -88,6 +110,7 @@ const Onboarding = () => {
         <OnboardingCreateSpacev2 
             stepNumProps={{ stepNum, setStepNum,stepDisplay }}
             fullName={data?.user.fullName}
+            setIsOnboardingComplete={setIsOnboardingComplete}
         />
     </Suspense>;
 
@@ -99,11 +122,40 @@ const Onboarding = () => {
             },
             spaceStep: {
                 component: selectSpaceContent
-                // main: <ParentComponent data={data} stepNum={stepNum} setStepNum={setStepNum} />,
-                // illustration: <ParentComponent data={data} stepNum={stepNum} setStepNum={setStepNum} />,
             },
         },
     ];
+
+    useEffect(() => {
+        async function sendDataToPlatform() {
+            if(stepNum === 3) {
+                try {
+                    const response = await completeOnboarding();
+                    
+                    if (response) {
+                        setTimeout(() => {
+                            setIsOnboardingComplete(true);
+                        },1400);
+
+                        setTimeout(() => {
+                            setIsOnboardingComplete(false);
+                            navigate(`/${response.spaceDto?.slug}`, { 
+                                state: { 
+                                    userInfo: response.userDto, 
+                                    spaceInfo: response.spaceDto 
+                                } 
+                            });
+                        },2000);
+                        
+                    }
+                } catch (error) {
+                    console.error('Onboarding completion failed:', error);
+                }
+            }
+        }
+
+        sendDataToPlatform();
+    },[stepNum,navigate]);
 
     // const [profileOptions, setProfileOptions] = useState(picture ? [{
     //     option: (
@@ -165,7 +217,7 @@ const Onboarding = () => {
             
     //         const updatedSpaceInfo = response.spaceData.body;
             
-    //         await updateAuthStatus();
+            // await updateAuthStatus();
             
     //         navigate('/home', { state: { userInfo: updatedUserInfo, spaceInfo: updatedSpaceInfo } });
     //     }
@@ -219,7 +271,6 @@ const Onboarding = () => {
         exit: { opacity: 0, x: -50 }, // Exit position (slide out)
     };
 
-
     return (<>
         {data?.user && (
     <Box className="w-full bg-background">
@@ -230,7 +281,7 @@ const Onboarding = () => {
               <AnimatePresence mode="wait" >
                 {stepNum === 1 && (
                   <motion.div
-                    className='w-full flex justify-between'
+                    className='w-full'
                     key="profileStep"
                     initial="initial"
                     animate="animate"
@@ -238,10 +289,12 @@ const Onboarding = () => {
                     variants={transitionVariants}
                     transition={{ duration: 0.5 }}
                   >
-                    {step.profileStep.component}
+                    <Flex justify={{base: 'center', md: 'space-between'}} >
+                        {step.profileStep.component}
+                    </Flex>
                   </motion.div>
                 )}
-                {stepNum === 2 && (
+                {stepNum >= 2 && (
                   <motion.div
                     className='w-full'
                     key="spaceStep"
@@ -251,9 +304,12 @@ const Onboarding = () => {
                     variants={transitionVariants}
                     transition={{ duration: 0.5 }}
                   >
-                    <Flex justify={{base: 'center', md: 'space-between'}} className='w-full'>
+                    {isOnboardingComplete ? <LoadingSpinner /> : 
+                        <Flex justify={{base: 'center', md: 'space-between'}} >
                         {step.spaceStep.component}
-                    </Flex>
+                        </Flex>
+                }
+                    
                   </motion.div>
                 )}
               </AnimatePresence>

@@ -4,58 +4,68 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
+import { motion, AnimatePresence } from "framer-motion";
+
 import { Avatar,Flex,Box } from '@mantine/core';
 
-import { FormControl,FormDescription, Form, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { FormControl,FormDescription,Form,FormField,FormItem,FormLabel,FormMessage } from "@/components/ui/form"
 import { Select,SelectContent,SelectItem,SelectTrigger,SelectValue } from "@/components/ui/select"
 import { Input } from "@/components/ui/input"
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from "@/components/ui/button"
 import { IconsFilled } from '@/components/icons/iconsFilled';
+import Logo2 from '@/components/Logo/logo2';
+
+import { handleSpaceCreation } from '@/api/onboarding/handleSpaceCreation';
 
 import SpaceCreationIconsPopover from '@/components/Home/SpaceCreationModal/spaceCreationIconsPopover';
 import createSpaceIllustration from '@/assets/illustrations/onboarding/createSpace.svg';
+import { generateSpaceIconJson } from '@/utils/generateSpaceIconJson';
 
 const formSchema = z.object({
     name: z.string().nonempty({ message: "Organization name is required." }),
     description: z.string().optional(),
+    type: z.string().nonempty({
+      message: "Please select a space type.",
+    }),
 });
 const profileSize = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--mantine-scale')) || 1;
 const size = 3 * 0.5 * profileSize * 16;
 
-const OnboardingCreateSpacev2 = ({stepNumProps,fullName}) => {
+const OnboardingCreateSpacev2 = ({stepNumProps,fullName,setIsOnboardingComplete}) => {
     const { stepNum,setStepNum,stepDisplay } = stepNumProps;
     
     const [color, setColor] = useState('#848484');
     const [spaceIcon, setSpaceIcon] = useState(<Avatar bg={color} variant='light' radius='calc(0.25rem * 1)' >
         {IconsFilled('IconUserFilled', size, size, '#fafafa')}</Avatar>);
-    const [openIconPopover, setOpenIconPopover] = useState(false);
 
-    const onboardingForm = useForm({
+    const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            fullName: "",
-            username: "",
-            avatar: null,
-            picture: null,
-            image: null,
+            name: "",
+            description: "",
+            type: "personal",
         },
     });
+    const { formState: { isValid } } = form;
+
+    // const [isOnboardingComplete, setIsOnboardingComplete] = useState(false);
 
     const onSubmit = async (data) => {
-        console.log(data);
-        // try {
-        //     const response = await handleProfileCreation({
-        //         fullName: onboardingForm.getValues('fullName'),
-        //         username: onboardingForm.getValues('username'),
-        //         avatarName: onboardingForm.getValues('avatar'),
-        //     }, onboardingForm,croppedFile);
-        //     if (response && response.status === 200) {
-        //         setStepNum(stepNum + 1);
-        //     }
-        // } catch (error) {
-        //     console.log(error);
-        // }
+        try {
+            const response = await handleSpaceCreation({
+                name: form.getValues('name'),
+                description: form.getValues('description'),
+                icon: generateSpaceIconJson(spaceIcon),
+                type: form.getValues('type'),
+            });
+
+            if (response && response.status === 200) {
+                setStepNum(stepNum + 1);
+            }
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     const main = <>
@@ -71,20 +81,20 @@ const OnboardingCreateSpacev2 = ({stepNumProps,fullName}) => {
                 </p>
             </Box>
         </Flex>
-        <Form {...onboardingForm}>
-            <form onSubmit={onboardingForm.handleSubmit(onSubmit)} className='w-full'>
-                <Flex align={{base: 'start', xs: 'start'}} gap={{base: 50, xs: 65}} direction={{base: 'column', xs: 'row'}}> 
+        <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className='w-full space-y-4'>
+                <Flex align='start' gap={{base: 50, xs: 65}} direction={{base: 'column', xs: 'row'}}> 
 
                     <Flex direction='column' gap={30} w='100%'>
                         <Flex direction='column' >
                             <Flex direction='column' className='space-y-2.5' >
                                 <Flex align='center' gap={15}>
                                     <FormField
-                                        control={onboardingForm.control}
+                                        control={form.control}
                                         name="name"
                                         render={({ field }) => (
                                             <FormItem className='w-full'>
-                                                <FormLabel className='text-gray-200'>Icon & Name <span className='text-muted-foreground'>*</span></FormLabel>
+                                                <FormLabel className='text-gray-200'>Icon & Name</FormLabel>
                                                 <Flex gap={10} direction={{base: 'column', xs: 'row'}}>
                                                     <Flex>
                                                         <SpaceCreationIconsPopover 
@@ -93,10 +103,10 @@ const OnboardingCreateSpacev2 = ({stepNumProps,fullName}) => {
                                                             spaceIcon={spaceIcon}
                                                             setSpaceIcon={setSpaceIcon}
                                                             colorMode='dark'
-                                                            setOpenIconPopover={setOpenIconPopover}
                                                         />
                                                     </Flex>
                                                     <Input
+                                                        autoComplete="off"
                                                         placeholder={`Organization name`} 
                                                         className='pb-2 px-2.5 placeholder:text-muted-foreground text-gray-100'
                                                         {...field} 
@@ -114,7 +124,7 @@ const OnboardingCreateSpacev2 = ({stepNumProps,fullName}) => {
                         <Flex direction='column'>
                             <Flex align='center'>
                                 <FormField
-                                    control={onboardingForm.control}
+                                    control={form.control}
                                     name="description"
                                     render={({ field }) => (
                                         <FormItem className='w-full'>
@@ -136,27 +146,28 @@ const OnboardingCreateSpacev2 = ({stepNumProps,fullName}) => {
 
                         <Flex direction='column'>
                         <FormField
-                            control={onboardingForm.control}
-                            name="email"
+                            control={form.control}
+                            name="type"
                             render={({ field }) => (
                                 <FormItem className='w-full'>
-                                <FormLabel>Type</FormLabel>
-                                <Select onValueChange={field.onChange} defaultValue={field.value}>
-                                    <FormControl className='w-full'>
-                                    <SelectTrigger >
-                                        <SelectValue placeholder="Select a verified email to display" />
-                                    </SelectTrigger>
-                                    </FormControl>
-                                    <SelectContent className='w-full'>
-                                    <SelectItem defaultValue value="m@example.com">m@example.com</SelectItem>
-                                    <SelectItem value="m@google.com">m@google.com</SelectItem>
-                                    <SelectItem value="m@support.com">m@support.com</SelectItem>
-                                    </SelectContent>
-                                </Select>
-                                <FormDescription>
-                                    What would best describe your organization?
-                                </FormDescription>
-                                <FormMessage />
+                                    <FormLabel>Type</FormLabel>
+                                    <Select onValueChange={field.onChange} value={field.value}>
+                                        <FormControl className='w-full'>
+                                        <SelectTrigger >
+                                            <SelectValue placeholder="What would best describe your organization?" />
+                                        </SelectTrigger>
+                                        </FormControl>
+                                        <SelectContent className='w-full'>
+                                        <SelectItem value="personal">Personal</SelectItem>
+                                        <SelectItem value="small_team">Small team</SelectItem>
+                                        <SelectItem value="startup">Startup</SelectItem>
+                                        <SelectItem value="company">Company</SelectItem>
+                                        </SelectContent>
+                                    </Select>
+                                    <FormDescription>
+                                        What would best describe your organization?
+                                    </FormDescription>
+                                    <FormMessage />
                                 </FormItem>
                             )}
                             />
@@ -165,12 +176,11 @@ const OnboardingCreateSpacev2 = ({stepNumProps,fullName}) => {
                     </Flex>
                 </Flex>
                 <Flex direction='column' mt={40} gap={20}>
-                    <Button type="submit" className='w-12 h-5 bg-gray-100 hover:bg-gray-300 transition-all duration-300' >Continue</Button>
+                    <Button disabled={!isValid} type="submit" className='w-12 h-5 bg-gray-100 hover:bg-gray-300 transition-all duration-300' >Continue</Button>
                 </Flex>
-
             </form>
         </Form>
-        </>;
+    </>;
 
     const illustration = (
         <Flex w='40%' justify='center' align='center' className='bg-teal-600 min-h-screen' display={{base: 'none', md: 'flex'}}>
@@ -178,13 +188,98 @@ const OnboardingCreateSpacev2 = ({stepNumProps,fullName}) => {
         </Flex>
     );
 
+    const transitionVariants = {
+        initial: { opacity: 0, x: 50 },
+        animate: { opacity: 1, x: 0 },
+        exit: { opacity: 0, x: -50 },
+    };
+
     return (
         <>
-            <Flex direction='column' gap={40} py={100} px={{base: 20, xs: 40}} align={{base: 'center', md: 'start'}} >
+            {/* {!isOnboardingComplete ?
+            <>
+            
+            <Flex direction='column' gap={40} py={120} px={{base: 20, xs: 40}} align={{base: 'center', md: 'start'}} >
+                <div className='w-36 '>
+                <Logo2 strokeColor='#f0f0f0'/>
+                </div>
+
+                
                 {stepDisplay}
-                {main}
+                
+                <motion.div
+                    className='w-full'
+                    key="spaceStep"
+                    initial="initial"
+                    animate="animate"
+                    exit="exit"
+                    variants={transitionVariants}
+                    transition={{ duration: 0.5 }}
+                  >
+                    {main}
+                </motion.div> 
+                
             </Flex>
-            {illustration}
+            {illustration}</>
+
+            :
+                <motion.div
+                    className='w-full'
+                    key="spaceStep"
+                    initial="initial"
+                    animate="animate"
+                    exit="exit"
+                    variants={transitionVariants}
+                    transition={{ duration: 0.5 }}
+                  >
+                    {completed}
+                  </motion.div>} */}
+
+
+{/* {!isOnboardingComplete ? */}
+            <>
+            
+            <Flex direction='column' align={{base: 'center', md: 'start'}} >
+                <Flex px={{base: 20, xs: 40}} pt={30}>
+                <div className='w-36 '>
+                    <Logo2 strokeColor='#f0f0f0'/>
+                </div>
+                </Flex>
+
+                <Flex direction='column' gap={40} py={100} px={{base: 20, xs: 40}} align={{base: 'center', md: 'start'}} >
+
+
+                
+                {stepDisplay}
+                
+                <motion.div
+                    className='w-full'
+                    key="spaceStep"
+                    initial="initial"
+                    animate="animate"
+                    exit="exit"
+                    variants={transitionVariants}
+                    transition={{ duration: 0.5 }}
+                  >
+                    {main}
+                </motion.div> 
+                </Flex>
+                
+            </Flex>
+            {illustration}</>
+
+            {/* :
+                <motion.div
+                    className='w-full'
+                    key="spaceStep"
+                    initial="initial"
+                    animate="animate"
+                    exit="exit"
+                    variants={transitionVariants}
+                    transition={{ duration: 0.5 }}
+                  >
+                    {completed}
+                  </motion.div>} */}
         </>
     );
 };

@@ -2,9 +2,11 @@ package com.cocollabs.app.space.model;
 
 import com.cocollabs.app.task.model.Task;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.cocollabs.app.space.util.SpaceIconConverter;
 import com.cocollabs.app.user.model.User;
+import com.fasterxml.jackson.annotation.JsonValue;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
@@ -24,7 +26,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -62,9 +63,14 @@ public class Space {
     @Column(columnDefinition = "TEXT")
     private SpaceIcon icon;
 
+    @Builder.Default
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, columnDefinition = "VARCHAR(255) NOT NULL DEFAULT 'PRIVATE'")
+    private SpaceVisibility visibility = SpaceVisibility.PRIVATE;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Visibility visibility;
+    private SpaceType type = SpaceType.PERSONAL;
 
     @CreationTimestamp
     @Column(name="created_on", nullable = false)
@@ -81,22 +87,39 @@ public class Space {
     @ManyToMany(mappedBy = "spaces", fetch = FetchType.LAZY)
     private Set<User> users = new LinkedHashSet<>();
 
-    public Space(String name, SpaceIcon icon, String baseUrl, String slug, Visibility visibility) {
-        this.name = name;
-        this.description = "";
-        this.icon = icon;
-        this.visibility = visibility;
-        this.slug = slug;
-        this.url = baseUrl + "/" + slug;
-        Timestamp currentTime = new Timestamp(new Date().getTime());
-        this.createdOn = currentTime;
-        this.lastUpdatedOn = currentTime;
-    }
-
     public void addUser(User user) {
         //this.users.add(user);
         user.getSpaces().add(this);
     }
+
+    public enum SpaceType {
+        PERSONAL,SMALL_TEAM, STARTUP,COMPANY;
+
+        @JsonCreator
+        public static SpaceType fromString(String value) {
+            return SpaceType.valueOf(value.toUpperCase());
+        }
+
+        @JsonValue
+        public String toValue() {
+            return name().toLowerCase(); // Optional: if you want to serialize it as lowercase
+        }
+    }
+
+    public enum SpaceVisibility {
+        PERSONAL, PUBLIC, PRIVATE;
+
+        @JsonCreator
+        public static SpaceVisibility fromString(String value) {
+            return SpaceVisibility.valueOf(value.toUpperCase());
+        }
+
+        @JsonValue
+        public String toValue() {
+            return name().toLowerCase(); // Optional: if you want to serialize it as lowercase
+        }
+    }
+
 
 //    public void addTask(Task task) {
 //        tasks.add(task);

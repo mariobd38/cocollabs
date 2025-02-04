@@ -3,7 +3,7 @@ import React, { useRef, useEffect,useState } from "react";
 import { useScroll, useTransform, motion } from "framer-motion";
 
 export const ContainerScroll = ({
-    titleComponent,
+    // titleComponent,
     children
 }) => {
     const containerRef = useRef(null);
@@ -34,14 +34,14 @@ export const ContainerScroll = ({
 
     return (
         <div
-            className="h-[30rem] sm:h-[35rem] md:h-[55rem] flex items-center justify-center relative p-2 md:p-20"
+            className="h-[30rem] sm:h-[35rem] md:h-[48rem] flex items-center justify-center relative p-2 md:p-20"
             ref={containerRef}>
             <div
-                className="py-10 md:py-20 w-full relative"
+                className="w-full relative"
                 style={{
                     perspective: "1000px",
                 }}>
-                <Header translate={translate} titleComponent={titleComponent} />
+                {/* <Header translate={translate} titleComponent={titleComponent} /> */}
                 <Card rotate={rotate} translate={translate} scale={scale}>
                 {children}
                 </Card>

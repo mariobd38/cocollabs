@@ -321,7 +321,7 @@ const SignupContent = (props) => {
                                         <Text c="#97999c" size="sm" ff='Nunito Sans'>
                                             Already have an account?
                                         </Text>
-                                        <Anchor onClick={() => routeChange('/login')} ps={5} c="#2b93f0" size="sm" ff='Nunito Sans'>
+                                        <Anchor className='cursor-pointer' onClick={() => routeChange('/login')} ps={5} c="#2b93f0" size="sm" ff='Nunito Sans'>
                                             Log In
                                         </Anchor>
                                     </Flex>
