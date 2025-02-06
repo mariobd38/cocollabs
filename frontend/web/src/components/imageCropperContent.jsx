@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 
 import { Flex,Box,Divider } from '@mantine/core';
 import { Button } from "@/components/ui/button"
@@ -42,10 +41,8 @@ const ImageCropperContent = ({imageCropperProps, setOpen, profileProps}) => {
             
             // Do something with the cropped image (upload, store, etc.)
             const file = new File([blob], "", { type: "image/jpeg" });
-            console.log(file);
             setCroppedFile(file);
             
-            //TODO; save file to s3
             // setPreviewUrl(file);
             const preview = URL.createObjectURL(file);
             setActiveProfile(null);
@@ -70,12 +67,11 @@ const ImageCropperContent = ({imageCropperProps, setOpen, profileProps}) => {
             {/* <Flex direction="column" className="w-full h-[450px]">
                 <Box className='py-3'><Divider /></Box>
                 <Flex align="center" justify="center" className="flex-grow"> */}
-            <Flex direction="column" className="w-full h-full"> 
+            <div className="flex flex-col w-full h-full"> 
                 <Box className='py-3'><Divider /></Box>
-                <Flex align="center" justify="center" 
-                className={`crop-container relative w-full flex-grow h-[280px] max-h-[280px] transition-opacity duration-300`}
-                
-            >
+                <div
+                className={`flex justify-center items-center crop-container relative w-full flex-grow h-[280px] max-h-[280px] transition-opacity duration-300`}
+                >
                     {!isClosing && <Cropper
                         image={imageToCrop}
                         crop={crop}
@@ -85,13 +81,13 @@ const ImageCropperContent = ({imageCropperProps, setOpen, profileProps}) => {
                         onZoomChange={setZoom}
                         onCropComplete={onCropComplete}
                     />}
-            </Flex>
+                </div>
 
                 <DialogFooter className='flex gap-2 pt-5'>
                     <Button onClick={handleClose} className="size-auto border border-white text-white px-3 bg-transparent" variant="default">Cancel</Button>
                     <Button onClick={handleApply} className="size-auto border border-white px-3 bg-white" variant="default">Apply</Button>
                 </DialogFooter>
-            </Flex>
+            </div>
         </Box>
     );
 };

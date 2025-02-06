@@ -1,5 +1,4 @@
 async function handleProfileCreation(profileData,form,croppedFile) {
-    console.log(croppedFile);
     const formData = new FormData();
     formData.append('file', croppedFile);
 

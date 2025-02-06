@@ -96,7 +96,7 @@ const OnboardingCreateSpacev2 = ({stepNumProps,fullName,setIsOnboardingComplete}
                                             <FormItem className='w-full'>
                                                 <FormLabel className='text-gray-200'>Icon & Name</FormLabel>
                                                 <Flex gap={10} direction={{base: 'column', xs: 'row'}}>
-                                                    <Flex>
+                                                    <div className='flex'>
                                                         <SpaceCreationIconsPopover 
                                                             color={color}
                                                             setColor={setColor}
@@ -104,7 +104,7 @@ const OnboardingCreateSpacev2 = ({stepNumProps,fullName,setIsOnboardingComplete}
                                                             setSpaceIcon={setSpaceIcon}
                                                             colorMode='dark'
                                                         />
-                                                    </Flex>
+                                                    </div>
                                                     <Input
                                                         autoComplete="off"
                                                         placeholder={`Organization name`} 

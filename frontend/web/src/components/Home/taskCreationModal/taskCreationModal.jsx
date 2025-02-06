@@ -94,7 +94,7 @@ const TaskCreationModal = (props) => {
                         />
                     </Box>
     
-                    <Box>
+                    <div>
                         <Flex justify='space-between' align='center' >
                             <Flex gap='10'>
                                 <Button radius={5} h='30' p='0 8px' bg={buttonBg} bd='.1px solid #048369'>
@@ -153,7 +153,7 @@ const TaskCreationModal = (props) => {
                                 </Popover>
                             </Flex>
                         </Flex>
-                    </Box>
+                    </div>
                 </Box>
                 <Divider size={1} color={`${colorScheme==='dark' ? '#57585a' : '#c7c7c7'}`}/>
                 <Box m='auto' w='100%' >

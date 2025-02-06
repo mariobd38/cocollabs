@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Image,Title,Flex } from '@mantine/core';
+import { Flex } from '@mantine/core';
 
 import { ContainerScroll } from '@/components/ui/ContainerScrollAnimation/container-scroll-animation';
 
@@ -25,14 +25,7 @@ const ContainerScrollAnimationComp = () => {
                 //     </Flex>
                 // }
             >
-                <Image
-                    src={home_screenshot}
-                    alt="hero"
-                    radius={15}
-                    h='100%'
-                    w='100%'
-                    className="object-cover object-left-top"
-                />
+                <img alt='hero' src={home_screenshot} className='rounded-2xl h-full w-full object-cover object-left-top' />
             </ContainerScroll>
         </Flex>
     );

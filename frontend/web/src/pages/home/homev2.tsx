@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useOutletContext } from 'react-router-dom';
-import { Box } from '@mantine/core';
 
 import HomeHeader from '@/components/Home/HomeHeader/homeHeader';
 import QuickActions from '@/components/Home/QuickActions/quickActions';
@@ -64,12 +63,12 @@ const Homev2: React.FC = () => {
 
     return (
         <>
-            <Box className={`transition-opacity duration-300 ease-linear ${visible ? 'opacity-100' : 'opacity-0'}`}>
+            <div className={`transition-opacity duration-300 ease-linear ${visible ? 'opacity-100' : 'opacity-0'}`}>
                 <HomeHeader spaceName={currentSpace?.name || ''} themeColors={themeColors} colorScheme={colorScheme} />
-                <Box w="100%">
+                <div className='w-full'>
                     <QuickActions themeColors={themeColors} colorScheme={colorScheme} />
-                </Box>
-            </Box>
+                </div>
+            </div>
         </>
     );
 };

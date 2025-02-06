@@ -5,30 +5,24 @@ import com.cocollabs.app.aws.service.S3Service;
 import com.cocollabs.app.profile.model.Profile;
 import com.cocollabs.app.user.model.User;
 import com.cocollabs.app.profile.repository.ProfileRepository;
-import com.cocollabs.app.user.repository.UserRepository;
-import com.cocollabs.app.profile.dto.ProfileDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
 public class ProfileService {
     private final Logger log = LoggerFactory.getLogger(ProfileService.class);
-    private final UserRepository userRepository;
     private final ProfileRepository profileRepository;
     private final S3Service s3Service;
     private final String bucketName;
 
-    public ProfileService(UserRepository userRepository,
-                          ProfileRepository profileRepository,
+    public ProfileService(ProfileRepository profileRepository,
                           S3Service s3Service,
                           S3Buckets s3Bucket) {
-        this.userRepository = userRepository;
         this.profileRepository = profileRepository;
         this.s3Service = s3Service;
         this.bucketName = s3Bucket.getClient();
@@ -76,7 +70,7 @@ public class ProfileService {
         return profileRepository.save(profile);
     }
 
-    public String getProfileImageUrl(Profile profile) {
+    public String getProfileImageUrl(User user, Profile profile) {
 //        Profile profile = profileRepository.findByUser(user)
 //                .orElseThrow(() -> new RuntimeException("Profile not found"));
 
@@ -84,7 +78,7 @@ public class ProfileService {
             return null;
         }
 
-        return s3Service.generatePreSignedUrl(bucketName, profile.getS3Key());
+        return s3Service.generatePreSignedUrl(bucketName, getS3Key(user,profile));
     }
 
 //    public ProfileDto handleDefaultAvatar(User user) {

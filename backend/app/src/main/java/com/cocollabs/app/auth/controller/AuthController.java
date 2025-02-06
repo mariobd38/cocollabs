@@ -5,7 +5,6 @@ import com.cocollabs.app.auth.service.CustomJwtService;
 import com.cocollabs.app.auth.util.AuthValidationUtil;
 import com.cocollabs.app.auth.util.CookieUtil;
 import com.cocollabs.app.auth.util.JwtUtil;
-import com.cocollabs.app.profile.service.ProfileService;
 import com.cocollabs.app.user.dto.UserAuthenticationDto;
 import com.cocollabs.app.user.dto.UserRegistrationDto;
 import com.cocollabs.app.user.service.CustomUserService;
@@ -50,7 +49,6 @@ public class AuthController {
     private final CustomJwtService customJwtService;
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
-    private final ProfileService profileService;
     private final UserPlatformDtoConverter userPlatform;
 
     @Value("${APP_ACCESS_TOKEN_NAME}")
@@ -63,7 +61,6 @@ public class AuthController {
             CustomJwtService customJwtService,
             PasswordEncoder passwordEncoder,
             UserRepository userRepository,
-            ProfileService profileService,
             UserPlatformDtoConverter userPlatform
     ) {
         this.authenticationManager = authenticationManager;
@@ -72,60 +69,55 @@ public class AuthController {
         this.customJwtService = customJwtService;
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
-        this.profileService = profileService;
         this.userPlatform = userPlatform;
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@Valid @RequestBody UserAuthenticationDto request, HttpServletResponse response) {
+    public ResponseEntity<?> login(@Valid @RequestBody UserAuthenticationDto data,
+                                   HttpServletRequest request,
+                                   HttpServletResponse response) {
         try {
-            String sanitizedEmail = HtmlUtils.htmlEscape(request.getEmail().toLowerCase().trim());
+            String sanitizedEmail = HtmlUtils.htmlEscape(data.getEmail().toLowerCase().trim());
             if (!EmailValidator.getInstance().isValid(sanitizedEmail)) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                         .body("Invalid email format");
             }
 
+
             Authentication authenticate = authenticationManager
                     .authenticate(
                             new UsernamePasswordAuthenticationToken(
                                     sanitizedEmail,
-                                    request.getPassword()
+                                    data.getPassword()
                             )
                     );
 
             User user = (User) authenticate.getPrincipal();
-            addTokensAsCookies(response, user);
-            user.setPassword(null);
 
+            CookieUtil.deleteAllCookies(request, response);
+            addTokensAsCookies(response, user);
 
             //CookieUtil.addCookie(response, jwtCookieName, jwtUtil.generateToken(user),jwtUtil.getTokenValidityInSeconds());
             //CookieUtil.addCookie(response, jwtCookieName, jwtUtil.generateAccessToken(user),jwtUtil.getTokenValidityInSeconds());
-
             return ResponseEntity.ok().body(userPlatform.convertToDto(user));
         } catch (BadCredentialsException ex) {
             log.atError().log("Invalid user credentials");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body("Invalid credentials");
         }
-//        catch (Exception ex) {
-//            log.atError().log("Unexpected error occurred during authentication");
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-//                    .body("An error occurred during authentication");
-//        }
+        catch (Exception ex) {
+            log.atError().log("Unexpected error occurred during authentication");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("An error occurred during authentication");
+        }
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> signup(@RequestBody UserRegistrationDto requestBody, HttpServletResponse response) {
+    public ResponseEntity<?> signup(@RequestBody UserRegistrationDto requestBody,
+                                    HttpServletRequest request,
+                                    HttpServletResponse response) {
         try {
-            String sanitizedFullName = HtmlUtils.htmlEscape(requestBody.getFullName().trim());
             String sanitizedEmail = HtmlUtils.htmlEscape(requestBody.getEmail().toLowerCase().trim());
-
-            //full name validation check
-            AuthValidationUtil.ValidationResult fullNameValidation = AuthValidationUtil.validateFullName(sanitizedFullName);
-            if (!fullNameValidation.isValid()) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                        .body(fullNameValidation.getErrors().get(0));
-            }
 
             //email validation check
             AuthValidationUtil.ValidationResult emailValidation = AuthValidationUtil.validateEmail(sanitizedEmail);
@@ -149,16 +141,15 @@ public class AuthController {
             String encodedPassword = passwordEncoder.encode(requestBody.getPassword());
 
             User user = new User(
-                    //AuthValidationUtil.capitalizeName(sanitizedFullName),
                     sanitizedEmail,
                     encodedPassword,
                     null
             );
             customUserService.createUser(user);
 
-            CookieUtil.deleteCookie(response,APP_ACCESS_TOKEN_NAME);
-            //CookieUtil.addCookie(response, jwtCookieName, jwtUtil.generateToken(user),jwtUtil.getTokenValidityInSeconds());
-            CookieUtil.addCookie(response, APP_ACCESS_TOKEN_NAME, jwtUtil.generateAccessToken(user),jwtUtil.getTokenValidityInSeconds());
+            CookieUtil.deleteAllCookies(request, response);
+            //CookieUtil.addCookie(response, APP_ACCESS_TOKEN_NAME, jwtUtil.generateAccessToken(user),jwtUtil.getTokenValidityInSeconds());
+            addTokensAsCookies(response, user);
 
             return ResponseEntity.ok().build();
         } catch (Exception ex) {
@@ -266,6 +257,11 @@ public class AuthController {
 
         CookieUtil.addCookie(response, APP_ACCESS_TOKEN_NAME, accessToken, jwtUtil.getAccessTokenValidityInSeconds());
         CookieUtil.addCookie(response, REFRESH_TOKEN_COOKIE_NAME, refreshToken, jwtUtil.getRefreshTokenValidityInSeconds());
+    }
+
+    private void clearAuthCookieTokens(HttpServletResponse response, User user) {
+        CookieUtil.deleteCookie(response,APP_ACCESS_TOKEN_NAME);
+        CookieUtil.deleteCookie(response,REFRESH_TOKEN_COOKIE_NAME);
     }
 
 }

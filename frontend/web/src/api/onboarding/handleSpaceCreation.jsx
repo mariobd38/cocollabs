@@ -1,7 +1,5 @@
 async function handleSpaceCreation(data) {
     // const formData = new FormData();
-
-    console.log(data);
     
     try {
         const response = await fetch(`/api/spaces/create`, {

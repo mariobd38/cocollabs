@@ -19,7 +19,6 @@ import { getTextColor } from '@/components/Themes/getTextColor';
 
 // import '@/styles/home/home.css';
 
-
 const AppLayout = ({content}) => {
     // const dayjs = require('dayjs');
     const theme = useMantineTheme();
@@ -66,23 +65,6 @@ const AppLayout = ({content}) => {
         }
         fetchSpaceData();
     }, [slug])
-
-    // const [visible, setVisible] = useState(false);
-
-    // Visibility effect
-    // useEffect(() => {
-    //     // if (spaceData) {
-    //         const timer = setTimeout(() => {
-    //             setVisible(true);
-    //         }, 1500);
-    //         // setVisible(false);
-    //         return () => clearTimeout(timer);
-    //     // } else {
-    //         // setVisible(false);
-    //     // }
-    //     console.log(visible);
-    // }, [visible]);
-
 
     useEffect(() => {
         const fetchProfileData = async () => {
@@ -146,17 +128,8 @@ const AppLayout = ({content}) => {
                 storedUserInfo={storedAppInfo}
                 setStoredUserInfo={setStoredAppInfo}
             />}
-            <Flex>
-                <Box>
-                    {/* {userFullName &&
-                    <HomeSidebar className='user-home-sidebar'
-                        profileInfo={{fullName: userFullName, email: userEmail}}
-                        themeColors={themeColors}
-                        colorScheme={colorScheme}
-                        openSidebarToggle={openSidebarToggle}
-                        setOpenSidebarToggle={setOpenSidebarToggle}
-                        spaceData={{name: spaceData.name, icon: spaceData.icon}}
-                    />} */}
+            <div className='flex'>
+                <div>
                     <HomeSidebarv2 
                         themeColors={themeColors}
                         colorScheme={colorScheme}
@@ -166,14 +139,11 @@ const AppLayout = ({content}) => {
                         userFullName={userFullName}
                         activePage={activePage}
                     />
-                </Box>
+                </div>
                 <Flex direction='column' className={`user-home-all-content ${openSidebarToggle && 'open' }`}>
-                    {/* <Box className={`transition-opacity duration-300 ease-linear ${visible ? 'opacity-100' : 'opacity-0'}`}> */}
-                    
-                        <Outlet context={{themeColors,spaceData,colorScheme,currentSpace}}/>
-                    {/* </Box> */}
+                    <Outlet context={{themeColors,spaceData,colorScheme,currentSpace}}/>
                 </Flex>
-            </Flex>
+            </div>
         </>
     );
 };

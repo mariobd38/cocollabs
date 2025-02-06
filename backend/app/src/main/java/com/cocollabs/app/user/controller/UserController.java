@@ -2,7 +2,7 @@ package com.cocollabs.app.user.controller;
 
 import com.cocollabs.app.profile.service.ProfileService;
 import com.cocollabs.app.user.repository.UserPreferenceRepository;
-import com.cocollabs.app.user.dto.UserOnboardingProfileDto;
+import com.cocollabs.app.user.dto.UserProfileDto;
 import com.cocollabs.app.user.error.OnboardingProfileErrorResponse;
 import com.cocollabs.app.user.model.ThemePreference;
 import com.cocollabs.app.user.model.User;
@@ -12,7 +12,6 @@ import com.cocollabs.app.user.repository.UserRepository;
 import com.cocollabs.app.auth.util.JwtUtil;
 import com.cocollabs.app.user.service.CustomUserService;
 import com.cocollabs.app.user.util.UserPlatformDtoConverter;
-import com.cocollabs.app.user.dto.UserPlatformDto;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import org.slf4j.Logger;
@@ -34,6 +33,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Optional;
 
 @RestController
@@ -87,7 +87,7 @@ public class UserController {
 
     @PutMapping(value = "/createProfile",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> createUserProfile(@AuthenticationPrincipal User user,
-                                           @RequestPart("onboardingProfileDto") @Valid UserOnboardingProfileDto onboardingProfileDto,
+                                           @RequestPart("onboardingProfileDto") @Valid UserProfileDto onboardingProfileDto,
                                            @RequestPart(value = "file", required = false) MultipartFile file) {
         if (user == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not found");
@@ -196,4 +196,20 @@ public class UserController {
 //                .orElse(false));
 
     }
+
+    @PostMapping("/changeProfile")
+    public ResponseEntity<?> changeProfile(@AuthenticationPrincipal User user,
+                                           @RequestPart(value = "file", required = false) MultipartFile file) throws IOException {
+        try {
+            if (file != null && !file.isEmpty()) {
+                profileService.handleFileUpload(user, file);
+            }
+            return ResponseEntity.ok().body("upload successful");
+        }   catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("An error occurred while changing profile");
+        }
+
+    }
+
 }

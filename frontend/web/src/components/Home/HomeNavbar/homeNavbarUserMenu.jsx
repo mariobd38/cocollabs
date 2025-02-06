@@ -58,13 +58,13 @@ const HomeNavbarUserMenu = (props) => {
                             userProfileDto={userProfileDto}
                             userProfilePicture={userProfilePicture}
                             initials={initials}
-                            multiplier={2.075}
+                            multiplier={2.2}
                             fontSize={1}
                         />
                     </Flex>
                 }
                 dropdown={
-                    <Box>
+                    <div>
                         <DropdownMenuLabel className='mb-2.5'>
                             <Flex align='center' gap={16}>
                                 <UserAvatar 
@@ -97,7 +97,7 @@ const HomeNavbarUserMenu = (props) => {
                                 Log out
                             </Flex>
                         </DropdownMenuItem>
-                    </Box>
+                    </div>
                 } side='bottom' align='end' w={280}
             />
         </>

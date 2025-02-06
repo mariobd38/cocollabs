@@ -34,9 +34,9 @@ public class UserPlatformDtoConverter {
     }
 
     public UserPlatformDto convertToDto(User user) {
-//        try {
+        try {
             UserDto userDto = getUserDto(user);
-            ProfileDto profileDto = getProfileDto(user.getProfile());
+            ProfileDto profileDto = getProfileDto(user);
             UserPreferenceDto userPreferenceDto = getUserPreferenceDto(user.getUserPreference());
             Set<UserSpaceDto> userSpaceDto = getUserSpacesDto(user);
 
@@ -46,9 +46,9 @@ public class UserPlatformDtoConverter {
                     .userPreferenceDto(userPreferenceDto)
                     .userSpaceDto(userSpaceDto)
                     .build();
-//        } catch (Exception ex) {
-//            throw new RuntimeException("Error while converting user to UserPlatformDto");
-//        }
+        } catch (Exception ex) {
+            throw new RuntimeException("Error while converting user to UserPlatformDto");
+        }
     }
 
     private UserDto getUserDto(User user) {
@@ -61,8 +61,8 @@ public class UserPlatformDtoConverter {
                 .build();
     }
 
-    public ProfileDto getProfileDto(Profile profile) {
-        //Profile profile = user.getProfile();
+    public ProfileDto getProfileDto(User user) {
+        Profile profile = user.getProfile();
         if (profile == null) return null;
 
         ProfileFile profileFile = profile.getProfileFile();
@@ -77,7 +77,7 @@ public class UserPlatformDtoConverter {
                 .pfd(null)
                 .type(profile.getType())
                 .svg(profile.getSvg())
-                .preSignedUrl(profileService.getProfileImageUrl(profile))
+                .preSignedUrl(profileService.getProfileImageUrl(user,profile))
                 .build();
     }
 

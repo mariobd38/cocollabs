@@ -12,8 +12,6 @@ import org.hibernate.validator.constraints.Length;
 @AllArgsConstructor
 public class UserRegistrationDto {
     @NotBlank
-    private String fullName;
-    @NotBlank
     @Email
     private String email;
     @NotBlank

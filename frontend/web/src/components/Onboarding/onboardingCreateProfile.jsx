@@ -118,7 +118,7 @@ const ImageCropperContent = lazy(() => import('@/components/imageCropperContent'
                     <Flex justify='center' align='center' className={`relative h-36 w-36 bg-transparent ${(activeProfile || previewUrl) ? 'border-solid' : 'border-dashed'} transition-all duration-500 linear hover:border-gray-100 border-1 border-gray-700 rounded-full text-white`}>
                         <Popover open={isAvatarPopoverOpen} onOpenChange={(isOpen) => {setIsAvatarPopoverOpen(isOpen);}}>
                             <PopoverTrigger asChild>
-                                <Box>
+                                <div>
                                     {activeProfile ? <img src={activeProfile.svg} alt="avatar" className="w-full h-full rounded-full" /> 
                                     : previewUrl ? 
                                     <img src={previewUrl} alt="Preview" className="w-full h-full rounded-full object-cover"/>
@@ -128,7 +128,7 @@ const ImageCropperContent = lazy(() => import('@/components/imageCropperContent'
                                     {/* <Flex justify='center' align='center' className='cursor-pointer absolute bottom-0 right-0 rounded-full w-9 h-9 bg-background border-1 border-gray-500'>
                                         {Icons('IconEdit',15,15,'#f0f0f0')}
                                     </Flex> */}
-                                </Box>
+                                </div>
                             
                             </PopoverTrigger>
                             <PopoverContent className="absolute w-[300px] sm:w-[334px] bg-background" onClose={() => setIsAvatarPopoverOpen(false)} side='bottom' align='start' >

@@ -17,7 +17,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class UserPlatformDtoConverterTest {
     @Value("${DTO_CONVERTER_TEST_EMAIL}")
     private String DTO_CONVERTER_TEST_EMAIL;
-
     @Autowired
     private UserRepository userRepository;
 

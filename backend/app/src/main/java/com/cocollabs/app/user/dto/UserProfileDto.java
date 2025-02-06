@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserOnboardingProfileDto {
+public class UserProfileDto {
     private String fullName;
     private String username;
     private String avatarName;

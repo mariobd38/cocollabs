@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
-import { authStatusInfo } from '@/api/Auth/status';
 
 const AuthContext = createContext();
 
@@ -12,24 +11,6 @@ export const AuthProvider = ({ children }) => {
     const [pending, setPending] = useState(true);
     const location = useLocation();
 
-    // const checkAuthStatus = useCallback(async () => {
-    //     try {
-    //         const response = await authStatusInfo();
-    //         setAuthState({
-    //             isAuthenticated: response.isAuthenticated,
-    //             isOnboarded: response.isOnboarded,
-    //         });
-    //     } catch (error) {
-    //         console.error('Auth check failed:', error);
-    //         setAuthState({
-    //             isAuthenticated: false,
-    //             isOnboarded: false,
-    //         });
-    //     } 
-    //     finally {
-    //         setPending(false); // Auth check is done
-    //     }
-    // }, []);
     const authStatusInfo = async () => {
         try {
             const response = await fetch('/api/auth/status', {

@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 // import { useNavigate } from "react-router-dom";
 
-import {  Box } from '@mantine/core';
 // import { Carousel } from '@mantine/carousel';
 
 // import { Icons } from '@/components/icons/icons';
@@ -79,10 +78,9 @@ const MainContent = () => {
         <div>
             <main>
                 <NavbarContent scrollPosition={scrollPosition}/>
-                <Box bg='hsl(240 10% 3.9%)'>
+                <div className="bg-[hsl(240,10%,3.9%)]">
                     <Hero />
-                </Box>
-
+                </div>
                 
                 {/* <div className='landing-page-features-div '>
 

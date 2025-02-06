@@ -5,7 +5,7 @@ import { useFocusWithin } from '@mantine/hooks';
 import { Title,Flex,Center,Box,TextInput,PasswordInput,Text,Paper,Group,Button,Divider,Anchor,Stack,Progress } from '@mantine/core';
 import { useForm } from '@mantine/form';
 
-import {Icons} from '@/components/icons/icons';
+import { Icons } from '@/components/icons/icons';
 import { GoogleButton } from '@/components/Auth/OAuthButtons/googleButton';
 import { GithubButton } from '@/components/Auth/OAuthButtons/githubButton';
 import AuthSideBlock from '@/components/Auth/authSideBlock';
@@ -20,16 +20,6 @@ const requirements = [
     { re: /[A-Z]/ },
     { re: /[$&+,:;~=?@#|'<>.^*({})%!-]/ },
 ];
-const validateFullName = (value) => {
-    if (!value.trim()) {
-        return 'Full name is required';
-    }
-    const words = value.trim().split(/\s+/);
-    if (words.length < 2) {
-        return 'Full name is required';
-    }
-    return null;
-};
 
 const validatePassword = (value) => {
     if (!value.trim()) {
@@ -90,12 +80,12 @@ const SignupContent = (props) => {
 
     const form = useForm({
         initialValues: {
-            fullName: '',
+            // fullName: '',
             password: '',
         },
 
         validate: {
-            fullName: validateFullName,
+            // fullName: validateFullName,
             password: validatePassword
         },
     });
@@ -133,7 +123,7 @@ const SignupContent = (props) => {
             />
     ));
 
-    const { ref: fullNameRef, focused: isFullNameFocused } = useFocusWithin();
+    // const { ref: fullNameRef, focused: isFullNameFocused } = useFocusWithin();
     const { ref: passwordRef, focused: isPasswordFocused } = useFocusWithin();
     // const { setIsAuthenticated, setIsOnboarded } = UseAuth();
     
@@ -141,15 +131,9 @@ const SignupContent = (props) => {
     const handleSignUpWithEmailRequest = async (values) => {
         setHideProgressBars(true);
 
-        const fullName = values.fullName
-            .trim()
-            .split(/\s+/)
-            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-            .join(' ');
-
         const password = values.password;
         const reqBody = {
-            fullName: fullName,
+            // fullName: fullName,
             email: inputEmail,
             password: password,
         };
@@ -183,9 +167,8 @@ const SignupContent = (props) => {
     }
 
     return (
-        <Flex mih='100dvh'>
-
-            <Box w='100%' className='auth-content-wrapper-paper'>
+        <div className='min-h-dvh'>
+            <div className='w-full auth-content-wrapper-paper'>
                 <Flex w={{xs: 530, md: '100%'}} m='auto' >
                     <Flex align='center' direction='column' w='100%' justify='center' mih='100vh' py={20}>
                         <Paper w={{base: '85%', xs: 580}}  bg='transparent'  >
@@ -205,38 +188,23 @@ const SignupContent = (props) => {
                             <Flex align='center' m='auto' direction='column' w={{xs: '80%'}}>
                                 <form noValidate style={{width: "100%"}} className='auth-user-info-block' onSubmit={form.onSubmit((values) => handleSignUpWithEmailRequest(values))}>
                                     <Flex align='center' justify='space-between' wrap='wrap' className='mb-4'>
-                                        <Box className='rounded cursor-pointer hover:bg-[#282828] hover:brightness-125 transition-all duration-500 ease-linear' p='4px 4px 5px 4px' onClick={() => routeChange('/signup')}>
+                                        <div className='rounded cursor-pointer hover:bg-[#282828] hover:brightness-125 transition-all duration-500 ease-linear px-1 pt-1 pb-[5px]' onClick={() => routeChange('/signup')}>
                                             {Icons('IconArrowBack',24,24, '#a6a7a9')}
-                                        </Box>
+                                        </div>
 
                                         <Center flex={1} w='100%' >
                                             <Button className='px-[20px] py-[3px]' bg='#232529' c='#f0f0f0' radius="xl" fw={800} >
-                                                <Flex align='center'>
+                                                <div className='flex items-center'>
                                                     <Box me={10}>
                                                         {Icons('IconMail',18,18,'#f0f0f0',2)}
                                                     </Box>
                                                     <Text fw={600} c='#f0f0f0' fz={{base: 13, xs: 14}}>{inputEmail}</Text>
-                                                </Flex>
+                                                </div>
                                             </Button>
                                         </Center>
                                     </Flex>
 
-                                    <Stack className='flex align-center'>
-                                        {/* <Box ref={fullNameRef} className='w-full'>
-                                            <TextInput
-                                                required
-                                                label="Full name"
-                                                placeholder={isFullNameFocused ? '' : 'John Doe'}
-                                                type="text"
-                                                autoComplete='off'
-                                                leftSection={Icons('IconUser',18,18,'#717171',2)}
-                                                className='w-full auth-user-input-field'
-                                                size="lg"
-                                                radius="md"
-                                                key={form.key('fullName')}
-                                                {...form.getInputProps('fullName')}
-                                            />
-                                        </Box> */}
+                                    <Stack className='flex items-center'>
 
                                         <Box ref={passwordRef} className='w-full'>
                                             <PasswordInput
@@ -279,7 +247,7 @@ const SignupContent = (props) => {
                             // className='auth-content-block' w={{xs: '80%'}} 
                             <Flex direction='column' w={{xs: '80%'}} className='auth-content-block' >
                                 {showOAuth2Buttons &&
-                                    <Box>
+                                    <div>
 
                                         <Flex mb="lg" gap={20} direction='column' >
                                             <GoogleButton bd='1px solid #5c5c5c' c='#f0f0f0' size="sm" onClick={handleGoogleLogin} radius={6} p='8px 0' className='sign-up-oauth-button' fz={17} bg="transparent">
@@ -293,10 +261,10 @@ const SignupContent = (props) => {
                                         </Flex>
 
                                         <Divider label="or" color='#929292' className='auth-content-wrapper-paper-divider' labelPosition="center" my={30} />
-                                    </Box>
+                                    </div>
                                 }
                                 
-                                <Box>
+                                <div>
                                     <Stack align='center'>
                                         <TextInput
                                             label='Email'
@@ -314,17 +282,17 @@ const SignupContent = (props) => {
                                     <Text fz={14.5} c='#dc5050' pt='5' fw={400} >
                                         {invalidEmailErrorText}
                                     </Text> }
-                                </Box>
+                                </div>
 
                                 <Group justify='space-between' pt={30} >
-                                    <Flex align='center'>
+                                    <div className='flex items-center'>
                                         <Text c="#97999c" size="sm" ff='Nunito Sans'>
                                             Already have an account?
                                         </Text>
                                         <Anchor className='cursor-pointer' onClick={() => routeChange('/login')} ps={5} c="#2b93f0" size="sm" ff='Nunito Sans'>
                                             Log In
                                         </Anchor>
-                                    </Flex>
+                                    </div>
                                     
                                     <Button bg='transparent' bd='1px solid #5c5c5c' c='#f0f0f0' type="submit" className='auth-content-signup-button' radius={6} px="18" py="3" fw={700} fz={15} onClick={handleEmailSignUp}>
                                         Continue
@@ -338,9 +306,8 @@ const SignupContent = (props) => {
                     <AuthSideBlock  />
 
                 </Flex>
-
-            </Box>
-        </Flex>
+            </div>
+        </div>
     );
 };
 

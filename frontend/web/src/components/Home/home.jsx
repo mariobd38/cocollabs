@@ -188,7 +188,7 @@ const Home = () => {
                     colorScheme={colorScheme}
                 />
 
-                <Box w='100%' >
+                <div className='w-full' >
                     {/* ONLY FOR GOOGLE OAUTH USERS */}
                     {/* {userProfilePicture && <Button onClick={getGoogleTasks}>Access Google tasks</Button>} */}
 
@@ -203,7 +203,7 @@ const Home = () => {
                         <div className='user-home-all-content-left-spacing'>
                             {/* <Button onClick={getSpaceTasks}>get personal tasks</Button> */}
                             {/* <Button onClick={getUserSpace}>get personal tasks</Button> */}
-                            <Box>
+                            <div>
                                 {userFullName &&
                                 <TaskCard 
                                     colorScheme={colorScheme}
@@ -231,10 +231,10 @@ const Home = () => {
                                     spaceData={{ id: spaceData.id, slug: spaceData.slug }}
                                 />} */}
                                 
-                            </Box>
+                            </div>
                         </div>
                     </div>
-                </Box>
+                </div>
             </Flex>
         </>
     );

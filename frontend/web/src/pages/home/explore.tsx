@@ -44,11 +44,11 @@ const Explore: React.FC = () => {
 
     return (
         <>
-            <Box className={`transition-opacity duration-300 ease-linear ${visible ? 'opacity-100' : 'opacity-0'}`}>
-                <Box w='100%' >
+            <div className={`transition-opacity duration-300 ease-linear ${visible ? 'opacity-100' : 'opacity-0'}`}>
+                <div className='w-full' >
                     this is the explore page!
-                </Box>
-            </Box>
+                </div>
+            </div>
         </>
     );
 };

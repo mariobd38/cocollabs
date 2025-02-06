@@ -11,7 +11,7 @@ const AuthSideBlock = ({isLogin}) => {
     return (
         <Paper radius={0} ms={isLogin ? 15 : 0} bg='transparent' py={20} display={{base: 'none', md: 'block'}} mih='100vh' >
             <Flex px={25} bg='#233142a0' bd='1px solid #536172a0' align='center' justify='center' direction='column' py={50} me={20} gap={45} h='100%' style={{ flexGrow: 1, borderRadius: "8px"}}>
-                <Box>
+                <div>
                     <Flex pb={45} justify='center'>
                         <Box w='9rem'>
                             <Logo2 strokeColor='#f0f0f0' />
@@ -31,7 +31,7 @@ const AuthSideBlock = ({isLogin}) => {
 
 
                     
-                </Box>
+                </div>
 
                 <Flex w='100%' direction='column' justify='space-between' gap={20}>
                     <Flex justify='flex-start'>
@@ -40,7 +40,7 @@ const AuthSideBlock = ({isLogin}) => {
                                 <span>
                                     {IconsFilled('IconPhotoFilled',50,50, '#353535')}
                                 </span>
-                                <Flex direction='column'>
+                                <div className='flex flex-col'>
                                     <h1 className='text-gray-900 lato-font font-bold text-medium'>
                                         Invite to project
                                     </h1>
@@ -48,7 +48,7 @@ const AuthSideBlock = ({isLogin}) => {
                                     <Text fz={13} c='#797979' ff='Lato'>
                                         Collaborate with members on this project
                                     </Text>
-                                </Flex>
+                                </div>
                                 
                             </Flex>
 
@@ -69,7 +69,7 @@ const AuthSideBlock = ({isLogin}) => {
                                 <Box w='3.8rem' >
                                     <Image src={profile} radius={50}/>
                                 </Box>
-                                <Flex direction='column'>
+                                <div className='flex flex-col'>
                                     <h1 className='text-gray-900 lato-font font-bold text-medium'>
                                         Oscar Martinez
                                     </h1>
@@ -77,7 +77,7 @@ const AuthSideBlock = ({isLogin}) => {
                                     <Text fz={13} c='#797979'>
                                         Software Engineer
                                     </Text>
-                                </Flex>
+                                </div>
                                 
                             </Flex>
 

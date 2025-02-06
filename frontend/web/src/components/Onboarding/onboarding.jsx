@@ -27,7 +27,7 @@ const Onboarding = () => {
     const [spaceInfo, setSpaceInfo] = useState({ name: '', icon: null, description: '', visibility: ''});
     const location = useLocation();
     const [picture, setPicture] = useState(location.state?.data?.picture ?? null);
-    const [stepNum, setStepNum] = useState(33);
+    const [stepNum, setStepNum] = useState(1);
     const navigate = useNavigate();
 
     const [openImageCropper, setOpenImageCropper] = useState(false);
@@ -73,7 +73,7 @@ const Onboarding = () => {
             fullName: userInfo?.userDto?.fullName,
             picture: userInfo?.userDto?.picture,
             profile: userInfo?.userDto?.profile,
-            initials: userInfo?.userDto?.fullName.split(' ')[0][0] + userInfo?.userDto?.fullName.split(' ')[1][0],
+            // initials: userInfo?.userDto?.fullName?.split(' ')[0][0] + userInfo?.userDto?.fullName?.split(' ')[1][0],
         },
         space: spaceInfo,
         onboardingStep: userInfo?.userDto?.onboardingStep
@@ -94,35 +94,26 @@ const Onboarding = () => {
         }
     }, [location.state]);
 
-
-    // OnboardingCreateProfilev2({ data,stepNum,setStepNum })
-    const selectProfileContent = <Suspense fallback={<LoadingFallback />}>
-        <OnboardingCreateProfile 
-            data={data}
-            stepNumProps={{ stepNum, setStepNum,stepDisplay }}
-            imageCropperProps={{ setOpenImageCropper, openImageCropper,imageToCrop, setImageToCrop, previewUrl, setPreviewUrl }}
-            avatarPopoverProps={{ isAvatarPopoverOpen, setIsAvatarPopoverOpen }}
-            profileProps={{ activeProfile, setActiveProfile }}
-        />
-    </Suspense>;
-
-    const selectSpaceContent = <Suspense fallback={<LoadingFallback />}>
-        <OnboardingCreateSpacev2 
-            stepNumProps={{ stepNum, setStepNum,stepDisplay }}
-            fullName={data?.user.fullName}
-            setIsOnboardingComplete={setIsOnboardingComplete}
-        />
-    </Suspense>;
-
     const steps = [
         {
-            profileStep: {
-                component: selectProfileContent
-
-            },
-            spaceStep: {
-                component: selectSpaceContent
-            },
+            profileStep: { component: 
+            <Suspense fallback={<LoadingFallback />}>
+                <OnboardingCreateProfile 
+                    data={data}
+                    stepNumProps={{ stepNum, setStepNum,stepDisplay }}
+                    imageCropperProps={{ setOpenImageCropper, openImageCropper,imageToCrop, setImageToCrop, previewUrl, setPreviewUrl }}
+                    avatarPopoverProps={{ isAvatarPopoverOpen, setIsAvatarPopoverOpen }}
+                    profileProps={{ activeProfile, setActiveProfile }}
+                />
+            </Suspense>
+             },
+            spaceStep: { component: <Suspense fallback={<LoadingFallback />}>
+                <OnboardingCreateSpacev2 
+                    stepNumProps={{ stepNum, setStepNum,stepDisplay }}
+                    fullName={data?.user.fullName}
+                    setIsOnboardingComplete={setIsOnboardingComplete}
+                />
+            </Suspense> },
         },
     ];
 
@@ -273,52 +264,51 @@ const Onboarding = () => {
 
     return (<>
         {data?.user && (
-    <Box className="w-full bg-background">
-      {/* <AuthHeader /> */}
-        <Flex gap={80} direction="column" ff="Geist" justify='center' className='min-h-screen'>
-          {steps.map((step, index) => (
-            <Flex key={index} >
-              <AnimatePresence mode="wait" >
-                {stepNum === 1 && (
-                  <motion.div
-                    className='w-full'
-                    key="profileStep"
-                    initial="initial"
-                    animate="animate"
-                    exit="exit"
-                    variants={transitionVariants}
-                    transition={{ duration: 0.5 }}
-                  >
-                    <Flex justify={{base: 'center', md: 'space-between'}} >
-                        {step.profileStep.component}
+            <Box className="w-full bg-background">
+                <Flex gap={80} direction="column" ff="Geist" justify='center' className='min-h-screen'>
+                {steps.map((step, index) => (
+                    <Flex key={index} >
+                    <AnimatePresence mode="wait" >
+                        {stepNum === 1 && (
+                        <motion.div
+                            className='w-full'
+                            key="profileStep"
+                            initial="initial"
+                            animate="animate"
+                            exit="exit"
+                            variants={transitionVariants}
+                            transition={{ duration: 0.5 }}
+                        >
+                            <Flex justify={{base: 'center', md: 'space-between'}} >
+                                {step.profileStep.component}
+                            </Flex>
+                        </motion.div>
+                        )}
+                        {stepNum >= 2 && (
+                        <motion.div
+                            className='w-full'
+                            key="spaceStep"
+                            initial="initial"
+                            animate="animate"
+                            exit="exit"
+                            variants={transitionVariants}
+                            transition={{ duration: 0.5 }}
+                        >
+                            {isOnboardingComplete ? <LoadingSpinner /> : 
+                                <Flex justify={{base: 'center', md: 'space-between'}} >
+                                {step.spaceStep.component}
+                                </Flex>
+                        }
+                            
+                        </motion.div>
+                        )}
+                    </AnimatePresence>
                     </Flex>
-                  </motion.div>
-                )}
-                {stepNum >= 2 && (
-                  <motion.div
-                    className='w-full'
-                    key="spaceStep"
-                    initial="initial"
-                    animate="animate"
-                    exit="exit"
-                    variants={transitionVariants}
-                    transition={{ duration: 0.5 }}
-                  >
-                    {isOnboardingComplete ? <LoadingSpinner /> : 
-                        <Flex justify={{base: 'center', md: 'space-between'}} >
-                        {step.spaceStep.component}
-                        </Flex>
-                }
-                    
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </Flex>
-          ))}
-        </Flex>
-    </Box>
-  )}
-  </>
+                ))}
+                </Flex>
+            </Box>
+        )}
+    </>
     );
 };
 

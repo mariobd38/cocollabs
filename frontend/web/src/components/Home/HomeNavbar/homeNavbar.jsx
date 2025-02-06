@@ -58,10 +58,10 @@ const HomeNavbar = (props) => {
                 <Grid align='center' h='100%' gutter={{ base: 5 }}>
                     <Grid.Col span={2} >
                         <Flex align='center' gap={30}>
-                            <Box w='fit-content' className={`navbar-menu-sidebar-icon home-button ${colorScheme}`} onClick={handleOpenSidebarToggle}>
+                            <div className={`w-fit navbar-menu-sidebar-icon home-button ${colorScheme}`} onClick={handleOpenSidebarToggle}>
 
                                 {Icons('IconMenu2',27,27,buttonColor)}
-                            </Box>
+                            </div>
 
                             <Flex align='center' pb={0} display={{base: 'none', xs: 'flex'}}>
                                 <Box w='9.2rem' >
@@ -75,25 +75,24 @@ const HomeNavbar = (props) => {
                         <Flex align='center' justify='end'>
                             <Box pe={{base: 3, xs: 12}}>
                                 {isSmallScreen ? 
-                                            <div className={`m-auto home-navbar-search-ss ${colorScheme}`}>
-                                                {Icons('IconSearch',17.5,17.5,themeColors.text[1])}
-                                            </div>
-                                        : 
-                                        <form className="home-navbar-search" role="search">
-                                            <Input 
-                                                me={10}
-                                                placeholder="Search"
-                                                className={`home-navbar-search-input ${colorScheme}`}
-                                                leftSection={Icons('IconSearch',16,16,themeColors.text[1])}
-                                                rightSection={<Flex p='2px 9px' me={30} h={28} bg={inputRightSection} style={{borderRadius: "5px"}} bd={`.1px solid ${findButtonBdColor}`} >
-                                                    <Flex align='center' pb={1} >
-                                                        {Icons('IconCommand',15,15,themeColors.text[3])}
-                                                    </Flex>
-                                                    <Text m='auto' c={themeColors.text[3]} ff='Inter' fw={600} fz={13}>K</Text>
-                                                </Flex>}
-                                            />
-                                        </form>
-                                }
+                                    <div className={`m-auto home-navbar-search-ss ${colorScheme}`}>
+                                        {Icons('IconSearch',17.5,17.5,themeColors.text[1])}
+                                    </div>
+                                : 
+                                <form className="home-navbar-search" role="search">
+                                    <Input 
+                                        me={10}
+                                        placeholder="Search"
+                                        className={`home-navbar-search-input ${colorScheme}`}
+                                        leftSection={Icons('IconSearch',16,16,themeColors.text[1])}
+                                        rightSection={<Flex p='2px 9px' me={30} h={28} bg={inputRightSection} style={{borderRadius: "5px"}} bd={`.1px solid ${findButtonBdColor}`} >
+                                            <Flex align='center' pb={1} >
+                                                {Icons('IconCommand',15,15,themeColors.text[3])}
+                                            </Flex>
+                                            <Text m='auto' c={themeColors.text[3]} ff='Inter' fw={600} fz={13}>K</Text>
+                                        </Flex>}
+                                    />
+                                </form>}
                             </Box>
 
                             <Flex display={{base: 'none', xs: 'flex'}}>

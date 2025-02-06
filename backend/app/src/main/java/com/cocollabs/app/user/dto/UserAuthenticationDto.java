@@ -14,5 +14,5 @@ public class UserAuthenticationDto {
     @Email
     private String email;
     @NotBlank
-    String password;
+    private String password;
 }

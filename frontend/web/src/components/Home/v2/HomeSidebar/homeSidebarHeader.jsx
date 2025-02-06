@@ -105,7 +105,7 @@ const HomeSidebarHeader = forwardRef((props, ref) => {
                         </SidebarMenuButton>
                     }
                     dropdown={
-                        <Box>
+                        <div>
                             <DropdownMenuLabel className="flex items-center gap-3.5">
                                 {profileAvatar(2.1,data.space)}
                                 <Flex ff='Inter' lts={0.25} direction='column' gap={0.5} className=" max-w-[80%] whitespace-nowrap overflow-hidden text-ellipsis">
@@ -118,7 +118,7 @@ const HomeSidebarHeader = forwardRef((props, ref) => {
                                     <Flex align='center' justify='center' className="size-6 rounded-sm border">
                                             {Icons('IconSwitchHorizontal')}
                                     </Flex>
-                                    <Box>Switch space</Box>
+                                    <div>Switch space</div>
                                 </DropdownMenuSubTrigger>
                                 <DropdownMenuPortal>
                                     <DropdownMenuSubContent className='w-56'>
@@ -155,7 +155,7 @@ const HomeSidebarHeader = forwardRef((props, ref) => {
                                 </Flex>
                                 <Box onClick={() => setDialogTrigger(ref)}>New space</Box>
                             </DropdownMenuItem>
-                        </Box>
+                        </div>
                     } side={isMobile ? "bottom" : "right"} align='start' w={240} 
                 /> 
             </SidebarMenuItem>
