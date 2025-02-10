@@ -6,7 +6,7 @@ import { Title,Flex,Center,Box,TextInput,PasswordInput,Text,Paper,Group,Button,D
 import { useForm } from '@mantine/form';
 
 import { Icons } from '@/components/icons/icons';
-import { GoogleButton } from '@/components/Auth/OAuthButtons/googleButton';
+import { GoogleButton } from '@/components/Auth/OAuthButtons/googleIcon';
 import { GithubButton } from '@/components/Auth/OAuthButtons/githubButton';
 import AuthSideBlock from '@/components/Auth/authSideBlock';
 

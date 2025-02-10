@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 
 import { useLocalStorage } from '@mantine/hooks';
 // import { GOOGLE_AUTH_URL } from '../../../constants';
-import SignupContent from '@/components/Auth/SignUp/signupContent';
+// import SignupContent from '@/components/Auth/SignUp/signupContent';
+import SignupContentv2 from '@/components/Auth/SignUp/signupContentv2';
 
 import './../auth.css';
 import './signup.css'
 
 const SignUp = () => {
-    const [inputEmail,setInputEmail] = useState("");
     const [authOrigin, setAuthOrigin] = useLocalStorage({
         key: 'auth_origin',
         defaultValue: '',
@@ -20,10 +20,8 @@ const SignUp = () => {
     };
 
     return (
-        <SignupContent
+        <SignupContentv2
             handleGoogleLogin={handleGoogleLogin}
-            inputEmail={inputEmail}
-            setInputEmail={setInputEmail}
             showOAuth2Buttons={true}
         />
     );

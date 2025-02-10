@@ -13,12 +13,13 @@ export default defineConfig(({mode}) => {
             global: {},
         },
         plugins: [react({
-            include: "**/*.jsx",
+            include: "**/*.jsx"
         })],
         resolve: {
             alias: {
               "@": path.resolve(__dirname, "./src"),
             },
+            extensions: ['.js', '.jsx', '.ts', '.tsx']
           },
         server: {
             port: 3000,

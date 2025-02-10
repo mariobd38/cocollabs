@@ -11,7 +11,7 @@ import AppLayout from '@/pages/home/appLayout';
 import LandingPage from "@/components/Landing/LandingPage";
 import Login from "@/components/Auth/Login/login";
 import SignUp from "@/components/Auth/SignUp/signup"
-import SignUpNextSteps from "@/components/Auth/SignUp/SignUpNextSteps/signUpNextSteps";
+// import SignUpNextSteps from "@/components/Auth/SignUp/SignUpNextSteps/signUpNextSteps";
 import Onboarding from "@/components/Onboarding/onboarding";
 import OAuth2RedirectHandler from "@/components/Auth/SignUp/oAuth2RedirectHandler";
 import NotFound from '@/components/NotFound/notFound';
@@ -59,7 +59,7 @@ function App() {
 
 
                 <Route path="/signUp" element={<SignUp/> } />
-                <Route path="/app/signup" element={<SignUpNextSteps/> } />
+                {/* <Route path="/app/signup" element={<SignUpNextSteps/> } /> */}
 
                 <Route path="/" element={<LandingPage/> } />
 

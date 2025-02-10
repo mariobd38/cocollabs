@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
 
-import { Flex,Box,Divider } from '@mantine/core';
+import { DialogDescription,DialogFooter,DialogHeader,DialogTitle } from "@/components/ui/dialog"
+// import { Divider } from '@mantine/core';
 import { Button } from "@/components/ui/button"
+import { Divider } from "@/components/ui/divider";
 
 import Cropper from 'react-easy-crop';
 import { getCroppedImage } from '@/utils/getCroppedImage';
 
-import { DialogDescription,DialogFooter,DialogHeader,DialogTitle } from "@/components/ui/dialog"
-
-
 const ImageCropperContent = ({imageCropperProps, setOpen, profileProps}) => {
-    const { imageToCrop, setImageToCrop,setCroppedFile } = imageCropperProps;
+    const { imageToCrop,setCroppedFile } = imageCropperProps;
     const { setPreviewUrl,setActiveProfile } = profileProps;
 //     const [crop, setCrop] = useState({ x: 0, y: 0 });
 //   const [zoom, setZoom] = useState(1); 
@@ -57,18 +56,19 @@ const ImageCropperContent = ({imageCropperProps, setOpen, profileProps}) => {
 
     
     return (
-        <Box ff='Geist' className='px-2'>
+        <div className='px-2 font-["Geist"]'>
             <DialogHeader className='text-left gap-1'>
                 <DialogTitle>Crop image</DialogTitle>
                 <DialogDescription>
                     Adjust the size of the grid to crop your image
                 </DialogDescription>
             </DialogHeader>
-            {/* <Flex direction="column" className="w-full h-[450px]">
-                <Box className='py-3'><Divider /></Box>
-                <Flex align="center" justify="center" className="flex-grow"> */}
+
             <div className="flex flex-col w-full h-full"> 
-                <Box className='py-3'><Divider /></Box>
+                {/* <div className='py-3'><Divider /></div> */}
+                <div className='py-4'>
+                    <Divider theme='dark' />
+                </div>
                 <div
                 className={`flex justify-center items-center crop-container relative w-full flex-grow h-[280px] max-h-[280px] transition-opacity duration-300`}
                 >
@@ -84,11 +84,11 @@ const ImageCropperContent = ({imageCropperProps, setOpen, profileProps}) => {
                 </div>
 
                 <DialogFooter className='flex gap-2 pt-5'>
-                    <Button onClick={handleClose} className="size-auto border border-white text-white px-3 bg-transparent" variant="default">Cancel</Button>
-                    <Button onClick={handleApply} className="size-auto border border-white px-3 bg-white" variant="default">Apply</Button>
+                    <Button onClick={handleClose} className="size-auto border border-white text-white px-4 bg-transparent hover:bg-zinc-800/50" variant="default">Cancel</Button>
+                    <Button onClick={handleApply} className="size-auto border border-white px-4 bg-white hover:bg-white/80" variant="default">Apply</Button>
                 </DialogFooter>
             </div>
-        </Box>
+        </div>
     );
 };
 

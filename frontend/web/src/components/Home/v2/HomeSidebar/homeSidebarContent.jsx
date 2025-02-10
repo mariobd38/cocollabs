@@ -36,14 +36,14 @@ const HomeSidebarContent = ({ spaceSlug,openSidebarToggle,themeColors,colorSchem
             {openSidebarToggle ? 
                 <UnstyledButton onClick={(e) => redirectToSpace(e,link)}  key={link.label} 
                     className={`${classes.mainLink} last:mb-0 ${classes.active} ${activePage === link.label && classes.activeSpace }`} data-theme={colorScheme} >
-                    <Flex>
+                    <div className='flex'>
                         <div className={`${classes.mainLinkIcon} ${classes.sidebarOpen}`}>
                             {Icons(link.icon, 20, 20, themeColors.text[10])}
                         </div>
                         <Text ff='Inter' fz={15} c={themeColors.text[5]} className="label">
                             {link.label}
                         </Text>
-                    </Flex>
+                    </div>
                     {link.notifications && (
                         <Badge size="sm" variant="filled" className={classes.mainLinkBadge}>
                             {link.notifications}

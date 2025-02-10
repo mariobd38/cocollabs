@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import { Icons } from '@/components/icons/icons';
 
-import { Divider,Box,Text,Flex,Container,Grid,Image } from '@mantine/core';
+import { Divider,Box,Text,Flex,Container,Grid } from '@mantine/core';
 import { Button } from '@/components/ui/button';
 import CustomCommand from '@/components/customCommand';
 
@@ -52,7 +52,7 @@ const HomeNavbarv2 = ({ themeColors,colorScheme,setColorScheme,profileInfo,setOp
       }, [])
 
     return (
-        <nav className="navbar w-full fixed h-16 top-0" style={{zIndex: "11", backgroundColor: themeColors.bg[2],
+        <nav className="flex items-center w-full fixed h-16 top-0" style={{zIndex: "11", backgroundColor: themeColors.bg[2],
             borderBottom: `1px solid ${colorScheme==='dark' ? '#292929' : '#d8d8d8'}`
         }}>
             <Container w='100%' fluid >
@@ -60,18 +60,17 @@ const HomeNavbarv2 = ({ themeColors,colorScheme,setColorScheme,profileInfo,setOp
                     <Grid.Col span={2} >
                         <Flex align='center' gap={25}>
                             <Box w='fit-content' className={`navbar-menu-sidebar-icon home-button ${colorScheme}`} onClick={handleOpenSidebarToggle}>
-                                {/* {Icons('IconMenu2',27,27,buttonColor)} */}
                                 {Icons('IconSquare',22,22,buttonColor)}
-                                <Box left={openSidebarToggle ? 21 : 15.5} top={18.5} className='absolute transition-all duration-200 ease-linear'>
+                                <Box left={openSidebarToggle ? 21 : 15.5} top={18} className='absolute transition-all duration-200 ease-linear'>
                                     {Icons('IconMinusVertical',28,28,buttonColor,1.25)}
                                 </Box>
                             </Box>
 
                             <Flex align='center' pb={0} display={{base: 'none', sm: 'flex'}}>
-                                <Box w='8.5rem' >
+                                <div className='w-[8.5rem]' >
                                     <Logo2 strokeColor={colorScheme === 'dark' ? '#f4fff6' : '#323335'}/>
                                     {/* <Coconut strokeColor={colorScheme === 'dark' ? '#fafafa' : '#323335'}/> */}
-                                </Box>
+                                </div>
                             </Flex>
                         </Flex>
                     </Grid.Col>
@@ -105,7 +104,7 @@ const HomeNavbarv2 = ({ themeColors,colorScheme,setColorScheme,profileInfo,setOp
                                         <Box ps={4} className='hidden md:block'> anything</Box>...
                                     </Flex>
 
-                                    <Flex ms={10} p='2px 9px' gap={3} align='center' h={28} bg={kdbBdColor} className='rounded-md font-mono' bd={`1px solid ${searchBdColor}`} >
+                                    <Flex ms={10} p='2px 9px' gap={3} h={28} bg={kdbBdColor} className='items-center rounded-md font-mono' bd={`1px solid ${searchBdColor}`} >
                                         <span className="text-[18px] kbd pt-0.5 text-muted-foreground">⌘</span>
                                         <Text m='auto' className='text-muted-foreground kbd'  fw={400} fz={13}>K</Text>
                                     </Flex>
@@ -127,9 +126,9 @@ const HomeNavbarv2 = ({ themeColors,colorScheme,setColorScheme,profileInfo,setOp
                                     {Icons('IconBell',22,22,buttonColor)}
                                 </div>
 
-                                <div className={`user-home-navbar-icon-apps home-button ${colorScheme}`}>
+                                {/* <div className={`user-home-navbar-icon-apps home-button ${colorScheme}`}>
                                     {Icons('IconApps',22,22,buttonColor)}
-                                </div>
+                                </div> */}
                             </Flex>
                             
                             {/* outside components */}

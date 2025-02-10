@@ -4,17 +4,15 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
-import { Avatar,Flex,Box } from '@mantine/core';
-
+import { Avatar } from '@mantine/core';
 import { FormControl,FormDescription,Form,FormField,FormItem,FormLabel,FormMessage } from "@/components/ui/form"
 import { Select,SelectContent,SelectItem,SelectTrigger,SelectValue } from "@/components/ui/select"
 import { Input } from "@/components/ui/input"
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from "@/components/ui/button"
 import { IconsFilled } from '@/components/icons/iconsFilled';
-import Logo2 from '@/components/Logo/logo2';
 
 import { handleSpaceCreation } from '@/api/onboarding/handleSpaceCreation';
 
@@ -31,6 +29,12 @@ const formSchema = z.object({
 });
 const profileSize = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--mantine-scale')) || 1;
 const size = 3 * 0.5 * profileSize * 16;
+const spaceTyes = [
+    { label: 'Personal', value: 'personal' },
+    { label: 'Small team', value: 'small_team' },
+    { label: 'Startup', value: 'startup' },
+    { label: 'Company', value: 'company' },
+]
 
 const OnboardingCreateSpacev2 = ({stepNumProps,fullName,setIsOnboardingComplete}) => {
     const { stepNum,setStepNum,stepDisplay } = stepNumProps;
@@ -47,9 +51,7 @@ const OnboardingCreateSpacev2 = ({stepNumProps,fullName,setIsOnboardingComplete}
             type: "personal",
         },
     });
-    const { formState: { isValid } } = form;
-
-    // const [isOnboardingComplete, setIsOnboardingComplete] = useState(false);
+    // const { formState: { isValid } } = form;
 
     const onSubmit = async (data) => {
         try {
@@ -69,82 +71,65 @@ const OnboardingCreateSpacev2 = ({stepNumProps,fullName,setIsOnboardingComplete}
     }
 
     const main = <>
-        <Flex direction="column" gap={10}  >
-            <Flex fz={{base: 26, xs: 30}} lh={{base: 32, xs: 36}} >
-                <h1 className="text-gray-100 w-full text-wrap text-left">
-                Create your first space
-                </h1>
-            </Flex>
-            <Box fz={{base: 13, xs: 14}} lh={1}>
-                <p className="text-gray-400 text-wrap leading-5">
-                Add your name, username, and profile picture to personalize your experience
-                </p>
-            </Box>
-        </Flex>
+        <div className="flex flex-col gap-2" >
+            <h1 className="text-gray-100 w-full text-wrap text-left text-2xl">
+            Create your first space
+            </h1>
+            <p className="text-gray-400 text-wrap leading-5 text-sm">
+            This space will hold your organization&apos;s details. Think of it like a container for your entire project!
+            </p>
+        </div>
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className='w-full space-y-4'>
-                <Flex align='start' gap={{base: 50, xs: 65}} direction={{base: 'column', xs: 'row'}}> 
+            <form onSubmit={form.handleSubmit(onSubmit)} className='w-full pt-5'>
+                <div className='flex flex-col sm:flex-row gap-12 sm:gap-16'> 
+                    <div className='flex flex-col w-full'>
+                        <div className='flex flex-col gap-3'>
+                        <FormField
+                            control={form.control}
+                            name="name"
+                            render={({ field }) => (
+                                <FormItem className='w-full'>
+                                    <FormLabel className='text-gray-200'>Icon & Name</FormLabel>
+                                    <div className='gap-2.5 flex flex-col sm:flex-row'>
+                                        <div className='flex'>
+                                            <SpaceCreationIconsPopover 
+                                                color={color}
+                                                setColor={setColor}
+                                                spaceIcon={spaceIcon}
+                                                setSpaceIcon={setSpaceIcon}
+                                                colorMode='dark'
+                                            />
+                                        </div>
+                                        <Input
+                                            autoComplete="off"
+                                            placeholder={`Organization name`} 
+                                            className='pb-2 px-2.5 placeholder:text-muted-foreground text-gray-100'
+                                            {...field} 
+                                        />
+                                    </div>
+                                    <FormMessage className='py-0 text-red-700 text-[13px]'/>
+                                </FormItem>
+                            )}
+                        />
 
-                    <Flex direction='column' gap={30} w='100%'>
-                        <Flex direction='column' >
-                            <Flex direction='column' className='space-y-2.5' >
-                                <Flex align='center' gap={15}>
-                                    <FormField
-                                        control={form.control}
-                                        name="name"
-                                        render={({ field }) => (
-                                            <FormItem className='w-full'>
-                                                <FormLabel className='text-gray-200'>Icon & Name</FormLabel>
-                                                <Flex gap={10} direction={{base: 'column', xs: 'row'}}>
-                                                    <div className='flex'>
-                                                        <SpaceCreationIconsPopover 
-                                                            color={color}
-                                                            setColor={setColor}
-                                                            spaceIcon={spaceIcon}
-                                                            setSpaceIcon={setSpaceIcon}
-                                                            colorMode='dark'
-                                                        />
-                                                    </div>
-                                                    <Input
-                                                        autoComplete="off"
-                                                        placeholder={`Organization name`} 
-                                                        className='pb-2 px-2.5 placeholder:text-muted-foreground text-gray-100'
-                                                        {...field} 
-                                                    />
-                                                </Flex>
-                                                <FormMessage className='py-0 text-red-700 text-[13px]'/>
-                                            </FormItem>
-                                        )}
-                                    />
-                                </Flex>
-                            </Flex>
-                        </Flex>
+                        <FormField
+                            control={form.control}
+                            name="description"
+                            render={({ field }) => (
+                                <FormItem className='w-full'>
+                                    <FormLabel className='text-gray-200'>Description</FormLabel>
+                                    <div className='flex'>
+                                        <Textarea
+                                            placeholder={`What does your organization do?`} 
+                                            className='px-2.5 placeholder:text-muted-foreground text-gray-100'
+                                            {...field} 
+                                        />
+                                    </div>
+                                    <FormMessage className='py-0 text-red-700 text-[13px]'/>
+                                </FormItem>
+                            )}
+                        />
 
-
-                        <Flex direction='column'>
-                            <Flex align='center'>
-                                <FormField
-                                    control={form.control}
-                                    name="description"
-                                    render={({ field }) => (
-                                        <FormItem className='w-full'>
-                                            <FormLabel className='text-gray-200'>Description</FormLabel>
-                                            <div className='flex'>
-                                                <Textarea
-                                                    placeholder={`What does your organization do?`} 
-                                                    className='px-2.5 placeholder:text-muted-foreground text-gray-100'
-                                                    {...field} 
-                                                />
-                                            </div>
-                                            <FormMessage className='py-0 text-red-700 text-[13px]'/>
-                                        </FormItem>
-                                    )}
-                                />
-                            </Flex>
-                        </Flex>
-
-
-                        <Flex direction='column'>
                         <FormField
                             control={form.control}
                             name="type"
@@ -158,10 +143,9 @@ const OnboardingCreateSpacev2 = ({stepNumProps,fullName,setIsOnboardingComplete}
                                         </SelectTrigger>
                                         </FormControl>
                                         <SelectContent className='w-full'>
-                                        <SelectItem value="personal">Personal</SelectItem>
-                                        <SelectItem value="small_team">Small team</SelectItem>
-                                        <SelectItem value="startup">Startup</SelectItem>
-                                        <SelectItem value="company">Company</SelectItem>
+                                            {spaceTyes.map((spaceType) => (
+                                                <SelectItem key={spaceType.value} value={spaceType.value}>{spaceType.label}</SelectItem>
+                                            ))}
                                         </SelectContent>
                                     </Select>
                                     <FormDescription>
@@ -169,23 +153,25 @@ const OnboardingCreateSpacev2 = ({stepNumProps,fullName,setIsOnboardingComplete}
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>
-                            )}
+                                )}
                             />
-                        </Flex>
+                        </div>
+                    </div>
+                </div>
+                <div className='flex flex-col gap-3 mt-8'>
+                    {(form.formState.errors.avatar || form.formState.errors.image) &&
+                    <p className='text-red-700 text-[13px] font-medium'>{form.formState.errors.avatar?.message}</p>}
+                    <Button type="submit" className='w-16 h-5 bg-gray-100 text-zinc-800 hover:bg-white/80 transition-all duration-300'>Continue</Button>
+                </div>
 
-                    </Flex>
-                </Flex>
-                <Flex direction='column' mt={40} gap={20}>
-                    <Button disabled={!isValid} type="submit" className='w-12 h-5 bg-gray-100 hover:bg-gray-300 transition-all duration-300' >Continue</Button>
-                </Flex>
             </form>
         </Form>
     </>;
 
     const illustration = (
-        <Flex w='40%' justify='center' align='center' className='bg-teal-600 min-h-screen' display={{base: 'none', md: 'flex'}}>
+        <div className='w-2/5 items-center justify-center min-h-screen bg-cyan-700 hidden lg:flex'>
             <img src={createSpaceIllustration} alt='create profile' className='w-3/4' />
-        </Flex>
+        </div>
     );
 
     const transitionVariants = {
@@ -196,90 +182,24 @@ const OnboardingCreateSpacev2 = ({stepNumProps,fullName,setIsOnboardingComplete}
 
     return (
         <>
-            {/* {!isOnboardingComplete ?
-            <>
-            
-            <Flex direction='column' gap={40} py={120} px={{base: 20, xs: 40}} align={{base: 'center', md: 'start'}} >
-                <div className='w-36 '>
-                <Logo2 strokeColor='#f0f0f0'/>
-                </div>
+            <div className='flex flex-col py-20 sm:py-[120px] gap-10 px-6 sm:px-12' >
 
-                
-                {stepDisplay}
-                
-                <motion.div
-                    className='w-full'
-                    key="spaceStep"
-                    initial="initial"
-                    animate="animate"
-                    exit="exit"
-                    variants={transitionVariants}
-                    transition={{ duration: 0.5 }}
-                  >
-                    {main}
-                </motion.div> 
-                
-            </Flex>
-            {illustration}</>
-
-            :
-                <motion.div
-                    className='w-full'
-                    key="spaceStep"
-                    initial="initial"
-                    animate="animate"
-                    exit="exit"
-                    variants={transitionVariants}
-                    transition={{ duration: 0.5 }}
-                  >
-                    {completed}
-                  </motion.div>} */}
-
-
-{/* {!isOnboardingComplete ? */}
-            <>
-            
-            <Flex direction='column' align={{base: 'center', md: 'start'}} >
-                <Flex px={{base: 20, xs: 40}} pt={30}>
-                <div className='w-36 '>
-                    <Logo2 strokeColor='#f0f0f0'/>
-                </div>
-                </Flex>
-
-                <Flex direction='column' gap={40} py={100} px={{base: 20, xs: 40}} align={{base: 'center', md: 'start'}} >
-
-
-                
-                {stepDisplay}
-                
-                <motion.div
-                    className='w-full'
-                    key="spaceStep"
-                    initial="initial"
-                    animate="animate"
-                    exit="exit"
-                    variants={transitionVariants}
-                    transition={{ duration: 0.5 }}
-                  >
-                    {main}
-                </motion.div> 
-                </Flex>
-                
-            </Flex>
-            {illustration}</>
-
-            {/* :
-                <motion.div
-                    className='w-full'
-                    key="spaceStep"
-                    initial="initial"
-                    animate="animate"
-                    exit="exit"
-                    variants={transitionVariants}
-                    transition={{ duration: 0.5 }}
-                  >
-                    {completed}
-                  </motion.div>} */}
+                {/* <Flex direction='column' gap={40} py={100} px={{base: 20, xs: 40}} align={{base: 'center', md: 'start'}} > */}
+                    {stepDisplay}
+                    <motion.div
+                        className='w-full'
+                        key="spaceStep"
+                        initial="initial"
+                        animate="animate"
+                        exit="exit"
+                        variants={transitionVariants}
+                        transition={{ duration: 0.5 }}
+                    >
+                        {main}
+                    </motion.div> 
+                {/* </Flex> */}
+            </div>
+            {illustration}
         </>
     );
 };

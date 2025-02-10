@@ -1,34 +1,22 @@
-.auth-content-wrapper-paper {
-    background: hsl(240 10% 3.9%);
-}
 .auth-content-wrapper-paper-divider .mantine-Divider-label {
     color: #898989;
     font-family: 'Nunito Sans';
     font-size: 14px;
 }
-.sign-up-oauth-button {
+/* .sign-up-oauth-button {
     width: 100% !important;
     transition: all 0.5s ease;
-}
-.sign-up-oauth-button:disabled:hover {
+} */
+/* .sign-up-oauth-button:disabled:hover {
     cursor: default !important;
     filter: brightness(0.95) !important;
-}
-.auth-user-info-block {
-    width: 100% !important;
-    justify-content: space-between !important;
-    transition: width 0.5s ease;
-}
-@media(max-width: 480px) {
-    .sign-up-oauth-button, .auth-user-info-block {
+} */
+/* @media(max-width: 480px) {
+    .sign-up-oauth-button {
         width: 100% !important;
     }
 }
 
 .sign-up-oauth-button:hover {
     background-color: #252629 !important;
-}
-
-.signup-content-progress-bar .mantine-Progress-section {
-    border-radius: 5px !important;
-}
+} */

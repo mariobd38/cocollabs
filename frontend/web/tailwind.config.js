@@ -137,7 +137,7 @@ module.exports = {
       			'fade-left': 'fade-left 0.3s ease'
       		},
       		fontFamily: {
-      			sans: []
+      			'sans': ['Nunito Sans']
       		},
       	}
       },

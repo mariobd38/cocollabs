@@ -25,6 +25,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import com.cocollabs.app.user.model.User;
+import com.cocollabs.app.user.model.User.UserOnboardingStep;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -145,6 +146,7 @@ public class AuthController {
                     encodedPassword,
                     null
             );
+
             customUserService.createUser(user);
 
             CookieUtil.deleteAllCookies(request, response);
@@ -182,7 +184,7 @@ public class AuthController {
 
             // User is authenticated, check onboarding status
             statusResponse.put("isAuthenticated", true);
-            statusResponse.put("isOnboarded", user.get().isOnboardingComplete()); // Assuming you have this field
+            statusResponse.put("isOnboarded", user.get().getOnboardingStep().equals(UserOnboardingStep.COMPLETE));
             return ResponseEntity.ok(statusResponse);
 
         } catch (Exception e) {

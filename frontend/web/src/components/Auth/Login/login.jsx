@@ -7,7 +7,7 @@ import {Icons} from '@/components/icons/icons';
 import { useForm } from '@mantine/form';
 
 // import { GOOGLE_AUTH_URL } from '../../../constants';
-import { GoogleButton } from '@/components/Auth/OAuthButtons/googleButton';
+// import { GoogleButton } from '@/components/Auth/OAuthButtons/googleIcon';
 import { GithubButton } from '@/components/Auth/OAuthButtons/githubButton';
 
 
@@ -169,7 +169,7 @@ const Login = () => {
 
     return (
         <div className='min-h-dvh'>
-            <div className='w-full auth-content-wrapper-paper'>
+            <div className='w-full bg-[hsl(240,10%,3.9%)]'>
                 <Flex w={{xs: 530, md: '100%'}} m='auto' >
                     
                     <AuthSideBlock isLogin={true} />
@@ -188,17 +188,17 @@ const Login = () => {
                             </Flex>
                                 
                                 
-                            <Flex className='auth-content-block' w={{base: '85%', xs: '80%'}} >
+                            <div className='flex flex-col m-auto sm:w-[80%]' >
                                 <div>
                                     <Flex mb="lg" gap={20} direction='column' >
-                                        <GoogleButton bd='1px solid #5c5c5c' c='#f0f0f0' size="sm" onClick={handleGoogleLogin} radius={6} p='8px 0' className='sign-up-oauth-button' fz={17} bg="transparent">
+                                        {/* <GoogleButton bd='1px solid #5c5c5c' c='#f0f0f0' size="sm" onClick={handleGoogleLogin} radius={6} p='8px 0' className='sign-up-oauth-button' fz={17} bg="transparent">
                                             <Text className='ms-2 oauth-button-text' fw={700} fz={{base: 16, xs: 17}}>Continue with Google</Text>
-                                        </GoogleButton>
+                                        </GoogleButton> */}
                                             
-                                        <GithubButton bd='1px solid #5c5c5c' c='#f0f0f0' size="sm" onClick={handleGoogleLogin} radius={6} p='8px 0' className='sign-up-oauth-button' fz={17} bg="transparent">
+                                        {/* <GithubButton bd='1px solid #5c5c5c' c='#f0f0f0' size="sm" onClick={handleGoogleLogin} radius={6} p='8px 0' className='sign-up-oauth-button' fz={17} bg="transparent">
                                             <Text className='ms-2 oauth-button-text' fw={700} fz={{base: 16, xs: 17}}>Continue with Github</Text>
-                                        
-                                        </GithubButton>
+                                        </GithubButton> */}
+
                                         {/* <SlackButton size="md" radius="md" px="0" className='py-2 sign-up-oauth-button' style={{fontSize: "17px",background: "#fafafa"}}>Continue with Slack</SlackButton> */}
                                     </Flex>
 
@@ -270,7 +270,7 @@ const Login = () => {
                                         </Button>
                                     </Group>
                                 </form>
-                            </Flex>
+                            </div>
                         </Paper>
                     </div>
                 </Flex>
