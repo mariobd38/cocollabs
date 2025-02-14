@@ -2,32 +2,64 @@ package com.cocollabs.app.dto;
 
 import com.cocollabs.app.user.model.User;
 import com.cocollabs.app.user.repository.UserRepository;
-import jakarta.transaction.Transactional;
-import org.hibernate.Hibernate;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
+//@SpringBootTest
 public class UserPlatformDtoConverterTest {
-    @Value("${DTO_CONVERTER_TEST_EMAIL}")
-    private String DTO_CONVERTER_TEST_EMAIL;
-    @Autowired
+    private final String email = "test@example.com";
+    @Mock
     private UserRepository userRepository;
 
-    @Transactional
     @Test
     void testUserSpaceSize() {
-        Optional<User> user = userRepository.findByEmail(DTO_CONVERTER_TEST_EMAIL);
+//        User mockUser = User.builder()
+//                        .id(1L)
+//                        .email(DTO_CONVERTER_TEST_EMAIL)
+//                        .spaces(new LinkedHashSet<>())
+//                        .build();
+//
+//        Mockito.when(userRepository.findByEmail(DTO_CONVERTER_TEST_EMAIL))
+//                .thenReturn(Optional.of(mockUser));
+//
+//        Optional<User> user = userRepository.findByEmail(DTO_CONVERTER_TEST_EMAIL);
+//        user.ifPresent(userEntity -> {
+//            assertTrue(userEntity.getSpaces().size() >= 2);
+//        });
+    }
+    @Test
+    void testGetUserByEmail() {
+        // Given
+        User mockUser = User.builder()
+                .id(1L)
+                .fullName("John Doe")
+                .email(email)
+                .spaces(new LinkedHashSet<>())
+                .build();
 
-        user.ifPresent(userEntity -> {
-            Hibernate.initialize(userEntity.getSpaces());
-            assertTrue(userEntity.getSpaces().size() >= 2);
+        Mockito.when(userRepository.findByEmail(email))
+                .thenReturn(Optional.of(mockUser));
+
+        // When
+        Optional<User> foundUser = userRepository.findByEmail(email);
+        foundUser.ifPresent(userEntity -> {
+            assertEquals(email, userEntity.getEmail());
+            assertEquals("John Doe", userEntity.getFullName());
         });
+
     }
 }

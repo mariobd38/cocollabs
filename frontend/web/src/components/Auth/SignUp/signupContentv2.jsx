@@ -97,7 +97,7 @@ const SignupContentv2 = (props) => {
                                             <div className="w-4 h-4">
                                                 <GoogleIcon />
                                             </div>
-                                            <div className="text-center text-sm text-gray-100">Continue with Google</div>
+                                            <div className="text-center font-semibold text-sm text-gray-100">Continue with Google</div>
                                         </a>
 
                                         <div className='py-[30px]'>
@@ -156,7 +156,7 @@ const SignupContentv2 = (props) => {
                                                     Log In
                                                 </a>
                                             </div>
-                                            <Button type="submit" className='h-5 bg-gray-100 text-zinc-800 hover:bg-white/80 transition-all duration-300 font-semibold rounded-lg'>Continue</Button>
+                                            <Button type="submit" className='h-5 sm:w-16 bg-gray-100 text-zinc-800 hover:bg-white/80 transition-all duration-300 font-semibold rounded-lg'>Continue</Button>
                                         </div>
                                     </form>
                                 </Form>

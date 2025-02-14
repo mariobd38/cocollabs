@@ -41,19 +41,6 @@ import './MainContent.css'
 // ]
 
 const MainContent = () => {
-    const [scrollPosition, setScrollPosition] = useState(0);
-    const handleScroll = () => {
-        const position = window.scrollY;
-        setScrollPosition(position);
-    };
-
-    // useEffect(() => {
-    //     window.addEventListener('scroll', handleScroll, { passive: true });
-        
-    //     return () => {
-    //         window.removeEventListener('scroll', handleScroll);
-    //     };
-    // }, [scrollPosition]);
     
     // const items = features.map((feature,index) => (
     //     <div key={index} style={{color: "#121212"}}>
@@ -77,7 +64,7 @@ const MainContent = () => {
     return (
         <div>
             <main>
-                <NavbarContent scrollPosition={scrollPosition}/>
+                <NavbarContent />
                 <div className="bg-[hsl(240,10%,3.9%)]">
                     <Hero />
                 </div>

@@ -1,22 +1,6 @@
 .landing-nav-button {
-    font-size: .95em !important;
-    font-family: 'Inter' !important;
-    border-radius: 10px !important;
-    /* letter-spacing: .25px; */
-    padding: 0 14px !important;
-    font-family: 'Geist' !important;
-    transform: none !important;
-    transition: all 0.2s ease-in-out;
-}
-.landing-nav-button.item:hover {
-    /* background-color: #1b2246 !important; */
-}
-.landing-nav-button.signup {
-    /* border: 1px solid #fafafa !important; */
-    color: #202020 !important
-}
-.landing-nav-button.signup:hover {
-    filter: brightness(0.9) !important;
+    /* transform: none !important;
+    transition: all 0.2s ease-in-out; */
 }
 
 .navbar-content-burger .mantine-Burger-burger, 

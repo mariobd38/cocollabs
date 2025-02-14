@@ -16,7 +16,7 @@ import './onboarding.css';
 
 const LoadingFallback = () => <></>;
 const OnboardingCreateProfile = lazy(() => import('@/components/Onboarding/onboardingCreateProfile'));
-const OnboardingCreateSpacev2 = lazy(() => import('@/components/Onboarding/onboardingCreateSpacev2'));
+const OnboardingCreateSpace = lazy(() => import('@/components/Onboarding/onboardingCreateSpace'));
 
 const Onboarding = () => {
     const [userInfo, setUserInfo] = useState({ email: '', fullName: '', picture: null, profile: null});
@@ -94,7 +94,7 @@ const Onboarding = () => {
             </Suspense>
              },
             spaceStep: { component: <Suspense fallback={<LoadingFallback />}>
-                <OnboardingCreateSpacev2 
+                <OnboardingCreateSpace 
                     stepNumProps={{ stepNum, setStepNum,stepDisplay }}
                     fullName={data?.user.fullName}
                     setIsOnboardingComplete={setIsOnboardingComplete}

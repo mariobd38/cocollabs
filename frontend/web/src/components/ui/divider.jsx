@@ -10,6 +10,7 @@ const Divider = ({text,theme}) => {
                 <span className="bg-background px-2 text-muted-foreground text-neutral-400">{text}</span>
             </div>
         </div>
+
     );
 };
 

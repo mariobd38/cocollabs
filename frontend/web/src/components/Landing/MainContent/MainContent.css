@@ -39,17 +39,7 @@ a {
 .get-started {
     transition: transform .43s ease-in-out, box-shadow .33s ease-in-out !important;
 }
-.get-started-text {
-    padding: 16px 30px;
-}
-@media (max-width: 767px) {
-    .get-started-text {
-        padding: 16px 45px;
-    }
-    /* .visit-community-button {
-        padding: 11px 26px !important;
-    } */
-}
+
 
 .get-started:hover,.visit-community-button:hover {
     /* filter: brightness(1.35); */

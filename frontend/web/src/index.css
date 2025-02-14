@@ -47,7 +47,6 @@
     }
 
     :root[data-mantine-color-scheme="dark"] body {
-        /* --background: 220, 5%, 12%; */
         --background: 180 18.2% 4.3%;
         --foreground: 210 40% 98%;
 
@@ -103,8 +102,6 @@
         --color-4: 195 100% 63%;
         --color-5: 90 100% 63%;
         --radius: 0.5rem;
-
-        --dark-bg: 180 18.2% 4.3%;
       }
 }
 

@@ -1,16 +1,27 @@
-import React from 'react'
+import React, { useEffect,useState } from 'react'
 
 import { Avatar } from '@mantine/core';
 
 import './userAvatar.css'
 
-import { getAvatars } from '@/utils/getProfileAvatarList';
-const avatarList = getAvatars();
+// import { getAvatars } from '@/utils/getProfileAvatarList';
+// const avatarList = getAvatars();
 
 const UserAvatar = (props) => {
     const { userProfileDto, userProfilePicture, initials, multiplier, fontSize } = props;
     const size = `calc(${multiplier}rem * var(--mantine-scale))`;
+    
+    const [avatarList, setAvatarList] = useState([]);
     const avatar = userProfileDto.type === 'avatar' ? avatarList.find(avatar => avatar.name === userProfileDto.svg).svg : userProfileDto.preSignedUrl;
+
+    useEffect(() => {
+        async function fetchAvatars() {
+            const { getAvatars } = await import('@/utils/getProfileAvatarList');
+            setAvatarList(getAvatars());
+        }
+
+        fetchAvatars();
+    }, []);
 
     return (
         <Avatar 

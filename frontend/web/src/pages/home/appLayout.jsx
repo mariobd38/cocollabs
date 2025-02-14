@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useParams, Outlet } from 'react-router-dom';
 
-import { useMantineTheme,useMantineColorScheme,Box,Flex } from '@mantine/core';
+import { useMantineTheme,useMantineColorScheme,Flex } from '@mantine/core';
 import { useLocalStorage } from '@mantine/hooks';
 
 import HomeNavbarv2 from '@/components/Home/v2/HomeNavbar/homeNavbarv2';

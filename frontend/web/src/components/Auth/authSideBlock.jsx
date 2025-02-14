@@ -14,7 +14,7 @@ const AuthSideBlock = ({isLogin}) => {
             <div className="p-4 relative flex h-full w-full flex-col items-center justify-center overflow-hidden rounded-2xl border !border-zinc-100 bg-[hsl(180,18.2%,4.3%)] md:shadow-xl">
                <div className='flex flex-col items-center gap-4'>
                     <p className="z-10 whitespace-pre-wrap text-center text-3xl font-medium tracking-tighter text-white px-3 text-balance">
-                        &quot;The best way to connect with developers and manage your projects with ease&quot;
+                        &quot;The best way to match with talent and manage your projects with ease&quot;
                     </p>
 
                     <div className='flex items-center gap-3'>

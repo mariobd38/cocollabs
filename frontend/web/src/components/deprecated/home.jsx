@@ -1,11 +1,11 @@
 import React, { useState, useEffect,useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { useMantineTheme,useMantineColorScheme,Box,Flex } from '@mantine/core';
+import { useMantineTheme,useMantineColorScheme } from '@mantine/core';
 import { useLocalStorage } from '@mantine/hooks';
 
 import HomeHeader from '@/components/Home/HomeHeader/homeHeader';
-import HomeNavbar from '@/components/Home/HomeNavbar/homeNavbar';
+import HomeNavbar from '@/components/deprecated/homeNavbar';
 import TaskCard from '@/components/Home/TaskCard/taskCard';
 // import QuickActions from './QuickActions/quickActions';
 import HomeSidebar from '@/components/Home/HomeSidebar/homeSidebar';
@@ -181,7 +181,7 @@ const Home = () => {
                 />}
             </div>
 
-            <Flex direction='column' className={` user-home-all-content ${openSidebarToggle && 'open' }`}>
+            <div className={`flex flex-col user-home-all-content ${openSidebarToggle && 'open' }`}>
                 <HomeHeader 
                     spaceName={spaceData.name}
                     themeColors={themeColors}
@@ -235,7 +235,7 @@ const Home = () => {
                         </div>
                     </div>
                 </div>
-            </Flex>
+            </div>
         </>
     );
 };
