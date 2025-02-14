@@ -169,7 +169,7 @@ const Login = () => {
 
     return (
         <div className='min-h-dvh'>
-            <div className='w-full bg-[hsl(240,10%,3.9%)]'>
+            <div className='w-full bg-background'>
                 <Flex w={{xs: 530, md: '100%'}} m='auto' >
                     
                     <AuthSideBlock isLogin={true} />

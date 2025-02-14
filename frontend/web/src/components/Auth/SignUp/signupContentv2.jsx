@@ -74,7 +74,7 @@ const SignupContentv2 = (props) => {
 
     return (
         <div className='min-h-dvh'>
-            <div className='w-full bg-[hsl(240,10%,3.9%)]'>
+            <div className='w-full bg-background'>
                 <div className='flex m-auto md:grid lg:grid-cols-2' >
                     <div className='flex flex-col items-center justify-center w-full min-h-screen py-32'>
                         {/* <div className='py-8 bg-transparent sm:w-[560px] w-full px-12 sm:px-0'  > */}

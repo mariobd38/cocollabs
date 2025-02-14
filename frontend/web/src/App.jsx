@@ -8,7 +8,7 @@ import Homev2 from '@/pages/home/homev2';
 import Explore from '@/pages/home/explore';
 import AppLayout from '@/pages/home/appLayout';
 // import TaskDetailsModal from "@/components/Home/TaskDetailsModal/taskDetailsModal";
-import LandingPage from "@/components/Landing/LandingPage";
+import LandingPage from "@/components/Landing/landing";
 import Login from "@/components/Auth/Login/login";
 import SignUp from "@/components/Auth/SignUp/signup"
 // import SignUpNextSteps from "@/components/Auth/SignUp/SignUpNextSteps/signUpNextSteps";

@@ -65,7 +65,7 @@ const MainContent = () => {
         <div>
             <main>
                 <NavbarContent />
-                <div className="bg-[hsl(240,10%,3.9%)]">
+                <div className="bg-background">
                     <Hero />
                 </div>
                 

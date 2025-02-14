@@ -7,8 +7,6 @@ import { Button } from "@/components/ui/button";
 
 import Logo2 from '@/components/Logo/logo2';
 
-import './NavbarContent.css';
-  
 const NavbarContent: React.FC = () => {
     const navigate = useNavigate();
     const navItems: string[] = ['Projects', 'Communities', 'Resources', 'Pricing'];
@@ -53,22 +51,13 @@ const NavbarContent: React.FC = () => {
                                 </Button>
                             </div>
                         </div>
-            
-                        {/* <ManBurger
-                            opened={drawerOpened}
-                            className={`flex items-center lg:hidden navbar-content-burger ${scrollPosition > 40 ? 'scrolled' : ''}`}
-                            onClick={toggleDrawer}
-                        /> */}
-                        <div className='flex lg:hidden'>
 
+                        <div className='flex lg:hidden'>
                             <Sheet open={isOpen} onOpenChange={setIsOpen} >
                                 <SheetTrigger asChild>
                                     <Burger isOpen={isOpen} toggle={() => setIsOpen(true)} />
                                 </SheetTrigger>
-                                <SheetContent 
-                                    side="right" 
-                                    className=" z-0 bg-background top-0 border-t border-gray-800 font-['Geist']"
-                                >
+                                <SheetContent side="right" className="z-20 bg-background top-0 border-t border-gray-800 font-['Geist']">
                                     <div className="absolute top-3 right-10 z-50">
                                         <Burger isOpen={isOpen}  toggle={() => setIsOpen(false)} />
                                     </div>

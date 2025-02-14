@@ -7,7 +7,7 @@ import Logo2 from '@/components/Logo/logo2';
 
 const AuthSideBlock = ({isLogin}) => {
     return (
-        <div className='h-full bg-[hsl(240,10%,3.9%)] hidden lg:block p-4' >
+        <div className='h-full hidden lg:block p-4' >
             <div className='absolute z-50 p-4 w-48 h-48'>
                 <Logo2 strokeColor='#f0f0f0' />
             </div>
