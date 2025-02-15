@@ -45,7 +45,6 @@ export const ProfileCard = (props) => {
                                 userProfilePicture={profileInfo.picture}
                                 initials={profileInfo.initials}
                                 multiplier={4.8}
-                                fontSize={2.3}
                             />
                         </div>
                         <div>

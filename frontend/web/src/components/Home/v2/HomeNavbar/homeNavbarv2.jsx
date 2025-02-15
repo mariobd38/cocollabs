@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from 'react';
 
 import { Icons } from '@/components/icons/icons';
-
-import { Divider,Box,Text,Flex,Container,Grid } from '@mantine/core';
 import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
 import CustomCommand from '@/components/customCommand';
 
-import Coconut from '@/components/Logo/coconut';
 import Logo2 from '@/components/Logo/logo2';
-
 import HomeNavbarUserMenu from '@/components/Home/HomeNavbar/homeNavbarUserMenu';
 // import SpaceCreationModal from '@/components/Home/SpaceCreationModal/spaceCreationModal';
 
@@ -37,7 +34,6 @@ const HomeNavbarv2 = ({ themeColors,colorScheme,setColorScheme,profileInfo,setOp
     const buttonColor = colorScheme === 'dark' ? '#d4d5d6' : '#424345';
     const searchBgColor = colorScheme === 'dark' ? '#262729' : '#f6f7f9';
     const searchBdColor = colorScheme === 'dark' ? '#323335' : '#dee2e6';
-    const kdbBdColor = colorScheme === 'dark' ? '#1a1b1d' : '#fafbfd';
 
     const [openCommand, setOpenCommand] = useState(false);
     useEffect(() => {
@@ -52,107 +48,58 @@ const HomeNavbarv2 = ({ themeColors,colorScheme,setColorScheme,profileInfo,setOp
       }, [])
 
     return (
-        <nav className="flex items-center w-full fixed h-16 top-0" style={{zIndex: "11", backgroundColor: themeColors.bg[2],
-            borderBottom: `1px solid ${colorScheme==='dark' ? '#292929' : '#d8d8d8'}`
-        }}>
-            <Container w='100%' fluid >
-                <Grid align='center' h='100%' gutter={5}>
-                    <Grid.Col span={2} >
-                        <Flex align='center' gap={25}>
-                            <Box w='fit-content' className={`navbar-menu-sidebar-icon home-button ${colorScheme}`} onClick={handleOpenSidebarToggle}>
-                                {Icons('IconSquare',22,22,buttonColor)}
-                                <Box left={openSidebarToggle ? 21 : 15.5} top={18} className='absolute transition-all duration-200 ease-linear'>
-                                    {Icons('IconMinusVertical',28,28,buttonColor,1.25)}
-                                </Box>
-                            </Box>
+        <nav className="flex items-center w-full fixed h-16 top-0 z-20 border-b border-zinc-300 dark:border-zinc-700" style={{backgroundColor: themeColors.bg[2]}}>
+            <div className='container px-4 w-full max-w-full' >
+                <div className='flex justify-between h-full items-center place-items-center'>
+                    <div className='flex items-center gap-6'>
+                        <div className={`w-fit p-1.5 cursor-pointer rounded home-button ${colorScheme}`} onClick={handleOpenSidebarToggle}>
+                            {Icons('IconSquare',22,22,buttonColor)}
+                            <div style={{left: `${openSidebarToggle ? 21 : 15.5}px`}} className={`left-[20px] top-[18px] absolute transition-all duration-200 ease-linear`}>
+                                {Icons('IconMinusVertical',28,28,buttonColor,1.25)}
+                            </div>
+                        </div>
 
-                            <Flex align='center' pb={0} display={{base: 'none', sm: 'flex'}}>
-                                <div className='w-[8.5rem]' >
-                                    <Logo2 strokeColor={colorScheme === 'dark' ? '#f4fff6' : '#323335'}/>
-                                    {/* <Coconut strokeColor={colorScheme === 'dark' ? '#fafafa' : '#323335'}/> */}
-                                </div>
-                            </Flex>
-                        </Flex>
-                    </Grid.Col>
-
-                    <Grid.Col span={10} >
-                        <Flex align='center' justify='end'>
-                            <Box pe={{base: 3, xs: 12}}>
-                                {/* {isSmallScreen ? 
-                                            <div className={`m-auto home-navbar-search-ss ${colorScheme}`}>
-                                                {Icons('IconSearch',17.5,17.5,themeColors.text[1])}
-                                            </div>
-                                        : 
-                                        <form className="home-navbar-search" role="search">
-                                            <Input 
-                                                // me={10}
-                                                placeholder="Search"
-                                                className={`home-navbar-search-input ${colorScheme}`}
-                                                leftSection={Icons('IconSearch',16,16,themeColors.text[1])}
-                                                rightSection={<Flex p='2px 9px' me={30} h={28} bg={inputRightSection} style={{borderRadius: "5px"}} bd={`.1px solid ${findButtonBdColor}`} >
-                                                    <Flex align='center' pb={1} >
-                                                        {Icons('IconCommand',15,15,themeColors.text[3])}
-                                                    </Flex>
-                                                    <Text m='auto' c={themeColors.text[3]} ff='Inter' fw={600} fz={13}>K</Text>
-                                                </Flex>}
-                                            />
-                                        </form>
-                                } */}
-                                <Button size='auto' variant='ghost' className={`flex py-1 ps-3 pe-2.5 rounded gap-32 border-solid border-[${searchBdColor}] navbar-search-button ${colorScheme} hover:all transition-all duration-300 ease-linear`} 
-                                style={{border: `1px solid ${searchBdColor}`, backgroundColor: `${searchBgColor}`}} onClick={() => setOpenCommand((open) => !open)}>
-                                    <Flex ff='Inter' fz={13.5} align='center' className='text-muted-foreground kbd'>Search
-                                        <Box ps={4} className='hidden md:block'> anything</Box>...
-                                    </Flex>
-
-                                    <Flex ms={10} p='2px 9px' gap={3} h={28} bg={kdbBdColor} className='items-center rounded-md font-mono' bd={`1px solid ${searchBdColor}`} >
-                                        <span className="text-[18px] kbd pt-0.5 text-muted-foreground">⌘</span>
-                                        <Text m='auto' className='text-muted-foreground kbd'  fw={400} fz={13}>K</Text>
-                                    </Flex>
-                                </Button>
-                            </Box>
-
-                            {/* <Flex display={{base: 'none', xs: 'flex'}}>
-                                <Button className={`home-button ${colorScheme}`} me={5} fw={600} radius={6} p='0 11px' bg='transparent' bd={`1px solid ${buttonBdColor}`} ff='Inter' c={buttonColor} >
-                                    Explore
-                                </Button>
-                            </Flex> */}
-
-                            <Flex className='home-navbar-divider'>
-                                <Divider size="xs" orientation="vertical" ms={8} me={10} m='auto' h={28} bd={`.1px solid ${colorScheme==='dark' ? '#676869' : '#878889'}`}/>
-                            </Flex>
-
-                            <Flex m='auto 20px auto 0' gap={6}>
-                                <div className={`user-home-navbar-icon-apps home-button ${colorScheme}`}>
-                                    {Icons('IconBell',22,22,buttonColor)}
+                        <div className='items-center hidden sm:flex' >
+                            <div className='w-[8.5rem]' >
+                                <Logo2 strokeColor={colorScheme === 'dark' ? '#f4fff6' : '#323335'}/>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div className='flex items-center justify-end font-["Inter"]'>
+                        <div className='pr-3 md:pr-4'>
+                            <Button size='auto' variant='ghost' className={`flex py-1 px-3 rounded gap-32 border-solid border-[${searchBdColor}] navbar-search-button ${colorScheme} hover:all transition-all duration-300 ease-linear`} 
+                            style={{border: `1px solid ${searchBdColor}`, backgroundColor: `${searchBgColor}`}} onClick={() => setOpenCommand((open) => !open)}>
+                                <div className='flex text-[13px] text-muted-foreground kbd'>Search
+                                    <div className='pl-1 hidden md:block'> anything</div>...
                                 </div>
 
-                                {/* <div className={`user-home-navbar-icon-apps home-button ${colorScheme}`}>
-                                    {Icons('IconApps',22,22,buttonColor)}
-                                </div> */}
-                            </Flex>
-                            
-                            {/* outside components */}
-                            <HomeNavbarUserMenu 
-                                userProfileDto={profileInfo.profileDto}
-                                userProfilePicture={profileInfo.picture}
-                                userFullName={profileInfo.fullName}
-                                initials={profileInfo.initials}
-                                colorScheme={colorScheme}
-                                themeColors={themeColors}
-                                setColorScheme={setColorScheme}
-                                storedUserInfo={storedUserInfo}
-                                setStoredUserInfo={setStoredUserInfo}
-                            />
+                                <div className='flex px-2 bg-gray-100 dark:bg-black gap-1 h-7 items-center rounded-md font-mono border dark:border-black border-gray-300' >
+                                    <span className="text-[18px] kbd pt-0.5 text-muted-foreground">⌘</span>
+                                    <p className='m-auto pt-[1px] text-muted-foreground kbd text-sm'>K</p>
+                                </div>
+                            </Button>
+                        </div>
 
-                            <CustomCommand 
-                                open={openCommand}
-                                setOpen={setOpenCommand}
-                            />
+                        <Separator orientation='vertical' className='hidden sm:flex h-8 mx-3 bg-zinc-600' />
 
-                        </Flex>
-                    </Grid.Col>
-                </Grid>
-            </Container>
+                        <HomeNavbarUserMenu 
+                            userProfileDto={profileInfo.profileDto}
+                            userProfilePicture={profileInfo.picture}
+                            userFullName={profileInfo.fullName}
+                            themeColors={themeColors}
+                            storedUserInfo={storedUserInfo}
+                            setStoredUserInfo={setStoredUserInfo}
+                        />
+
+                        <CustomCommand 
+                            open={openCommand}
+                            setOpen={setOpenCommand}
+                        />
+
+                    </div>
+                </div>
+            </div>
         </nav>
     );
 };

@@ -1,19 +1,20 @@
 import React from 'react';
 
+import { useMantineColorScheme } from '@mantine/core';
+
 import { updateThemeInfo } from '@/api/Users/updateTheme';
 import { userLogout } from '@/api/Auth/logout';
 
-import { Text,Flex,Box } from '@mantine/core';
 import { DropdownMenuLabel,DropdownMenuItem,DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
 import CustomDropdown from '@/components/customDropdown';
 
-import {Icons} from '@/components/icons/icons';
+
+import { Icons } from '@/components/icons/icons';
 import UserAvatar from '@/components/Home/UserAvatar/userAvatar';
 
 const HomeNavbarUserMenu = (props) => {
-    const {userProfileDto,userProfilePicture, userFullName, initials,colorScheme,setColorScheme,themeColors,
-        storedUserInfo,setStoredUserInfo
-     } = props;
+    const {userProfileDto,userProfilePicture, userFullName,themeColors,storedUserInfo,setStoredUserInfo} = props;
+    const { colorScheme,setColorScheme } = useMantineColorScheme();
 
     const handleUserLogout = () => {
         localStorage.clear();
@@ -53,49 +54,45 @@ const HomeNavbarUserMenu = (props) => {
         <>
             <CustomDropdown 
                 trigger={
-                    <Flex align='center' p='5.5px 8px' className={`cursor-pointer home-button ${colorScheme}`} style={{borderRadius: "6px"}}>
+                    <div className={`py-1.5 px-2 flex items-center  cursor-pointer home-button ${colorScheme} rounded-lg`}>
                         <UserAvatar 
                             userProfileDto={userProfileDto}
                             userProfilePicture={userProfilePicture}
-                            initials={initials}
                             multiplier={2.2}
-                            fontSize={1}
                         />
-                    </Flex>
+                    </div>
                 }
                 dropdown={
                     <div>
                         <DropdownMenuLabel className='mb-2.5'>
-                            <Flex align='center' gap={16}>
+                            <div className='flex items-center gap-4'>
                                 <UserAvatar 
                                     userProfileDto={userProfileDto}
                                     userProfilePicture={userProfilePicture}
-                                    initials={initials}
                                     multiplier={4.8}
-                                    fontSize={2.1}
                                 />
 
-                                <Flex direction='column'>
-                                    <Text c={themeColors.text[2]} fz={17} fw={650} className='home-navbar-menu-fullnamedesc'>{userFullName}</Text>
-                                    <Text c={colorScheme === 'dark' ? '#cccccc' : '#616161'} fz={14} fw={200} className='home-navbar-menu-fullnamedesc'>Software Engineer</Text>
-                                </Flex>
-                            </Flex>
+                                <div className='flex flex-col font-["Lato"]'>
+                                    <p className='text-lg font-semibold whitespace-nowrap overflow-hidden text-ellipsis w-40'>{userFullName}</p>
+                                    <p className='text-sm font-extralight text-muted-foreground whitespace-nowrap overflow-hidden w-40 text-ellipsis'>Software EngineerEngineerEngineer</p>
+                                </div>
+                            </div>
                         </DropdownMenuLabel>
 
                         {menuItems.map((item) => (
                             <DropdownMenuItem key={item.name} onClick={item.action} className={`cursor-pointer ${colorScheme}`}>
-                                <Flex gap={12} align='center' >
+                                <div className='flex gap-3 items-center' >
                                     {Icons(item.icon,14,14,themeColors.text[4])}
                                     {item.name}
-                                </Flex>
+                                </div>
                             </DropdownMenuItem>
                         ))}
                         <DropdownMenuSeparator />
                         <DropdownMenuItem className={`home-button cursor-pointer ${colorScheme}`} onClick={handleUserLogout}>
-                            <Flex gap={12} align='center'>
+                            <div className='flex gap-3 items-center' >
                                 {Icons('IconLogout',14,14,themeColors.text[4])}
                                 Log out
-                            </Flex>
+                            </div>
                         </DropdownMenuItem>
                     </div>
                 } side='bottom' align='end' w={280}

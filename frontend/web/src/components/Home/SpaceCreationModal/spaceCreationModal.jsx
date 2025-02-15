@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-import { Text,Avatar,Flex,Box } from '@mantine/core';
+import { Avatar,Flex } from '@mantine/core';
 
 import { Icons } from '@/components/icons/icons';
 import { IconsFilled } from '@/components/icons/iconsFilled';
@@ -41,20 +41,20 @@ const SpaceContent = ({tabChange, description, content, buttonInfo,spaceData}) =
         }
     };
 
-    return <Box ff='Inter' className={`${tabChange && 'animate-fade-left'}`}>
+    return <div className={`${tabChange && 'animate-fade-left'}`}>
         <DialogHeader>
             <VisuallyHidden.Root><DialogTitle>Create space</DialogTitle></VisuallyHidden.Root>
-            <DialogDescription>
+            <DialogDescription className='text-center'>
                 {description}
             </DialogDescription>
         </DialogHeader>
-        <Flex className="grid gap-4 px-4 pt-4 pb-0">
+        <div className="grid gap-4 px-4 pt-4 pb-0">
             {content}
             <DialogFooter>
                 <Button onClick={handleSpaceCreation} className="size-auto px-3 text-[#fafafa] bg-teal-600" disabled={buttonInfo.isDisabled} variant="default">{buttonInfo.text}</Button>
             </DialogFooter>
-        </Flex>
-    </Box>;
+        </div>
+    </div>;
 }
 const profileSize = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--mantine-scale')) || 1;
 const size = 3 * 0.5 * profileSize * 16;
@@ -119,11 +119,11 @@ const SpaceCreationModal = (props) => {
         description='Organize, collaborate, and share resources within your workspace.'
         content={
             <>
-            <Flex direction='column' className="gap-2.5">
+            <div className="flex flex-col gap-2.5">
                 <Label htmlFor="icon">
                     Icon & Name
                 </Label>
-                <Flex items='center' className='gap-3 '>
+                <div className='flex items-center gap-3'>
 
                     <SpaceCreationIconsPopover 
                         color={color}
@@ -147,15 +147,15 @@ const SpaceCreationModal = (props) => {
                             setCreateSpaceSlug(getSanitizedUrl(updatedName));
                         }}
                     />
-                </Flex>
-            </Flex>
-            <Flex direction='column' className="gap-2.5">
+                </div>
+            </div>
+            <div className="flex flex-col gap-2.5">
                 <Label htmlFor="url">
                     URL
                 </Label>
                 
                 <div className='relative'>
-                    <div className='absolute top-2.5 left-4 text-sm text-muted-foreground'>
+                    <div className='absolute z-10 top-2.5 left-4 text-sm text-muted-foreground'>
                         cocollabs.dev/
                     </div>
                     <Input
@@ -171,18 +171,8 @@ const SpaceCreationModal = (props) => {
                     />
 
                 </div>
-            </Flex>
-            {/* <Flex direction='column' className="gap-2.5">
-                <Label htmlFor="description">
-                    Description <span className='text-muted-foreground'>(optional)</span>
-                </Label>
-                <Textarea placeholder="Briefly describe the purpose of this space.." 
-                autoComplete='off'
-                type='text'
-                value={spaceDescription}
-                onChange={(e) => setSpaceDescription(e.currentTarget.value) } />
-            </Flex> */}
-            <Flex direction='column' className="gap-2.5">
+            </div>
+            <div className="flex flex-col gap-2.5">
                 <Label htmlFor="visibility">
                     Visibility
                 </Label>
@@ -192,33 +182,29 @@ const SpaceCreationModal = (props) => {
                     value={spaceVisibility} 
                     onValueChange={(value) => setSpaceVisibility(value)}
                 >
-                    <Flex gap={20} justify="space-between" direction='column'>
+                    <div className='flex flex-col justify-between gap-5' >
                         {visibilityOptions.map((option, index) => (
-                            <Flex 
-                                direction="column" 
+                            <div 
                                 key={index} 
-                                p={12} 
-                                className="gap-2 rounded-md border hover:bg-zinc-800 cursor-pointer"
+                                className="flex flex-col p-3 gap-2 rounded-md border hover:bg-zinc-800 cursor-pointer"
                                 onClick={() => setSpaceVisibility(option.name)}
                             >
-                                <Flex align="center">
+                                <div className='flex items-center'>
                                     <RadioGroupItem value={option.name} id={option.name} />
                                     <Label htmlFor={option.name} className="ml-2 font-bold flex items-center gap-1.5">
                                         {Icons(option.icon,15,15)}
                                         {option.name}
                                     </Label>
-                                </Flex>
-                                <Flex align="center" className="pl-[26px]">
+                                </div>
+                                <div className="flex items-center pl-[26px]">
                                     
-                                    <Text className="text-[12px] text-muted-foreground">
-                                        {option.description}
-                                    </Text>
-                                </Flex>
-                            </Flex>
+                                    <p className="text-xs text-muted-foreground">{option.description}</p>
+                                </div>
+                            </div>
                         ))}
-                    </Flex>
+                    </div>
                 </RadioGroup>
-            </Flex>
+            </div>
             </>
         }
         buttonInfo={{text: 'Create space', isDisabled: !(createSpaceSlug && spaceName)}}
@@ -230,7 +216,7 @@ const SpaceCreationModal = (props) => {
         description='Organize, collaborate, and share resources within your workspace.'
         content={
             <>
-            <Flex direction='column' className="gap-2.5">
+            <div className="flex flex-col gap-2.5">
                 <Label htmlFor="url">
                     URL
                 </Label>
@@ -252,7 +238,7 @@ const SpaceCreationModal = (props) => {
                     />
 
                 </div>
-            </Flex>
+            </div>
             </>
         }
         buttonInfo={{text: 'Request to join', isDisabled: !joinSpaceSlug}}
@@ -260,13 +246,13 @@ const SpaceCreationModal = (props) => {
     />
 
     return (
-        <Tabs defaultValue="create" onValueChange={() => setTabChange(true)} className="gap-2">
-            <Flex justify='center'>
+        <Tabs defaultValue="create" onValueChange={() => setTabChange(true)} className="gap-2 font-['Inter']">
+            <div className='flex justify-center'>
                 <TabsList className="flex gap-2">
                     <TabsTrigger value="create">Create</TabsTrigger>
                     <TabsTrigger value="join">Join</TabsTrigger>
                 </TabsList>
-            </Flex>
+            </div>
             <TabsContent value="create" className='pt-2'>
                 {createContent}
             </TabsContent>

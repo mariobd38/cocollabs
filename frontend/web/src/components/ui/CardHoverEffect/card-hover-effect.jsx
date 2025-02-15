@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
-import { Title, Text, Image } from "@mantine/core";
 
 export const HoverEffect = ({items,className}) => {
     let [hoveredIndex, setHoveredIndex] = useState(null);
@@ -67,7 +66,7 @@ export const HoverEffect = ({items,className}) => {
                         )}
                     </AnimatePresence>
                     <Card key={idx}>
-                        <Image h={{base: 60, sm: 80}} w='auto' mb={20} src={item.illustration} />
+                        <img alt='feature_img' className="h-16 lg:h-20 w-auto mb-5" src={item.illustration} />
                         <CardTitle>{item.title}</CardTitle>
                         <CardDescription>{item.description}</CardDescription>
                     </Card>
@@ -95,11 +94,11 @@ export const Card = ({className,children}) => {
 };
 export const CardTitle = ({children}) => {
     return (
-        <Title c='#eaeaea' fz={{base: 22, sm: 25}} ff='Helvetica' className={cn('tracking-wide')}>{children}</Title>
+        <h1 className={cn('text-2xl font-semibold font-["Geist"] text-zinc-100 tracking-wide ')}>{children}</h1>
     );
 };
 export const CardDescription = ({className,children}) => {
     return (
-        <Text c='#b6b6b6' fz={{base: 13.3, sm: 13.8}} ff='Helvetica' mt={34} className={cn('tracking-wide leading-relaxed')}>{children}</Text>
+        <p className={cn('mt-4 text-sm font-["Geist"] tracking-wide text-muted-foreground leading-relaxed')}>{children}</p>
     );
 };

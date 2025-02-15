@@ -142,7 +142,7 @@ module.exports = {
       	}
       },
       plugins: [require('tailwindcss-animate')],
-      darkMode: ["class", 'class'],
+      darkMode: ["class", '[data-mantine-color-scheme="dark"]'],
       corePlugins: {
         // preflight: false,
       },

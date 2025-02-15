@@ -11,8 +11,8 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod"
 
 import { Icons } from '@/components/icons/icons';
-import {  GoogleIcon } from '@/components/Auth/OAuthButtons/googleIcon';
-import { GithubButton } from '@/components/Auth/OAuthButtons/githubButton';
+import {  GoogleIcon } from '@/components/Auth/OAuthIcons/googleIcon';
+import { GithubButton } from '@/components/Auth/OAuthIcons/githubButton';
 import AuthSideBlock from '@/components/Auth/authSideBlock';
 
 // import { SlackButton } from './slackButton';
@@ -32,7 +32,7 @@ const formSchema = z.object({
 });
 
 const SignupContentv2 = (props) => {
-    const { handleGoogleLogin,showOAuth2Buttons } = props;
+    const { handleGoogleLogin } = props;
 
     const navigate = useNavigate();
 
@@ -80,7 +80,7 @@ const SignupContentv2 = (props) => {
                         {/* <div className='py-8 bg-transparent sm:w-[560px] w-full px-12 sm:px-0'  > */}
                         <div className='mx-auto px-10 sm:px-4 py-8 max-w-[660px] w-full'  >
                                 
-                            <div className='flex flex-col items-center gap-1 font-["Nunito_Sans"]' >
+                            <div className='flex flex-col items-center gap-2 font-["Nunito_Sans"]' >
                                 <h1 className='text-3xl font-semibold text-white tracking-light text-center'>
                                     Welcome to Cocollabs
                                 </h1>
@@ -90,21 +90,19 @@ const SignupContentv2 = (props) => {
                                 </p>
                             </div>
 
-                            <div className='flex flex-col m-auto sm:w-[80%]' >
-                                {showOAuth2Buttons &&
-                                    <div>
-                                        <a className="px-2 flex h-10 py-1 border !border-[#424345] hover:bg-zinc-900/5 text-zinc-950/70 rounded-lg justify-center items-center gap-2.5" href="/#" onClick={e => { e.preventDefault(); handleGoogleLogin();}}>
-                                            <div className="w-4 h-4">
-                                                <GoogleIcon />
-                                            </div>
-                                            <div className="text-center font-semibold text-sm text-gray-100">Continue with Google</div>
-                                        </a>
-
-                                        <div className='py-[30px]'>
-                                            <Divider text='or' theme='dark' />
+                            <div className='flex flex-col m-auto sm:w-[80%] pt-5' >
+                                <div>
+                                    <a className="px-2 flex h-10 py-1 border !border-[#424345] hover:bg-zinc-900/5 text-zinc-950/70 rounded-lg justify-center items-center gap-2.5" href="/#" onClick={e => { e.preventDefault(); handleGoogleLogin();}}>
+                                        <div className="w-4 h-4">
+                                            <GoogleIcon />
                                         </div>
+                                        <div className="text-center font-semibold text-sm text-zinc-100">Continue with Google</div>
+                                    </a>
+
+                                    <div className='py-[30px]'>
+                                        <Divider text='or' theme='dark' />
                                     </div>
-                                }
+                                </div>
                                 
                                 <Form {...form}>
                                     <form onSubmit={form.handleSubmit(onSubmit)} className='w-full'>
@@ -114,17 +112,16 @@ const SignupContentv2 = (props) => {
                                                 name="email"
                                                 render={({ field }) => (
                                                     <FormItem >
-                                                        <FormLabel className='text-gray-200'>Email address</FormLabel>
+                                                        <FormLabel className='text-zinc-100'>Email address</FormLabel>
                                                         <Input
                                                             startIcon={Icons('IconMail',18,18,'#929292')}
                                                             autoComplete="off"
                                                             placeholder="Enter your email"
-                                                            className='rounded-lg placeholder:text-muted-foreground bg-transparent border border-[#424345] text-gray-100'
+                                                            className='rounded-lg placeholder:text-muted-foreground bg-transparent border border-[#424345] text-zinc-100'
                                                             {...field} 
                                                         />
                                                         <FormMessage className='py-0 text-red-700 text-[13px]'/>
                                                     </FormItem>
-                                                    
                                                 )}
                                             />
 
@@ -133,13 +130,13 @@ const SignupContentv2 = (props) => {
                                                 name="password"
                                                 render={({ field }) => (
                                                     <FormItem >
-                                                        <FormLabel className='text-gray-200'>Password</FormLabel>
+                                                        <FormLabel className='text-zinc-100'>Password</FormLabel>
                                                         <Input
                                                             startIcon={Icons('IconLock',18,18,'#929292')}
                                                             placeholder="Enter your password"
                                                             autoComplete="off"
                                                             type='password'
-                                                            className='rounded-lg placeholder:text-muted-foreground bg-transparent border border-[#424345] text-gray-100'
+                                                            className='rounded-lg placeholder:text-muted-foreground bg-transparent border border-[#424345] text-zinc-100'
                                                             {...field} 
                                                         />
                                                         <FormMessage className='py-0 text-red-700 text-[13px]'/>
@@ -156,7 +153,7 @@ const SignupContentv2 = (props) => {
                                                     Log In
                                                 </a>
                                             </div>
-                                            <Button type="submit" className='h-5 sm:w-16 bg-gray-100 text-zinc-800 hover:bg-white/80 transition-all duration-300 font-semibold rounded-lg'>Continue</Button>
+                                            <Button type="submit" className='h-5 sm:w-16 bg-zinc-100 text-zinc-800 hover:bg-white/80 transition-all duration-300 font-semibold rounded-lg'>Continue</Button>
                                         </div>
                                     </form>
                                 </Form>

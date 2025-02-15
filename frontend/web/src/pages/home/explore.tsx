@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useOutletContext } from 'react-router-dom';
 
-import { Box } from '@mantine/core';
-
 import '@/styles/home/home.css';
 
 
@@ -20,7 +18,6 @@ interface CurrentSpace {
 interface OutletContext {
     themeColors: ThemeColors;
     spaceData: SpaceData;
-    colorScheme: string;
     currentSpace: CurrentSpace;
 }
 

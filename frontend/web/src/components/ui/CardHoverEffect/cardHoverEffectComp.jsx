@@ -10,21 +10,21 @@ import { HoverEffect } from "@/components/ui/CardHoverEffect/card-hover-effect";
 export function CardHoverEffectComp() {
     const projects = [
         {
-            title: "Connect with endless developer communities",
+            title: "Meet endless developer communities",
             illustration: community,
             description:
                 "Join a diverse range of developer communities where you can collaborate, share knowledge, and network with like-minded professionals.",
             link: "https://stripe.com",
         },
         {
-            title: "Implement your dream project idea with AI",
+            title: "Build your dream project idea with AI",
             illustration: thoughts,
             description:
                 "Leverage powerful AI tools to bring your project ideas to life, enhancing productivity and creativity with cutting-edge technology.",
             link: "https://netflix.com",
         },
         {
-            title: "Build with your favorite integrations",
+            title: "Connect with your favorite integrations",
             illustration: integration,
             description:
                 "Seamlessly integrate with popular tools like GitHub, Jira, and Slack to streamline your workflow and supercharge your project management.",

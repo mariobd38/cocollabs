@@ -68,7 +68,7 @@ const NavbarContent: React.FC = () => {
                                             <div className='flex flex-col items-center gap-5'>
                                                 {navItems.map((item,index) => (
                                                     <div key={index} className='flex w-full' >
-                                                        <p className='text-lg text-muted-foreground hover:text-white font-medium '>{item}</p>
+                                                        <a href='/#' className='text-lg text-muted-foreground hover:text-white font-medium '>{item}</a>
                                                     </div>
                                                 ))}
                                             </div>

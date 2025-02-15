@@ -30,7 +30,6 @@ const AppLayout = ({content}) => {
     const [userEmail, setUserEmail] = useState(passedUserInfo?.email || '');
     const [userProfilePicture, setUserProfilePicture] = useState('');
     const [userProfileDto, setUserProfileDto] = useState('');
-    const [initials, setInitials] = useState(passedUserInfo?.fullName || '');
     const [spaceData, setSpaceData] = useState(passedSpaceInfo || []);
     const [userSpaces, setUserSpaces] = useState([]);
     const [openSidebarToggle, setOpenSidebarToggle] = useState(false);
@@ -49,7 +48,6 @@ const AppLayout = ({content}) => {
 
     const fullUserData = {
         fullName: userFullName, 
-        initials: initials, 
         email: userEmail, 
         picture: userProfilePicture, 
         profileDto: userProfileDto
@@ -71,7 +69,6 @@ const AppLayout = ({content}) => {
           if (storedAppInfo) {
             // Use the cached data if available
             setUserFullName(storedAppInfo.user.fullName);
-            setInitials((storedAppInfo.user.fullName.split(' ')[0][0] + storedAppInfo.user.fullName.split(' ')[1][0]).toUpperCase());
             setUserEmail(storedAppInfo.user.email);
             setUserProfilePicture(storedAppInfo.user.picture);
             setUserProfileDto(storedAppInfo.profile);
@@ -89,7 +86,6 @@ const AppLayout = ({content}) => {
                     userSpace: data.userSpaceDto
                 }
                 setUserFullName(jsonData.user.fullName);
-                setInitials((jsonData.user.fullName.split(' ')[0][0] + jsonData.user.fullName.split(' ')[1][0]).toUpperCase());
                 setUserEmail(jsonData.user.email);
                 setUserProfilePicture(jsonData.user.picture);
                 setUserProfileDto(jsonData.profile);
@@ -140,8 +136,8 @@ const AppLayout = ({content}) => {
                         activePage={activePage}
                     />
                 </div>
-                <Flex direction='column' className={`user-home-all-content ${openSidebarToggle && 'open' }`}>
-                    <Outlet context={{themeColors,spaceData,colorScheme,currentSpace}}/>
+                <Flex direction='column' className={`w-full user-home-all-content ${openSidebarToggle && 'open' }`}>
+                    <Outlet context={{themeColors,spaceData,currentSpace}}/>
                 </Flex>
             </div>
         </>

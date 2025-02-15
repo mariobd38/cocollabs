@@ -8,7 +8,7 @@ import './userAvatar.css'
 // const avatarList = getAvatars();
 
 const UserAvatar = (props) => {
-    const { userProfileDto, userProfilePicture, initials, multiplier, fontSize } = props;
+    const { userProfileDto, userProfilePicture, multiplier } = props;
     const size = `calc(${multiplier}rem * var(--mantine-scale))`;
     
     const [avatarList, setAvatarList] = useState([]);
@@ -28,16 +28,13 @@ const UserAvatar = (props) => {
             className='user-avatar cursor-pointer'
             src={avatar}
             bgsz='cover'
-            // radius='20%'
             w={size}
             miw={size}
             h={size}
-            fz={`${fontSize}rem`}
             style={{backgroundImage: userProfilePicture !== null && userProfileDto == null ? `url(${userProfilePicture})` : 'none', overflow: "visible",
         }} 
             bg={`${userProfileDto !== null && userProfileDto.avatarType === 'color' ? userProfileDto.color : ''}`}
         >
-            {userProfileDto !== null && userProfileDto.avatarType === 'color' ? initials : ''}
         </Avatar>
 
     );

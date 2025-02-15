@@ -14,7 +14,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
-} from "@/components/ui/NavigationMenu/navigation-menu";
+} from "@/components/deprecated/NavigationMenu/navigation-menu";
 
 const components = [
     {

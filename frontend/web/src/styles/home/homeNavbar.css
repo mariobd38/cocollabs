@@ -2,28 +2,7 @@
     overflow: hidden;
 } */
 
-.home-navbar-search-ss {
-    border-radius: 50%;
-    /* width: 2.3rem;
-    height: 2.3rem; */
-    padding:9px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: .1px solid #797979;
-    cursor: pointer;
-}
-.home-navbar-search-ss.dark {
-    background-color: #2a2c2e;
-}
-.home-navbar-search-ss.light {
-    background-color: #e4e6e8;
-}
-@media(max-width: 340px) {
-    .home-navbar-search-ss,.home-navbar-divider {
-        display: none;
-    }
-}
+
 .home-navbar-search {
     width: 24rem;
     transition: width 0.4s ease;
@@ -32,54 +11,6 @@
     .home-navbar-search {
         width: 18rem;
     }
-}
-.home-navbar-search-input {
-    display: flex;
-    align-items: center;
-    
-    .mantine-Input-input {
-        font-family: 'Inter' !important;
-        height: 42px;
-        font-size:13.5px;
-        border-radius: 9px;
-    }
-}
-.home-navbar-search-input::before, .home-navbar-search-input::after {
-    border-bottom: none !important;
-}
-.home-navbar-search-input.light {
-    .mantine-Input-input {
-        background-color: #fff;
-        border: 1px solid #c9cbcd;
-        color: #222222;
-    }
-    .mantine-Input-input::placeholder {
-        color: #526467 !important;
-    }
-}
-.home-navbar-search-input.dark {
-    .mantine-Input-input {
-        background-color: #36383a;
-        border: 1px solid #4b4d4f;
-        color: #fafafa;
-    }
-
-    .mantine-Input-input::placeholder {
-        color: #cacaca !important;
-    }
-}
-
-.home-navbar-menu-fullnamedesc {
-    white-space: nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
-    width: 170px;
-    font-family: 'Lato';
-}
-.user-home-navbar-icon-apps,.navbar-menu-sidebar-icon {
-    border-radius: 6px;
-    padding: 6px;
-    cursor: pointer;
 }
 
 .navbar-search-button .kbd {

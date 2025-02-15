@@ -41,7 +41,6 @@ const Hero = () => {
                         />
                         <div className='flex px-2.5 flex-col gap-10'>
 
-                            {/* <TypingAnimationComp text={'Collab like never before'} duration={55} /> */}
                             <div className='font-["Helvetica"]'>
                                 <h1 className='font-bold text-white text-5xl sm:text-7xl tracking-tight sm:tracking-normal text-balance sm:text-wrap text-center leading-[3.8rem] sm:leading-[4.6rem] w-11/12 sm:w-full m-auto'>Connecting development to  <AuroraTextComp>success</AuroraTextComp>
                                 </h1>
@@ -71,7 +70,7 @@ const Hero = () => {
                 </div>
             </div>
             <ContainerScrollAnimationComp />
-            
+
             <div className='container sm:px-5 lg:px-0 pb-10 md:pt-40'>
                 <div className='flex flex-col px-2.5 gap-6'>
                     <Title c='#fafafa' order={3} fz={{ base: '1.7rem', xs: '2rem', sm: '2.2rem'}} style={{transition: "font-size 0.4s ease"}}

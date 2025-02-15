@@ -8,7 +8,7 @@ import HomeHeader from '@/components/Home/HomeHeader/homeHeader';
 import HomeNavbar from '@/components/deprecated/homeNavbar';
 import TaskCard from '@/components/Home/TaskCard/taskCard';
 // import QuickActions from './QuickActions/quickActions';
-import HomeSidebar from '@/components/Home/HomeSidebar/homeSidebar';
+import HomeSidebar from '@/components/deprecated/homeSidebar';
 
 import { getUserProfileInfo } from '@/api/Users/getUserProfileInfo';
 import { getLastActiveSpaceInfo } from '@/api/Spaces/getLastActiveSpace';
