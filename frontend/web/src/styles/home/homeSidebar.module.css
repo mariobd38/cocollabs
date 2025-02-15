@@ -1,12 +1,11 @@
-  .mainLinks { padding-bottom: var(--mantine-spacing-md); }
-  
-  .mainLink.active {
+.mainLink.active {
     width: 90%;
-    /* padding: rem(8px) var(--mantine-spacing-xs); */
     padding: 5.5px 8px;
     border-radius: 6px;
-  }
-  .mainLink {
+    min-width:auto !important;
+    height:auto !important;
+}
+.mainLink {
     display: flex;
     align-items: center;
     margin:auto;
@@ -20,34 +19,17 @@
     min-width: calc(2.075rem * var(--mantine-scale)) !important;  */
     height: calc(2.075rem * var(--mantine-scale)) !important; 
     background-color: transparent;
-  }
+}
 
-  .mainLink[data-theme="light"]:hover {
-      filter: brightness(0.98) !important;
-      background-color: #d8dadc !important;
-      .mainLinkIcon svg { stroke: #181818 !important; }
-  }
-  .mainLink[data-theme="dark"]:hover,.mainLink[data-theme="dark"].activeSpace {
+.mainLink[data-theme="light"]:hover {
+    filter: brightness(0.98) !important;
+    background-color: #d8dadc !important;
+    .mainLinkIcon svg { stroke: #181818 !important; }
+}
+.mainLink[data-theme="dark"]:hover,.mainLink[data-theme="dark"].activeSpace {
     filter: brightness(1.2);
     background-color: #2e3135 !important;
     .mainLinkIcon svg { stroke: #f0f0f0 !important; }
-  }
-  /* .mainLink[data-theme="dark"].activeSpace {
-    background-color: #2e3135 !important;
-  } */
-
-  .mainLink.profile {
-    padding: 8px 0px !important;
-    background-color: transparent !important;
-    /* width: auto !important; */
-  }
-
-.mainLink.active,.mainLink.profile {
-    min-width:auto !important;
-    height:auto !important;
-}
-.profile {
-    /* margin: 0.29rem auto; */
 }
 
   /* .mainLinkInner {
@@ -57,36 +39,13 @@
     flex: 1;
   } */
   
-  .mainLinkIcon.sidebarOpen {
+.mainLinkIcon.sidebarOpen {
     margin-right: var(--mantine-spacing-sm);
-  }
-  .mainLinkIcon.active, mainLinkIcon.sidebarOpen {
+}
+.mainLinkIcon.active, mainLinkIcon.sidebarOpen {
     color: light-dark(var(--mantine-color-gray-6), var(--mantine-color-dark-2));
-  }
-  .mainLinkIcon {
+}
+.mainLinkIcon {
     margin-right:0;
     color: light-dark(var(--mantine-color-gray-6), var(--mantine-color-dark-2));
-  }
-  
-  .mainLinkBadge {
-    padding: 0;
-    width: rem(20px);
-    height: rem(20px);
-    pointer-events: none;
-  }
-  
-  .collectionLink {
-    display: block;
-    padding: rem(8px) var(--mantine-spacing-xs);
-    text-decoration: none;
-    border-radius: var(--mantine-radius-sm);
-    font-size: var(--mantine-font-size-xs);
-    color: light-dark(var(--mantine-color-gray-7), var(--mantine-color-dark-0));
-    line-height: 1;
-    font-weight: 500;
-  
-    &:hover {
-      background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));
-      color: light-dark(var(--mantine-color-gray-7), var(--mantine-color-dark-0));
-    }
-  }
+}

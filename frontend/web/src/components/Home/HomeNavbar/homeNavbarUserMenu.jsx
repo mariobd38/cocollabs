@@ -7,8 +7,6 @@ import { userLogout } from '@/api/Auth/logout';
 
 import { DropdownMenuLabel,DropdownMenuItem,DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
 import CustomDropdown from '@/components/customDropdown';
-
-
 import { Icons } from '@/components/icons/icons';
 import UserAvatar from '@/components/Home/UserAvatar/userAvatar';
 
@@ -37,7 +35,6 @@ const HomeNavbarUserMenu = (props) => {
             // Update localStorage with the new data
             setStoredUserInfo(updatedUserInfo);
         }
-
     }
 
     const menuItems = [
@@ -54,11 +51,11 @@ const HomeNavbarUserMenu = (props) => {
         <>
             <CustomDropdown 
                 trigger={
-                    <div className={`py-1.5 px-2 flex items-center  cursor-pointer home-button ${colorScheme} rounded-lg`}>
+                    <div className={`py-1.5 px-2 flex items-center  cursor-pointer hover:bg-black/10 dark:hover:bg-zinc-700 rounded-lg`}>
                         <UserAvatar 
                             userProfileDto={userProfileDto}
                             userProfilePicture={userProfilePicture}
-                            multiplier={2.2}
+                            multiplier={1.8}
                         />
                     </div>
                 }
@@ -74,7 +71,7 @@ const HomeNavbarUserMenu = (props) => {
 
                                 <div className='flex flex-col font-["Lato"]'>
                                     <p className='text-lg font-semibold whitespace-nowrap overflow-hidden text-ellipsis w-40'>{userFullName}</p>
-                                    <p className='text-sm font-extralight text-muted-foreground whitespace-nowrap overflow-hidden w-40 text-ellipsis'>Software EngineerEngineerEngineer</p>
+                                    <p className='text-sm font-extralight text-muted-foreground whitespace-nowrap overflow-hidden w-40 text-ellipsis'>Software Engineer</p>
                                 </div>
                             </div>
                         </DropdownMenuLabel>

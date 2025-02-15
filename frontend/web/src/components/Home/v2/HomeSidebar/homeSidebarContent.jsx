@@ -1,14 +1,14 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { Box,UnstyledButton,Badge,Tooltip,Flex,Text } from '@mantine/core';
-
+import { UnstyledButton,Tooltip } from '@mantine/core';
+import { Badge } from '@/components/ui/badge';
 import { SidebarGroup,SidebarGroupContent,SidebarMenu } from "@/components/ui/sidebar"
 import { Icons } from "@/components/icons/icons";
+import UserAvatar from '@/components/Home/UserAvatar/userAvatar';
 
 import classes from '@/styles/home/homeSidebar.module.css';
 import '@/styles/home/homeSidebar.css';
-
 
 const links = [
     { icon: 'IconHome', label: 'Home', redirect: '/:slug' },
@@ -20,7 +20,8 @@ const links = [
     // { icon: 'IconDotsCircleHorizontal', label: 'More' },
 ];
 
-const HomeSidebarContent = ({ spaceSlug,openSidebarToggle,themeColors,colorScheme,activePage }) => {
+const HomeSidebarContent = (props) => {
+    const { spaceSlug,openSidebarToggle,themeColors,colorScheme,activePage,userProfileDto,userProfilePicture } = props;
     const navigate = useNavigate(); 
 
     const redirectToSpace = (e,link) => {
@@ -31,24 +32,26 @@ const HomeSidebarContent = ({ spaceSlug,openSidebarToggle,themeColors,colorSchem
         }
     }
 
-    const mainLinks = links.map((link) => (
+    const mainLinks = links.map((link,index) => (
         <React.Fragment key={link.label} >
             {openSidebarToggle ? 
                 <UnstyledButton onClick={(e) => redirectToSpace(e,link)}  key={link.label} 
                     className={`${classes.mainLink} last:mb-0 ${classes.active} ${activePage === link.label && classes.activeSpace }`} data-theme={colorScheme} >
-                    <div className='flex'>
-                        <div className={`${classes.mainLinkIcon} ${classes.sidebarOpen}`}>
-                            {Icons(link.icon, 20, 20, themeColors.text[10])}
+                    <div className='flex justify-between w-full items-center'>
+                        <div className='flex'>
+                            <div className={`${classes.mainLinkIcon} ${classes.sidebarOpen}`}>
+                                {Icons(link.icon, 20, 20, themeColors.text[10])}
+                            </div>
+                            <p className='font-["Inter"] text-sm dark:text-zinc-200 text-black/100'>
+                                {link.label}
+                            </p>
                         </div>
-                        <Text ff='Inter' fz={15} c={themeColors.text[5]} className="label">
-                            {link.label}
-                        </Text>
+                        {link.notifications && (
+                            <Badge className='border-0 size-6 px-2 h-4 flex justify-center'>
+                                {link.notifications}
+                            </Badge>
+                        )}
                     </div>
-                    {link.notifications && (
-                        <Badge size="sm" variant="filled" className={classes.mainLinkBadge}>
-                            {link.notifications}
-                        </Badge>
-                    )}
                 </UnstyledButton>
             : 
             <Tooltip 
@@ -63,19 +66,17 @@ const HomeSidebarContent = ({ spaceSlug,openSidebarToggle,themeColors,colorSchem
                 offset={{ mainAxis: 10 }}
             >
                 <UnstyledButton onClick={(e) => redirectToSpace(e,link)}  
-                    key={link.label} className={`${classes.mainLink} px-[5px] last:mb-0 ${activePage === link.label && classes.activeSpace }` } data-theme={colorScheme}>
-                    <Flex align='center' pos='relative' flex={1} justify='center'>
-                        <Box mb={2}>
-                            <div className={`${classes.mainLinkIcon}`}>
+                    key={link.label} className={`${classes.mainLink} font-["Inter"] px-[5px] last:mb-0 ${activePage === link.label && classes.activeSpace }` } data-theme={colorScheme}>
+                    <div className='flex items-center justify-center relative'>
+                        <div className={`${classes.mainLinkIcon}`}>
                             {Icons(link.icon, 20, 20, themeColors.text[10],1.7)}
-                            </div>
-                            {link.notifications && (
-                                <Badge circle size="xs" color="blue" className={classes.badge + ' translate-y-[-65%] translate-x-[55%]'} ff='Inter' pos='absolute' top={0} right={0} >
-                                    {link.notifications}
-                                </Badge>
-                            )} 
-                        </Box>
-                    </Flex>
+                        </div>
+                        {link.notifications && (
+                            <Badge className='border-0 top-0 right-0 size-1 px-2 text-[11px] h-4 flex justify-center absolute translate-y-[-85%] translate-x-[60%]'>
+                                {link.notifications}
+                            </Badge>
+                        )} 
+                    </div>
                 </UnstyledButton>
             </Tooltip>
             }
@@ -83,13 +84,41 @@ const HomeSidebarContent = ({ spaceSlug,openSidebarToggle,themeColors,colorSchem
     ));
 
     return (
+        // <SidebarGroup>
+        //     <SidebarGroupContent className='h-[calc(100%_-8rem)] max-h-[90%]'>
+        //         <SidebarMenu className='flex flex-col h-full'>
+        //             <div className='my-2'>{mainLinks}</div>
+        //         </SidebarMenu>
+        //         <div className='flex justify-center' >
+        //             <UserAvatar 
+        //                 userProfileDto={userProfileDto}
+        //                 userProfilePicture={userProfilePicture}
+        //                 multiplier={2}
+        //             />
+        //         </div>
+        //     </SidebarGroupContent>
+        // </SidebarGroup>
         <SidebarGroup>
-            <SidebarGroupContent>
-                <SidebarMenu >
-                    <Box mb='var(--mantine-spacing-md)' my={8} bg='transparent' data-theme={colorScheme}>
-                        <div className={classes.mainLinks}>{mainLinks}</div>
-                    </Box>
+            <SidebarGroupContent className="h-[calc(100%_-6rem)] flex flex-col justify-between">
+                <SidebarMenu>
+                    <div className="my-2">{mainLinks}</div>
                 </SidebarMenu>
+        
+                {openSidebarToggle ?
+                <div className="flex items-center gap-3 py-3 px-0 border-t border-zinc-700">
+                    <UserAvatar 
+                        userProfileDto={userProfileDto}
+                        userProfilePicture={userProfilePicture}
+                        multiplier={1.8}
+                    />
+                </div> :
+                <div className="flex justify-center items-center gap-2 p-3 border-t border-zinc-700">
+                    <UserAvatar 
+                        userProfileDto={userProfileDto}
+                        userProfilePicture={userProfilePicture}
+                        multiplier={1.8}
+                    />
+                </div>}
             </SidebarGroupContent>
         </SidebarGroup>
     );

@@ -98,8 +98,6 @@ public class AuthController {
             CookieUtil.deleteAllCookies(request, response);
             addTokensAsCookies(response, user);
 
-            //CookieUtil.addCookie(response, jwtCookieName, jwtUtil.generateToken(user),jwtUtil.getTokenValidityInSeconds());
-            //CookieUtil.addCookie(response, jwtCookieName, jwtUtil.generateAccessToken(user),jwtUtil.getTokenValidityInSeconds());
             return ResponseEntity.ok().body(userPlatform.convertToDto(user));
         } catch (BadCredentialsException ex) {
             log.atError().log("Invalid user credentials");

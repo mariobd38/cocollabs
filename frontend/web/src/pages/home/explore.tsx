@@ -5,7 +5,6 @@ import '@/styles/home/home.css';
 
 
 interface SpaceData { name: string; [key: string]: any; }
-interface ThemeColors { bg: string[]; text: string[]; }
 
 interface CurrentSpace {
     name: string;
@@ -16,7 +15,6 @@ interface CurrentSpace {
 }
 
 interface OutletContext {
-    themeColors: ThemeColors;
     spaceData: SpaceData;
     currentSpace: CurrentSpace;
 }
@@ -42,8 +40,8 @@ const Explore: React.FC = () => {
     return (
         <>
             <div className={`transition-opacity duration-300 ease-linear ${visible ? 'opacity-100' : 'opacity-0'}`}>
-                <div className='w-full' >
-                    this is the explore page!
+                <div className="flex justify-between items-center py-7">
+                    this
                 </div>
             </div>
         </>

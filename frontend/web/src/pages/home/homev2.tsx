@@ -66,7 +66,10 @@ const Homev2: React.FC = () => {
             <div className={`transition-opacity duration-300 ease-linear ${visible ? 'opacity-100' : 'opacity-0'}`}>
                 <HomeHeader spaceName={currentSpace?.name || ''} themeColors={themeColors} />
                 {/* <div className='w-full'>
-                    <QuickActions themeColors={themeColors} colorScheme={colorScheme} />
+                    <QuickActions themeColors={themeColors} />
+                    <QuickActions themeColors={themeColors} />
+                    <QuickActions themeColors={themeColors} />
+                    <QuickActions themeColors={themeColors} />
                 </div> */}
             </div>
         </>

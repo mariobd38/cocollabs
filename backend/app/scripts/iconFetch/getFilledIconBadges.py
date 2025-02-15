@@ -46,7 +46,7 @@ def extract_icon_list_from_react_file(path):
 
 
 file_path = os.path.abspath(
-    os.path.join(os.path.dirname(__file__), '../../..', 'frontend/web/src/components/icons/iconsFilled.jsx'))
+    os.path.join(os.path.dirname(__file__), '../../../..', 'frontend/web/src/components/icons/iconsFilled.jsx'))
 
 # Extract keys
 keys = extract_keys_from_react_file(file_path)

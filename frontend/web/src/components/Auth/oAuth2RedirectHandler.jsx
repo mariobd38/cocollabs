@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { readLocalStorageValue } from '@mantine/hooks';
-import { OAUTH2_CALLBACK_URI } from '../../../constants';
+import { OAUTH2_CALLBACK_URI } from '@/constants';
 
 import { UseAuth } from '@/hooks/authProvider';
 

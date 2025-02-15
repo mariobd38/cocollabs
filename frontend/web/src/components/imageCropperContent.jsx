@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { DialogDescription,DialogFooter,DialogHeader,DialogTitle } from "@/components/ui/dialog"
-// import { Divider } from '@mantine/core';
+
 import { Button } from "@/components/ui/button"
 import { Divider } from "@/components/ui/divider";
 

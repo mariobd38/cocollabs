@@ -22,7 +22,7 @@ import java.util.function.Function;
 @Component
 public class JwtUtil {
     private final Logger log = LoggerFactory.getLogger(JwtUtil.class);
-    private static final long ACCESS_TOKEN_VALIDITY = 24 * 60 * 60L; // 5 minutes
+    private static final long ACCESS_TOKEN_VALIDITY = 5 * 60L; // 5 minutes
     private static final long REFRESH_TOKEN_VALIDITY = 7 * 24 * 60 * 60L; // 7 days
     private static final long JWT_TOKEN_VALIDITY = 30 * 24 * 60 * 60L;
     private static final String ISSUER = "cocollabs-app";
@@ -39,18 +39,7 @@ public class JwtUtil {
 //        String username = getUserEmailFromToken(token);
 //        return username.equals(userDetails.getUsername()) && !isTokenExpired(token);
 //    }
-//
-//    public boolean canTokenBeRefreshed(String token) {
-//        return !isTokenExpired(token) || ignoreTokenExpiration(token);
-//    }
-//
-//    private Claims extractAllClaims(String token) {
-//        return Jwts.parser()
-//                .verifyWith(getSignInKey())
-//                .build()
-//                .parseSignedClaims(token)
-//                .getPayload();
-//    }
+
 
     public String generateAccessToken(UserDetails userDetails) {
         return generateToken(userDetails, ACCESS_TOKEN_VALIDITY, TokenType.ACCESS);
@@ -82,9 +71,7 @@ public class JwtUtil {
 
     public boolean validateToken(String token, UserDetails userDetails) {
         try {
-            if (isTokenExpired(token)) {
-                return false;
-            }
+            if (isTokenExpired(token)) return false;
 
             Claims claims = extractAllClaims(token);
 
@@ -151,10 +138,6 @@ public class JwtUtil {
 
     private Date extractExpiration(String token) {
         return extractClaim(token, Claims::getExpiration);
-    }
-
-    public long getTokenValidityInSeconds() {
-        return JWT_TOKEN_VALIDITY;
     }
 
     public enum TokenType { ACCESS, REFRESH }

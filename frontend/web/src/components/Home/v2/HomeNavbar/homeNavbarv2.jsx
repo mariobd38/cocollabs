@@ -12,6 +12,11 @@ import HomeNavbarUserMenu from '@/components/Home/HomeNavbar/homeNavbarUserMenu'
 import '@/styles/home/homeNavbar.css';
 
 const HomeNavbarv2 = ({ themeColors,colorScheme,setColorScheme,profileInfo,setOpenSidebarToggle,openSidebarToggle,storedUserInfo,setStoredUserInfo } ) => {
+    const [openCommand, setOpenCommand] = useState(false);
+    const buttonColor = colorScheme === 'dark' ? '#d4d5d6' : '#424345';
+    const searchBgColor = colorScheme === 'dark' ? '#262729' : '#f6f7f9';
+    const searchBdColor = colorScheme === 'dark' ? '#323335' : '#dee2e6';
+
     const handleOpenSidebarToggle = () => {
         setOpenSidebarToggle(!openSidebarToggle);
         if (openSidebarToggle) {
@@ -20,22 +25,7 @@ const HomeNavbarv2 = ({ themeColors,colorScheme,setColorScheme,profileInfo,setOp
             document.body.classList.add('active');
         }
     }
-    
-    // useEffect(() => {
-    //     // closeOffcanvasIfLargeScreen();
-    //     window.addEventListener('resize', closeOffcanvasIfLargeScreen);
-    
-    //     return () => {
-    //         window.removeEventListener('resize', closeOffcanvasIfLargeScreen);
-    //     };
-    // }, [setIsSmallScreen]);
 
-    // const inputRightSection = colorScheme === 'dark' ? '#202020' : '#e9e9e9'
-    const buttonColor = colorScheme === 'dark' ? '#d4d5d6' : '#424345';
-    const searchBgColor = colorScheme === 'dark' ? '#262729' : '#f6f7f9';
-    const searchBdColor = colorScheme === 'dark' ? '#323335' : '#dee2e6';
-
-    const [openCommand, setOpenCommand] = useState(false);
     useEffect(() => {
         const down = (e) => {
           if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
@@ -59,16 +49,16 @@ const HomeNavbarv2 = ({ themeColors,colorScheme,setColorScheme,profileInfo,setOp
                             </div>
                         </div>
 
-                        <div className='items-center hidden sm:flex' >
+                        {/* <div className='items-center hidden sm:flex' >
                             <div className='w-[8.5rem]' >
                                 <Logo2 strokeColor={colorScheme === 'dark' ? '#f4fff6' : '#323335'}/>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                     
                     <div className='flex items-center justify-end font-["Inter"]'>
                         <div className='pr-3 md:pr-4'>
-                            <Button size='auto' variant='ghost' className={`flex py-1 px-3 rounded gap-32 border-solid border-[${searchBdColor}] navbar-search-button ${colorScheme} hover:all transition-all duration-300 ease-linear`} 
+                            <Button size='auto' variant='ghost' className={`flex py-1 px-3 rounded-lg gap-32 border-solid border-[${searchBdColor}] navbar-search-button ${colorScheme} hover:all transition-all duration-300 ease-linear`} 
                             style={{border: `1px solid ${searchBdColor}`, backgroundColor: `${searchBgColor}`}} onClick={() => setOpenCommand((open) => !open)}>
                                 <div className='flex text-[13px] text-muted-foreground kbd'>Search
                                     <div className='pl-1 hidden md:block'> anything</div>...

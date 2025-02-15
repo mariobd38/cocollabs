@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useParams, Outlet } from 'react-router-dom';
 
-import { useMantineTheme,useMantineColorScheme,Flex } from '@mantine/core';
+import { useMantineTheme,useMantineColorScheme } from '@mantine/core';
 import { useLocalStorage } from '@mantine/hooks';
 
 import HomeNavbarv2 from '@/components/Home/v2/HomeNavbar/homeNavbarv2';
-import HomeSidebarv2 from '@/components/Home/v2/HomeSidebar/homeSidebarv2';
+import HomeSidebar from '@/components/Home/v2/HomeSidebar/homeSidebar';
 
 import { getUserProfileInfo } from '@/api/Users/getUserProfileInfo';
 import { getLastActiveSpaceInfo } from '@/api/Spaces/getLastActiveSpace';
@@ -52,7 +52,6 @@ const AppLayout = ({content}) => {
         picture: userProfilePicture, 
         profileDto: userProfileDto
     };
-
     
     useEffect(() => {
         async function fetchSpaceData() {
@@ -126,7 +125,7 @@ const AppLayout = ({content}) => {
             />}
             <div className='flex'>
                 <div>
-                    <HomeSidebarv2 
+                    <HomeSidebar 
                         themeColors={themeColors}
                         colorScheme={colorScheme}
                         openSidebarToggle={openSidebarToggle}
@@ -134,11 +133,13 @@ const AppLayout = ({content}) => {
                         spaceData={{name: currentSpace?.name, icon: currentSpace?.icon,slug: currentSpace?.slug}}
                         userFullName={userFullName}
                         activePage={activePage}
+                        userProfileDto={fullUserData.profileDto}
+                        userProfilePicture={fullUserData.picture}
                     />
                 </div>
-                <Flex direction='column' className={`w-full user-home-all-content ${openSidebarToggle && 'open' }`}>
+                <div className={`bg-background flex flex-col w-full relative px-6 top-10 py-6 overflow-y-scroll max-h-[calc(100dvh_-_2rem)] ${openSidebarToggle && 'open' }`}>
                     <Outlet context={{themeColors,spaceData,currentSpace}}/>
-                </Flex>
+                </div>
             </div>
         </>
     );

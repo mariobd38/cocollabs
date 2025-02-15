@@ -9,12 +9,11 @@ import Explore from '@/pages/home/explore';
 import AppLayout from '@/pages/home/appLayout';
 // import TaskDetailsModal from "@/components/Home/TaskDetailsModal/taskDetailsModal";
 import LandingPage from "@/components/Landing/landing";
-// import Login from "@/components/deprecated/login";
-import Login from "@/components/Auth/Login/login";
-import SignUp from "@/components/Auth/SignUp/signup"
+import Login from "@/components/Auth/login";
+import SignUp from "@/components/Auth/signup"
 // import SignUpNextSteps from "@/components/Auth/SignUp/SignUpNextSteps/signUpNextSteps";
 import Onboarding from "@/components/Onboarding/onboarding";
-import OAuth2RedirectHandler from "@/components/Auth/SignUp/oAuth2RedirectHandler";
+import OAuth2RedirectHandler from "@/components/Auth/oAuth2RedirectHandler";
 import NotFound from '@/components/NotFound/notFound';
 
 import './App.css';

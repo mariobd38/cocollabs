@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { useNavigate } from "react-router-dom";
 
-import { Title } from '@mantine/core';
 import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
 import { Icons } from '@/components/icons/icons';
@@ -73,12 +72,8 @@ const Hero = () => {
 
             <div className='container sm:px-5 lg:px-0 pb-10 md:pt-40'>
                 <div className='flex flex-col px-2.5 gap-6'>
-                    <Title c='#fafafa' order={3} fz={{ base: '1.7rem', xs: '2rem', sm: '2.2rem'}} style={{transition: "font-size 0.4s ease"}}
-                        fw={550} ff='Helvetica' ta='center'>Your developer journey starts here</Title>
-                    
-
-                    <Title c='#c0c3c6' order={5} fz={{ base: '0.86rem', xs: '1.04rem', sm: '1.2rem'}} style={{transition: "font-size 0.4s ease"}}
-                        fw={50} ff='Helvetica' ta='center'>Explore new opportunities, collaborate with experts, and create impactful projects together</Title>
+                    <h1 className='text-zinc-200 text-3xl font-semibold text-center md:text-4xl transition-all duration-500 ease font-["Helvetica"]'>Your developer journey starts here</h1>
+                    <h2 className='text-muted-foreground text-base text-center md:text-xl transition-all duration-500 ease font-["Helvetica"]'>Explore new opportunities, collaborate with experts, and create impactful projects together</h2>
                 </div>
                 <CardHoverEffectComp />
                 

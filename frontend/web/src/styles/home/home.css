@@ -1,22 +1,3 @@
-.user-home-all-content {
-    max-height: calc(100dvh - 3rem) !important;
-    /* height: 100dvh !important; */
-    overflow-y: scroll !important;
-    position: relative !important;
-    top: 3.82rem;
-    transition: margin 0.23s linear;
-    /* margin: 0 1rem 0 2.8rem; */
-    padding: 0 2rem 3rem 2rem;
-    /* padding: 0 0.75rem 3rem 0.75rem !important; */
-}
-
-.user-home-tooltip {
-    border: .1px solid #898989;
-    padding: 5px 12px !important;
-    font-family: 'Inter' !important;
-    border-radius: 6px !important;
-}
-
 .home-button.light:hover {
     background-color: #e0e2e4 !important;
 }

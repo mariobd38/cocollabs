@@ -10,8 +10,6 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import AuthForm from '@/components/Auth/authForm';
 // import SignupContentv2 from '@/components/Auth/SignUp/signupContentv2';
 
-import './signup.css'
-
 const formSchema = z.object({
     email: z.string()
         .min(1, { message: "Email is required." })

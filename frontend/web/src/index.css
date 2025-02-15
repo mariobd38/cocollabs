@@ -87,7 +87,7 @@
         --sidebar-border: 0, 0%, 16%;
         --sidebar-ring: 217.2 91.2% 59.8%;
 
-        background-color: #1e1f21;
+        /* background-color: #1e1f21; */
 
         .border {
             border: 1px solid #424345 !important;
