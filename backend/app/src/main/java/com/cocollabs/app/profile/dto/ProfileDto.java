@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ProfileDto {
     private String color;
-    private ProfileFileDto pfd;
     private ProfileType type;
     private String svg;
     private String preSignedUrl;

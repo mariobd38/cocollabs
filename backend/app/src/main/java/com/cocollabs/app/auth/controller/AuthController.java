@@ -5,6 +5,7 @@ import com.cocollabs.app.auth.service.CustomJwtService;
 import com.cocollabs.app.auth.util.AuthValidationUtil;
 import com.cocollabs.app.auth.util.CookieUtil;
 import com.cocollabs.app.auth.util.JwtUtil;
+import com.cocollabs.app.config.AppConfiguration;
 import com.cocollabs.app.user.dto.UserAuthenticationDto;
 import com.cocollabs.app.user.dto.UserRegistrationDto;
 import com.cocollabs.app.user.service.CustomUserService;
@@ -16,7 +17,6 @@ import jakarta.validation.Valid;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -43,7 +43,6 @@ import java.util.Optional;
 @RequestMapping("/api/auth")
 public class AuthController {
     private final Logger log = LoggerFactory.getLogger(AuthController.class);
-    private static final String REFRESH_TOKEN_COOKIE_NAME = "refresh_token";
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
     private final CustomUserService customUserService;
@@ -51,9 +50,7 @@ public class AuthController {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final UserPlatformDtoConverter userPlatform;
-
-    @Value("${APP_ACCESS_TOKEN_NAME}")
-    private String APP_ACCESS_TOKEN_NAME;
+    private final AppConfiguration appConfiguration;
 
     public AuthController(
             AuthenticationManager authenticationManager,
@@ -62,7 +59,8 @@ public class AuthController {
             CustomJwtService customJwtService,
             PasswordEncoder passwordEncoder,
             UserRepository userRepository,
-            UserPlatformDtoConverter userPlatform
+            UserPlatformDtoConverter userPlatform,
+            AppConfiguration appConfiguration
     ) {
         this.authenticationManager = authenticationManager;
         this.jwtUtil = jwtUtil;
@@ -71,6 +69,7 @@ public class AuthController {
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
         this.userPlatform = userPlatform;
+        this.appConfiguration = appConfiguration;
     }
 
     @PostMapping("/login")
@@ -159,7 +158,7 @@ public class AuthController {
     }
 
     @GetMapping("/status")
-    public ResponseEntity<?> getAuthStatus(@CookieValue(name = "${APP_ACCESS_TOKEN_NAME}", required = false) String jwt) {
+    public ResponseEntity<?> getAuthStatus(@CookieValue(name = "${APP_ACCESS_TOKEN_LABEL}", required = false) String jwt) {
         Map<String, Boolean> statusResponse = new HashMap<>();
 
         if (jwt == null) {
@@ -197,7 +196,7 @@ public class AuthController {
     public ResponseEntity<?> refreshToken(HttpServletRequest request, HttpServletResponse response) {
         log.info("Received request to refresh token");
         try {
-            String refreshToken = CookieUtil.getCookieValue(request, REFRESH_TOKEN_COOKIE_NAME);
+            String refreshToken = CookieUtil.getCookieValue(request, appConfiguration.getRefreshTokenLabel());
             if (refreshToken == null) {
                 log.warn("No refresh token found in request");
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
@@ -230,8 +229,8 @@ public class AuthController {
             customJwtService.revokeToken(storedToken.get());
             customJwtService.createToken(user.get(), newRefreshToken, jwtUtil.getRefreshTokenValidityInSeconds());
             // Set new cookies
-            CookieUtil.addCookie(response, APP_ACCESS_TOKEN_NAME, newAccessToken, jwtUtil.getAccessTokenValidityInSeconds());
-            CookieUtil.addCookie(response, REFRESH_TOKEN_COOKIE_NAME, newRefreshToken, jwtUtil.getRefreshTokenValidityInSeconds());
+            CookieUtil.addCookie(response, appConfiguration.getAccessTokenLabel(), newAccessToken, jwtUtil.getAccessTokenValidityInSeconds());
+            CookieUtil.addCookie(response, appConfiguration.getRefreshTokenLabel(), newRefreshToken, jwtUtil.getRefreshTokenValidityInSeconds());
 
             log.info("Successfully refreshed tokens for user");
             return ResponseEntity.ok().build();
@@ -255,13 +254,8 @@ public class AuthController {
 
         customJwtService.createToken(user, refreshToken, jwtUtil.getRefreshTokenValidityInSeconds());
 
-        CookieUtil.addCookie(response, APP_ACCESS_TOKEN_NAME, accessToken, jwtUtil.getAccessTokenValidityInSeconds());
-        CookieUtil.addCookie(response, REFRESH_TOKEN_COOKIE_NAME, refreshToken, jwtUtil.getRefreshTokenValidityInSeconds());
-    }
-
-    private void clearAuthCookieTokens(HttpServletResponse response, User user) {
-        CookieUtil.deleteCookie(response,APP_ACCESS_TOKEN_NAME);
-        CookieUtil.deleteCookie(response,REFRESH_TOKEN_COOKIE_NAME);
+        CookieUtil.addCookie(response, appConfiguration.getAccessTokenLabel(), accessToken, jwtUtil.getAccessTokenValidityInSeconds());
+        CookieUtil.addCookie(response, appConfiguration.getRefreshTokenLabel(), refreshToken, jwtUtil.getRefreshTokenValidityInSeconds());
     }
 
 }

@@ -5,6 +5,8 @@ import com.cocollabs.app.aws.service.S3Service;
 import com.cocollabs.app.profile.model.Profile;
 import com.cocollabs.app.user.model.User;
 import com.cocollabs.app.profile.repository.ProfileRepository;
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class ProfileService {
@@ -19,6 +22,9 @@ public class ProfileService {
     private final ProfileRepository profileRepository;
     private final S3Service s3Service;
     private final String bucketName;
+    private final Cache<String, String> urlCache = Caffeine.newBuilder()
+            .expireAfterWrite(8, TimeUnit.MINUTES)  // Slightly less than S3 URL expiry
+            .build();
 
     public ProfileService(ProfileRepository profileRepository,
                           S3Service s3Service,
@@ -71,14 +77,22 @@ public class ProfileService {
     }
 
     public String getProfileImageUrl(User user, Profile profile) {
-//        Profile profile = profileRepository.findByUser(user)
-//                .orElseThrow(() -> new RuntimeException("Profile not found"));
-
         if (profile.getS3Key() == null) {
             return null;
         }
 
-        return s3Service.generatePreSignedUrl(bucketName, getS3Key(user,profile));
+        //return s3Service.generatePreSignedUrl(bucketName, getS3Key(user,profile));
+
+        // Try cache first
+        String cachedUrl = urlCache.getIfPresent(profile.getS3Key());
+        if (cachedUrl != null) {
+            return cachedUrl;
+        }
+
+        // Generate new URL and cache it
+        String newUrl = s3Service.generatePreSignedUrl(bucketName, getS3Key(user, profile));
+        urlCache.put(profile.getS3Key(), newUrl);
+        return newUrl;
     }
 
 //    public ProfileDto handleDefaultAvatar(User user) {
@@ -91,45 +105,5 @@ public class ProfileService {
         String key = profile.getS3Key();
         return "images/user_id=" + user.getId() + "/" + key + ".jpg";
     }
-
-    /*
-    public ProfileDto handleColorChange(User user, String color) {
-        Optional<Profile> profile = profileRepository.findByUser(user);
-        if (profile.isEmpty()) {
-            profile = new Profile();
-            profile.setUser(user);
-        }
-        profile.setType(Profile.ProfileType.COLOR);
-        profile.setColor(color);
-        profile.setProfileFile(null);
-        user.setProfile(profile);
-        profileRepository.save(profile);
-        userRepository.save(user);
-        return new ProfileDto(color,null,"color");
-    }
-
-    public ProfileDto handleFileUpload(User user, ProfileDto request) {
-        String name = request.getPfd().getName();
-        String type = request.getPfd().getType();
-        String data = request.getPfd().getData();
-
-        ProfileFile profileFile = new ProfileFile(name, type);
-        profileFile.setBase64Data(data);
-
-        Profile profile = profileRepository.findByUser(user);
-        if (profile == null) {
-            profile = new Profile();
-            profile.setUser(user);
-        }
-        profile.setProfileFile(profileFile);
-        profile.setType(Profile.ProfileType.IMAGE);
-        profile.setColor(null);
-        profileRepository.save(profile);
-
-        user.setProfile(profile);
-        userRepository.save(user);
-        return new ProfileDto(null,request.getPfd(),"image");
-    }
-    */
 
 }

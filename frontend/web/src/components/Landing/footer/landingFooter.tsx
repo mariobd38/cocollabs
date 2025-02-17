@@ -30,7 +30,7 @@ const data = [{
         ],
 }];
 
-export function FooterContent() {
+export function LandingFooter() {
     const groups = data.map((group) => {
         const links = group.links.map((item, index) => (
             <a key={index} href={item.link} className="block text-zinc-400 text-sm py-[3px] hover:underline" onClick={(event) => event.preventDefault()}>{item.label}</a>
@@ -76,4 +76,4 @@ export function FooterContent() {
     );
 }
 
-export default FooterContent;
+export default LandingFooter;

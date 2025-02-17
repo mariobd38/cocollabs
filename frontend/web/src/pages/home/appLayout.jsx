@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useLayoutEffect } from 'react';
 import { useLocation, useParams, Outlet } from 'react-router-dom';
 
 import { useMantineTheme,useMantineColorScheme } from '@mantine/core';
@@ -9,6 +9,9 @@ import HomeSidebar from '@/components/Home/v2/HomeSidebar/homeSidebar';
 
 import { getUserProfileInfo } from '@/api/Users/getUserProfileInfo';
 import { getLastActiveSpaceInfo } from '@/api/Spaces/getLastActiveSpace';
+
+import { Avatar,AvatarImage,AvatarFallback } from '@/components/ui/avatar';
+
 // import { getPersonalSpaceInfo } from '@/api/Spaces/getPersonalSpaceInfo';
 // import { getTaskInfoBySpace } from '@/api/Tasks/getTasksBySpace';
 // import { getAllUserSpacesInfo } from '@/api/Spaces/getAllUserSpaces';
@@ -16,8 +19,6 @@ import { getLastActiveSpaceInfo } from '@/api/Spaces/getLastActiveSpace';
 
 import { getThemeColor } from '@/components/Themes/getThemeColor';
 import { getTextColor } from '@/components/Themes/getTextColor';
-
-// import '@/styles/home/home.css';
 
 const AppLayout = ({content}) => {
     // const dayjs = require('dayjs');
@@ -74,7 +75,8 @@ const AppLayout = ({content}) => {
             setUserSpaces(storedAppInfo.userSpace);
             setColorScheme(storedAppInfo.userPreference.theme);
             // const jsonData = { user: storedAppInfo };
-          } else {
+          } 
+          else {
             // Fetch data from API if no data in localStorage
             const data = await getUserProfileInfo(passedUserInfo || null);
             if (data) {
@@ -90,11 +92,10 @@ const AppLayout = ({content}) => {
                 setUserProfileDto(jsonData.profile);
                 setColorScheme(jsonData.userPreference.theme);
                 setUserSpaces(jsonData.userSpace);
-
                 setStoredAppInfo(jsonData);
             }
           }
-        };
+        }
         fetchProfileData();
       }, [passedUserInfo, storedAppInfo, setStoredAppInfo]);
 
@@ -108,11 +109,10 @@ const AppLayout = ({content}) => {
             setActivePage("Home");
         }
     }, [location.pathname]);
-
+    // console.log(fullUserData.profileDto.preSignedUrl);
 
     return (
         <>
-            {userFullName && 
             <HomeNavbarv2 
                 themeColors={themeColors}
                 colorScheme={colorScheme}
@@ -122,7 +122,7 @@ const AppLayout = ({content}) => {
                 setOpenSidebarToggle={setOpenSidebarToggle}
                 storedUserInfo={storedAppInfo}
                 setStoredUserInfo={setStoredAppInfo}
-            />}
+            />
             <div className='flex'>
                 <div>
                     <HomeSidebar 
@@ -138,7 +138,8 @@ const AppLayout = ({content}) => {
                     />
                 </div>
                 <div className={`bg-background flex flex-col w-full relative px-6 top-10 py-6 overflow-y-scroll max-h-[calc(100dvh_-_2rem)] ${openSidebarToggle && 'open' }`}>
-                    <Outlet context={{themeColors,spaceData,currentSpace}}/>
+                    <Outlet context={{themeColors,spaceData,currentSpace,colorScheme}}/>
+                    
                 </div>
             </div>
         </>

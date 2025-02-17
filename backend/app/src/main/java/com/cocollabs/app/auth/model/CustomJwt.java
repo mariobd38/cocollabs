@@ -43,13 +43,4 @@ public class CustomJwt {
 
     @Column(nullable = false)
     private boolean revoked;
-
-    public CustomJwt(User user, String tokenHash, long validityInSeconds) {
-        this.user = user;
-        this.tokenHash = tokenHash;
-        long currentMillis = System.currentTimeMillis();
-        this.issuedAt = new Timestamp(currentMillis);
-        this.expiryDate = new Timestamp(currentMillis + (validityInSeconds * 1000));
-        this.revoked = false;
-    }
 }

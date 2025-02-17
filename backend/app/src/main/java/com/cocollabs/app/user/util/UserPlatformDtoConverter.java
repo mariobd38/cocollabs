@@ -1,9 +1,6 @@
 package com.cocollabs.app.user.util;
 
 import com.cocollabs.app.profile.dto.ProfileDto;
-import com.cocollabs.app.profile.dto.ProfileFileDto;
-import com.cocollabs.app.profile.model.Profile;
-import com.cocollabs.app.profile.model.ProfileFile;
 import com.cocollabs.app.profile.service.ProfileService;
 import com.cocollabs.app.space.dto.UserSpaceDto;
 import com.cocollabs.app.space.model.Space;
@@ -20,6 +17,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Comparator;
 import java.util.LinkedHashSet;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -39,6 +37,7 @@ public class UserPlatformDtoConverter {
             ProfileDto profileDto = getProfileDto(user);
             UserPreferenceDto userPreferenceDto = getUserPreferenceDto(user.getUserPreference());
             Set<UserSpaceDto> userSpaceDto = getUserSpacesDto(user);
+            System.out.println(profileDto);
 
             return UserPlatformDto.builder()
                     .userDto(userDto)
@@ -47,6 +46,7 @@ public class UserPlatformDtoConverter {
                     .userSpaceDto(userSpaceDto)
                     .build();
         } catch (Exception ex) {
+            log.error("Error while converting user to UserPlatformDto: ", ex);
             throw new RuntimeException("Error while converting user to UserPlatformDto");
         }
     }
@@ -62,42 +62,34 @@ public class UserPlatformDtoConverter {
     }
 
     public ProfileDto getProfileDto(User user) {
-        Profile profile = user.getProfile();
-        if (profile == null) return null;
-
-        ProfileFile profileFile = profile.getProfileFile();
-        ProfileFileDto profileFileDto = profileFile != null ? new ProfileFileDto(
-                profileFile.getBase64Data(),
-                profileFile.getName(),
-                profileFile.getType()
-        ) : null;
-
-        return ProfileDto.builder()
-                .color(profile.getColor())
-                .pfd(null)
-                .type(profile.getType())
-                .svg(profile.getSvg())
-                .preSignedUrl(profileService.getProfileImageUrl(user,profile))
-                .build();
+        return Optional.ofNullable(user.getProfile())
+                .map(profile -> ProfileDto.builder()
+                        .color(profile.getColor())
+                        .type(profile.getType())
+                        .svg(profile.getSvg())
+                        .preSignedUrl(profileService.getProfileImageUrl(user, profile))
+                        .build())
+                .orElse(null);
     }
 
     private UserPreferenceDto getUserPreferenceDto(UserPreference userPreference) {
-        return new UserPreferenceDto(
-                userPreference != null ? userPreference.getTheme() : ThemePreference.DARK
-        );
+        return UserPreferenceDto.builder()
+                .theme(Optional.ofNullable(userPreference)
+                        .map(UserPreference::getTheme)
+                        .orElse(ThemePreference.DARK))
+                .build();
     }
 
     public Set<UserSpaceDto> getUserSpacesDto(User user) {
-        //TODO: change logic to extract most popular spaces rather than oldest spaces
         return user.getSpaces().stream()
                 .sorted(Comparator.comparing(Space::getCreatedOn))
-                .map(space -> new UserSpaceDto(
-                        space.getName(),
-                        space.getIcon(),
-                        space.getDescription(),
-                        space.getSlug(),
-                        space.getVisibility()
-                ))
+                .map(space -> UserSpaceDto.builder()
+                        .name(space.getName())
+                        .icon(space.getIcon())
+                        .description(space.getDescription())
+                        .slug(space.getSlug())
+                        .visibility(space.getVisibility())
+                        .build())
                 .collect(Collectors.toCollection(LinkedHashSet::new));
     }
 

@@ -29,7 +29,7 @@ interface OutletContext {
 
 
 const Homev2: React.FC = () => {
-    const { themeColors,spaceData,currentSpace } = useOutletContext<OutletContext>();
+    const { themeColors,spaceData,currentSpace,colorScheme } = useOutletContext<OutletContext>();
     // const { colorScheme } = useMantineColorScheme();
     // const theme = useMantineTheme();
     // const passedSpaceInfo = location.state?.spaceInfo as SpaceData | undefined;
@@ -64,7 +64,7 @@ const Homev2: React.FC = () => {
     return (
         <>
             <div className={`transition-opacity duration-300 ease-linear ${visible ? 'opacity-100' : 'opacity-0'}`}>
-                <HomeHeader spaceName={currentSpace?.name || ''} themeColors={themeColors} />
+                <HomeHeader spaceName={currentSpace?.name || ''} themeColors={themeColors} colorScheme={colorScheme} />
                 {/* <div className='w-full'>
                     <QuickActions themeColors={themeColors} />
                     <QuickActions themeColors={themeColors} />

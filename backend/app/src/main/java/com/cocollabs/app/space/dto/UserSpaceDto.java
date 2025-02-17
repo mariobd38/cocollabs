@@ -3,9 +3,11 @@ package com.cocollabs.app.space.dto;
 import com.cocollabs.app.space.model.SpaceIcon;
 import com.cocollabs.app.space.model.Space.SpaceVisibility;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

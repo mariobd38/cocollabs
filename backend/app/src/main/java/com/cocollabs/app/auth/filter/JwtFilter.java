@@ -33,7 +33,7 @@ public class JwtFilter extends OncePerRequestFilter {
     public JwtFilter(
             JwtUtil jwtUtil,
             UserDetailsService userDetailsService,
-            @Value("${APP_ACCESS_TOKEN_NAME}") String jwtCookieName) {
+            @Value("${APP_ACCESS_TOKEN_LABEL}") String jwtCookieName) {
         this.jwtUtil = jwtUtil;
         this.userDetailsService = userDetailsService;
         this.jwtCookieName = jwtCookieName;

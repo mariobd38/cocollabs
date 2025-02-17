@@ -94,6 +94,10 @@ module.exports = {
       					height: '0'
       				}
       			},
+				floatUp: {
+					'0%': { transform: 'translateY(50px)', opacity: '0' },
+					'100%': { transform: 'translateY(0)', opacity: '1' },
+				},
       			meteor: {
       				'0%': {
       					transform: 'rotate(215deg) translateX(0)',
@@ -133,8 +137,9 @@ module.exports = {
       			meteor: 'meteor 5s linear infinite',
       			// gradient: 'gradient 8s linear infinite',
 				gradient: 'gradient 6s ease-in-out infinite',
-
+				floatUp: 'floatUp 1s ease-out forwards',
       			'fade-left': 'fade-left 0.3s ease'
+				
       		},
       		fontFamily: {
       			'sans': ['Nunito Sans']

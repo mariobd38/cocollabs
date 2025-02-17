@@ -56,6 +56,7 @@ const HomeNavbarUserMenu = (props) => {
                             userProfileDto={userProfileDto}
                             userProfilePicture={userProfilePicture}
                             multiplier={1.8}
+                            userFullName={userFullName}
                         />
                     </div>
                 }

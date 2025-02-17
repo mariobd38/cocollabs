@@ -13,7 +13,7 @@ import '@/styles/home/homeSidebar.css';
 const links = [
     { icon: 'IconHome', label: 'Home', redirect: '/:slug' },
     { icon: 'IconWorldSearch', label: 'Explore', redirect: '/:slug/explore' },
-    { icon: 'IconInbox', label: 'Inbox' },
+    // { icon: 'IconInbox', label: 'Inbox' },
     { icon: 'IconFolder', label: 'Projects' },
     { icon: 'IconFile', label: 'Docs' },
     { icon: 'IconCalendar', label: 'Calendar' },
@@ -99,7 +99,7 @@ const HomeSidebarContent = (props) => {
         //     </SidebarGroupContent>
         // </SidebarGroup>
         <SidebarGroup>
-            <SidebarGroupContent className="h-[calc(100%_-6rem)] flex flex-col justify-between">
+            <SidebarGroupContent className="h-[calc(100%_-4rem)] flex flex-col justify-between">
                 <SidebarMenu>
                     <div className="my-2">{mainLinks}</div>
                 </SidebarMenu>

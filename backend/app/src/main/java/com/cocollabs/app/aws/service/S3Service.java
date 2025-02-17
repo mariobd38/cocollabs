@@ -28,6 +28,7 @@ public class S3Service {
     public void putObject(String bucketName, String key, byte[] file) {
         PutObjectRequest request = PutObjectRequest.builder()
                 .bucket(bucketName)
+                .contentType("image/jpeg")
                 .key(key)
                 .build();
         s3.putObject(request, RequestBody.fromBytes(file));

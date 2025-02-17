@@ -40,12 +40,10 @@ const formSchema = z.object({
         }),
         z.null(),
     ]),
-    }).refine(
-        (data) => data.avatar !== null || data.image !== null,
-        {
-            message: "Please select an avatar or image.",
-            path: ["avatar"], // ✅ Attach error message to avatar field
-        }
+    }).refine((data) => data.avatar !== null || data.image !== null,{
+        message: "Please select an avatar or image.",
+        path: ["avatar"], // ✅ Attach error message to avatar field
+    }
 );
 
 const LoadingFallback = () => <></>;

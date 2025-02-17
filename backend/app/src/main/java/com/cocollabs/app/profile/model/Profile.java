@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.cocollabs.app.user.model.User;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -46,21 +45,11 @@ public class Profile {
     @Column(name = "s3_key")
     private String s3Key;
 
-    @JoinColumn(name = "file_id", referencedColumnName = "id")
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JsonIgnore
-    private ProfileFile profileFile;
-
     @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
-    public Profile(String color, ProfileFile profileFile, User user) {
-        this.color = color;
-        this.profileFile = profileFile;
-        this.user = user;
-    }
 
     public enum ProfileType {
         AVATAR, COLOR, IMAGE, S3_IMAGE;

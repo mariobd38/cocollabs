@@ -28,8 +28,15 @@ public class CustomJwtService {
     }
 
     public void createToken(User user, String token, long validityInSeconds) {
-        String tokenHash = hashToken(token);
-        CustomJwt jwtToken = new CustomJwt(user, tokenHash, validityInSeconds);
+        long currentMillis = System.currentTimeMillis();
+        CustomJwt jwtToken = CustomJwt.builder()
+                .user(user)
+                .tokenHash(hashToken(token))
+                .issuedAt(new Timestamp(currentMillis))
+                .expiryDate(new Timestamp(currentMillis + (validityInSeconds * 1000)))
+                .revoked(false)
+                .build();
+
         customJwtRepository.save(jwtToken);
     }
 

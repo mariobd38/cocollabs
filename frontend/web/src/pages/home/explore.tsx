@@ -23,7 +23,7 @@ const Explore: React.FC = () => {
     const { spaceData } = useOutletContext<OutletContext>();
 
 
-    const [visible, setVisible] = useState(false);
+    const [visible, setVisible] = useState<boolean>(false);
 
     // Visibility effect
     useEffect(() => {

@@ -7,9 +7,9 @@ import { Button } from "@/components/ui/button";
 
 import Logo2 from '@/components/Logo/logo2';
 
-const NavbarContent: React.FC = () => {
+const navItems: string[] = ['Projects', 'Communities', 'Resources', 'Pricing'];
+const LandingNavbar: React.FC = () => {
     const navigate = useNavigate();
-    const navItems: string[] = ['Projects', 'Communities', 'Resources', 'Pricing'];
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
     useEffect(() => {
@@ -35,7 +35,7 @@ const NavbarContent: React.FC = () => {
             
                         <div className='h-full hidden lg:flex gap-8'>
                             {navItems.map((item, index) => (
-                                <a key={index} className="landing-nav-button font-medium text-muted-foreground hover:text-white" href="/#">{item}</a>
+                                <a key={index} className="font-medium text-muted-foreground hover:text-white" href="/#">{item}</a>
                             ))}
                         </div>
                     </div>
@@ -43,12 +43,19 @@ const NavbarContent: React.FC = () => {
                     <div className='flex items-center gap-7'>
                         <div className='hidden sm:flex'>
                             <div className="flex gap-5 items-center">
-                                <Button variant="ghost" onClick={() => navigate('/login')} className="h-9 landing-nav-button rounded-lg px-3 py-0 font-medium text-base text-white border-solid border-[transparent] hover:bg-zinc-800">
+                                {process.env.NODE_ENV === 'development' ?
+                                <>
+                                <Button variant="ghost" onClick={() => navigate('/login')} className="h-9 rounded-lg px-3.5 py-0 font-medium text-base text-white border-solid border-[transparent] hover:bg-zinc-800">
                                     Login
                                 </Button>
-                                <Button variant="ghost" onClick={() => navigate('/signup')} className="h-9 landing-nav-button rounded-lg px-3 py-0 font-medium text-base !text-black signup bg-white border-solid border-white hover:brightness-90">
+                                <Button variant="ghost" onClick={() => navigate('/signup')} className="h-9 rounded-lg px-3.5 py-0 font-medium text-base !text-black bg-white border-solid border-white hover:brightness-90">
                                     Sign up
+                                </Button></> : 
+                                <Button variant="ghost" className="rounded-lg px-3 py-0 font-medium text-base bg-white hover:brightness-90
+                                inline-block bg-gradient-to-r from-[hsl(var(--color-1))] via-[hsl(var(--color-2))] to-[hsl(var(--color-3))]  text-white animate-gradient">
+                                    Join the waitlist
                                 </Button>
+                                }
                             </div>
                         </div>
 
@@ -84,4 +91,4 @@ const NavbarContent: React.FC = () => {
     );
 }
 
-export default NavbarContent;
+export default LandingNavbar;

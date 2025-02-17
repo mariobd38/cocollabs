@@ -11,6 +11,8 @@ async function getUserProfileInfo() {
             throw new Error("Network response was not ok");
         }
         const data = await response.json();
+        console.log('PRINTING PROFILE DATA');
+        console.log("user profile data",data);
         return data;
     } catch (error) {
         return '';

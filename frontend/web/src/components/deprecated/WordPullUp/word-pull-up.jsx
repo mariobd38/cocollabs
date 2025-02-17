@@ -1,7 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 
-import { createPolymorphicComponent, Title } from '@mantine/core';
+import { createPolymorphicComponent } from '@mantine/core';
 
 // Create a motion version of the Title component
 const MotionTitle = createPolymorphicComponent(motion.div);

@@ -65,7 +65,7 @@ public class UserController {
 
     @GetMapping("/getInfo")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<?> getUserInfo(@CookieValue(name = "${APP_ACCESS_TOKEN_NAME}", required = false) String jwt) {
+    public ResponseEntity<?> getUserInfo(@CookieValue(name = "${APP_ACCESS_TOKEN_LABEL}", required = false) String jwt) {
         if (jwt == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Authentication required");
         }

@@ -96,7 +96,7 @@ const HomeSidebar = (props) => {
     return (
         <>
             <SidebarProvider openSidebarToggle={openSidebarToggle} currentWidth={width}>
-                <Sidebar className='top-[64.2px] h-full' ref={sidebarRef} >
+                <Sidebar className='top-14 h-full' ref={sidebarRef} >
                 <SidebarHeader className='h-[55px]'>
                     {data && <HomeSidebarHeader 
                         data={data} 

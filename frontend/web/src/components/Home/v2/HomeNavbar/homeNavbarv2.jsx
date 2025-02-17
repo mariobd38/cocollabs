@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import { Icons } from '@/components/icons/icons';
-import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-import CustomCommand from '@/components/customCommand';
+import { Button } from '@/components/ui/button';
 
 import Logo2 from '@/components/Logo/logo2';
 import HomeNavbarUserMenu from '@/components/Home/HomeNavbar/homeNavbarUserMenu';
@@ -11,11 +10,9 @@ import HomeNavbarUserMenu from '@/components/Home/HomeNavbar/homeNavbarUserMenu'
 
 import '@/styles/home/homeNavbar.css';
 
+
 const HomeNavbarv2 = ({ themeColors,colorScheme,setColorScheme,profileInfo,setOpenSidebarToggle,openSidebarToggle,storedUserInfo,setStoredUserInfo } ) => {
-    const [openCommand, setOpenCommand] = useState(false);
     const buttonColor = colorScheme === 'dark' ? '#d4d5d6' : '#424345';
-    const searchBgColor = colorScheme === 'dark' ? '#262729' : '#f6f7f9';
-    const searchBdColor = colorScheme === 'dark' ? '#323335' : '#dee2e6';
 
     const handleOpenSidebarToggle = () => {
         setOpenSidebarToggle(!openSidebarToggle);
@@ -26,38 +23,28 @@ const HomeNavbarv2 = ({ themeColors,colorScheme,setColorScheme,profileInfo,setOp
         }
     }
 
-    useEffect(() => {
-        const down = (e) => {
-          if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
-            e.preventDefault()
-            setOpenCommand((open) => !open)
-          }
-        }
-        document.addEventListener("keydown", down)
-        return () => document.removeEventListener("keydown", down)
-      }, [])
-
     return (
-        <nav className="flex items-center w-full fixed h-16 top-0 z-20 border-b border-zinc-300 dark:border-zinc-700" style={{backgroundColor: themeColors.bg[2]}}>
+        <nav className="flex items-center w-full fixed h-14 top-0 z-20 border-b border-zinc-300 dark:border-zinc-700" style={{backgroundColor: themeColors.bg[2]}}>
             <div className='container px-4 w-full max-w-full' >
                 <div className='flex justify-between h-full items-center place-items-center'>
                     <div className='flex items-center gap-6'>
                         <div className={`w-fit p-1.5 cursor-pointer rounded home-button ${colorScheme}`} onClick={handleOpenSidebarToggle}>
                             {Icons('IconSquare',22,22,buttonColor)}
-                            <div style={{left: `${openSidebarToggle ? 21 : 15.5}px`}} className={`left-[20px] top-[18px] absolute transition-all duration-200 ease-linear`}>
+                            <div style={{left: `${openSidebarToggle ? 21 : 15.5}px`}} className={`left-[20px] top-[14px] absolute transition-all duration-200 ease-linear`}>
                                 {Icons('IconMinusVertical',28,28,buttonColor,1.25)}
                             </div>
                         </div>
-
-                        {/* <div className='items-center hidden sm:flex' >
-                            <div className='w-[8.5rem]' >
+                        <div className='items-center hidden sm:flex' >
+                            <div className='w-32' >
                                 <Logo2 strokeColor={colorScheme === 'dark' ? '#f4fff6' : '#323335'}/>
                             </div>
-                        </div> */}
+                        </div> 
+
                     </div>
                     
-                    <div className='flex items-center justify-end font-["Inter"]'>
-                        <div className='pr-3 md:pr-4'>
+                    
+                    <div className='flex items-center justify-end font-["Inter"] gap-5'>
+                        {/* <div className='pr-3 md:pr-4'>
                             <Button size='auto' variant='ghost' className={`flex py-1 px-3 rounded-lg gap-32 border-solid border-[${searchBdColor}] navbar-search-button ${colorScheme} hover:all transition-all duration-300 ease-linear`} 
                             style={{border: `1px solid ${searchBdColor}`, backgroundColor: `${searchBgColor}`}} onClick={() => setOpenCommand((open) => !open)}>
                                 <div className='flex text-[13px] text-muted-foreground kbd'>Search
@@ -69,9 +56,14 @@ const HomeNavbarv2 = ({ themeColors,colorScheme,setColorScheme,profileInfo,setOp
                                     <p className='m-auto pt-[1px] text-muted-foreground kbd text-sm'>K</p>
                                 </div>
                             </Button>
-                        </div>
+                        </div> */}
+                        <div>
 
-                        <Separator orientation='vertical' className='hidden sm:flex h-8 mx-3 bg-zinc-600' />
+                        <Button className='h-5 px-2 bg-transparent dark:hover:bg-zinc-700/50 hover:bg-zinc-300 transition-all duration-300 linear'>
+                            {Icons('IconInbox',22,22,buttonColor)}
+                        </Button>
+                        </div>
+                        {/* <Separator orientation='vertical' className='hidden sm:flex h-8 mx-3 bg-zinc-600' /> */}
 
                         <HomeNavbarUserMenu 
                             userProfileDto={profileInfo.profileDto}
@@ -80,11 +72,6 @@ const HomeNavbarv2 = ({ themeColors,colorScheme,setColorScheme,profileInfo,setOp
                             themeColors={themeColors}
                             storedUserInfo={storedUserInfo}
                             setStoredUserInfo={setStoredUserInfo}
-                        />
-
-                        <CustomCommand 
-                            open={openCommand}
-                            setOpen={setOpenCommand}
                         />
 
                     </div>

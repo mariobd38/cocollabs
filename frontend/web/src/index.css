@@ -112,6 +112,11 @@
     }
     body {
         @apply bg-background text-foreground;
+        -webkit-font-feature-settings: "kern", "liga", "case"; /* No variation */
+       -moz-font-feature-settings: "kern=1", "liga=1", "case=1"; /* Firefox 4.0 to 14.0 */
+       -moz-font-feature-settings: "kern", "liga" , "case"; /* Firefox 15.0 onwards */
+       -moz-font-feature-settings: "kern" 1, "liga" 1, "case" 1; /* Firefox 15.0 onwards explicitly set feature values */
+            font-feature-settings: "kern", "liga", "case"; /* No variation */
     }
 }
 
@@ -128,6 +133,8 @@ body {
     background-color: #fafafa;
     padding: 0;
     overflow-x: hidden;
+    -webkit-font-smoothing: subpixel-antialiased !important; 
+    text-rendering:optimizeLegibility !important;
 }
 
 code {
@@ -135,24 +142,8 @@ code {
     monospace;
 }
 
-
-.fafafa-color {
-    color: #fafafa;
-}
-.lato-font {
-    font-family: 'Lato', serif !important;
-}
-.nunito-sans-font, .nunito-sans-font-600 {
-    font-family: 'Nunito Sans', serif !important;
-}
-.nunito-sans-font-600 {
-    font-weight: 600;
-}
 .no-pointer-events {
     pointer-events: none !important;
-}
-.user-avatar:hover {
-    scale: 1;  
 }
 /* 
 makes text pixelated
