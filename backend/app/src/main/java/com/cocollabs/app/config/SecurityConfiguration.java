@@ -90,8 +90,8 @@ public class SecurityConfiguration {
                         .requestMatchers(new AntPathRequestMatcher("/api/auth/**")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/oauth2/**")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/google/**")).permitAll()
-                        .requestMatchers(new AntPathRequestMatcher("/api/user/exists")).permitAll()
-                        .requestMatchers(new AntPathRequestMatcher("/api/user/isOAuth")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/api/users/exists")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/api/users/isOAuth")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/api/**")).authenticated()
                         .anyRequest().authenticated());
 

@@ -10,10 +10,10 @@ import TaskCard from '@/components/Home/TaskCard/taskCard';
 // import QuickActions from './QuickActions/quickActions';
 import HomeSidebar from '@/components/deprecated/homeSidebar';
 
-import { getUserProfileInfo } from '@/api/Users/getUserProfileInfo';
-import { getLastActiveSpaceInfo } from '@/api/Spaces/getLastActiveSpace';
+import { getUserProfileInfo } from '@/api/users/getUserProfileInfo';
+import { getLastActiveSpaceInfo } from '@/api/spaces/getLastActiveSpace';
 // import { getPersonalSpaceInfo } from '@/api/Spaces/getPersonalSpaceInfo';
-import { getTaskInfoBySpace } from '@/api/Tasks/getTasksBySpace';
+import { getTaskInfoBySpace } from '@/api/tasks/getTasksBySpace';
 // import { getAllUserSpacesInfo } from '@/api/Spaces/getAllUserSpaces';
 // import { getGoogleTaskInfo } from '../../DataManagement/Tasks/getGoogleTasks';
 import dayjs from 'dayjs';

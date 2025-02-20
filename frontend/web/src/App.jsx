@@ -29,7 +29,7 @@ function App() {
     
     return (
         <AuthProvider>
-            <Suspense fallback={LoadingFallback}>
+            <Suspense fallback={<LoadingFallback />}>
             <Routes>
                 
 

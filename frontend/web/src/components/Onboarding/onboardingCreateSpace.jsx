@@ -159,8 +159,6 @@ const OnboardingCreateSpace = ({stepNumProps,fullName,setIsOnboardingComplete}) 
                     </div>
                 </div>
                 <div className='flex flex-col gap-3 mt-8'>
-                    {(form.formState.errors.avatar || form.formState.errors.image) &&
-                    <p className='text-red-700 text-[13px] font-medium'>{form.formState.errors.avatar?.message}</p>}
                     <Button type="submit" className='w-16 h-5 bg-gray-100 text-zinc-800 hover:bg-white/80 transition-all duration-300'>Continue</Button>
                 </div>
 

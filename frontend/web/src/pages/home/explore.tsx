@@ -41,7 +41,7 @@ const Explore: React.FC = () => {
         <>
             <div className={`transition-opacity duration-300 ease-linear ${visible ? 'opacity-100' : 'opacity-0'}`}>
                 <div className="flex justify-between items-center py-7">
-                    this
+                    explore
                 </div>
             </div>
         </>

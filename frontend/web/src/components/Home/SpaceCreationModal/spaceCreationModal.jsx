@@ -17,7 +17,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
-import { createSpaceInfo } from '@/api/Spaces/createSpace';
+import { createSpaceInfo } from '@/api/spaces/createSpace';
 import { generateSpaceIconJson } from '@/utils/generateSpaceIconJson';
 // import { linkTasksToPersonalSpace } from '../../../DataManagement/Spaces/linkTasksToPersonalSpace';
 
@@ -137,7 +137,7 @@ const SpaceCreationModal = (props) => {
                         id="name"
                         defaultValue=""
                         autoComplete='off'
-                        placeholder={`${userFullName.split(' ')[0]}'s ML space, RepoCentral, etc.. `} 
+                        placeholder={`First MVP, AI Chatbot integration, etc.`} 
                         type='text'
                         value={spaceName}
                         onChange={(e) => {

@@ -1,6 +1,7 @@
 package com.cocollabs.app.user.model;
 
 import com.cocollabs.app.comment.model.Comment;
+import com.cocollabs.app.organization.model.Organization;
 import com.cocollabs.app.profile.model.Profile;
 import com.cocollabs.app.role.model.Role;
 import com.cocollabs.app.space.model.Space;
@@ -56,15 +57,6 @@ public class User implements UserDetails {
     @Column(updatable = false, nullable = false)
     private Long id;
 
-    @Column(name = "first_name")
-    @Setter private String firstName;
-
-    @Column(name = "last_name")
-    @Setter private String lastName;
-
-    @Column(name = "full_name")
-    private String fullName;
-
     @Column(nullable = false,unique = true)
     private String email;
 
@@ -74,9 +66,6 @@ public class User implements UserDetails {
     @JsonIgnore
     @Column(length = 60)
     private String password;
-
-    @Column
-    private String picture;
 
     @CreationTimestamp
     @Column(name="created_on")
@@ -100,9 +89,6 @@ public class User implements UserDetails {
     @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Profile profile;
-
-    @Column(name="is_onboarding_complete")
-    private boolean isOnboardingComplete = false;
 
     @Builder.Default
     @Enumerated(EnumType.STRING)
@@ -129,24 +115,13 @@ public class User implements UserDetails {
             inverseJoinColumns = {@JoinColumn(name = "space_id")})
     private Set<Space> spaces = new LinkedHashSet<>();
 
+    @JsonIgnore
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "user_organizations_dim",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "organization_id")})
+    private Set<Organization> organizations = new LinkedHashSet<>();
 
-    public User(String email, String password, String picture) {
-        //setFullName(fullName);
-        this.email = email;
-        this.password = password;
-        this.picture = picture;
-        Timestamp currentTime = new Timestamp(new Date().getTime());
-        this.createdOn = currentTime;
-        this.lastUpdatedOn = currentTime;
-        this.isOnboardingComplete = false;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-        String[] names = fullName.split(" ");
-        this.firstName = names.length > 0 ? names[0] : "";
-        this.lastName = names.length > 1 ? names[names.length - 1] : "";
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -193,6 +168,11 @@ public class User implements UserDetails {
         space.getUsers().add(this);
     }
 
+    public void addOrganization(Organization organization) {
+        organizations.add(organization);
+        organization.getUsers().add(this);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -206,7 +186,7 @@ public class User implements UserDetails {
     }
 
     public enum UserOnboardingStep {
-        PROFILE, SPACE, COMPLETE;
+        PROFILE, ORGANIZATION, COMPLETE;
 
         @JsonCreator
         public static User.UserOnboardingStep fromString(String value) {

@@ -1,11 +1,12 @@
 package com.cocollabs.app.auth.controller;
 
 import com.cocollabs.app.auth.model.CustomJwt;
+import com.cocollabs.app.auth.service.AuthService;
 import com.cocollabs.app.auth.service.CustomJwtService;
-import com.cocollabs.app.auth.util.AuthValidationUtil;
 import com.cocollabs.app.auth.util.CookieUtil;
 import com.cocollabs.app.auth.util.JwtUtil;
 import com.cocollabs.app.config.AppConfiguration;
+import com.cocollabs.app.general.error.ErrorResponse;
 import com.cocollabs.app.user.dto.UserAuthenticationDto;
 import com.cocollabs.app.user.dto.UserRegistrationDto;
 import com.cocollabs.app.user.service.CustomUserService;
@@ -47,6 +48,7 @@ public class AuthController {
     private final JwtUtil jwtUtil;
     private final CustomUserService customUserService;
     private final CustomJwtService customJwtService;
+    private final AuthService authService;
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final UserPlatformDtoConverter userPlatform;
@@ -57,6 +59,7 @@ public class AuthController {
             JwtUtil jwtUtil,
             CustomUserService customUserService,
             CustomJwtService customJwtService,
+            AuthService authService,
             PasswordEncoder passwordEncoder,
             UserRepository userRepository,
             UserPlatformDtoConverter userPlatform,
@@ -66,6 +69,7 @@ public class AuthController {
         this.jwtUtil = jwtUtil;
         this.customUserService = customUserService;
         this.customJwtService = customJwtService;
+        this.authService = authService;
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
         this.userPlatform = userPlatform;
@@ -73,12 +77,12 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@Valid @RequestBody UserAuthenticationDto data,
+    public ResponseEntity<?> login(@Valid @RequestBody UserAuthenticationDto requestBody,
                                    HttpServletRequest request,
                                    HttpServletResponse response) {
         try {
-            String sanitizedEmail = HtmlUtils.htmlEscape(data.getEmail().toLowerCase().trim());
-            if (!EmailValidator.getInstance().isValid(sanitizedEmail)) {
+            String email = HtmlUtils.htmlEscape(requestBody.getEmail().toLowerCase().trim());
+            if (!EmailValidator.getInstance().isValid(email)) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                         .body("Invalid email format");
             }
@@ -87,8 +91,8 @@ public class AuthController {
             Authentication authenticate = authenticationManager
                     .authenticate(
                             new UsernamePasswordAuthenticationToken(
-                                    sanitizedEmail,
-                                    data.getPassword()
+                                    email,
+                                    requestBody.getPassword()
                             )
                     );
 
@@ -102,8 +106,7 @@ public class AuthController {
             log.atError().log("Invalid user credentials");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body("Invalid credentials");
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             log.atError().log("Unexpected error occurred during authentication");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("An error occurred during authentication");
@@ -115,34 +118,29 @@ public class AuthController {
                                     HttpServletRequest request,
                                     HttpServletResponse response) {
         try {
-            String sanitizedEmail = HtmlUtils.htmlEscape(requestBody.getEmail().toLowerCase().trim());
+            String email = HtmlUtils.htmlEscape(requestBody.getEmail().toLowerCase().trim());
 
             //email validation check
-            AuthValidationUtil.ValidationResult emailValidation = AuthValidationUtil.validateEmail(sanitizedEmail);
-            if (!emailValidation.isValid()) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                        .body(emailValidation.getErrors().get(0));
+            if (authService.getEmailValidationErrors(email) != null) {
+                return ResponseEntity.badRequest().body(authService.getEmailValidationErrors(email));
             }
 
             // Check if user already exists
-            if (customUserService.existsByEmail(sanitizedEmail)) {
+            if (customUserService.existsByEmail(email)) {
                 return ResponseEntity.status(HttpStatus.CONFLICT)
-                        .body("Email already registered");
+                        .body(new ErrorResponse("Email already registered", "email"));
             }
 
             //password validation check
-            AuthValidationUtil.ValidationResult passwordValidation = AuthValidationUtil.validatePassword(requestBody.getPassword());
-            if (!passwordValidation.isValid()) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                        .body(passwordValidation.getErrors().get(0));
+            if (authService.getPasswordValidationErrors(requestBody.getPassword()) != null) {
+                return ResponseEntity.badRequest().body(authService.getPasswordValidationErrors(requestBody.getPassword()));
             }
             String encodedPassword = passwordEncoder.encode(requestBody.getPassword());
 
-            User user = new User(
-                    sanitizedEmail,
-                    encodedPassword,
-                    null
-            );
+            User user = User.builder()
+                            .email(email)
+                            .password(encodedPassword)
+                            .build();
 
             customUserService.createUser(user);
 

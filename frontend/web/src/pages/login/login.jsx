@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 
 import { UseAuth } from '@/hooks/authProvider';
 import { authStatusInfo } from '@/api/Auth/status';
-import { getLastActiveSpaceInfo } from '@/api/Spaces/getLastActiveSpace';
+import { getLastActiveSpaceInfo } from '@/api/spaces/getLastActiveSpace';
 
 import AuthForm from '@/components/Auth/authForm';
 

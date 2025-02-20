@@ -4,7 +4,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import SignupContent from '@/components/Auth/SignUp/signupContent';
 
 import { VerifyEmailRegex } from '@/utils/emailRegexFormat';
-import { userExists } from '@/api/Users/userExists';
+import { userExists } from '@/api/users/userExists';
 
 const SignUpNextSteps = (props) => {
     let navigate = useNavigate();

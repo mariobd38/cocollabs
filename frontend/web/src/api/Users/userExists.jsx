@@ -1,5 +1,5 @@
 async function userExists(email) {
-    const response = await fetch(`/api/user/exists?email=${email}`, {
+    const response = await fetch(`/api/users/exists?email=${email}`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",

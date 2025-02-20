@@ -7,8 +7,8 @@ import { useLocalStorage } from '@mantine/hooks';
 import HomeNavbarv2 from '@/components/Home/v2/HomeNavbar/homeNavbarv2';
 import HomeSidebar from '@/components/Home/v2/HomeSidebar/homeSidebar';
 
-import { getUserProfileInfo } from '@/api/Users/getUserProfileInfo';
-import { getLastActiveSpaceInfo } from '@/api/Spaces/getLastActiveSpace';
+import { getUserProfileInfo } from '@/api/users/getUserProfileInfo';
+import { getLastActiveSpaceInfo } from '@/api/spaces/getLastActiveSpace';
 // import { getPersonalSpaceInfo } from '@/api/Spaces/getPersonalSpaceInfo';
 // import { getTaskInfoBySpace } from '@/api/Tasks/getTasksBySpace';
 // import { getAllUserSpacesInfo } from '@/api/Spaces/getAllUserSpaces';

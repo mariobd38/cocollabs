@@ -9,16 +9,21 @@ import UserAvatar from '@/components/Home/UserAvatar/userAvatar';
 
 import classes from '@/styles/home/homeSidebar.module.css';
 import '@/styles/home/homeSidebar.css';
+import { Separator } from '@radix-ui/react-separator';
 
-const links = [
-    { icon: 'IconHome', label: 'Home', redirect: '/:slug' },
-    { icon: 'IconWorldSearch', label: 'Explore', redirect: '/:slug/explore' },
-    // { icon: 'IconInbox', label: 'Inbox' },
-    { icon: 'IconFolder', label: 'Projects' },
-    { icon: 'IconFile', label: 'Docs' },
-    { icon: 'IconCalendar', label: 'Calendar' },
-    // { icon: 'IconDotsCircleHorizontal', label: 'More' },
-];
+const links = {
+    top: [
+        { icon: 'IconHome', label: 'Home', redirect: '/:slug' },
+        { icon: 'IconEdit', label: 'Chat' },
+        { icon: 'IconFolder', label: 'Projects' },
+        { icon: 'IconFile', label: 'Docs' },
+        { icon: 'IconCalendar', label: 'Calendar' },
+    ],
+    middle: [
+        { icon: 'IconWorldSearch', label: 'Explore', redirect: '/:slug/explore' },
+    ]
+};
+
 
 const HomeSidebarContent = (props) => {
     const { spaceSlug,openSidebarToggle,themeColors,colorScheme,activePage,userProfileDto,userProfilePicture } = props;
@@ -32,56 +37,68 @@ const HomeSidebarContent = (props) => {
         }
     }
 
-    const mainLinks = links.map((link,index) => (
-        <React.Fragment key={link.label} >
-            {openSidebarToggle ? 
-                <UnstyledButton onClick={(e) => redirectToSpace(e,link)}  key={link.label} 
-                    className={`${classes.mainLink} last:mb-0 ${classes.active} ${activePage === link.label && classes.activeSpace }`} data-theme={colorScheme} >
-                    <div className='flex justify-between w-full items-center'>
-                        <div className='flex'>
-                            <div className={`${classes.mainLinkIcon} ${classes.sidebarOpen}`}>
-                                {Icons(link.icon, 20, 20, themeColors.text[10])}
-                            </div>
-                            <p className='font-["Inter"] text-sm dark:text-zinc-200 text-black/100'>
-                                {link.label}
-                            </p>
-                        </div>
-                        {link.notifications && (
-                            <Badge className='border-0 size-6 px-2 h-4 flex justify-center'>
-                                {link.notifications}
-                            </Badge>
-                        )}
+    const renderLinks = (linksArray) => (
+        linksArray.map(link => (
+          <React.Fragment key={link.label}>
+            {openSidebarToggle ? (
+              <UnstyledButton
+                onClick={(e) => redirectToSpace(e, link)}
+                className={`${classes.mainLink} last:mb-0 ${classes.active} ${
+                  activePage === link.label && classes.activeSpace
+                }`}
+                data-theme={colorScheme}
+              >
+                <div className="flex justify-between w-full items-center">
+                  <div className="flex">
+                    <div className={`${classes.mainLinkIcon} ${classes.sidebarOpen}`}>
+                      {Icons(link.icon, 20, 20, themeColors.text[10])}
                     </div>
-                </UnstyledButton>
-            : 
-            <Tooltip 
-                label={link.label} 
-                position="right" 
-                withArrow 
-                arrowOffset={10} 
-                arrowSize={4} 
-                bg={`${colorScheme==='dark' ? '#121212' : '#272727'}`} 
-                c='#f0f0f0' 
-                openDelay={100} 
+                    <p className="font-['Inter'] text-sm dark:text-zinc-200 text-black/100">
+                      {link.label}
+                    </p>
+                  </div>
+                  {link.notifications && (
+                    <Badge className="border-0 size-6 px-2 h-4 flex justify-center">
+                      {link.notifications}
+                    </Badge>
+                  )}
+                </div>
+              </UnstyledButton>
+            ) : (
+              <Tooltip
+                label={link.label}
+                position="right"
+                withArrow
+                arrowOffset={10}
+                arrowSize={4}
+                bg={`${colorScheme === 'dark' ? '#121212' : '#272727'}`}
+                c="#f0f0f0"
+                openDelay={100}
                 offset={{ mainAxis: 10 }}
-            >
-                <UnstyledButton onClick={(e) => redirectToSpace(e,link)}  
-                    key={link.label} className={`${classes.mainLink} font-["Inter"] px-[5px] last:mb-0 ${activePage === link.label && classes.activeSpace }` } data-theme={colorScheme}>
-                    <div className='flex items-center justify-center relative'>
-                        <div className={`${classes.mainLinkIcon}`}>
-                            {Icons(link.icon, 20, 20, themeColors.text[10],1.7)}
-                        </div>
-                        {link.notifications && (
-                            <Badge className='border-0 top-0 right-0 size-1 px-2 text-[11px] h-4 flex justify-center absolute translate-y-[-85%] translate-x-[60%]'>
-                                {link.notifications}
-                            </Badge>
-                        )} 
+              >
+                <UnstyledButton
+                  onClick={(e) => redirectToSpace(e, link)}
+                  className={`${classes.mainLink} font-['Inter'] px-[5px] last:mb-0 ${
+                    activePage === link.label && classes.activeSpace
+                  }`}
+                  data-theme={colorScheme}
+                >
+                  <div className="flex items-center justify-center relative">
+                    <div className={`${classes.mainLinkIcon}`}>
+                      {Icons(link.icon, 20, 20, themeColors.text[10], 1.7)}
                     </div>
+                    {link.notifications && (
+                      <Badge className="border-0 top-0 right-0 size-1 px-2 text-[11px] h-4 flex justify-center absolute translate-y-[-85%] translate-x-[60%]">
+                        {link.notifications}
+                      </Badge>
+                    )}
+                  </div>
                 </UnstyledButton>
-            </Tooltip>
-            }
-        </React.Fragment>
-    ));
+              </Tooltip>
+            )}
+          </React.Fragment>
+        ))
+    );
 
     return (
         // <SidebarGroup>
@@ -101,16 +118,34 @@ const HomeSidebarContent = (props) => {
         <SidebarGroup>
             <SidebarGroupContent className="h-[calc(100%_-4rem)] flex flex-col justify-between">
                 <SidebarMenu>
-                    <div className="my-2">{mainLinks}</div>
+                    <div className="my-2">{renderLinks(links.top)}</div>
+                    <Separator className='bg-zinc-600/80 w-full h-[1px]' />
+                    
+                    <div className="my-2">{renderLinks(links.middle)}</div>
                 </SidebarMenu>
+
+                {/* <Separator className='bg-zinc-600/80 w-full h-[1px]' /> */}
         
                 {openSidebarToggle ?
-                <div className="flex items-center gap-3 py-3 px-0 border-t border-zinc-700">
+                <div className="flex items-center gap-3 py-3 px-0 border-t border-zinc-600/80">
                     <UserAvatar 
                         userProfileDto={userProfileDto}
                         userProfilePicture={userProfilePicture}
                         multiplier={1.8}
                     />
+                    <UnstyledButton
+                    className={`${classes.mainLink} last:mb-0 ${classes.active}`} data-theme={colorScheme} >
+                    <div className='flex justify-between w-full items-center'>
+                        <div className='flex flex-col gap-2'>
+                            <p className='font-["Inter"] text-sm dark:text-zinc-200 text-black/100 whitespace-nowrap'>
+                                {userProfileDto?.fullName}
+                            </p>
+                            <p className='font-["Inter"] text-xs text-muted-foreground whitespace-nowrap'>
+                                {userProfileDto?.fullName}
+                            </p>
+                        </div>
+                    </div>
+                </UnstyledButton>
                 </div> :
                 <div className="flex justify-center items-center gap-2 p-3 border-t border-zinc-700">
                     <UserAvatar 
@@ -118,6 +153,7 @@ const HomeSidebarContent = (props) => {
                         userProfilePicture={userProfilePicture}
                         multiplier={1.8}
                     />
+                    
                 </div>}
             </SidebarGroupContent>
         </SidebarGroup>

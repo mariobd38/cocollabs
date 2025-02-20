@@ -12,9 +12,9 @@ import { GithubButton } from '@/components/Auth/OAuthIcons/githubButton';
 
 import { UseAuth } from '@/hooks/authProvider';
 import { VerifyEmailRegex } from '@/utils/emailRegexFormat';
-import { isOAuthUser } from '@/api/Users/isOAuthUser';
+import { isOAuthUser } from '@/api/users/isOAuthUser';
 import { authStatusInfo } from '@/api/Auth/status';
-import { getLastActiveSpaceInfo } from '@/api/Spaces/getLastActiveSpace';
+import { getLastActiveSpaceInfo } from '@/api/spaces/getLastActiveSpace';
 // import { UseLastActiveSpace } from '@/hooks/useLastActiveSpace';
 import AuthSideBlock from '@/components/Auth/authSideBlock';
 

@@ -2,8 +2,6 @@ package com.cocollabs.app.user.controller;
 
 import com.cocollabs.app.profile.service.ProfileService;
 import com.cocollabs.app.user.repository.UserPreferenceRepository;
-import com.cocollabs.app.user.dto.UserProfileDto;
-import com.cocollabs.app.user.error.OnboardingProfileErrorResponse;
 import com.cocollabs.app.user.model.ThemePreference;
 import com.cocollabs.app.user.model.User;
 import com.cocollabs.app.user.model.User.UserOnboardingStep;
@@ -12,12 +10,10 @@ import com.cocollabs.app.user.repository.UserRepository;
 import com.cocollabs.app.auth.util.JwtUtil;
 import com.cocollabs.app.user.service.CustomUserService;
 import com.cocollabs.app.user.util.UserPlatformDtoConverter;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -37,13 +33,12 @@ import java.io.IOException;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/api/users")
 public class UserController {
     private final Logger log = LoggerFactory.getLogger(UserController.class);
     private final UserRepository userRepository;
     private final UserPreferenceRepository userPreferenceRepository;
     private final JwtUtil jwtUtil;
-    private final CustomUserService customUserService;
     private final ProfileService profileService;
     private final UserPlatformDtoConverter userPlatform;
 
@@ -51,14 +46,11 @@ public class UserController {
             UserRepository userRepository,
             UserPreferenceRepository userPreferenceRepository,
             JwtUtil jwtUtil,
-            CustomUserService customUserService,
             ProfileService profileService,
-            UserPlatformDtoConverter userPlatform
-    ) {
+            UserPlatformDtoConverter userPlatform) {
         this.userRepository = userRepository;
         this.userPreferenceRepository = userPreferenceRepository;
         this.jwtUtil = jwtUtil;
-        this.customUserService = customUserService;
         this.profileService = profileService;
         this.userPlatform = userPlatform;
     }
@@ -82,50 +74,6 @@ public class UserController {
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body("An error occurred while processing the request");
-        }
-    }
-
-    @PutMapping(value = "/createProfile",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<?> createUserProfile(@AuthenticationPrincipal User user,
-                                           @RequestPart("onboardingProfileDto") @Valid UserProfileDto onboardingProfileDto,
-                                           @RequestPart(value = "file", required = false) MultipartFile file) {
-        if (user == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not found");
-        }
-        try {
-            String fullName = onboardingProfileDto.getFullName();
-            String username = onboardingProfileDto.getUsername();
-            String avatarName = onboardingProfileDto.getAvatarName();
-
-            //validation checks
-            if (customUserService.getUsernameValidationErrors(username) != null) {
-                return ResponseEntity.badRequest().body(customUserService.getUsernameValidationErrors(username));
-            }
-            if (userRepository.existsByUsername(username)) {
-                return ResponseEntity.badRequest().body(new OnboardingProfileErrorResponse("Username is not available", "username"));
-            }
-            if (customUserService.getFullNameValidationErrors(fullName) != null) {
-                return ResponseEntity.badRequest().body(customUserService.getFullNameValidationErrors(fullName));
-            }
-            if (customUserService.getAvatarNameValidationErrors(avatarName) != null) {
-                return ResponseEntity.badRequest().body(customUserService.getAvatarNameValidationErrors(avatarName));
-            }
-
-            user.setFullName(customUserService.transformFullName(fullName));
-            user.setUsername(username);
-            if (file != null && !file.isEmpty()) {
-                user.setProfile(profileService.handleFileUpload(user, file));
-            } else {
-                user.setProfile(profileService.handleAvatarCreation(user, avatarName));
-            }
-
-            user.setOnboardingStep(UserOnboardingStep.SPACE);
-            userRepository.save(user);
-            return ResponseEntity.ok().build();
-        } catch (Exception e) {
-            log.error("Profile creation failed for user {}: {}", user.getId(), e.getMessage());
-            return ResponseEntity.internalServerError().body(new OnboardingProfileErrorResponse("Unexpected error, please try again later", "username"));
-
         }
     }
 
@@ -177,18 +125,16 @@ public class UserController {
     @GetMapping("/isUserOnboarded")
     public ResponseEntity<Boolean> isUserOnboarded(@RequestParam("email") @Email String email) {
         return ResponseEntity.ok(userRepository.findByEmail(email)
-                .map(User::isOnboardingComplete)
+                .map(user -> user.getOnboardingStep() == UserOnboardingStep.COMPLETE)
                 .orElse(false));
     }
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/completeOnboarding")
     public ResponseEntity<?> completeUserOnboarding(@AuthenticationPrincipal User user) {
-        user.setOnboardingComplete(true);
         user.setOnboardingStep(UserOnboardingStep.COMPLETE);
         userRepository.save(user);
         Optional<User> user2 = userRepository.findById(user.getId());
-        user2.ifPresent(value -> System.out.println(value.getProfile().getType().toValue()));
 
         return ResponseEntity.ok(userPlatform.convertToDto(user2.get()));
 //        return ResponseEntity.ok(UserPlatformDtoConverter.convertToDto(user)

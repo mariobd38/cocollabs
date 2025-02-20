@@ -9,16 +9,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class SpaceDto {
     private String name;
     private SpaceIcon icon;
     private String description;
     private SpaceType type;
-    //private static final Visibility visibility = Visibility.PERSONAL;
     private SpaceVisibility visibility;
 
     public Space toEntity() {

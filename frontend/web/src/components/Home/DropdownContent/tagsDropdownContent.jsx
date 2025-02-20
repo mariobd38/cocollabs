@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 
 import { Input,Button,Divider,Flex,Box } from '@mantine/core';
 
-import { getAllTagsInfo } from '@/api/Tags/getAllTags';
-import { addExistingTagInfo } from '@/api/Tags/addExistingTag';
-import { createTagInfo } from '@/api/Tags/createTag';
+import { getAllTagsInfo } from '@/api/tags/getAllTags';
+import { addExistingTagInfo } from '@/api/tags/addExistingTag';
+import { createTagInfo } from '@/api/tags/createTag';
 import { TagOptionsDropdown } from '@/components/Home/TaskDetailsModal/TagOptionsDropdown/tagOptionsDropdown';
 
 import './dropdownContent.css';

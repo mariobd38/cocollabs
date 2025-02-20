@@ -1,5 +1,5 @@
 async function isOAuthUser(email) {
-    const response = await fetch(`/api/user/isOAuth?email=${email}`, {
+    const response = await fetch(`/api/users/isOAuth?email=${email}`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",

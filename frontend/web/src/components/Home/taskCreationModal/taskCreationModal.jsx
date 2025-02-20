@@ -14,7 +14,7 @@ import TaskDescriptionTipTap from '@/components/Home/TaskDetailsModal/TaskDescri
 
 import { useScrollLock } from '@/utils/useScrollLock';
 import getPriorityProperty from '@/utils/getPriorityProperty';
-import { createTaskInfo } from '@/api/Tasks/createTaskv2';
+import { createTaskInfo } from '@/api/tasks/createTaskv2';
 
 import './taskCreationModal.css';
 import dayjs from 'dayjs';

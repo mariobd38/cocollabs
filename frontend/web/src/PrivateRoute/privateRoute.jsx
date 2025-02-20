@@ -27,32 +27,26 @@ const PrivateRoute = ({ children }) => {
 
     // Redirect logic based on permissions and active space
     useEffect(() => {
-        if (currentSlug && userSpaces.length > 0) {
+        if (activeSpaceSlug && userSpaces.length > 0) {
             const isPermittedSpace = userSpaces.some(space => space.slug === slug);
 
             if (!isPermittedSpace) {
                 const targetPath = isExplorePage()
-                    ? `/${currentSlug}/explore`
-                    : `/${currentSlug}`;
+                    ? `/${activeSpaceSlug}/explore`
+                    : `/${activeSpaceSlug}`;
 
                 if (location.pathname !== targetPath) {
                     navigate(targetPath, { replace: true });
                 }
             }
         }
-    }, [currentSlug, isExplorePage, location.pathname, navigate, slug, userSpaces]);
+    }, [activeSpaceSlug, isExplorePage, location.pathname, navigate, slug, userSpaces]);
 
-    if (pending) {
-        return '';
-    }
+    if (pending) { return ''; }
 
-    if (!isAuthenticated) {
-        return <Navigate to="/login" replace />;
-    }
+    if (!isAuthenticated) { return <Navigate to="/login" replace />; }
 
-    if (isAuthenticated && !isOnboarded && location.pathname !== '/onboarding') {
-        return <Navigate to="/onboarding" replace />;
-    }
+    if (isAuthenticated && !isOnboarded && location.pathname !== '/onboarding') { return <Navigate to="/onboarding" replace />; }
 
     // Redirect to notFound if slug is invalid and spaces have loaded
     if (slug && !userSpaces.some(space => space.slug === slug) && userSpaces.length > 0 && !currentSlug) {

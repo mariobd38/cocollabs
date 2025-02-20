@@ -4,7 +4,7 @@ import { Menu,Box,Portal, Divider } from '@mantine/core';
 
 import {Icons} from '@/components/icons/icons';
 
-import { deleteTaskInfo } from '@/api/Tasks/deleteTask';
+import { deleteTaskInfo } from '@/api/tasks/deleteTask';
 
 const TaskOptionsPortal = forwardRef((props, ref) => {
     const { contextMenuPosition,showContextMenu,setShowContextMenu,openMenuIndex,setOpenMenuIndex,

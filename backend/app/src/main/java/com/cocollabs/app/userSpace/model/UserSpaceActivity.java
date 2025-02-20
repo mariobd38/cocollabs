@@ -44,10 +44,4 @@ public class UserSpaceActivity {
     @UpdateTimestamp
     @Column(name="last_active_at")
     private Timestamp lastActiveAt;
-
-    public UserSpaceActivity(User user, Space space) {
-        this.user = user;
-        this.space = space;
-        this.lastActiveAt = new Timestamp(new Date().getTime());
-    }
 }

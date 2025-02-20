@@ -13,4 +13,6 @@ public class AppConfiguration {
     @Value("${APP_REFRESH_TOKEN_LABEL}")
     private String refreshTokenLabel;
 
+    @Value("${COCOLLABS_BASE_URL}")
+    private String baseUrl;
 }

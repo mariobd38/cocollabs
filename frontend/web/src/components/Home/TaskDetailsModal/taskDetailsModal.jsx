@@ -24,8 +24,8 @@ import TaskDescriptionTipTap from '@/components/Home/TaskDetailsModal/TaskDescri
 
 import { dropdownProps } from '@/animations/dropdownProps';
 
-import { removeTagInfo } from '@/api/Tags/removeTag';
-import { deleteTagInfo } from '@/api/Tags/deleteTag';
+import { removeTagInfo } from '@/api/tags/removeTag';
+import { deleteTagInfo } from '@/api/tags/deleteTag';
 
 import './taskDetailsModal.css';
 

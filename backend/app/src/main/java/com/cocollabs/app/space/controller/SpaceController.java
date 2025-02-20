@@ -53,16 +53,6 @@ public class SpaceController {
                     .orElseThrow(() -> new RuntimeException("Failed to create space")));
     }
 
-    @GetMapping("/getPersonal")
-    public ResponseEntity<?> getPersonalSpace(@AuthenticationPrincipal User user) {
-        try {
-            return ResponseEntity.ok(spaceService.getUserPersonalSpace(user));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Error fetching user's personal space: " + e.getMessage());
-        }
-    }
-
     @Transactional
     @GetMapping("/getAll")
     public ResponseEntity<?> getAllUserSpaces(@AuthenticationPrincipal User authenticatedUser) {

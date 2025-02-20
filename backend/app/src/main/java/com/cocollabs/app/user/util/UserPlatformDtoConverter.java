@@ -1,5 +1,7 @@
 package com.cocollabs.app.user.util;
 
+import com.cocollabs.app.organization.dto.OrganizationDto;
+import com.cocollabs.app.organization.model.Organization;
 import com.cocollabs.app.profile.dto.ProfileDto;
 import com.cocollabs.app.profile.service.ProfileService;
 import com.cocollabs.app.space.dto.UserSpaceDto;
@@ -33,17 +35,12 @@ public class UserPlatformDtoConverter {
 
     public UserPlatformDto convertToDto(User user) {
         try {
-            UserDto userDto = getUserDto(user);
-            ProfileDto profileDto = getProfileDto(user);
-            UserPreferenceDto userPreferenceDto = getUserPreferenceDto(user.getUserPreference());
-            Set<UserSpaceDto> userSpaceDto = getUserSpacesDto(user);
-            System.out.println(profileDto);
-
             return UserPlatformDto.builder()
-                    .userDto(userDto)
-                    .profileDto(profileDto)
-                    .userPreferenceDto(userPreferenceDto)
-                    .userSpaceDto(userSpaceDto)
+                    .userDto(getUserDto(user))
+                    .profileDto(getProfileDto(user))
+                    .userPreferenceDto(getUserPreferenceDto(user.getUserPreference()))
+                    .userSpaceDto(getUserSpacesDto(user))
+                    .organizationDto(getOrganizationsDto(user))
                     .build();
         } catch (Exception ex) {
             log.error("Error while converting user to UserPlatformDto: ", ex);
@@ -53,10 +50,8 @@ public class UserPlatformDtoConverter {
 
     private UserDto getUserDto(User user) {
         return UserDto.builder()
-                .fullName(user.getFullName())
                 .email(user.getEmail())
                 .username(user.getUsername())
-                .picture(user.getPicture())
                 .onboardingStep(user.getOnboardingStep())
                 .build();
     }
@@ -64,6 +59,9 @@ public class UserPlatformDtoConverter {
     public ProfileDto getProfileDto(User user) {
         return Optional.ofNullable(user.getProfile())
                 .map(profile -> ProfileDto.builder()
+                        .firstName(profile.getFirstName())
+                        .lastName(profile.getLastName())
+                        .fullName(profile.getFullName())
                         .color(profile.getColor())
                         .type(profile.getType())
                         .svg(profile.getSvg())
@@ -90,6 +88,13 @@ public class UserPlatformDtoConverter {
                         .slug(space.getSlug())
                         .visibility(space.getVisibility())
                         .build())
+                .collect(Collectors.toCollection(LinkedHashSet::new));
+    }
+
+    public Set<OrganizationDto> getOrganizationsDto(User user) {
+        return user.getOrganizations().stream()
+                .sorted(Comparator.comparing(Organization::getCreatedOn))
+                .map(OrganizationDto::mapper)
                 .collect(Collectors.toCollection(LinkedHashSet::new));
     }
 

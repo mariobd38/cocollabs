@@ -1,6 +1,6 @@
 async function activateSpaceInfo(name) {
     try {
-        const response = await fetch(`/api/userSpacesActivity/activateCurrent?spaceName=${name}`, {
+        const response = await fetch(`/api/userSpacesActivity/activate?spaceName=${name}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

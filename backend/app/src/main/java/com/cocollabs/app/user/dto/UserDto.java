@@ -14,11 +14,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UserDto {
     @NotBlank
-    private String fullName;
-    @NotBlank
     @Email
     private String email;
     private String username;
-    private String picture;
     private UserOnboardingStep onboardingStep;
 }

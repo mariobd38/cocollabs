@@ -87,10 +87,6 @@ public class Space {
     @ManyToMany(mappedBy = "spaces", fetch = FetchType.LAZY)
     private Set<User> users = new LinkedHashSet<>();
 
-    public void addUser(User user) {
-        //this.users.add(user);
-        user.getSpaces().add(this);
-    }
 
     public enum SpaceType {
         PERSONAL,SMALL_TEAM, STARTUP,COMPANY;

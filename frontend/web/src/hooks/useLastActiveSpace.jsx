@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-import { getLastActiveSpaceInfo } from '@/api/Spaces/getLastActiveSpace';
+import { getLastActiveSpaceInfo } from '@/api/spaces/getLastActiveSpace';
 
 export const UseLastActiveSpace = () => {
   const [activeSpaceSlug, setActiveSpaceSlug] = useState(null);

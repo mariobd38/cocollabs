@@ -2,7 +2,7 @@ import React from 'react';
 
 import { useMantineColorScheme } from '@mantine/core';
 
-import { updateThemeInfo } from '@/api/Users/updateTheme';
+import { updateThemeInfo } from '@/api/users/updateTheme';
 import { userLogout } from '@/api/Auth/logout';
 
 import { DropdownMenuLabel,DropdownMenuItem,DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
@@ -11,7 +11,7 @@ import { Icons } from '@/components/icons/icons';
 import UserAvatar from '@/components/Home/UserAvatar/userAvatar';
 
 const HomeNavbarUserMenu = (props) => {
-    const {userProfileDto,userProfilePicture, userFullName,themeColors,storedUserInfo,setStoredUserInfo} = props;
+    const {userProfileDto,userProfilePicture,themeColors,storedUserInfo,setStoredUserInfo} = props;
     const { colorScheme,setColorScheme } = useMantineColorScheme();
 
     const handleUserLogout = () => {
@@ -56,7 +56,6 @@ const HomeNavbarUserMenu = (props) => {
                             userProfileDto={userProfileDto}
                             userProfilePicture={userProfilePicture}
                             multiplier={1.8}
-                            userFullName={userFullName}
                         />
                     </div>
                 }
@@ -64,14 +63,14 @@ const HomeNavbarUserMenu = (props) => {
                     <div>
                         <DropdownMenuLabel className='mb-2.5'>
                             <div className='flex items-center gap-4'>
-                                <UserAvatar 
+                                {userProfileDto?.fullName && <UserAvatar 
                                     userProfileDto={userProfileDto}
                                     userProfilePicture={userProfilePicture}
                                     multiplier={4.8}
-                                />
+                                />}
 
                                 <div className='flex flex-col font-["Lato"]'>
-                                    <p className='text-lg font-semibold whitespace-nowrap overflow-hidden text-ellipsis w-40'>{userFullName}</p>
+                                    <p className='text-lg font-semibold whitespace-nowrap overflow-hidden text-ellipsis w-40'>{userProfileDto?.fullName}</p>
                                     <p className='text-sm font-extralight text-muted-foreground whitespace-nowrap overflow-hidden w-40 text-ellipsis'>Software Engineer</p>
                                 </div>
                             </div>

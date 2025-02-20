@@ -6,7 +6,7 @@ import { Popover, PopoverContent, PopoverTrigger} from "@nextui-org/react";
 
 import { Icons } from '@/components/icons/icons';
 
-import { updateTagInfo } from '@/api/Tags/updateTag';
+import { updateTagInfo } from '@/api/tags/updateTag';
 
 import "./tagOptionsDropdown.css";
 

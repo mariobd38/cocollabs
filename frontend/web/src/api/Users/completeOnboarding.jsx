@@ -30,7 +30,7 @@
 async function completeOnboarding() {
 
     try {
-        const response = await fetch(`/api/user/completeOnboarding`, {
+        const response = await fetch(`/api/users/completeOnboarding`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

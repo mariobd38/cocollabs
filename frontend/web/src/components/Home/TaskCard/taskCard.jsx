@@ -7,8 +7,8 @@ import TaskCardContent from '@/components/Home/TaskCard/TaskCardContent/taskCard
 import TaskCreationModal from '@/components/Home/taskCreationModal/taskCreationModal';
 import { Icons } from '@/components/icons/icons';
 
-import { getTagInfo } from '@/api/Tags/getTags';
-import { UpdateTaskInfoNew } from '@/api/Tasks/updateTaskNew';
+import { getTagInfo } from '@/api/tags/getTags';
+import { UpdateTaskInfoNew } from '@/api/tasks/updateTaskNew';
 
 import checklist from '@/assets/illustrations/home/checklist.png';
 

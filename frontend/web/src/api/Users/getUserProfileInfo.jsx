@@ -1,6 +1,6 @@
 async function getUserProfileInfo() {
     try {
-        const response = await fetch('/api/user/getInfo', {
+        const response = await fetch('/api/users/getInfo', {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",

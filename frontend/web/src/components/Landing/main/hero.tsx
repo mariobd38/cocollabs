@@ -49,12 +49,12 @@ const Hero: React.FC = () => {
                                             Get started for free
                                         </div>
                                     </button> */}
-                                    <Button className="visit-community-button bg-blue-500/80 text-white font-bold rounded-xl text-base px-4 py-2 flex items-center 
+                                    <Button className="w-40 sm:w-44 visit-community-button bg-blue-500/80 text-white font-bold rounded-xl text-sm sm:text-base px-4 py-2 flex items-center 
                                     gap-2 transition-all duration-300 ease-in-out hover:brightness-95 hover:shadow-[0px_0px_45px_1px_#0f204180] hover:-translate-y-1 tracking-wide">
                                         Get started for free
                                     </Button>
                                     
-                                    <Button className="visit-community-button bg-white text-black font-bold rounded-xl text-base px-4 py-2 flex items-center 
+                                    <Button className="w-40 sm:w-44 visit-community-button bg-white text-black font-bold rounded-xl text-sm sm:text-base px-4 py-2 flex items-center 
                                     gap-2 transition-all duration-300 ease-in-out hover:brightness-95 hover:shadow-[0px_0px_45px_1px_#0f204180] hover:-translate-y-1 tracking-wide">
                                         Visit the community<span className="visit-community icon">{Icons('IconChevronRight', 16, 16)}</span>
                                     </Button>

@@ -1,6 +1,6 @@
 const updateThemeInfo = async (theme) => {
     try {
-        const response = await fetch("/api/user/updateTheme", {
+        const response = await fetch("/api/users/updateTheme", {
             method: "PUT",
             headers: {
             "Content-Type": "application/json",

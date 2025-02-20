@@ -30,8 +30,6 @@ interface OutletContext {
 
 const Homev2: React.FC = () => {
     const { themeColors,spaceData,currentSpace,colorScheme } = useOutletContext<OutletContext>();
-    // const { colorScheme } = useMantineColorScheme();
-    // const theme = useMantineTheme();
     // const passedSpaceInfo = location.state?.spaceInfo as SpaceData | undefined;
 
     // const [today, setToday] = useState<Dayjs>(dayjs());

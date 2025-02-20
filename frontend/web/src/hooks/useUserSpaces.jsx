@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-import { getAllUserSpacesInfo } from '@/api/Spaces/getAllUserSpaces';
+import { getAllUserSpacesInfo } from '@/api/spaces/getAllUserSpaces';
 
 export const useUserSpaces = () => {
   const [userSpaces, setUserSpaces] = useState([]);

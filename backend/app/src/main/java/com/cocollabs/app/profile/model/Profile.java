@@ -19,6 +19,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity()
 @Table(name = "profile_dim")
@@ -31,6 +32,16 @@ public class Profile {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false, nullable = false)
     private Long id;
+
+    @Column(name = "first_name")
+    @Setter
+    private String firstName;
+
+    @Column(name = "last_name")
+    @Setter private String lastName;
+
+    @Column(name = "full_name")
+    private String fullName;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -49,6 +60,13 @@ public class Profile {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+        String[] names = fullName.split(" ");
+        this.firstName = names.length > 0 ? names[0] : "";
+        this.lastName = names.length > 1 ? names[names.length - 1] : "";
+    }
 
 
     public enum ProfileType {

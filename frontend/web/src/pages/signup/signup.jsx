@@ -48,13 +48,17 @@ const SignUp = () => {
                 body: JSON.stringify(reqBody),
             });
 
-            if (response.status === 200) {
-                // setIsAuthenticated(true);
-                // setIsOnboarded(false);
-                navigate('/onboarding');
-            } else {
-                console.error("Unexpected error with user registration");
+            if (!response.ok) {
+                if (response.status === 409) {
+                    const error = await response.json();
+                    form.setError(error.field, { message: error.message });
+                    throw new Error(error.message);
+                } else {
+                    console.error("Unexpected error with user registration");
+                }
             }
+
+            navigate('/onboarding');
         } catch (error) {
             console.error(error);
             console.error("Error with API call to register user");

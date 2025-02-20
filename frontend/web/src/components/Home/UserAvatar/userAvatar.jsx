@@ -7,7 +7,7 @@ import { Avatar,AvatarImage,AvatarFallback } from '@/components/ui/avatar';
 // const avatarList = getAvatars();
 
 const UserAvatar = (props) => {
-    const { userFullName,userProfileDto, userProfilePicture, multiplier } = props;
+    const { userProfileDto, multiplier } = props;
     const size = `calc(${multiplier}rem * var(--mantine-scale))`;
     
     const [avatarList, setAvatarList] = useState([]);
@@ -48,7 +48,7 @@ const UserAvatar = (props) => {
         
         <Avatar style={{ width: size, height: size, minWidth: size }}>
             <AvatarImage src={avatarUrl} alt="profile_img" loading='eager' />
-            <AvatarFallback>{userFullName?.split(' ').map(name => name[0]).join('')}</AvatarFallback>
+            <AvatarFallback>{userProfileDto.fullName?.split(' ').map(name => name[0]).join('')}</AvatarFallback>
         </Avatar>
 
     );

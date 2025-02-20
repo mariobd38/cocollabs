@@ -7,8 +7,8 @@ import { Progress,useMantineColorScheme } from '@mantine/core';
 // import AuthHeader from '@/components/Auth/authHeader';
 import { motion, AnimatePresence } from "framer-motion";
 
-import { getUserProfileInfo } from '@/api/Users/getUserProfileInfo';
-import { completeOnboarding } from '@/api/Users/completeOnboarding';
+import { getUserProfileInfo } from '@/api/users/getUserProfileInfo';
+import { completeOnboarding } from '@/api/users/completeOnboarding';
 import { LoadingSpinner } from '@/components/ui/loading-spinner';
 // import { authStatusInfo } from '@/api/Auth/status';
 
@@ -16,7 +16,8 @@ import './onboarding.css';
 
 const LoadingFallback = () => <></>;
 const OnboardingCreateProfile = lazy(() => import('@/components/Onboarding/onboardingCreateProfile'));
-const OnboardingCreateSpace = lazy(() => import('@/components/Onboarding/onboardingCreateSpace'));
+// const OnboardingCreateSpace = lazy(() => import('@/components/Onboarding/onboardingCreateSpace'));
+const OnboardingCreateOrg = lazy(() => import('@/components/Onboarding/onboardingCreateOrg'));
 
 const Onboarding = () => {
     const [userInfo, setUserInfo] = useState({ email: '', fullName: '', picture: null, profile: null});
@@ -34,7 +35,7 @@ const Onboarding = () => {
     
     const stepsObj = [
         {name: 'profile', num: 1},
-        {name: 'space', num: 2},
+        {name: 'organization', num: 2},
         {name: 'complete', num: 3}
     ];
 
@@ -93,8 +94,15 @@ const Onboarding = () => {
                 />
             </Suspense>
              },
-            spaceStep: { component: <Suspense fallback={<LoadingFallback />}>
-                <OnboardingCreateSpace 
+            // spaceStep: { component: <Suspense fallback={<LoadingFallback />}>
+            //     <OnboardingCreateSpace 
+            //         stepNumProps={{ stepNum, setStepNum,stepDisplay }}
+            //         fullName={data?.user.fullName}
+            //         setIsOnboardingComplete={setIsOnboardingComplete}
+            //     />
+            // </Suspense> },
+            orgStep: { component: <Suspense fallback={<LoadingFallback />}>
+                <OnboardingCreateOrg
                     stepNumProps={{ stepNum, setStepNum,stepDisplay }}
                     fullName={data?.user.fullName}
                     setIsOnboardingComplete={setIsOnboardingComplete}
@@ -165,7 +173,7 @@ const Onboarding = () => {
                         {stepNum >= 2 && (
                         <motion.div
                             className='w-full'
-                            key="spaceStep"
+                            key="orgStep"
                             initial="initial"
                             animate="animate"
                             exit="exit"
@@ -174,7 +182,8 @@ const Onboarding = () => {
                         >
                             {isOnboardingComplete ? <LoadingSpinner /> : 
                                 <div className='flex justify-center lg:justify-between' >
-                                {step.spaceStep.component}
+
+                                {step.orgStep.component}
                                 </div>
                             }
                         </motion.div>

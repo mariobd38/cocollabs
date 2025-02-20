@@ -3,8 +3,10 @@ package com.cocollabs.app.profile.service;
 import com.cocollabs.app.aws.S3Buckets;
 import com.cocollabs.app.aws.service.S3Service;
 import com.cocollabs.app.profile.model.Profile;
+import com.cocollabs.app.general.error.ErrorResponse;
 import com.cocollabs.app.user.model.User;
 import com.cocollabs.app.profile.repository.ProfileRepository;
+import com.cocollabs.app.user.util.UserValidationUtil;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import org.slf4j.Logger;
@@ -13,8 +15,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 @Service
 public class ProfileService {
@@ -33,6 +37,16 @@ public class ProfileService {
         this.s3Service = s3Service;
         this.bucketName = s3Bucket.getClient();
     }
+
+    public Profile updateFullName(User user, String fullName) {
+        Profile profile = profileRepository.findByUser(user)
+                .orElseGet(() -> Profile.builder()
+                        .user(user)
+                        .build());
+        profile.setFullName(transformFullName(fullName));
+        return profileRepository.save(profile);
+    }
+
 
     public Profile handleAvatarCreation(User user, String avatarName) {
         Profile profile = profileRepository.findByUser(user)
@@ -81,8 +95,6 @@ public class ProfileService {
             return null;
         }
 
-        //return s3Service.generatePreSignedUrl(bucketName, getS3Key(user,profile));
-
         // Try cache first
         String cachedUrl = urlCache.getIfPresent(profile.getS3Key());
         if (cachedUrl != null) {
@@ -95,15 +107,40 @@ public class ProfileService {
         return newUrl;
     }
 
-//    public ProfileDto handleDefaultAvatar(User user) {
-//        user.setProfile(null);
-//        userRepository.save(user);
-//        return new ProfileDto(null,null,"default");
-//    }
+    public ErrorResponse getFullNameValidationErrors(String fullName) {
+        return UserValidationUtil.validateFullName(fullName);
+    }
+
+    public ErrorResponse getUsernameValidationErrors(String username) {
+        return UserValidationUtil.validateUsername(username);
+    }
+
+    public ErrorResponse getAvatarNameValidationErrors(String avatarName) {
+        return UserValidationUtil.validateAvatarName(avatarName);
+    }
+
+    public boolean isFileValid(MultipartFile file) {
+        if (file == null || file.isEmpty()) {
+            return false;
+        }
+        // Validate file size (e.g., max 5MB)
+        if (file.getSize() > 5 * 1024 * 1024) {
+            return false;
+        }
+        // Validate file type (e.g., allow only images)
+        String contentType = file.getContentType();
+        return contentType != null && contentType.startsWith("image/");
+    }
 
     private String getS3Key(User user, Profile profile) {
         String key = profile.getS3Key();
         return "images/user_id=" + user.getId() + "/" + key + ".jpg";
+    }
+
+    private String transformFullName(String fullName) {
+        return Arrays.stream(fullName.trim().split("\\s+"))
+                .map(word -> Character.toUpperCase(word.charAt(0)) + word.substring(1).toLowerCase())
+                .collect(Collectors.joining(" "));
     }
 
 }

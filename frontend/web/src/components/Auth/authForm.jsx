@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { useLocalStorage } from '@mantine/hooks';
 import {  GoogleIcon } from '@/components/Auth/OAuthIcons/googleIcon';
@@ -11,7 +12,10 @@ import { Icons } from '@/components/icons/icons';
 import AuthSideBlock from '@/components/Auth/authSideBlock';
 
 
-const AuthForm = ({navigate,form,onSubmit,content}) => {
+const AuthForm = ({ navigate, form, onSubmit, content }) => {
+// const AuthForm: React.FC<AuthFormParameters> = ({ form, onSubmit, content }) => {
+// const AuthForm = ({form,onSubmit,content}) => {
+    // const navigate = useNavigate();
     const [authOrigin, setAuthOrigin] = useLocalStorage({
         key: 'auth_origin',
         defaultValue: '',

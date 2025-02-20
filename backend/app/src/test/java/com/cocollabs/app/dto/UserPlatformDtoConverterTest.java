@@ -46,7 +46,6 @@ public class UserPlatformDtoConverterTest {
         // Given
         User mockUser = User.builder()
                 .id(1L)
-                .fullName("John Doe")
                 .email(email)
                 .spaces(new LinkedHashSet<>())
                 .build();
@@ -58,7 +57,6 @@ public class UserPlatformDtoConverterTest {
         Optional<User> foundUser = userRepository.findByEmail(email);
         foundUser.ifPresent(userEntity -> {
             assertEquals(email, userEntity.getEmail());
-            assertEquals("John Doe", userEntity.getFullName());
         });
 
     }

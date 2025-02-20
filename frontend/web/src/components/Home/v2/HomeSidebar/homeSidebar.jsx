@@ -12,7 +12,7 @@ const CustomDialog = lazy(() => import('@/components/customDialog'));
 const LoadingFallback = () => <></>;
 
 const HomeSidebar = (props) => {
-    const {openSidebarToggle, themeColors, colorScheme, setOpenSidebarToggle, spaceData,userFullName,activePage,
+    const {openSidebarToggle, themeColors, colorScheme, setOpenSidebarToggle, spaceData,activePage,
         userProfileDto,userProfilePicture} = props;
 
     const sidebarRef = useRef(null);
@@ -20,7 +20,6 @@ const HomeSidebar = (props) => {
 
     const data = {
         user: {
-            name: userFullName,
             email: "m@example.com",
         },
         space: spaceData,
@@ -87,11 +86,7 @@ const HomeSidebar = (props) => {
     const [dialogTrigger, setDialogTrigger] = useState(null);
     const [openIconPopover, setOpenIconPopover] = useState(false);
 
-    useEffect(() => {
-        return () => {
-            document.body.style.pointerEvents = '';
-        };
-    }, [openSpaceCreateModal]);
+    useEffect(() => { return () => document.body.style.pointerEvents = '' }, [openSpaceCreateModal]);
         
     return (
         <>
@@ -130,7 +125,6 @@ const HomeSidebar = (props) => {
                         <SpaceCreationModal 
                         openSpaceCreateModal={openSpaceCreateModal}
                         setOpenSpaceCreateModal={setOpenSpaceCreateModal}
-                        userFullName={data.user.name}
                         colorScheme={colorScheme}
                         setOpenIconPopover={setOpenIconPopover}
                     />}

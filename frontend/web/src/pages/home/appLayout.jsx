@@ -7,8 +7,8 @@ import { useLocalStorage } from '@mantine/hooks';
 import HomeNavbarv2 from '@/components/Home/v2/HomeNavbar/homeNavbarv2';
 import HomeSidebar from '@/components/Home/v2/HomeSidebar/homeSidebar';
 
-import { getUserProfileInfo } from '@/api/Users/getUserProfileInfo';
-import { getLastActiveSpaceInfo } from '@/api/Spaces/getLastActiveSpace';
+import { getUserProfileInfo } from '@/api/users/getUserProfileInfo';
+import { getLastActiveSpaceInfo } from '@/api/spaces/getLastActiveSpace';
 
 import { Avatar,AvatarImage,AvatarFallback } from '@/components/ui/avatar';
 
@@ -27,7 +27,6 @@ const AppLayout = ({content}) => {
     const location = useLocation();
     const passedUserInfo = location.state?.userInfo;
     const passedSpaceInfo = location.state?.spaceInfo;
-    const [userFullName, setUserFullName] = useState(passedUserInfo?.fullName || '');
     const [userEmail, setUserEmail] = useState(passedUserInfo?.email || '');
     const [userProfilePicture, setUserProfilePicture] = useState('');
     const [userProfileDto, setUserProfileDto] = useState('');
@@ -48,7 +47,6 @@ const AppLayout = ({content}) => {
     });
 
     const fullUserData = {
-        fullName: userFullName, 
         email: userEmail, 
         picture: userProfilePicture, 
         profileDto: userProfileDto
@@ -68,7 +66,7 @@ const AppLayout = ({content}) => {
         const fetchProfileData = async () => {
           if (storedAppInfo) {
             // Use the cached data if available
-            setUserFullName(storedAppInfo.user.fullName);
+            // setUserFullName(storedAppInfo.user.fullName);
             setUserEmail(storedAppInfo.user.email);
             setUserProfilePicture(storedAppInfo.user.picture);
             setUserProfileDto(storedAppInfo.profile);
@@ -86,7 +84,7 @@ const AppLayout = ({content}) => {
                     userPreference: data.userPreferenceDto,
                     userSpace: data.userSpaceDto
                 }
-                setUserFullName(jsonData.user.fullName);
+                // setUserFullName(jsonData.user.fullName);
                 setUserEmail(jsonData.user.email);
                 setUserProfilePicture(jsonData.user.picture);
                 setUserProfileDto(jsonData.profile);
@@ -131,7 +129,6 @@ const AppLayout = ({content}) => {
                         openSidebarToggle={openSidebarToggle}
                         setOpenSidebarToggle={setOpenSidebarToggle}
                         spaceData={{name: currentSpace?.name, icon: currentSpace?.icon,slug: currentSpace?.slug}}
-                        userFullName={userFullName}
                         activePage={activePage}
                         userProfileDto={fullUserData.profileDto}
                         userProfilePicture={fullUserData.picture}
