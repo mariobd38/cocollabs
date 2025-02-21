@@ -1,6 +1,6 @@
-.home-button.light:hover {
-    background-color: #e0e2e4 !important;
+.add-favorites:hover svg {
+    stroke: #eab308 !important;
 }
-.home-button.dark:hover {
-    background-color: #2d2f31 !important;
+.add-favorites.dark:hover svg {
+    stroke: #facc15 !important;
 }

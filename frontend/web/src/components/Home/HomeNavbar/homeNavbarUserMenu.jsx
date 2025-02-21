@@ -1,4 +1,6 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+
 
 import { useMantineColorScheme } from '@mantine/core';
 
@@ -7,16 +9,18 @@ import { userLogout } from '@/api/Auth/logout';
 
 import { DropdownMenuLabel,DropdownMenuItem,DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
 import CustomDropdown from '@/components/customDropdown';
-import { Icons } from '@/components/icons/icons';
+import { User, Settings, PaintRoller, Archive, LogOut, Bug } from 'lucide-react';
+
 import UserAvatar from '@/components/Home/UserAvatar/userAvatar';
 
 const HomeNavbarUserMenu = (props) => {
     const {userProfileDto,userProfilePicture,themeColors,storedUserInfo,setStoredUserInfo} = props;
     const { colorScheme,setColorScheme } = useMantineColorScheme();
+    const navigate = useNavigate();
 
     const handleUserLogout = () => {
         localStorage.clear();
-        userLogout();
+        userLogout(navigate);
     };
 
     const handleThemeUpdate = () => {
@@ -38,13 +42,13 @@ const HomeNavbarUserMenu = (props) => {
     }
 
     const menuItems = [
-        { name: 'Profile',icon: 'IconUser', marginTop: '20', action: () => console.log("profile")},
-        { name: 'Settings',icon: 'IconSettings', action: () => console.log("settings")},
-        { name: 'Notification Settings',icon: 'IconBell', action: () => console.log("notification settings")},
-        { name: 'Themes',icon: 'IconBrush', action: handleThemeUpdate},
-        { name: 'Archive',icon: 'IconArchive', action: () => console.log("archive")},
-        { name: 'Trash',icon: 'IconTrash', action: () => console.log("trash")},
-        { name: 'Help',icon: 'IconHelp', action: () => console.log("help")},
+        { name: 'Profile',icon: User, marginTop: '20', action: () => console.log("profile")},
+        { name: 'Settings',icon: Settings, action: () => console.log("settings")},
+        // { name: 'Notification Settings',icon: Bell, action: () => console.log("notification settings")},
+        { name: 'Themes',icon: PaintRoller, action: handleThemeUpdate},
+        { name: 'Archive',icon: Archive, action: () => console.log("archive")},
+        { name: 'Report a bug',icon: Bug, action: () => console.log("report bug")},
+        // { name: 'Help',icon: 'IconHelp', action: () => console.log("help")},
     ];
 
     return (
@@ -79,15 +83,18 @@ const HomeNavbarUserMenu = (props) => {
                         {menuItems.map((item) => (
                             <DropdownMenuItem key={item.name} onClick={item.action} className={`cursor-pointer ${colorScheme}`}>
                                 <div className='flex gap-3 items-center' >
-                                    {Icons(item.icon,14,14,themeColors.text[4])}
+                                    <item.icon className='text-zinc-800 dark:text-zinc-300' />
+                                    <p className='text-sm'>
+
                                     {item.name}
+                                    </p>
                                 </div>
                             </DropdownMenuItem>
                         ))}
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem className={`home-button cursor-pointer ${colorScheme}`} onClick={handleUserLogout}>
+                        <DropdownMenuItem className={` cursor-pointer ${colorScheme}`} onClick={handleUserLogout}>
                             <div className='flex gap-3 items-center' >
-                                {Icons('IconLogout',14,14,themeColors.text[4])}
+                                <LogOut className='text-zinc-800 dark:text-zinc-300' />
                                 Log out
                             </div>
                         </DropdownMenuItem>

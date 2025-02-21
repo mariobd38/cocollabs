@@ -31,7 +31,7 @@ interface SpaceData {
     name?: string;
     icon?: string;
     slug?: string;
-  }
+}
   
   interface FullUserData {
     fullName: string;

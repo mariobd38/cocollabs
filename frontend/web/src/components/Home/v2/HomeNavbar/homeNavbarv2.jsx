@@ -1,7 +1,8 @@
 import React from 'react';
 
-import { Icons } from '@/components/icons/icons';
 import { Separator } from '@/components/ui/separator';
+import { Inbox,Square,Minus } from 'lucide-react';
+
 import { Button } from '@/components/ui/button';
 
 import Logo2 from '@/components/Logo/logo2';
@@ -28,10 +29,10 @@ const HomeNavbarv2 = ({ themeColors,colorScheme,setColorScheme,profileInfo,setOp
             <div className='container px-4 w-full max-w-full' >
                 <div className='flex justify-between h-full items-center place-items-center'>
                     <div className='flex items-center gap-6'>
-                        <div className={`w-fit p-1.5 cursor-pointer rounded home-button ${colorScheme}`} onClick={handleOpenSidebarToggle}>
-                            {Icons('IconSquare',22,22,buttonColor)}
-                            <div style={{left: `${openSidebarToggle ? 21 : 15.5}px`}} className={`left-[20px] top-[14px] absolute transition-all duration-200 ease-linear`}>
-                                {Icons('IconMinusVertical',28,28,buttonColor,1.25)}
+                        <div className={`w-fit p-1.5 cursor-pointer rounded  ${colorScheme}`} onClick={handleOpenSidebarToggle}>
+                            <Square className='text-zinc-800 dark:text-zinc-200' size={20} />
+                            <div style={{left: `${openSidebarToggle ? 23 : 19}px`}} className={`top-[12px] absolute transition-all duration-200 ease-linear`}>
+                                <Minus className='text-zinc-800 dark:text-zinc-200 rotate-90' width={21} height={31} />
                             </div>
                         </div>
                         <div className='items-center hidden sm:flex' >
@@ -60,7 +61,7 @@ const HomeNavbarv2 = ({ themeColors,colorScheme,setColorScheme,profileInfo,setOp
                         <div>
 
                         <Button className='h-5 px-2 bg-transparent dark:hover:bg-zinc-700/50 hover:bg-zinc-300 transition-all duration-300 linear'>
-                            {Icons('IconInbox',22,22,buttonColor)}
+                            <Inbox className='text-zinc-800 dark:text-zinc-200' size={20} />
                         </Button>
                         </div>
                         {/* <Separator orientation='vertical' className='hidden sm:flex h-8 mx-3 bg-zinc-600' /> */}

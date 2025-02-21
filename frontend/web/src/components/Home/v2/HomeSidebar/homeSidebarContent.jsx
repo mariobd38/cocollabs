@@ -4,24 +4,25 @@ import { useNavigate } from 'react-router-dom';
 import { UnstyledButton,Tooltip } from '@mantine/core';
 import { Badge } from '@/components/ui/badge';
 import { SidebarGroup,SidebarGroupContent,SidebarMenu } from "@/components/ui/sidebar"
-import { Icons } from "@/components/icons/icons";
+import { Home, MessageCircle, Folder, File, Calendar } from 'lucide-react';
 import UserAvatar from '@/components/Home/UserAvatar/userAvatar';
 
 import classes from '@/styles/home/homeSidebar.module.css';
 import '@/styles/home/homeSidebar.css';
 import { Separator } from '@radix-ui/react-separator';
 
+
 const links = {
     top: [
-        { icon: 'IconHome', label: 'Home', redirect: '/:slug' },
-        { icon: 'IconEdit', label: 'Chat' },
-        { icon: 'IconFolder', label: 'Projects' },
-        { icon: 'IconFile', label: 'Docs' },
-        { icon: 'IconCalendar', label: 'Calendar' },
+        { icon: Home, label: 'Home', redirect: '/:slug' },
+        { icon: MessageCircle, label: 'Chat' },
+        { icon: Folder, label: 'Projects' },
+        { icon: File, label: 'Docs' },
+        { icon: Calendar, label: 'Calendar' },
     ],
-    middle: [
-        { icon: 'IconWorldSearch', label: 'Explore', redirect: '/:slug/explore' },
-    ]
+    // middle: [
+    //     { icon: 'IconWorldSearch', label: 'Explore', redirect: '/:slug/explore' },
+    // ]
 };
 
 
@@ -51,7 +52,7 @@ const HomeSidebarContent = (props) => {
                 <div className="flex justify-between w-full items-center">
                   <div className="flex">
                     <div className={`${classes.mainLinkIcon} ${classes.sidebarOpen}`}>
-                      {Icons(link.icon, 20, 20, themeColors.text[10])}
+                    <link.icon className='text-zinc-800 dark:text-zinc-200' size={16} />
                     </div>
                     <p className="font-['Inter'] text-sm dark:text-zinc-200 text-black/100">
                       {link.label}
@@ -85,7 +86,7 @@ const HomeSidebarContent = (props) => {
                 >
                   <div className="flex items-center justify-center relative">
                     <div className={`${classes.mainLinkIcon}`}>
-                      {Icons(link.icon, 20, 20, themeColors.text[10], 1.7)}
+                    <link.icon className='text-zinc-800 dark:text-zinc-200' size={16} />
                     </div>
                     {link.notifications && (
                       <Badge className="border-0 top-0 right-0 size-1 px-2 text-[11px] h-4 flex justify-center absolute translate-y-[-85%] translate-x-[60%]">
@@ -101,32 +102,17 @@ const HomeSidebarContent = (props) => {
     );
 
     return (
-        // <SidebarGroup>
-        //     <SidebarGroupContent className='h-[calc(100%_-8rem)] max-h-[90%]'>
-        //         <SidebarMenu className='flex flex-col h-full'>
-        //             <div className='my-2'>{mainLinks}</div>
-        //         </SidebarMenu>
-        //         <div className='flex justify-center' >
-        //             <UserAvatar 
-        //                 userProfileDto={userProfileDto}
-        //                 userProfilePicture={userProfilePicture}
-        //                 multiplier={2}
-        //             />
-        //         </div>
-        //     </SidebarGroupContent>
-        // </SidebarGroup>
         <SidebarGroup>
             <SidebarGroupContent className="h-[calc(100%_-4rem)] flex flex-col justify-between">
                 <SidebarMenu>
                     <div className="my-2">{renderLinks(links.top)}</div>
                     <Separator className='bg-zinc-600/80 w-full h-[1px]' />
                     
-                    <div className="my-2">{renderLinks(links.middle)}</div>
+                    {/* <div className="my-2">{renderLinks(links.middle)}</div> */}
                 </SidebarMenu>
 
-                {/* <Separator className='bg-zinc-600/80 w-full h-[1px]' /> */}
         
-                {openSidebarToggle ?
+                {/* {openSidebarToggle ?
                 <div className="flex items-center gap-3 py-3 px-0 border-t border-zinc-600/80">
                     <UserAvatar 
                         userProfileDto={userProfileDto}
@@ -154,7 +140,7 @@ const HomeSidebarContent = (props) => {
                         multiplier={1.8}
                     />
                     
-                </div>}
+                </div>} */}
             </SidebarGroupContent>
         </SidebarGroup>
     );

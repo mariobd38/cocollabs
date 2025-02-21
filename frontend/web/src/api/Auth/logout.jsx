@@ -1,5 +1,4 @@
-
-function userLogout() {
+function userLogout(navigate) {
 
     fetch("/api/auth/logout", {
         method: "GET",
@@ -11,7 +10,7 @@ function userLogout() {
             throw new Error("Network response was not ok");
         }
         if (response.status === 204) {
-            window.location.href = '/';
+            navigate('/', { replace: true });
         }
     })
       .catch((error) => {

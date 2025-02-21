@@ -24,7 +24,7 @@ const HomeSidebarSpaceOptions = (props) => {
                 <DropdownMenuItem 
                     key={item.name} 
                     c={themeColors.text[3]}
-                    className={`home-button cursor-pointer ${colorScheme}`}
+                    className={`cursor-pointer ${colorScheme}`}
                     bg={themeColors.bg[12]}
                     mt={item?.marginTop} 
                     w='calc(240px - 13.8%)' 
@@ -35,7 +35,7 @@ const HomeSidebarSpaceOptions = (props) => {
             <DropdownMenuSeparator size="xs" bd='.1px solid #676869' my={5} />
             <DropdownMenuItem
                 bg={themeColors.bg[12]}
-                className={`home-button ${colorScheme} cursor-pointer`}
+                className={`${colorScheme} cursor-pointer`}
                 w='calc(240px - 13.8%)' 
                 onClick={() => setTimeout(() => {
                     setOpenSpaceCreateModal(true);

@@ -7,7 +7,8 @@ import { zodResolver } from "@hookform/resolvers/zod"
 
 import { UseAuth } from '@/hooks/authProvider';
 import { authStatusInfo } from '@/api/Auth/status';
-import { getLastActiveSpaceInfo } from '@/api/spaces/getLastActiveSpace';
+// import { getLastActiveSpaceInfo } from '@/api/spaces/getLastActiveSpace';
+import { getLastActiveOrganizationInfo } from '@/api/organizations/getLastActive';
 
 import AuthForm from '@/components/Auth/authForm';
 
@@ -53,8 +54,8 @@ const Login = () => {
                 const { isAuthenticated, isOnboarded } = await authStatusInfo();
                 if (isAuthenticated && isOnboarded) {
                     try {
-                        const activeUserSpace = await getLastActiveSpaceInfo();
-                        navigate(`/${activeUserSpace.slug}`, { state: { loginData } });
+                        const activeUserOrg = await getLastActiveOrganizationInfo();
+                        navigate(`/${activeUserOrg.slug}`, { state: { loginData } });
                     } catch(error) {
                         console.error("Could not redirect to user space:", error);
                     }

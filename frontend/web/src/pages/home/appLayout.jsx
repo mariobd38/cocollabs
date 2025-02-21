@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useLayoutEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation, useParams, Outlet } from 'react-router-dom';
 
 import { useMantineTheme,useMantineColorScheme } from '@mantine/core';
@@ -8,9 +8,9 @@ import HomeNavbarv2 from '@/components/Home/v2/HomeNavbar/homeNavbarv2';
 import HomeSidebar from '@/components/Home/v2/HomeSidebar/homeSidebar';
 
 import { getUserProfileInfo } from '@/api/users/getUserProfileInfo';
-import { getLastActiveSpaceInfo } from '@/api/spaces/getLastActiveSpace';
+// import { getLastActiveSpaceInfo } from '@/api/spaces/getLastActiveSpace';
+import { getLastActiveOrganizationInfo } from '@/api/organizations/getLastActive';
 
-import { Avatar,AvatarImage,AvatarFallback } from '@/components/ui/avatar';
 
 // import { getPersonalSpaceInfo } from '@/api/Spaces/getPersonalSpaceInfo';
 // import { getTaskInfoBySpace } from '@/api/Tasks/getTasksBySpace';
@@ -31,10 +31,14 @@ const AppLayout = ({content}) => {
     const [userProfilePicture, setUserProfilePicture] = useState('');
     const [userProfileDto, setUserProfileDto] = useState('');
     const [spaceData, setSpaceData] = useState(passedSpaceInfo || []);
+    const [orgData, setOrgData] = useState(passedSpaceInfo || []);
     const [userSpaces, setUserSpaces] = useState([]);
+    const [userOrgs, setUserOrgs] = useState([]);
     const [openSidebarToggle, setOpenSidebarToggle] = useState(false);
     const { slug } = useParams();
     const currentSpace = userSpaces.find(item => item.slug === slug);
+    // const currentOrg = userOrgs.find(item => item?.slug === slug);
+    const currentOrg = userOrgs?.length > 0 ? userOrgs.find(item => item?.slug === slug) : null;
 
     const themeColors = {
         bg: Array.from({ length: 13 }, (_, index) => getThemeColor(colorScheme, theme, index)),
@@ -52,15 +56,31 @@ const AppLayout = ({content}) => {
         profileDto: userProfileDto
     };
     
-    useEffect(() => {
-        async function fetchSpaceData() {
-            const data = await getLastActiveSpaceInfo();
-            setTimeout(() => {
-                setSpaceData(data);
-            },250)
-        }
-        fetchSpaceData();
-    }, [slug])
+    // useEffect(() => {
+    //     async function fetchSpaceData() {
+    //         const data = await getLastActiveOrganizationInfo();
+    //         setTimeout(() => {
+    //             setSpaceData(data);
+    //         },250)
+    //     }
+    //     fetchSpaceData();
+    // }, [slug])
+    // useEffect(() => {
+    //     async function fetchOrganizationsData() {
+    //         const data = await getLastActiveOrganizationInfo();
+    //         setTimeout(() => {
+    //             setOrgData(data);
+    //         },250)
+    //     }
+    //     fetchOrganizationsData();
+    // }, [slug]);
+
+    const appProps = {
+        space: spaceData,
+        // organizations: orgData,
+        organizations: userOrgs,
+        profile: userProfileDto,
+    }
 
     useEffect(() => {
         const fetchProfileData = async () => {
@@ -71,6 +91,7 @@ const AppLayout = ({content}) => {
             setUserProfilePicture(storedAppInfo.user.picture);
             setUserProfileDto(storedAppInfo.profile);
             setUserSpaces(storedAppInfo.userSpace);
+            setUserOrgs(storedAppInfo.organizations);
             setColorScheme(storedAppInfo.userPreference.theme);
             // const jsonData = { user: storedAppInfo };
           } 
@@ -82,7 +103,8 @@ const AppLayout = ({content}) => {
                     user: data.userDto,
                     profile: data.profileDto,
                     userPreference: data.userPreferenceDto,
-                    userSpace: data.userSpaceDto
+                    userSpace: data.userSpaceDto,
+                    organizations: data.organizationDto
                 }
                 // setUserFullName(jsonData.user.fullName);
                 setUserEmail(jsonData.user.email);
@@ -90,6 +112,7 @@ const AppLayout = ({content}) => {
                 setUserProfileDto(jsonData.profile);
                 setColorScheme(jsonData.userPreference.theme);
                 setUserSpaces(jsonData.userSpace);
+                setUserOrgs(jsonData.organizations);
                 setStoredAppInfo(jsonData);
             }
           }
@@ -135,7 +158,7 @@ const AppLayout = ({content}) => {
                     />
                 </div>
                 <div className={`bg-background flex flex-col w-full relative px-6 top-10 py-6 overflow-y-scroll max-h-[calc(100dvh_-_2rem)] ${openSidebarToggle && 'open' }`}>
-                    <Outlet context={{themeColors,spaceData,currentSpace,colorScheme}}/>
+                    <Outlet context={{themeColors,appProps,currentSpace,currentOrg,colorScheme}}/>
                     
                 </div>
             </div>

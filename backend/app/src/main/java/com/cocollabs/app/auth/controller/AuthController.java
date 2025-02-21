@@ -100,7 +100,6 @@ public class AuthController {
 
             CookieUtil.deleteAllCookies(request, response);
             addTokensAsCookies(response, user);
-
             return ResponseEntity.ok().body(userPlatform.convertToDto(user));
         } catch (BadCredentialsException ex) {
             log.atError().log("Invalid user credentials");
@@ -128,7 +127,7 @@ public class AuthController {
             // Check if user already exists
             if (customUserService.existsByEmail(email)) {
                 return ResponseEntity.status(HttpStatus.CONFLICT)
-                        .body(new ErrorResponse("Email already registered", "email"));
+                        .body(new ErrorResponse("Email already registered. Please login.", "email"));
             }
 
             //password validation check

@@ -1,5 +1,4 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import { useLocalStorage } from '@mantine/hooks';
 import {  GoogleIcon } from '@/components/Auth/OAuthIcons/googleIcon';
@@ -7,7 +6,7 @@ import { Form, FormField, FormItem, FormLabel, FormMessage } from "@/components/
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Divider } from "@/components/ui/divider";
-import { Icons } from '@/components/icons/icons';
+import { Mail,KeyRound } from 'lucide-react';
 
 import AuthSideBlock from '@/components/Auth/authSideBlock';
 
@@ -68,7 +67,7 @@ const AuthForm = ({ navigate, form, onSubmit, content }) => {
                                                     <FormItem >
                                                         <FormLabel className='text-zinc-100'>Email address</FormLabel>
                                                         <Input
-                                                            startIcon={Icons('IconMail',18,18,'#929292')}
+                                                            startIcon={<Mail className='text-zinc-400' size={16} />}
                                                             autoComplete="off"
                                                             placeholder="Enter your email"
                                                             className='rounded-lg placeholder:text-muted-foreground bg-transparent border border-[#424345] text-zinc-100'
@@ -86,7 +85,7 @@ const AuthForm = ({ navigate, form, onSubmit, content }) => {
                                                     <FormItem >
                                                         <FormLabel className='text-zinc-100'>Password</FormLabel>
                                                         <Input
-                                                            startIcon={Icons('IconLock',18,18,'#929292')}
+                                                            startIcon={<KeyRound className='text-zinc-400' size={16} />}
                                                             placeholder="Enter your password"
                                                             autoComplete="off"
                                                             type='password'

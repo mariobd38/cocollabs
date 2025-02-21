@@ -4,7 +4,6 @@ import com.cocollabs.app.space.dto.SpaceDto;
 import com.cocollabs.app.space.model.Space;
 import com.cocollabs.app.space.service.SpaceService;
 import com.cocollabs.app.userSpace.repository.UserSpaceActivityRepository;
-import com.cocollabs.app.auth.controller.AuthController;
 import com.cocollabs.app.user.model.User;
 import com.cocollabs.app.user.repository.UserRepository;
 import com.cocollabs.app.user.util.UserPlatformDtoConverter;
@@ -28,7 +27,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/spaces")
 public class SpaceController {
-    private final Logger log = LoggerFactory.getLogger(AuthController.class);
+    private final Logger log = LoggerFactory.getLogger(SpaceController.class);
     private final SpaceService spaceService;
     private final UserRepository userRepository;
     private final UserSpaceActivityRepository userSpaceActivityRepository;

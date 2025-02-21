@@ -15,12 +15,15 @@ public class OrganizationDto {
     private String name;
     private String description;
     private String slug;
+    private Boolean isPublic;
     private OrganizationType type;
 
     public static OrganizationDto mapper(Organization org) {
         return OrganizationDto.builder()
                 .name(org.getName())
                 .description(org.getDescription())
+                .slug(org.getSlug())
+                .isPublic(org.getIsPublic())
                 .type(org.getType())
                 .build();
     }

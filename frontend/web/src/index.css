@@ -2,8 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 @layer base {
-    :root[data-mantine-color-scheme="light"] body {
-        /* --background: 0 0% 100%; */
+    :root body {
+        --background: 20 20% 98%;
         --foreground: 222.2 84% 4.9%;
 
         --card: 0 0% 100%;
@@ -42,7 +42,7 @@
         --sidebar-border: 0, 0%, 85%;
         --sidebar-ring: 217.2 91.2% 59.8%;
 
-        background-color: #fff;
+        /* background-color: #fff; */
 
     }
 
@@ -112,11 +112,6 @@
     }
     body {
         @apply bg-background text-foreground;
-        -webkit-font-feature-settings: "kern", "liga", "case"; /* No variation */
-       -moz-font-feature-settings: "kern=1", "liga=1", "case=1"; /* Firefox 4.0 to 14.0 */
-       -moz-font-feature-settings: "kern", "liga" , "case"; /* Firefox 15.0 onwards */
-       -moz-font-feature-settings: "kern" 1, "liga" 1, "case" 1; /* Firefox 15.0 onwards explicitly set feature values */
-            font-feature-settings: "kern", "liga", "case"; /* No variation */
     }
 }
 

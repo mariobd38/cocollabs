@@ -11,7 +11,7 @@ const UserAvatar = (props) => {
     const size = `calc(${multiplier}rem * var(--mantine-scale))`;
     
     const [avatarList, setAvatarList] = useState([]);
-    const [avatarUrl, setAvatarUrl] = useState(userProfileDto.type === 'avatar' ? avatarList.find(avatar => avatar.name === userProfileDto.svg).svg : userProfileDto.preSignedUrl);
+    const [avatarUrl, setAvatarUrl] = useState(null);
 
     useEffect(() => {
         if (userProfileDto.type === 'avatar') {
