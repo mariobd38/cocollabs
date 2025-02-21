@@ -40,6 +40,7 @@ const LandingNavbar: React.FC = () => {
                             ))}
                         </div>
                     </div>
+                    {/* testing marketing vercel project */}
         
                     <div className='flex items-center gap-7'>
                         <div className='hidden sm:flex'>
