@@ -61,7 +61,7 @@ export const AuthProvider = ({ children }) => {
 
     // Initial auth check
     useEffect(() => {
-        if (location.pathname !== '/')
+        // if (location.pathname !== '/')
             checkAuthStatus();
     }, [checkAuthStatus,location]);
 

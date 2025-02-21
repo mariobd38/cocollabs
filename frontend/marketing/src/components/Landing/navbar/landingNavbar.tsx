@@ -1,8 +1,9 @@
 import React, { useState,useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
+import { APP_DOMAIN } from '@/constants';
 
 import { Burger } from '@/components/ui/burger';
-import { Sheet,SheetContent,SheetDescription,SheetHeader,SheetTitle,SheetTrigger } from "@/components/ui/sheet"
+import { Sheet,SheetContent,SheetDescription,SheetHeader,SheetTrigger } from "@/components/ui/sheet"
 import { Button } from "@/components/ui/button";
 
 import Logo2 from '@/components/Logo/logo2';
@@ -45,13 +46,21 @@ const LandingNavbar: React.FC = () => {
                             <div className="flex gap-5 items-center">
                                 {process.env.NODE_ENV === 'development' ?
                                 <>
-                                <Button variant="ghost" onClick={() => navigate('/login')} className="h-9 rounded-lg px-3.5 py-0 font-medium text-base text-white border-solid border-[transparent] hover:bg-zinc-800">
+                                {/* <Button variant="ghost" onClick={() => window.location.href =  `${APP_DOMAIN}/login`} className="h-9 rounded-lg px-3.5 py-0 font-medium text-base text-white border-solid border-[transparent] hover:bg-zinc-800">
                                     Login
-                                </Button>
-                                <Button variant="ghost" onClick={() => navigate('/signup')} className="h-9 rounded-lg px-3.5 py-0 font-medium text-base !text-black bg-white border-solid border-white hover:brightness-90">
+                                </Button> */}
+                                <a href={`${APP_DOMAIN}/login`} className="flex items-center h-9 rounded-lg px-3.5 py-0 font-medium text-base text-white border-solid border-[transparent] hover:bg-zinc-800">
+                                    Login
+                                </a>
+                                <a href={`${APP_DOMAIN}/signup`} className="flex items-center h-9 rounded-lg px-3.5 py-0 font-medium text-base !text-black bg-white border-solid border-white hover:brightness-90">
                                     Sign up
-                                </Button></> : 
-                                <Button variant="ghost" className="rounded-lg px-3 py-0 font-medium text-base bg-white hover:brightness-90
+                                </a>
+                                {/* <Button variant="ghost" onClick={() => window.location.href = `${APP_DOMAIN}/signup`}  className="h-9 rounded-lg px-3.5 py-0 font-medium text-base !text-black bg-white border-solid border-white hover:brightness-90">
+                                    Sign up
+                                </Button> */}
+                                </> 
+                                : 
+                                <Button variant="ghost" className="rounded-lg h-9 px-3 py-0 font-medium text-base bg-white hover:brightness-90
                                 inline-block bg-gradient-to-r from-[hsl(var(--color-1))] via-[hsl(var(--color-2))] to-[hsl(var(--color-3))]  text-white animate-gradient">
                                     Join the waitlist
                                 </Button>
@@ -70,8 +79,7 @@ const LandingNavbar: React.FC = () => {
                                     </div>
                                     
                                     <SheetHeader>
-                                        <SheetTitle>Are you absolutely sure?</SheetTitle>
-                                        <SheetDescription className='py-10'>
+                                        <SheetDescription className='py-16'>
                                             <div className='flex flex-col items-center gap-5'>
                                                 {navItems.map((item,index) => (
                                                     <div key={index} className='flex w-full' >

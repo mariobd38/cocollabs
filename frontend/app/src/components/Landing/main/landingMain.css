@@ -5,33 +5,6 @@ a {
 
 /* new */
 
-.hero-get-started-button {
-    font-size: 1.05rem !important;
-    font-family: Inter;
-    border-radius: 12px !important;
-    padding: 8px 26px !important;
-    transition: bottom 1s linear !important;
-    transition: transform .43s ease-in-out, box-shadow .33s ease-in-out !important;
-    border: 1px solid #404040 !important;
-    background-color: transparent !important;
-}
-.hero-get-started-button:hover {
-    filter: brightness(1.35);
-    box-shadow: #162a53 0px 22px 70px 6px;
-    transform: translateY(-5px) !important;
-}
-
-
-.visit-community-button:hover {
-    box-shadow: #0f204180 0px 0px 45px 1px;
-    transform: translateY(-5px);
-}
-.visit-community.icon {
-    transition: transform 1s ease;
-}
-.visit-community-button {
-    transition: background-color .5s ease,transform .43s ease-in-out,box-shadow .33s ease-in-out !important;
-}
 .visit-community-button:hover {
     .visit-community.icon {
         transform: translateX(5px) !important;

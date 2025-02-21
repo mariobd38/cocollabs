@@ -116,6 +116,7 @@
 }
 
 html {
+    background: #454545;
     --nextui-background: unset !important;
 }
 body {

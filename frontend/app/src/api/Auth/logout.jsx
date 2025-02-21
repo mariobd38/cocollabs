@@ -10,7 +10,8 @@ function userLogout(navigate) {
             throw new Error("Network response was not ok");
         }
         if (response.status === 204) {
-            navigate('/', { replace: true });
+            // navigate('/', { replace: true });
+            window.location.href = "http://localhost:3000/"
         }
     })
       .catch((error) => {

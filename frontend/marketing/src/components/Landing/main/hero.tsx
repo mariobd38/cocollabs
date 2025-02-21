@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
+import { APP_DOMAIN } from '@/constants';
 
 import { Separator } from '@/components/ui/separator';
-import { Button } from '@/components/ui/button';
 import { Icons } from '@/components/icons/icons';
 
 import AuroraTextComp from '@/components/ui/AuroraText/auroraTextComp';
@@ -43,21 +43,15 @@ const Hero: React.FC = () => {
                                 </p>
                                 
                                 <div className='flex flex-col sm:flex-row items-center m-auto gap-8 sm:gap-12 font-["Inter"]'>
-                                    {/* <button className="relative overflow-hidden p-[1px] rounded-xl transition-transform duration-500 ease-in-out hover:shadow-[0px_0px_45px_1px_#0f204180] hover:-translate-y-1">
-                                        <span className="absolute inset-[-1000%] animate-[spin_8s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#101216_0%,#393BB2_50%,#303256_100%)]" />
-                                        <div className="font-bold py-4 px-7 h-full w-full bg-background text-white backdrop-blur-3xl rounded-xl">
-                                            Get started for free
-                                        </div>
-                                    </button> */}
-                                    <Button className="w-40 sm:w-44 visit-community-button bg-blue-500/80 text-white font-bold rounded-xl text-sm sm:text-base px-4 py-2 flex items-center 
-                                    gap-2 transition-all duration-300 ease-in-out hover:brightness-95 hover:shadow-[0px_0px_45px_1px_#0f204180] hover:-translate-y-1 tracking-wide">
+                                    <a href={`${APP_DOMAIN}/signup`} className='w-48 h-14 flex justify-center sm:w-52 bg-blue-500/80 text-white font-bold rounded-xl text-sm sm:text-base flex items-center
+                                    gap-2 transition-all duration-500 ease-in-out hover:-translate-y-1.5 tracking-wide' >
                                         Get started for free
-                                    </Button>
+                                    </a>
+                                    <a href={`/#`} className='w-48 h-14 flex justify-center sm:w-52 visit-community-button bg-white text-black font-bold rounded-xl text-sm sm:text-base flex items-center
+                                    gap-2 transition-all duration-300 ease-in-out hover:-translate-y-1.5 tracking-wide'>
+                                        Visit communities<span className="visit-community icon">{Icons('IconChevronRight', 16, 16)}</span>
+                                    </a>
                                     
-                                    <Button className="w-40 sm:w-44 visit-community-button bg-white text-black font-bold rounded-xl text-sm sm:text-base px-4 py-2 flex items-center 
-                                    gap-2 transition-all duration-300 ease-in-out hover:brightness-95 hover:shadow-[0px_0px_45px_1px_#0f204180] hover:-translate-y-1 tracking-wide">
-                                        Visit the community<span className="visit-community icon">{Icons('IconChevronRight', 16, 16)}</span>
-                                    </Button>
                                 </div>
                             </div>
                         </div>

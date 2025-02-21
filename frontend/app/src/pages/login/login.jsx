@@ -55,7 +55,8 @@ const Login = () => {
                 if (isAuthenticated && isOnboarded) {
                     try {
                         const activeUserOrg = await getLastActiveOrganizationInfo();
-                        navigate(`/${activeUserOrg.slug}`, { state: { loginData } });
+                        // navigate(`/${activeUserOrg.slug}`, { state: { loginData } });
+                        window.location.href = "http://localhost:3001/";
                     } catch(error) {
                         console.error("Could not redirect to user space:", error);
                     }

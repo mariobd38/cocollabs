@@ -16,9 +16,6 @@ import OAuth2RedirectHandler from "@/components/Auth/oAuth2RedirectHandler";
 
 import './App.css';
 
-const Landing = lazy(() => import("@/pages/landing/landing"));
-const Login = lazy(() => import("@/pages/login/login"));
-const Signup = lazy(() => import("@/pages/signup/signup"));
 const NotFound = lazy(() => import('@/components/NotFound/notFound'));
 
 const LoadingFallback = () => <></>;
@@ -33,7 +30,7 @@ function App() {
             <Routes>
                 
 
-                {process.env.NODE_ENV === 'development' &&
+                {/* {process.env.NODE_ENV === 'development' &&
                     <>
                     <Route
                     path="/:slug"
@@ -41,11 +38,10 @@ function App() {
                     element={
                         <PrivateRoute>
                             <AppLayout />
-                            {/* <AppLayoutv2 /> */}
                         </PrivateRoute>
                     }>
-                        <Route index element={<Homev2 />} /> {/* Default route for /:slug */}
-                        <Route path="explore" element={<Explore />} /> {/* Route for /:slug/explore */}
+                        <Route index element={<Homev2 />} />
+                        <Route path="explore" element={<Explore />} />
                     </Route>
           
                     
@@ -53,7 +49,6 @@ function App() {
                     <Route path="/oauth2/redirect" element={<OAuth2RedirectHandler />} />
 
                     <Route path="/onboarding" element={
-                        // todo: might have to comment out PrivateRoute
                         <PrivateRoute> 
                             <Onboarding />
                         </PrivateRoute>
@@ -61,7 +56,7 @@ function App() {
 
                     <Route path="/login" element={<Login />} />
                     <Route path="/signup" element={<Signup />} />
-                </>}
+                </>} */}
 
                 {/* {background && (
                         <Route path="/home/modal" element={
@@ -71,7 +66,18 @@ function App() {
                     } />
                     )}  */}
 
-                <Route path="/" element={<Landing/> } />
+                {/* <Route path="/" element={<Landing/> } /> */}
+                <Route
+                    path="/"
+                    location={background || location} 
+                    element={
+                        <PrivateRoute>
+                            <AppLayout />
+                        </PrivateRoute>
+                    }>
+                        <Route index element={<Homev2 />} />
+                        <Route path="explore" element={<Explore />} />
+                </Route>
 
                 <Route path="*" element={<NotFound />} />
 

@@ -2,6 +2,7 @@ import keys from "@/config/dev";
 
 export const OAUTH2_REDIRECT_URI = keys.redirectUri;
 export const OAUTH2_CALLBACK_URI = keys.callbackUri;
+export const APP_DOMAIN = keys.appDomain;
 
 export const GOOGLE_AUTH_URL_PREFIX = 'https://accounts.google.com/o';
 
