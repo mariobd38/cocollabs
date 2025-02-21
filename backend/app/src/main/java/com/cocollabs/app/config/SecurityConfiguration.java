@@ -60,7 +60,7 @@ public class SecurityConfiguration {
         http.csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> cors.configurationSource(request -> {
                     var corsConfiguration = new CorsConfiguration();
-                    corsConfiguration.setAllowedOrigins(List.of("http://localhost:3000"));
+                    corsConfiguration.setAllowedOrigins(List.of("http://localhost:3000","http://localhost:3001"));
                     corsConfiguration.setAllowedMethods(Arrays.asList(
                             HttpMethod.GET.name(),
                             HttpMethod.POST.name(),

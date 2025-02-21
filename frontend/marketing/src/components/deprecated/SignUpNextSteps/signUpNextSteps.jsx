@@ -1,0 +1,58 @@
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+
+import SignupContent from '@/components/Auth/SignUp/signupContent';
+
+import { VerifyEmailRegex } from '@/utils/emailRegexFormat';
+import { userExists } from '@/api/users/userExists';
+
+const SignUpNextSteps = (props) => {
+    let navigate = useNavigate();
+    const location = useLocation();
+
+    // Extract email from the query parameters
+    const queryParams = new URLSearchParams(location.search);
+    const inputEmail = queryParams.get('email') || '';
+    useEffect(() => {
+
+    const checkUserExists = async () => {
+        if (!inputEmail || !VerifyEmailRegex(inputEmail)) {
+            navigate('/signup');
+            return;
+        }
+
+        try {
+            const exists = await userExists(inputEmail);
+            if (exists) {
+                navigate('/signup');
+            } else {
+                navigate(`/app/signup?email=${inputEmail}`);
+            }
+        } catch (error) {
+            console.error(error);
+            navigate('/signup');
+        }
+    };
+
+        checkUserExists();
+        
+    }, [inputEmail, navigate]);
+
+    // const [email,setEmail] = useState("");
+    const [isFocused, setIsFocused] = useState(false);
+
+    return (
+        <div className='w-full'>
+            {/* <AuthHeader /> */}
+            <SignupContent
+                inputEmail={inputEmail}
+                isFocused={isFocused}
+                setIsFocused={setIsFocused}
+                showOAuth2Buttons={false}
+                nextSteps={true}
+            />
+        </div>
+    );
+};
+
+export default SignUpNextSteps;

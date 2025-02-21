@@ -1,0 +1,31 @@
+.home-header-stat-block {
+    width: 16rem;
+    height: 8rem;
+    background-color: #1E1F21;
+    border-radius: 9px;
+    border: 1.5px solid #505050;
+}
+.home-header-stat-block-top {
+    height: 70%;
+    background-color: #1E1F21;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+.home-header-stat-block-bottom {
+    height: 30%;
+    background-color: #1E1F21 !important;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+.home-header-stat-block-text {
+    font-family: 'Lato';
+    font-size: 1.1rem;
+    color: #6FE3C2;
+    font-weight: 600;
+}
+.home-header-stat-block-num {
+    font-family: 'Lato';
+    font-size: 2.3rem;
+    color: #6FE3C2;
+    font-weight: 600;
+}

@@ -1,0 +1,192 @@
+.table-row-dark:hover .table-row-new-dark {
+    background-color: #2f3032 !important;
+}
+.table-row-dark {
+    cursor: pointer;
+}
+/* .table-row-dark:hover{
+    background-color: #2f3032 !important;
+} */
+.table-row-dark:hover .user-home-calendar-icon-div {
+    /* display: flex !important;
+    visibility:visible; */
+}
+.table-cell {
+    font-family: 'Lato', serif !important;
+    font-size: 15px;
+    overflow: clip !important;
+    border: none !important;
+    border-radius: 8px !important;
+    position: relative;
+    display:table !important;
+    /* display: flex;
+    align-items: center;
+    justify-content: space-between; */
+    height: 60px !important;
+    transition: all .4s ease;
+}
+.table-cell.dark:hover {
+    background-color: #2f3032 !important;
+}
+.table-cell.light:hover {
+    /* background-color: #e6eaf2 !important; */
+    background-color: #d0d3d4 !important;
+}
+.user-home-task-check-icon {
+    width: 1.15rem !important;
+    height: 1.15rem !important;
+}
+.user-home-task-check-icon:hover {
+    cursor: pointer;
+    color: #048a66 !important;
+}
+.task-name-link {
+    color: inherit;
+    cursor: pointer;
+    background: none;
+    border: none;
+    margin: 0;
+    padding: 0;
+    outline: none !important
+}
+.task-name-link:hover {
+    color: #fafafa;
+}
+.task-name-text:focus {
+    outline: none !important;
+}
+.task-name-text {
+    /* margin: auto !important; */
+    font-size: 0.88rem !important;
+    padding: 0.3em 1em;
+    border: none !important;
+    font-family: 'Poppins', serif;
+    color: #fafafa;
+}
+.table-cell:hover .task-name-text {
+    margin:0 !important;
+}
+.task-name-text.strikethrough {
+    text-decoration: line-through;
+}
+.user-home-calendar-icon-div {
+    color: #e7e7e7 !important;
+    /* border: .1px solid #969696 !important; */
+    padding: 6.8px 0.3rem;
+    cursor: pointer !important;
+    border-radius: 6px;
+    /* visibility: hidden; */
+    display: flex;
+    align-items: center;
+}
+.user-home-calendar-icon-div.dark:hover {
+    background-color: #414243 !important;
+}
+.user-home-calendar-icon-div.light:hover {
+    background-color: #c0c1c3 !important;
+}
+.user-home-calendar-icon {
+    color: #e7e7e7;
+    width: 1.3rem !important;
+    height: 1rem !important;
+}
+.user-home-chosen-due-date-text {
+    cursor: pointer;
+}
+
+.table-cell-icon {
+    display: flex;
+}
+
+.table-cell:hover .user-home-chosen-due-date-text {
+    /* display: none; */
+}
+
+.table-cell:hover .table-cell-icon {
+    display: inline !important;
+}
+
+/* Your other styles */
+.task-card-content-accordion {
+    font-family: 'Lato';
+    padding: 5px 0px !important;
+    border-radius: 4px;
+
+    .mantine-Accordion-chevron {
+        margin-inline-end: var(--mantine-spacing-sm);
+        margin-inline-start: 0 !important;
+        padding: 3px 3px;
+        width: 25px;
+        display: flex;
+        justify-content: left;
+        border-radius: 4px;
+    }
+    .mantine-Accordion-chevron:hover {
+        background-color: #303133;
+    }
+    .mantine-Accordion-label {
+        flex: 0;
+    }
+    .mantine-Accordion-icon {
+        margin: 0px 7px !important;
+        margin-inline-end: var(--mantine-spacing-sm) !important;
+    }
+}
+
+
+
+.task-card-content-accordion:hover {
+    background-color: transparent !important;
+}
+
+.task-card-content-accordion-panel .mantine-Accordion-content {
+    padding: 0;
+    padding-top: calc(var(--mantine-spacing-xs) / 2);
+}
+
+.user-home-task-set-complete:hover {
+    color: teal;
+    cursor: pointer;
+}
+
+.text-overflow-cell {
+    max-width: 0;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis !important;
+    /* padding-right: 0rem; */
+}
+.text-overflow {
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+
+.task-rename-modal {
+    .ant-modal-content {
+        background-color: #1e1f21;
+        border: 1px solid #57585a;
+    }
+    .ant-modal-close {
+        display: none;
+    }
+    .ant-modal-footer {
+        display: none !important;
+    }
+    .ant-modal-body {
+        color: #fafafa;
+    }
+    button { background-color: #048a66; }
+    button[disabled] {
+        background-color: #434446;
+        color: #838486;
+        cursor: auto;
+    }
+    .mantine-Textarea-root .mantine-Textarea-wrapper textarea {
+        background-color: transparent !important;
+        border: 1px solid transparent;
+        font-size: 20px;
+        color: #fafafa;
+    }
+}

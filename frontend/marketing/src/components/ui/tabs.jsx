@@ -1,0 +1,92 @@
+"use client";
+
+import { cn } from "@/lib/utils";
+import * as TabsPrimitive from "@radix-ui/react-tabs";
+import React, { useEffect, useRef, useState } from "react";
+
+const Tabs = TabsPrimitive.Root;
+
+const TabsList = ({ className, ...props }) => {
+  const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, top: 0, width: 0, height: 0 });
+  const [tabChangeCount, setTabChangeCount] = useState(0);
+  const tabsListRef = useRef(null);
+  const previousActiveTab = useRef(null);
+
+  useEffect(() => {
+    const updateIndicator = () => {
+      if (tabsListRef.current) {
+        const activeTab = tabsListRef.current.querySelector('[data-state="active"]');
+
+        if (activeTab) {
+          const activeRect = activeTab.getBoundingClientRect();
+          const tabsRect = tabsListRef.current.getBoundingClientRect();
+          setIndicatorStyle({
+            left: activeRect.left - tabsRect.left,
+            top: activeRect.top - tabsRect.top,
+            width: activeRect.width,
+            height: activeRect.height,
+          });
+
+          // Check if the active tab has changed
+          if (previousActiveTab.current !== activeTab) {
+            setTabChangeCount((prevCount) => prevCount + 1);
+            previousActiveTab.current = activeTab;
+          }
+        }
+      }
+    };
+
+    updateIndicator();
+    window.addEventListener("resize", updateIndicator);
+    const observer = new MutationObserver(updateIndicator);
+    if (tabsListRef.current) {
+      observer.observe(tabsListRef.current, {
+        attributes: true,
+        childList: true,
+        subtree: true,
+      });
+    }
+    return () => {
+      window.removeEventListener("resize", updateIndicator);
+      observer.disconnect();
+    };
+  }, []);
+
+  return (
+    <div className="relative w-fit" ref={tabsListRef}>
+      <TabsPrimitive.List
+        className={cn(
+          "relative inline-flex items-center justify-center rounded-md bg-muted p-1 text-muted-foreground",
+          className
+        )}
+        {...props}
+      />
+      <div
+        className={`absolute rounded-md bg-background shadow-sm ${tabChangeCount>1 && 'transition-all duration-300 ease-in-out'}}`}
+        style={indicatorStyle}
+      />
+    </div>
+  );
+};
+
+const TabsTrigger = ({ className, ...props }) => (
+  <TabsPrimitive.Trigger
+    className={cn(
+      "inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 data-[state=active]:text-foreground z-10",
+      className
+    )}
+    {...props}
+  />
+);
+
+const TabsContent = ({ className, ...props }) => (
+  <TabsPrimitive.Content
+    className={cn(
+      "mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+      className
+    )}
+    {...props}
+  />
+);
+
+export { Tabs, TabsContent, TabsList, TabsTrigger };

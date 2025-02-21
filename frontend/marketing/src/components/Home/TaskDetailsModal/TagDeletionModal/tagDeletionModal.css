@@ -1,0 +1,22 @@
+.tag-deletion-modal {
+    .ant-modal-content {
+        background-color: #1e1f21;
+        padding:0;
+    }
+    .ant-modal-footer {
+        display: none;
+    }
+    .ant-modal-close {
+        display: none;
+    }
+    .ant-modal-body {
+        color: #fafafa;
+        border-radius: 8px;
+    }
+    .delete-tag-button.dark:hover {
+        background-color: #313336 !important;
+    }
+    .delete-tag-button:hover {
+        background-color: #313336 !important;
+    }
+}
