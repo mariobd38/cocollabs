@@ -16,6 +16,8 @@ import OAuth2RedirectHandler from "@/components/Auth/oAuth2RedirectHandler";
 
 import './App.css';
 
+const Login = lazy(() => import("@/pages/login/login"));
+const Signup = lazy(() => import("@/pages/signup/signup"));
 const NotFound = lazy(() => import('@/components/NotFound/notFound'));
 
 const LoadingFallback = () => <></>;
@@ -78,6 +80,9 @@ function App() {
                         <Route index element={<Homev2 />} />
                         <Route path="explore" element={<Explore />} />
                 </Route>
+
+                <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<Signup />} />
 
                 <Route path="*" element={<NotFound />} />
 

@@ -16,8 +16,8 @@ import OAuth2RedirectHandler from "@/components/Auth/oAuth2RedirectHandler";
 
 import './App.css';
 
-const Login = lazy(() => import("@/pages/login/login"));
-const Signup = lazy(() => import("@/pages/signup/signup"));
+// const Login = lazy(() => import("@/pages/login/login"));
+// const Signup = lazy(() => import("@/pages/signup/signup"));
 const Landing = lazy(() => import("@/pages/landing/landing"));
 const NotFound = lazy(() => import('@/components/NotFound/notFound'));
 
@@ -47,8 +47,8 @@ function App() {
                     {/* <Route path="/login" element={<Login />} />
                     <Route path="/signup" element={<Signup />} /> */}
                 </>}
-                <Route path="/login" element={<Login />} />
-                <Route path="/signup" element={<Signup />} />
+                {/* <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<Signup />} /> */}
 
                 <Route path="/" element={<Landing/> } />
 
