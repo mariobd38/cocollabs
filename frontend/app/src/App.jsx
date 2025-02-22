@@ -68,7 +68,6 @@ function App() {
                     } />
                     )}  */}
 
-                {/* <Route path="/" element={<Landing/> } /> */}
                 <Route
                     path="/"
                     location={background || location} 
