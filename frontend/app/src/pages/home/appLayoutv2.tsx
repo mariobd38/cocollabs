@@ -4,7 +4,7 @@ import { useLocation, useParams, Outlet } from 'react-router-dom';
 import { useMantineTheme,useMantineColorScheme } from '@mantine/core';
 import { useLocalStorage } from '@mantine/hooks';
 
-import HomeNavbarv2 from '@/components/Home/v2/HomeNavbar/homeNavbarv2';
+import HomeNavbarv2 from '@/components/Home/HomeNavbar/homeNavbar';
 import HomeSidebar from '@/components/Home/v2/HomeSidebar/homeSidebar';
 
 import { getUserProfileInfo } from '@/api/users/getUserProfileInfo';

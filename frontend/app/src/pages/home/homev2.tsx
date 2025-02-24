@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useOutletContext } from 'react-router-dom';
 
 import HomeHeader from '@/components/Home/HomeHeader/homeHeader';
-import { Card, CardContent } from "@/components/ui/card"
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
 import MyOrganizations from '@/components/Home/MyOrganizations/myOrganizations';
 import QuickActions from '@/components/Home/QuickActions/quickActions';
 
@@ -77,36 +75,10 @@ const Homev2: React.FC = () => {
             <div className={`transition-opacity duration-300 ease-linear ${visible ? 'opacity-100' : 'opacity-0'}`}>
                 <HomeHeader firstName={appProps?.profile.firstName} colorScheme={colorScheme} />
                 <div className='w-full '>
-                    <MyOrganizations appData={appProps} colorScheme={colorScheme} />
-                    {/* <QuickActions /> */}
+                    <QuickActions />
+                    {appProps?.organizations.length > 0 && 
+                        <MyOrganizations appData={appProps} colorScheme={colorScheme} />}
                 
-                    {/* <Carousel
-                        opts={{
-                            align: "start",
-                        }}
-                        className="w-full"
-                    >
-                        <CarouselContent>
-                            {Array.from({ length: 5 }).map((_, index) => (
-                            <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
-                                <div className="p-1">
-                                <Card>
-                                    <CardContent className="flex items-center justify-center p-6">
-                                    <span className="text-3xl font-semibold">{index + 1}</span>
-                                    </CardContent>
-                                </Card>
-                                </div>
-                            </CarouselItem>
-                            ))}
-                        </CarouselContent>
-                        <CarouselPrevious />
-                        <CarouselNext />
-                    </Carousel> */}
-                    
-                    {/* <QuickActions themeColors={themeColors} />
-                    <QuickActions themeColors={themeColors} />
-                    <QuickActions themeColors={themeColors} />
-                    <QuickActions themeColors={themeColors} /> */}
                 </div>
             </div>
         </>

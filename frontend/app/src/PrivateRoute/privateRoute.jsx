@@ -45,25 +45,20 @@ const PrivateRoute = ({ children }) => {
     // }, [activeOrgSlug, isExplorePage, location.pathname, navigate, slug, userOrganizations]);
     // console.log(pending);
     if (pending) { 
-        console.log('pending');
         return ''; 
     }
 
     if (!isAuthenticated) { 
-        console.log('login');
         return <Navigate to="/login" replace />; 
     }
 
     if (isAuthenticated && !isOnboarded && location.pathname !== '/onboarding') { 
-        console.log('onboarding');
         return <Navigate to="/onboarding" replace />; 
     }
     // Redirect to notFound if slug is invalid and spaces have loaded
     if (slug && !userOrganizations.some(org => org.slug === slug) && userOrganizations.length > 0 && !currentSlug) {
-        console.log('not found');
         return <Navigate to="/notFound" replace />;
     }
-    console.log('clear!');
 
     return children;
 };

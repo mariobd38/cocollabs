@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
 
 export const HoverEffect = ({items,className}) => {
     let [hoveredIndex, setHoveredIndex] = useState(null);
@@ -66,7 +67,11 @@ export const HoverEffect = ({items,className}) => {
                         )}
                     </AnimatePresence>
                     <Card key={idx}>
-                        <img alt='feature_img' className="h-16 lg:h-20 w-auto mb-5" src={item.illustration} />
+                        <div className="flex justify-between">
+                            <img alt='feature_img' className="h-16 lg:h-20 w-auto mb-5" src={item.illustration} />
+                            {idx > 1 &&
+                            <Button className="cursor-default rounded-full h-9 px-4 bg-zinc-900 text-zinc-300/90 text-[13px] ">Coming soon</Button>}
+                        </div>
                         <CardTitle>{item.title}</CardTitle>
                         <CardDescription>{item.description}</CardDescription>
                     </Card>

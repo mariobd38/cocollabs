@@ -1,5 +1,4 @@
 import React, { useState,useEffect } from 'react';
-import { useNavigate } from "react-router-dom";
 import { APP_DOMAIN } from '@/constants';
 
 import { Burger } from '@/components/ui/burger';
@@ -10,7 +9,6 @@ import Logo2 from '@/components/Logo/logo2';
 
 const navItems: string[] = ['Projects', 'Communities', 'Resources', 'Pricing'];
 const LandingNavbar: React.FC = () => {
-    const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
     useEffect(() => {

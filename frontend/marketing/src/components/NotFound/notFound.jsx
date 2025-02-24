@@ -7,7 +7,6 @@ import notFound from '@/assets/illustrations/notFound/notFound.svg'
 import LandingNavbar from '../Landing/navbar/landingNavbar';
 import LandingFooter from '../Landing/footer/landingFooter';
 
-import './notFound.css'
 
 const NotFound = () => {
     const navigate = useNavigate();

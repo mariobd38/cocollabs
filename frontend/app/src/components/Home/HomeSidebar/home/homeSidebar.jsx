@@ -3,8 +3,8 @@ import React, { useRef,useState,useCallback,useEffect,lazy,Suspense } from "reac
 import { Sidebar,SidebarContent,SidebarHeader } from "@/components/ui/sidebar"
 import { SidebarProvider } from "@/components/ui/sidebar"
 
-import HomeSidebarContent from "./homeSidebarContent";
-import HomeSidebarHeader from "./homeSidebarHeader";
+import HomeSidebarContent from "./sidebarContent";
+// import HomeSidebarHeader from "./homeSidebarHeader";
 import SpaceCreationModal from '@/components/Home/SpaceCreationModal/spaceCreationModal';
 
 import '@/styles/home/homeSidebar.css';
@@ -12,7 +12,7 @@ const CustomDialog = lazy(() => import('@/components/customDialog'));
 const LoadingFallback = () => <></>;
 
 const HomeSidebar = (props) => {
-    const {resize, openSidebarToggle, themeColors, colorScheme, setOpenSidebarToggle, spaceData,activePage,
+    const {resize, appData, openSidebarToggle, colorScheme, setOpenSidebarToggle, spaceData,activePage,
         userProfileDto,userProfilePicture} = props;
 
     const sidebarRef = useRef(null);
@@ -104,9 +104,9 @@ const HomeSidebar = (props) => {
                     </SidebarHeader> */}
                     <SidebarContent >
                         <HomeSidebarContent
+                            appData={appData}
                             spaceSlug={spaceData.slug}
                             openSidebarToggle={openSidebarToggle}
-                            themeColors={themeColors}
                             colorScheme={colorScheme}
                             activePage={activePage}
                             userProfileDto={userProfileDto}

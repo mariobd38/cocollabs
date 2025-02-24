@@ -19,6 +19,8 @@ import './App.css';
 const Login = lazy(() => import("@/pages/login/login"));
 const Signup = lazy(() => import("@/pages/signup/signup"));
 const NotFound = lazy(() => import('@/components/NotFound/notFound'));
+const OrgHome = lazy(() => import('@/pages/organization/orgHome'));
+const Developers = lazy(() => import('@/pages/home/developers'));
 
 const LoadingFallback = () => <></>;
   
@@ -76,14 +78,23 @@ function App() {
                             <AppLayout />
                         </PrivateRoute>
                     }>
+
+                        <Route path="/org/:slug" element={<OrgHome />} />
                         <Route index element={<Homev2 />} />
                         <Route path="explore" element={<Explore />} />
+                        <Route path="developers" element={<Developers />} />
                 </Route>
+
+                <Route path="/onboarding" element={
+                    <PrivateRoute> 
+                        <Onboarding />
+                    </PrivateRoute>
+                }/>
 
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<Signup />} />
 
-                <Route path="*" element={<NotFound />} />
+                <Route path="/notFound" element={<NotFound />} />
 
             </Routes>
             </Suspense>

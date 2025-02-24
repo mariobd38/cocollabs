@@ -5,8 +5,7 @@ import { useMantineTheme,useMantineColorScheme } from '@mantine/core';
 import { useLocalStorage } from '@mantine/hooks';
 
 import HomeNavbarv2 from '@/components/Home/HomeNavbar/homeNavbar';
-// import HomeSidebar from '@/components/Home/v2/HomeSidebar/homeSidebar';
-import HomeSidebar from '@/components/Home/HomeSidebar/home/homeSidebar';
+import HomeSidebar from '@/components/Home/v2/HomeSidebar/homeSidebar';
 
 import { getUserProfileInfo } from '@/api/users/getUserProfileInfo';
 // import { getLastActiveSpaceInfo } from '@/api/spaces/getLastActiveSpace';
@@ -21,7 +20,7 @@ import { getLastActiveOrganizationInfo } from '@/api/organizations/getLastActive
 import { getThemeColor } from '@/components/Themes/getThemeColor';
 import { getTextColor } from '@/components/Themes/getTextColor';
 
-const AppLayout = ({content}) => {
+const OrgAppLayout = ({content}) => {
     document.body.style.overflowY = "hidden";
     // const dayjs = require('dayjs');
     const theme = useMantineTheme();
@@ -150,7 +149,7 @@ const AppLayout = ({content}) => {
                 <div>
                     <HomeSidebar 
                         resize={true}
-                        appData={appProps}
+                        themeColors={themeColors}
                         colorScheme={colorScheme}
                         openSidebarToggle={openSidebarToggle}
                         setOpenSidebarToggle={setOpenSidebarToggle}
@@ -168,4 +167,4 @@ const AppLayout = ({content}) => {
     );
 };
 
-export default AppLayout;
+export default OrgAppLayout;

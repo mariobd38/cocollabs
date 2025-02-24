@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Building, Search } from 'lucide-react';
+import { Building, Folder } from 'lucide-react';
 import { Button } from "@/components/ui/button"
 
 
@@ -13,19 +13,18 @@ const QuickActions = () => {
     // ];
 
     const qaButtons = [
-        {icon: Search, text: 'Search projects'},
-        {icon: Building, text: 'Create organization'}
+        {icon: Folder, text: 'New project'},
+        {icon: Building, text: 'New organization'}
     ];
 
 
     return (
         <>
-            <div className='py-4 font-["Inter"] gap-3 flex flex-col'>
-                <h1>Quick Actions</h1>
-                <div className='flex gap-5'>
+            <div className='py-4 font-["Inter"] flex flex-col'>
+                <div className='flex gap-3 flex-col sm:flex-row'>
                     {qaButtons.map((button,index) =>  (
-                        <Button key={index} variant='ghost' className='w-44 justify-start rounded-lg border border-solid dark:border-zinc-400 border-black/25 h-8 dark:hover:bg-zinc-900 hover:bg-black/10'>
-                            <button.icon className='text-zinc-800 dark:text-zinc-200 mr-1' size={18}/>
+                        <Button key={index} variant='ghost' className='text-[13px] py-0 h-9 px-3.5 justify-start rounded-lg border border-solid dark:border-zinc-400 bg-white dark:bg-transparent border-black/25 dark:hover:bg-zinc-900 hover:bg-zinc-100'>
+                            <button.icon className='text-zinc-800 dark:text-zinc-200 mr-0' size={13}/>
                             {button.text}
                         </Button>
                     ))}

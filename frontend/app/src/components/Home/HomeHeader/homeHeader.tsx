@@ -25,7 +25,7 @@ const HomeHeader: React.FC<HomeHeaderProps> = ({ firstName,colorScheme }) => {
     const month = date.toLocaleString("default", { month: "long" });
     const dayOfWeek = date.toLocaleDateString("en-US", { weekday: "long" });
 
-    document.body.style.overflowY = "hidden";
+    // document.body.style.overflowY = "hidden";
 
     const [openCommand, setOpenCommand] = useState<boolean>(false);
     const searchBgColor = colorScheme === 'dark' ? '#262729' : '#f6f7f9';
@@ -46,13 +46,6 @@ const HomeHeader: React.FC<HomeHeaderProps> = ({ firstName,colorScheme }) => {
         <>
             <div className="flex justify-between items-center py-7">
                 <div className="flex flex-col gap-1 font-['Inter']">
-                    {/* <div className="flex items-center gap-2.5">
-                        <div className="flex justify-center items-center">
-                            {Icons("IconHome", 20, 20, themeColors.text[3])}
-                        </div>
-                        <p className="font-semibold">{spaceName}</p>
-                        <p className="font-semibold">{orgName}</p>
-                    </div> */}
                     <h1 className="text-lg">
                         {getGreeting()}, {firstName}
                     </h1>

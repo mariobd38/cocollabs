@@ -9,7 +9,6 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
 
 
-
 const MyOrganizations = ({appData,colorScheme}) => {
     const navigate = useNavigate();
     const [showArrows, setShowArrows] = React.useState(false);
@@ -28,60 +27,33 @@ const MyOrganizations = ({appData,colorScheme}) => {
 
 
     return (
-        <div className='py-4 font-["Inter"] gap-3 flex flex-col'>
-            <h1>My Organizations</h1>
+        <div className='py-4 font-["Inter"] gap-2 flex flex-col'>
+            <h1 className='dark:text-white/90 text-black/80 font-bold'>My Organizations</h1>
             <div className='flex gap-5'>
-                <Carousel
-                    opts={{
-                        align: "start",
-                        containScroll: 'trimSnaps',
-                        // loop: true,
-                    }}
-                    className="w-full py-2 sm:flex"
-                >
+                <Carousel opts={{ containScroll: 'trimSnaps' }} className="w-full py-2 sm:flex">
                     <CarouselContent className="flex md:justify-start ">
                     {appData.organizations.map((org,index) =>  (
-                        // <CarouselItem key={index} className="basis-1/2">
-                        //     <Card className='h-auto w-64 border border-solid dark:border-zinc-400 bg-white dark:bg-transparent border-black/25 dark:hover:bg-zinc-900 hover:bg-black/5'>
-                        //         <CardContent className="flex h-auto items-center aspect-[3/1] justify-center p-5">
-                        //         <div className='flex flex-col w-full gap-8'>
-                        //             <div className='flex justify-between items-center'>
-                        //                 <a className='text-sky-600 dark:text-sky-500/90 hover:underline underline-offset-2' href='/#' onClick={(e) => {e.preventDefault(); navigate(`/${org.slug}`) }}>{org.name}</a>
-                        //                 <Button className='h-2 px-2 bg-transparent dark:text-zinc-400 text-zinc-600 border border-solid dark:border-zinc-500 border-zinc-300 text-xs rounded-full'>
-                        //                     {org.isPublic ? 'Public' : 'Private'}
-                        //                 </Button>
-                        //             </div>
-                        //             <div className='flex justify-between items-center'>
-                        //                 <div className={`add-favorites cursor-pointer ${colorScheme}`}>
-                        //                     <Star className="text-zinc-800 dark:text-zinc-200 dark:hover:text-yellow-500" size={18} />
-                        //                 </div>
-                        //                 <div className='flex gap-1.5'>
-                        //                     <User className='text-zinc-800 dark:text-zinc-300' size={14} />
-                        //                     <span className='text-xs text-zinc-800 dark:text-zinc-100'>1</span>
-                        //                 </div>
-                        //             </div>
-                        //         </div>
-                        //         </CardContent>
-                        //     </Card>
-                        // </CarouselItem>
-                        <CarouselItem 
-                            key={index} 
-                            className="min-w-full w-full sm:min-w-[300px] sm:basis-1/2 md:basis-1/3 lg:basis-1/4"
-                        >
-
-                            <Card className='h-auto w-full border border-solid dark:border-zinc-400 bg-white dark:bg-transparent border-black/25 dark:hover:bg-zinc-900 hover:bg-black/5'>
+                        <CarouselItem key={index} className="min-w-full w-full sm:min-w-[280px] sm:basis-1/2 md:basis-1/3 lg:basis-1/4">
+                            <Card className='h-auto w-full border border-solid dark:border-zinc-400 bg-white dark:bg-transparent border-black/25 dark:hover:bg-zinc-900 hover:bg-zinc-100'>
                                 <CardContent className="flex h-auto items-center  justify-center p-5">
-                                    <div className='flex flex-col w-full gap-8'>
-                                        <div className='flex justify-between items-center'>
-                                            <a className='text-sky-600 dark:text-sky-500/90 hover:underline underline-offset-2' 
-                                            href='/#' 
-                                            onClick={(e) => { e.preventDefault(); navigate(`/${org.slug}`) }}>
-                                                {org.name}
-                                            </a>
-                                            <Button className='h-2 px-2 bg-transparent dark:text-zinc-400 text-zinc-600 border border-solid dark:border-zinc-500 border-zinc-300 text-xs rounded-full'>
-                                                {org.isPublic ? 'Public' : 'Private'}
-                                            </Button>
+                                    <div className='flex flex-col w-full gap-7'>
+                                        <div className='gap-1 flex flex-col'>
+
+                                        
+                                            <div className='flex justify-between items-center'>
+                                                <a className='text-sky-600 dark:text-sky-500/90 hover:underline underline-offset-2 text-[15px]
+                                                overflow-hidden w-[370px] sm:w-[150px] whitespace-nowrap text-ellipsis' 
+                                                href='/#' onClick={(e) => { e.preventDefault(); navigate(`/org/${org.slug}`) }}>
+                                                    {org.name}
+                                                </a>
+                                                <Button className='h-2 px-2 bg-transparent dark:text-zinc-400 text-zinc-600 border border-solid dark:border-zinc-500 border-zinc-300 text-xs rounded-full'>
+                                                    {org.isPublic ? 'Public' : 'Private'}
+                                                </Button>
+                                                
+                                            </div>
+                                            <p className='text-xs text-muted-foreground'>/{org.slug}</p>
                                         </div>
+                                        
                                         <div className='flex justify-between items-center'>
                                             {/* <div className='cursor-pointer text-zinc-800 dark:text-zinc-200 dark:hover:text-yellow-500'>
                                                 <Star size={18} />
@@ -106,29 +78,7 @@ const MyOrganizations = ({appData,colorScheme}) => {
                 </Carousel>
             </div>
         </div>
-
-        
     );
 };
 
-
 export default MyOrganizations;
-
-
-{/* <Button key={index} variant='ghost' className='w-56 py-3 h-auto justify-start rounded-lg border border-solid dark:border-zinc-400 bg-white dark:bg-transparent border-black/25 dark:hover:bg-zinc-900 hover:bg-black/10'>
-            <div className='flex flex-col w-full gap-5'>
-                <div className='flex justify-between items-center'>
-                    <span>{org.name}</span>
-                    <Button className='h-2 px-2 bg-transparent text-zinc-400 border border-zinc-500 text-xs rounded-full'>{org.isPublic ? 'Public' : 'Private'}</Button>
-                </div>
-                <div className='flex justify-between items-center'>
-                    <div className={`add-favorites ${colorScheme}`}>
-                        <Star className="text-zinc-800 dark:text-zinc-200 dark:hover:text-yellow-500" size={18} />
-                    </div>
-                    <div className='flex gap-1.5'>
-                        <User className='text-zinc-800 dark:text-zinc-300' size={14} />
-                        <span className='text-xs text-zinc-800 dark:text-zinc-100'>1</span>
-                    </div>
-                </div>
-            </div>
-        </Button> */}

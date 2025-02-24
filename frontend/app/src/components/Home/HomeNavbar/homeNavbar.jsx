@@ -12,7 +12,7 @@ import HomeNavbarUserMenu from '@/components/Home/HomeNavbar/homeNavbarUserMenu'
 import '@/styles/home/homeNavbar.css';
 
 
-const HomeNavbarv2 = ({ themeColors,colorScheme,setColorScheme,profileInfo,setOpenSidebarToggle,openSidebarToggle,storedUserInfo,setStoredUserInfo } ) => {
+const HomeNavbar = ({ themeColors,colorScheme,setColorScheme,profileInfo,setOpenSidebarToggle,openSidebarToggle,storedUserInfo,setStoredUserInfo } ) => {
     const buttonColor = colorScheme === 'dark' ? '#d4d5d6' : '#424345';
 
     const handleOpenSidebarToggle = () => {
@@ -60,8 +60,8 @@ const HomeNavbarv2 = ({ themeColors,colorScheme,setColorScheme,profileInfo,setOp
                         </div> */}
                         <div>
 
-                        <Button className='h-5 px-2 bg-transparent dark:hover:bg-zinc-700/50 hover:bg-zinc-300 transition-all duration-300 linear'>
-                            <Inbox className='text-zinc-800 dark:text-zinc-200' size={20} />
+                        <Button className='h-4 px-2 bg-transparent dark:hover:bg-zinc-700/50 hover:bg-zinc-300 transition-all duration-300 linear'>
+                            <Inbox className='text-zinc-800 dark:text-zinc-200' size={16} />
                         </Button>
                         </div>
                         {/* <Separator orientation='vertical' className='hidden sm:flex h-8 mx-3 bg-zinc-600' /> */}
@@ -82,4 +82,4 @@ const HomeNavbarv2 = ({ themeColors,colorScheme,setColorScheme,profileInfo,setOp
     );
 };
 
-export default HomeNavbarv2;
+export default HomeNavbar;
