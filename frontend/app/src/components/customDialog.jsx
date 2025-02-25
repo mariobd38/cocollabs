@@ -3,8 +3,7 @@ import React from 'react';
 import { Dialog,DialogContent,DialogTrigger } from "@/components/ui/dialog"
 
 
-const CustomDialog = ({trigger,content, open, setOpen, width,openIconPopover}) => {
- 
+const CustomDialog = ({trigger,content, open, setOpen, width}) => {
     return (
         <Dialog open={open} >
             <DialogTrigger asChild>
@@ -15,7 +14,7 @@ const CustomDialog = ({trigger,content, open, setOpen, width,openIconPopover}) =
                 className={`sm:max-w-[${width}px]`}
                 onEscapeKeyDown={() => setOpen(false)}
                 // onPointerDownOutside={() => setOpen(false)}
-                openIconPopover={openIconPopover}
+                // openIconPopover={openIconPopover}
             >
                 {content}
             </DialogContent>

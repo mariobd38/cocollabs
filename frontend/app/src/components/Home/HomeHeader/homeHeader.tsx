@@ -44,7 +44,7 @@ const HomeHeader: React.FC<HomeHeaderProps> = ({ firstName,colorScheme }) => {
 
     return (
         <>
-            <div className="flex justify-between items-center py-7">
+            
                 <div className="flex flex-col gap-1 font-['Inter']">
                     <h1 className="text-lg">
                         {getGreeting()}, {firstName}
@@ -76,7 +76,7 @@ const HomeHeader: React.FC<HomeHeaderProps> = ({ firstName,colorScheme }) => {
                         <p className='m-auto pt-[1px] text-muted-foreground kbd text-sm'>K</p>
                     </div>
                 </Button> */}
-            </div>
+            
             <CustomCommand 
                 open={openCommand}
                 setOpen={setOpenCommand}

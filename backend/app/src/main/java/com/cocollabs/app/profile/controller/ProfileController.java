@@ -1,39 +1,49 @@
 package com.cocollabs.app.profile.controller;
 
+import com.cocollabs.app.profile.dto.ProfileDto;
 import com.cocollabs.app.profile.repository.ProfileRepository;
 import com.cocollabs.app.profile.service.ProfileService;
 import com.cocollabs.app.user.dto.UserProfileDto;
 import com.cocollabs.app.general.error.ErrorResponse;
 import com.cocollabs.app.user.model.User;
 import com.cocollabs.app.user.repository.UserRepository;
+import com.cocollabs.app.user.util.UserPlatformDtoConverter;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RestController
-@RequestMapping("/api/profile")
+@RequestMapping("/api/profiles")
 public class ProfileController {
     private final Logger log = LoggerFactory.getLogger(ProfileController.class);
     private final ProfileRepository profileRepository;
     private final UserRepository userRepository;
     private final ProfileService profileService;
+    private final UserPlatformDtoConverter userPlatform;
 
     public ProfileController(
             ProfileRepository profileRepository,
             UserRepository userRepository,
-            ProfileService profileService ) {
+            ProfileService profileService,
+            UserPlatformDtoConverter userPlatform) {
         this.profileRepository = profileRepository;
         this.userRepository = userRepository;
         this.profileService = profileService;
+        this.userPlatform = userPlatform;
     }
 
     @PutMapping(value = "/create",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -52,7 +62,7 @@ public class ProfileController {
             if (profileService.getUsernameValidationErrors(username) != null) {
                 return ResponseEntity.badRequest().body(profileService.getUsernameValidationErrors(username));
             }
-            if (userRepository.existsByUsername(username)) {
+            if (userRepository.existsByActualUsername(username)) {
                 return ResponseEntity.badRequest().body(new ErrorResponse("Username is not available", "username"));
             }
             if (profileService.getFullNameValidationErrors(fullName) != null) {
@@ -64,7 +74,7 @@ public class ProfileController {
 
             //user.setFullName(customUserService.transformFullName(fullName));
             user.setProfile(profileService.updateFullName(user,fullName));
-            user.setUsername(username);
+            user.setActualUsername(username);
             if (file != null && !file.isEmpty()) {
                 if (!profileService.isFileValid(file)) {
                     return ResponseEntity.badRequest().body(new ErrorResponse("Invalid file. Please upload a valid image.", "file"));
@@ -84,4 +94,15 @@ public class ProfileController {
         }
     }
 
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/getAll")
+    public ResponseEntity<?> getAllProfiles(@AuthenticationPrincipal User activeUser) {
+        List<ProfileDto> profileDtos = new ArrayList<>();
+        for(User user : userRepository.findAll()) {
+            if (user.getOnboardingStep().equals(User.UserOnboardingStep.COMPLETE) && !user.equals(activeUser)) {
+                profileDtos.add(userPlatform.getProfileDto(user));
+            }
+        }
+        return ResponseEntity.ok().body(profileDtos);
+    }
 }

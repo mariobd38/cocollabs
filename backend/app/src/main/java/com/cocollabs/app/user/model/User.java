@@ -60,8 +60,8 @@ public class User implements UserDetails {
     @Column(nullable = false,unique = true)
     private String email;
 
-    @Column(unique = true)
-    private String username;
+    @Column(name = "actual_username", unique = true)
+    private String actualUsername;
 
     @JsonIgnore
     @Column(length = 60)

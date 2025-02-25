@@ -1,24 +1,25 @@
 import React, { useEffect,useState } from 'react'
 
-// import { Avatar } from '@mantine/core';
 import { Avatar,AvatarImage,AvatarFallback } from '@/components/ui/avatar';
 
 // import { getAvatars } from '@/utils/getProfileAvatarList';
 // const avatarList = getAvatars();
 
 const UserAvatar = (props) => {
-    const { userProfileDto, multiplier } = props;
-    const size = `calc(${multiplier}rem * var(--mantine-scale))`;
+    const { userProfileDto, initials, multiplier=1.6 } = props;
+    const size = `${multiplier}rem`;
     
     const [avatarList, setAvatarList] = useState([]);
-    const [avatarUrl, setAvatarUrl] = useState(null);
+    const [activeProfile, setActiveProfile] = useState(null);
 
     useEffect(() => {
         if (userProfileDto.type === 'avatar') {
             const foundAvatar = avatarList.find(avatar => avatar.name === userProfileDto.svg);
-            setAvatarUrl(foundAvatar ? foundAvatar.svg : null);
+            setActiveProfile(foundAvatar?.svg);
+        } else if (userProfileDto.type === 's3_image') {
+            setActiveProfile(userProfileDto.preSignedUrl);
         } else {
-            setAvatarUrl(userProfileDto.preSignedUrl);
+            setActiveProfile(userProfileDto.svg);
         }
     }, [userProfileDto, avatarList]);
 
@@ -47,8 +48,8 @@ const UserAvatar = (props) => {
         // </Avatar>
         
         <Avatar style={{ width: size, height: size, minWidth: size }}>
-            <AvatarImage src={avatarUrl} alt="profile_img" loading='eager' />
-            <AvatarFallback>{userProfileDto.fullName?.split(' ').map(name => name[0]).join('')}</AvatarFallback>
+            <AvatarImage src={activeProfile} alt="profile_img"  />
+            <AvatarFallback>{initials}</AvatarFallback>
         </Avatar>
 
     );

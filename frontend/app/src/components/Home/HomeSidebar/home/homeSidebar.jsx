@@ -12,7 +12,7 @@ const CustomDialog = lazy(() => import('@/components/customDialog'));
 const LoadingFallback = () => <></>;
 
 const HomeSidebar = (props) => {
-    const {resize, appData, openSidebarToggle, colorScheme, setOpenSidebarToggle, spaceData,activePage,
+    const {appData, openSidebarToggle, colorScheme, setOpenSidebarToggle, spaceData,activePage,
         userProfileDto,userProfilePicture} = props;
 
     const sidebarRef = useRef(null);
@@ -90,8 +90,8 @@ const HomeSidebar = (props) => {
         
     return (
         <>
-            <SidebarProvider openSidebarToggle={openSidebarToggle} currentWidth={width} resize={resize}>
-                <Sidebar className='top-14 h-full' ref={sidebarRef} resize={resize} >
+            <SidebarProvider openSidebarToggle={openSidebarToggle} currentWidth={width} >
+                <Sidebar className='top-14 h-full' ref={sidebarRef} >
                     {/* <SidebarHeader className='h-[55px]'>
                         {data && <HomeSidebarHeader 
                             data={data} 
@@ -112,8 +112,7 @@ const HomeSidebar = (props) => {
                             userProfileDto={userProfileDto}
                             userProfilePicture={userProfilePicture}
                         />
-                        {resize && 
-                            <div ref={resizeHandleRef} className={`resize-handle ${colorScheme}`} onMouseDown={startResize} />}
+                        <div ref={resizeHandleRef} className={`resize-handle ${colorScheme}`} onMouseDown={startResize} />
                     </SidebarContent>
                 </Sidebar>
             </SidebarProvider>
@@ -133,6 +132,7 @@ const HomeSidebar = (props) => {
                     setOpen={setOpenSpaceCreateModal} 
                     width={835}
                     openIconPopover={openIconPopover}
+                    // note: if openIconPopover causes a bug, look in dialog.jsx
                 />
             </Suspense>
             

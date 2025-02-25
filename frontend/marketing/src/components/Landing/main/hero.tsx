@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
+
 import { APP_DOMAIN } from '@/constants';
+import { ChevronRight } from 'lucide-react';
 
 import { Separator } from '@/components/ui/separator';
-import { Icons } from '@/components/icons/icons';
-
 import AuroraTextComp from '@/components/ui/AuroraText/auroraTextComp';
 import AnimatedGradientTextComp from '@/components/ui/AnimatedGradientText/animatedGradientTextComp';
 import ContainerScrollAnimationComp from '@/components/ui/ContainerScrollAnimation/containerScrollAnimationComp';
@@ -26,7 +26,7 @@ const Hero: React.FC = () => {
                                 </div>
                                 Introducing a new way to build solutions together
                                 <span className='pl-2 transition-transform duration-300 ease-in-out group-hover:translate-x-0.5'>
-                                {Icons('IconChevronRight',13,13)}
+                                <ChevronRight size={13} />
                                 </span>
                             </div>}
                         />
@@ -49,7 +49,7 @@ const Hero: React.FC = () => {
                                     </a>
                                     <a href={`/#`} className='w-48 h-14 flex justify-center sm:w-52 visit-community-button bg-white text-black font-bold rounded-xl text-sm sm:text-base flex items-center
                                     gap-2 transition-all duration-300 ease-in-out hover:-translate-y-1.5 tracking-wide'>
-                                        Visit communities<span className="visit-community icon">{Icons('IconChevronRight', 16, 16)}</span>
+                                        Visit communities<span className="visit-community icon"><ChevronRight size={15} /></span>
                                     </a>
                                     
                                 </div>

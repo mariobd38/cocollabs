@@ -35,8 +35,8 @@ const MyOrganizations = ({appData,colorScheme}) => {
                     {appData.organizations.map((org,index) =>  (
                         <CarouselItem key={index} className="min-w-full w-full sm:min-w-[280px] sm:basis-1/2 md:basis-1/3 lg:basis-1/4">
                             <Card className='h-auto w-full border border-solid dark:border-zinc-400 bg-white dark:bg-transparent border-black/25 dark:hover:bg-zinc-900 hover:bg-zinc-100'>
-                                <CardContent className="flex h-auto items-center  justify-center p-5">
-                                    <div className='flex flex-col w-full gap-7'>
+                                <CardContent className="flex h-auto items-center  justify-center p-4">
+                                    <div className='flex flex-col w-full gap-8'>
                                         <div className='gap-1 flex flex-col'>
 
                                         

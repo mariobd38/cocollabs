@@ -4,7 +4,7 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import PrivateRoute from "@/PrivateRoute/privateRoute";
 import { AuthProvider } from "@/hooks/authProvider";
 
-import Homev2 from '@/pages/home/homev2';
+import Home from '@/pages/home/home';
 import Explore from '@/pages/home/explore';
 import AppLayout from '@/pages/home/appLayout';
 // import AppLayoutv2 from '@/pages/home/appLayoutv2';
@@ -80,7 +80,7 @@ function App() {
                     }>
 
                         <Route path="/org/:slug" element={<OrgHome />} />
-                        <Route index element={<Homev2 />} />
+                        <Route index element={<Home />} />
                         <Route path="explore" element={<Explore />} />
                         <Route path="developers" element={<Developers />} />
                 </Route>

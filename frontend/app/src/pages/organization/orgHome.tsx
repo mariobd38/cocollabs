@@ -21,7 +21,6 @@ const OrgHome: React.FC = () => {
     const { slug } = useParams();
     // console.log(appProps.organizations.find(org:Obj => org.slug === slug));
     const currentOrg = appProps.organizations.find((item:Organization) => item.slug === slug);
-    console.log(currentOrg);
 
     const [visible, setVisible] = useState(false);
 

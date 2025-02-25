@@ -6,7 +6,7 @@ async function handleProfileCreation(profileData,form,croppedFile) {
     formData.append('onboardingProfileDto', jsonBlob);
     
     try {
-        const response = await fetch(`/api/profile/create`, {
+        const response = await fetch(`/api/profiles/create`, {
             method: "PUT",
             headers: {
                 'Accept': 'application/json',

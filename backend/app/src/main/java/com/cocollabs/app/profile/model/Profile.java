@@ -47,9 +47,6 @@ public class Profile {
     @Column(nullable = false)
     private ProfileType type;
 
-    @Column
-    private String color;
-
     @Column(nullable = false, columnDefinition = "TEXT")
     private String svg;
 

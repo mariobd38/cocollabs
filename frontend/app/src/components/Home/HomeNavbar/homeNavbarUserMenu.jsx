@@ -14,7 +14,7 @@ import { User, Settings, PaintRoller, Archive, LogOut, Bug } from 'lucide-react'
 import UserAvatar from '@/components/Home/UserAvatar/userAvatar';
 
 const HomeNavbarUserMenu = (props) => {
-    const {userProfileDto,userProfilePicture,themeColors,storedUserInfo,setStoredUserInfo} = props;
+    const {userProfileDto,userProfilePicture,storedUserInfo,setStoredUserInfo,setOpenProfileDialog} = props;
     const { colorScheme,setColorScheme } = useMantineColorScheme();
     const navigate = useNavigate();
 
@@ -42,7 +42,7 @@ const HomeNavbarUserMenu = (props) => {
     }
 
     const menuItems = [
-        { name: 'Profile',icon: User, marginTop: '20', action: () => console.log("profile")},
+        { name: 'Profile',icon: User, action: () => setOpenProfileDialog(true)},
         { name: 'Settings',icon: Settings, action: () => console.log("settings")},
         // { name: 'Notification Settings',icon: Bell, action: () => console.log("notification settings")},
         { name: 'Themes',icon: PaintRoller, action: handleThemeUpdate},
@@ -60,6 +60,7 @@ const HomeNavbarUserMenu = (props) => {
                             userProfileDto={userProfileDto}
                             userProfilePicture={userProfilePicture}
                             multiplier={1.8}
+                            initials={userProfileDto?.fullName?.split(' ').map(n => n[0]).join('')}
                         />
                     </div>
                 }
@@ -71,6 +72,7 @@ const HomeNavbarUserMenu = (props) => {
                                     userProfileDto={userProfileDto}
                                     userProfilePicture={userProfilePicture}
                                     multiplier={4.8}
+                                    initials={userProfileDto?.fullName?.split(' ').map(n => n[0]).join('')}
                                 />}
 
                                 <div className='flex flex-col font-["Lato"]'>

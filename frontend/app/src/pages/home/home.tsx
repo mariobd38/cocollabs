@@ -39,7 +39,7 @@ interface OutletContext {
 }
 
 
-const Homev2: React.FC = () => {
+const Home: React.FC = () => {
     const { themeColors,appProps,currentSpace,currentOrg,colorScheme } = useOutletContext<OutletContext>();
     // const passedSpaceInfo = location.state?.spaceInfo as SpaceData | undefined;
 
@@ -73,7 +73,9 @@ const Homev2: React.FC = () => {
     return (
         <>
             <div className={`transition-opacity duration-300 ease-linear ${visible ? 'opacity-100' : 'opacity-0'}`}>
-                <HomeHeader firstName={appProps?.profile.firstName} colorScheme={colorScheme} />
+                <div className="flex justify-between items-center py-7">
+                    <HomeHeader firstName={appProps?.profile.firstName} colorScheme={colorScheme} />
+                </div>
                 <div className='w-full '>
                     <QuickActions />
                     {appProps?.organizations.length > 0 && 
@@ -85,4 +87,4 @@ const Homev2: React.FC = () => {
     );
 };
 
-export default Homev2;
+export default Home;

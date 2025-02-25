@@ -146,19 +146,16 @@ const OrgAppLayout = ({content}) => {
                 setStoredUserInfo={setStoredAppInfo}
             />
             <div className='flex'>
-                <div>
-                    <HomeSidebar 
-                        resize={true}
-                        themeColors={themeColors}
-                        colorScheme={colorScheme}
-                        openSidebarToggle={openSidebarToggle}
-                        setOpenSidebarToggle={setOpenSidebarToggle}
-                        spaceData={{name: currentSpace?.name, icon: currentSpace?.icon,slug: currentSpace?.slug}}
-                        activePage={activePage}
-                        userProfileDto={fullUserData.profileDto}
-                        userProfilePicture={fullUserData.picture}
-                    />
-                </div>
+                <HomeSidebar 
+                    themeColors={themeColors}
+                    colorScheme={colorScheme}
+                    openSidebarToggle={openSidebarToggle}
+                    setOpenSidebarToggle={setOpenSidebarToggle}
+                    spaceData={{name: currentSpace?.name, icon: currentSpace?.icon,slug: currentSpace?.slug}}
+                    activePage={activePage}
+                    userProfileDto={fullUserData.profileDto}
+                    userProfilePicture={fullUserData.picture}
+                />
                 <div className={`bg-background flex flex-col w-full relative px-6 top-10 py-6 overflow-y-scroll max-h-[calc(100dvh_-_2rem)] ${openSidebarToggle && 'open' }`}>
                     <Outlet context={{themeColors,appProps,currentSpace,currentOrg,colorScheme}}/>
                 </div>

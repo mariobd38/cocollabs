@@ -59,15 +59,11 @@ export const AuthProvider = ({ children }) => {
         }
     }, []);
 
-    // Initial auth check
     useEffect(() => {
-        // if (location.pathname !== '/')
-            checkAuthStatus();
-    }, [checkAuthStatus,location]);
-
-    const updateAuthStatus = useCallback(async () => {
-        await checkAuthStatus();
-    }, [checkAuthStatus]);
+        checkAuthStatus();
+      }, [checkAuthStatus]);
+      
+    const updateAuthStatus = checkAuthStatus;
 
     return (
         <AuthContext.Provider 
@@ -84,3 +80,76 @@ export const AuthProvider = ({ children }) => {
 };
 
 export const UseAuth = () => useContext(AuthContext);
+
+
+// AuthProvider.js
+// import React, { createContext, useState, useEffect, useCallback, useContext } from 'react';
+// import apiClient from '@/utils/apiClient';
+
+// const AuthContext = createContext(null);
+
+// export const AuthProvider = ({ children }) => {
+//     const [authState, setAuthState] = useState({
+//         isAuthenticated: false,
+//         isOnboarded: false,
+//         isLoading: true
+//     });
+//     const [pending, setPending] = useState(true);
+
+//     const authStatusInfo = async () => {
+//         try {
+//         const response = await apiClient.get('/api/auth/status');
+        
+//         if (!response.ok) {
+//             return { isAuthenticated: false, isOnboarded: false };
+//         }
+        
+//         return response.json();
+//         } catch (error) {
+//         console.error('Auth status check failed:', error);
+//         return { isAuthenticated: false, isOnboarded: false };
+//         }
+//     };
+
+//     const checkAuthStatus = useCallback(async () => {
+//         try {
+//         const response = await authStatusInfo();
+//         setAuthState({
+//             isAuthenticated: response.isAuthenticated,
+//             isOnboarded: response.isOnboarded,
+//             isLoading: false
+//         });
+//         } catch (error) {
+//             setAuthState({
+//                 isAuthenticated: false,
+//                 isOnboarded: false,
+//                 isLoading: false
+//             });
+//         } finally {
+//             setPending(false);
+//         }
+//     }, []);
+
+//     // Initial auth check
+//     useEffect(() => {
+//         checkAuthStatus();
+//     }, [checkAuthStatus]);
+
+//     const updateAuthStatus = useCallback(async () => {
+//         setAuthState(prev => ({ ...prev, isLoading: true }));
+//         await checkAuthStatus();
+//     }, [checkAuthStatus]);
+
+//     return (
+//         <AuthContext.Provider value={{
+//             isAuthenticated: authState.isAuthenticated,
+//             isOnboarded: authState.isOnboarded,
+//             updateAuthStatus,
+//             pending
+//         }}>
+//         {children}
+//         </AuthContext.Provider>
+//     );
+// };
+
+// export const UseAuth = () => useContext(AuthContext);

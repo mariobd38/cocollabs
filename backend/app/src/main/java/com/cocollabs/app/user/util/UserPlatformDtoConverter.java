@@ -51,7 +51,7 @@ public class UserPlatformDtoConverter {
     private UserDto getUserDto(User user) {
         return UserDto.builder()
                 .email(user.getEmail())
-                .username(user.getUsername())
+                .username(user.getActualUsername())
                 .onboardingStep(user.getOnboardingStep())
                 .build();
     }
@@ -62,7 +62,6 @@ public class UserPlatformDtoConverter {
                         .firstName(profile.getFirstName())
                         .lastName(profile.getLastName())
                         .fullName(profile.getFullName())
-                        .color(profile.getColor())
                         .type(profile.getType())
                         .svg(profile.getSvg())
                         .preSignedUrl(profileService.getProfileImageUrl(user, profile))

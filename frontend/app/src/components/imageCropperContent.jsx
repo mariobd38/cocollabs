@@ -11,8 +11,7 @@ import { getCroppedImage } from '@/utils/getCroppedImage';
 const ImageCropperContent = ({imageCropperProps, setOpen, profileProps}) => {
     const { imageToCrop,setCroppedFile } = imageCropperProps;
     const { setPreviewUrl,setActiveProfile } = profileProps;
-//     const [crop, setCrop] = useState({ x: 0, y: 0 });
-//   const [zoom, setZoom] = useState(1); 
+
     const [crop, setCrop] = useState({ x: 0, y: 0 })
     const [zoom, setZoom] = useState(1);
     const [isClosing, setIsClosing] = useState(false);

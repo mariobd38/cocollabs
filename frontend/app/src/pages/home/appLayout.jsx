@@ -134,6 +134,7 @@ const AppLayout = ({content}) => {
     }, [location.pathname]);
     // console.log(fullUserData.profileDto.preSignedUrl);
 
+
     return (
         <>
             <HomeNavbarv2 
@@ -149,7 +150,6 @@ const AppLayout = ({content}) => {
             <div className='flex'>
                 <div>
                     <HomeSidebar 
-                        resize={true}
                         appData={appProps}
                         colorScheme={colorScheme}
                         openSidebarToggle={openSidebarToggle}

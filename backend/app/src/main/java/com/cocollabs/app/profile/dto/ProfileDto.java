@@ -1,5 +1,7 @@
 package com.cocollabs.app.profile.dto;
 
+import com.cocollabs.app.organization.dto.OrganizationDto;
+import com.cocollabs.app.organization.model.Organization;
 import com.cocollabs.app.profile.model.Profile;
 import com.cocollabs.app.profile.model.Profile.ProfileType;
 import com.cocollabs.app.space.model.Space;
@@ -20,7 +22,6 @@ public class ProfileDto {
     private String lastName;
     @NotBlank
     private String fullName;
-    private String color;
     private ProfileType type;
     private String svg;
     private String preSignedUrl;

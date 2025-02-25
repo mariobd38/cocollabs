@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 
 import { useForm } from "react-hook-form";
 
-import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod"
+import { profileSchema } from '@/utils/schemas/profileSchema';
 
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Popover,PopoverContent,PopoverTrigger } from "@/components/ui/popover"
@@ -13,38 +13,11 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
 import createProfileIllustration from '@/assets/illustrations/onboarding/createProfile.svg';
-import { handleProfileCreation } from '@/api/onboarding/handleProfileCreation';
+import { handleProfileCreation } from '@/api/profiles/handleProfileCreation';
 
 import { getAvatars } from '@/utils/getProfileAvatarList';
 const avatarList = getAvatars();
 
-const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
-
-//full name and username validation
-const formSchema = z.object({
-    fullName: z.string()
-        .refine((value) => value.trim().split(/\s+/).length >= 2, {
-            message: "Full name must include first and last name.",
-        }),
-    username: z.string()
-        .min(3, {
-            message: "Username must be at least 3 characters.",
-        })
-        .max(40, {
-            message: "Username is too long (maximum 40 characters).",
-        }),
-    avatar: z.any().nullable(),
-    image: z.union([
-        z.instanceof(File).refine((file) => ACCEPTED_IMAGE_TYPES.includes(file.type), {
-            message: "Only these types are allowed: .jpg, .jpeg, .png, and .webp",
-        }),
-        z.null(),
-    ]),
-    }).refine((data) => data.avatar !== null || data.image !== null,{
-        message: "Please select an avatar or image.",
-        path: ["avatar"], // ✅ Attach error message to avatar field
-    }
-);
 
 const LoadingFallback = () => <></>;
 const CustomDialog = lazy(() => import('@/components/customDialog'));
@@ -63,7 +36,7 @@ const ImageCropperContent = lazy(() => import('@/components/imageCropperContent'
     // const [previewUrl, setPreviewUrl] = useState(null);
 
     const form = useForm({
-        resolver: zodResolver(formSchema),
+        resolver: zodResolver(profileSchema),
         defaultValues: {
             fullName: "",
             username: "",

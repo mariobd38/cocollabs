@@ -2,7 +2,6 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 
-import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod"
 
 import { UseAuth } from '@/hooks/authProvider';
@@ -11,22 +10,23 @@ import { authStatusInfo } from '@/api/Auth/status';
 import { getLastActiveOrganizationInfo } from '@/api/organizations/getLastActive';
 
 import AuthForm from '@/components/Auth/authForm';
+import { loginSchema } from '@/utils/schemas/loginSchema';
 
 // import { SlackButton } from './slackButton';
 
-const formSchema = z.object({
-    email: z.string()
-        .min(1, { message: "Email is required." }),
-    password: z.string()
-        .min(1, { message: "Password is required." })
-});
+// const formSchema = z.object({
+//     email: z.string()
+//         .min(1, { message: "Email is required." }),
+//     password: z.string()
+//         .min(1, { message: "Password is required." })
+// });
 
 const Login = () => {
     const navigate = useNavigate();
     const { updateAuthStatus } = UseAuth();
 
     const form = useForm({
-        resolver: zodResolver(formSchema),
+        resolver: zodResolver(loginSchema),
         defaultValues: {
             email: "",
             password: "",

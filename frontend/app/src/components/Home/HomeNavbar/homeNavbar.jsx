@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState,Suspense,lazy } from 'react';
 
 import { Separator } from '@/components/ui/separator';
 import { Inbox,Square,Minus } from 'lucide-react';
@@ -7,14 +7,15 @@ import { Button } from '@/components/ui/button';
 
 import Logo2 from '@/components/Logo/logo2';
 import HomeNavbarUserMenu from '@/components/Home/HomeNavbar/homeNavbarUserMenu';
+import ProfileDialog from '@/components/profileDialog/profileDialog';
+import CustomDialog from '@/components/customDialog';
 // import SpaceCreationModal from '@/components/Home/SpaceCreationModal/spaceCreationModal';
 
 import '@/styles/home/homeNavbar.css';
 
 
-const HomeNavbar = ({ themeColors,colorScheme,setColorScheme,profileInfo,setOpenSidebarToggle,openSidebarToggle,storedUserInfo,setStoredUserInfo } ) => {
-    const buttonColor = colorScheme === 'dark' ? '#d4d5d6' : '#424345';
-
+const HomeNavbar = (props) => {
+    const {themeColors,colorScheme,setColorScheme,profileInfo,setOpenSidebarToggle,openSidebarToggle,storedUserInfo,setStoredUserInfo} = props;
     const handleOpenSidebarToggle = () => {
         setOpenSidebarToggle(!openSidebarToggle);
         if (openSidebarToggle) {
@@ -23,6 +24,11 @@ const HomeNavbar = ({ themeColors,colorScheme,setColorScheme,profileInfo,setOpen
             document.body.classList.add('active');
         }
     }
+
+    const [dialogTrigger, setDialogTrigger] = useState(null);
+    const [openProfileDialog, setOpenProfileDialog] = useState(false);
+    const [imageToCrop, setImageToCrop] = useState(null);
+    // const [openImageCropper, setOpenImageCropper] = useState(false);
 
     return (
         <nav className="flex items-center w-full fixed h-14 top-0 z-20 border-b border-zinc-300 dark:border-zinc-700" style={{backgroundColor: themeColors.bg[2]}}>
@@ -70,10 +76,44 @@ const HomeNavbar = ({ themeColors,colorScheme,setColorScheme,profileInfo,setOpen
                             userProfileDto={profileInfo.profileDto}
                             userProfilePicture={profileInfo.picture}
                             userFullName={profileInfo.fullName}
-                            themeColors={themeColors}
                             storedUserInfo={storedUserInfo}
                             setStoredUserInfo={setStoredUserInfo}
+                            setOpenProfileDialog={setOpenProfileDialog}
                         />
+                        
+
+                        <CustomDialog
+                            trigger={dialogTrigger}
+                            content={
+                                <ProfileDialog 
+                                    userProfileDto={profileInfo.profileDto}
+                                    imageToCrop={imageToCrop}
+                                    setImageToCrop={setImageToCrop}
+                                    username={storedUserInfo?.user.username}
+                                    // setOpenImageCropper={setOpenImageCropper}
+                                />
+                            }
+                            open={openProfileDialog} 
+                            setOpen={setOpenProfileDialog} 
+                            width={500}
+                        />
+
+                        {/* <Suspense fallback={<LoadingFallback />}>
+                            {imageToCrop &&
+                            <CustomDialog
+                                trigger={openImageCropper}
+                                content={
+                                    <ImageCropperContent 
+                                    imageCropperProps={{ imageToCrop,setCroppedFile }}
+                                    setOpen={setOpenImageCropper}
+                                    profileProps={{ setPreviewUrl,setActiveProfile }}
+                                    />
+                                }
+                                open={openImageCropper} 
+                                setOpen={setOpenImageCropper} 
+                                width={800}
+                            />}
+                        </Suspense> */}
 
                     </div>
                 </div>
