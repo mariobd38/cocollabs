@@ -6,9 +6,7 @@ import App from '@/App';
 import reportWebVitals from '@/reportWebVitals';
 
 import '@mantine/core/styles.css';
-import '@mantine/dates/styles.css';
 
-import { NextUIProvider } from '@nextui-org/system';
 import { ThemeProvider } from '@/components/Themes/themeProvider';
 
 import './index.css';
@@ -23,9 +21,7 @@ root.render(
             v7_relativeSplatPath: true,
         }}>
             <ThemeProvider>
-                <NextUIProvider>
-                    <App />
-                </NextUIProvider>
+                <App />
             </ThemeProvider>
         </BrowserRouter>
     </>
