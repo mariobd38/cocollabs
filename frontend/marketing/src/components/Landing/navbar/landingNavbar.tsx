@@ -42,27 +42,21 @@ const LandingNavbar: React.FC = () => {
                     <div className='flex items-center gap-7'>
                         <div className='hidden sm:flex'>
                             <div className="flex gap-5 items-center">
-                                {process.env.NODE_ENV === 'development' ?
-                                <>
-                                {/* <Button variant="ghost" onClick={() => window.location.href =  `${APP_DOMAIN}/login`} className="h-9 rounded-lg px-3.5 py-0 font-medium text-base text-white border-solid border-[transparent] hover:bg-zinc-800">
-                                    Login
-                                </Button> */}
-                                <a href={`${APP_DOMAIN}/login`} className="flex items-center h-9 rounded-lg px-3.5 py-0 font-medium text-base text-white border-solid border-[transparent] hover:bg-zinc-800">
-                                    Login
-                                </a>
-                                <a href={`${APP_DOMAIN}/signup`} className="flex items-center h-9 rounded-lg px-3.5 py-0 font-medium text-base !text-black bg-white border-solid border-white hover:brightness-90">
-                                    Sign up
-                                </a>
-                                {/* <Button variant="ghost" onClick={() => window.location.href = `${APP_DOMAIN}/signup`}  className="h-9 rounded-lg px-3.5 py-0 font-medium text-base !text-black bg-white border-solid border-white hover:brightness-90">
-                                    Sign up
-                                </Button> */}
-                                </> 
+                                {/* {process.env.NODE_ENV === 'development' ?
+                                <> */}
+                                    <a href={`${APP_DOMAIN}/login`} className="flex items-center h-9 rounded-lg px-3.5 py-0 font-medium text-base text-white border-solid border-[transparent] hover:bg-zinc-800">
+                                        Login
+                                    </a>
+                                    <a href={`${APP_DOMAIN}/signup`} className="flex items-center h-9 rounded-lg px-3.5 py-0 font-medium text-base !text-black bg-white border-solid border-white hover:brightness-90">
+                                        Sign up
+                                    </a>
+                                {/* </> 
                                 : 
                                 <Button variant="ghost" className="rounded-lg h-9 px-3 py-0 font-medium text-base bg-white hover:brightness-90
                                 inline-block bg-gradient-to-r from-[hsl(var(--color-1))] via-[hsl(var(--color-2))] to-[hsl(var(--color-3))]  text-white animate-gradient">
                                     Join the waitlist
                                 </Button>
-                                }
+                                } */}
                             </div>
                         </div>
 
