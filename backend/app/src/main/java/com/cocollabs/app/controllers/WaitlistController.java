@@ -1,6 +1,7 @@
 package com.cocollabs.app.controllers;
 
 import com.cocollabs.app.services.WaitlistService;
+import jakarta.validation.constraints.Email;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +19,7 @@ public class WaitlistController {
     }
 
     @PostMapping("/join")
-    public ResponseEntity<?> join(@RequestParam String email) throws Exception {
+    public ResponseEntity<?> join(@RequestParam @Email String email) throws Exception {
         waitlistService.addToWaitlist(email);
 
         return ResponseEntity.ok("Waitlist join request received");

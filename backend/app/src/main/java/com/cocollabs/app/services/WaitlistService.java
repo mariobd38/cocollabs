@@ -1,33 +1,31 @@
 package com.cocollabs.app.services;
 
-import com.clerk.backend_api.Clerk;
-import com.clerk.backend_api.models.operations.CreateWaitlistEntryRequestBody;
-import com.clerk.backend_api.models.operations.CreateWaitlistEntryResponse;
-import org.springframework.beans.factory.annotation.Value;
+import com.cocollabs.app.models.Waitlist;
+import com.cocollabs.app.rate_limit.RateLimit;
+import com.cocollabs.app.repositories.WaitlistRepository;
 import org.springframework.stereotype.Service;
 
 
 @Service
 public class WaitlistService {
-    @Value("${CLERK_API_KEY}")
-    private String clerkApiKey;
+    private final WaitlistRepository waitlistRepository;
+     private final EmailService emailService;
+
+    public WaitlistService(final WaitlistRepository waitlistRepository,
+                           final EmailService emailService) {
+        this.waitlistRepository = waitlistRepository;
+        this.emailService = emailService;
+    }
 
 
-    public void addToWaitlist(String email) throws Exception {
-        Clerk sdk = Clerk.builder()
-                .bearerAuth(clerkApiKey)
-                .build();
-
-        CreateWaitlistEntryRequestBody req = CreateWaitlistEntryRequestBody.builder()
-                .emailAddress(email)
-                .build();
-
-        CreateWaitlistEntryResponse res = sdk.waitlistEntries().create()
-                .request(req)
-                .call();
-
-        if (res.waitlistEntry().isPresent()) {
-            System.out.println("User added to the waitlist!");
+    @RateLimit(endpoint = "auth", capacity = 10, refillTokens = 5)
+    public void addToWaitlist(String email) {
+        if (waitlistRepository.existsByEmail(email)) {
+            return;
         }
+        waitlistRepository.save(Waitlist.builder()
+                .email(email)
+                .build());
+        emailService.sendEmail(email);
     }
 }

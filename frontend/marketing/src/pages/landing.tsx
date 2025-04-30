@@ -12,7 +12,17 @@ import NavbarContent from '@/features/navbar';
 import Features from '@/features/features';
 import home_screenshot from '@/assets/images/home-screenshot.png';
 import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+//   DialogTrigger,
+} from "@/components/ui/dialog"
+// import { Label } from "@/components/ui/label"
 
 import { cn } from '@/lib/utils';
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -31,13 +41,16 @@ function Hero() {
         },
     });
     const [animate, setAnimate] = React.useState<boolean>(false);
+    const [dialogOpen, setDialogOpen] = React.useState(false);
+
     React.useEffect(() => setAnimate(true), []);
 
     const joinWaitlist = async (data: { email: string }) => {
-        // Handle form submission
-        // console.log(data.email);
-        const email = form.getValues('email');
-        const res = await join(email);
+        const res = await join(data.email);
+        console.log(res);
+        if (res?.status === 200) {
+            setDialogOpen(true); // ✅ show dialog only on success
+        }
     }
 
     return (
@@ -75,29 +88,45 @@ function Hero() {
                                     Review faster, merge sooner, and keep your team moving with intelligent, automated code reviews.
                                     </p>
                                     <div className="flex items-center gap-4 w-full">
-                                    <FormProvider {...form} >
-                                <form onSubmit={form.handleSubmit(joinWaitlist)} className='flex w-full gap-4'>
-                                    <FormField
-                                    control={form.control}
-                                    name="email"
-                                    render={({ field }) => (
-                                        <FormItem className='w-full'>
-                                        <FormControl>
-                                            <Input
-                                            {...field}
-                                            startIcon={<Mail className="text-zinc-400" size={16} />}
-                                            placeholder="johndoe@gmail.com"
-                                            type="email"
-                                            className="rounded-lg h-10 border-gray-400 placeholder:text-muted-foreground bg-white text-zinc-800"
-                                            />
-                                        </FormControl>
-                                        </FormItem>
-                                    )}
-                                    />
-                                    <Button type="submit" className='hover:bg-primary/90 z-5 h-10'>Join the waitlist</Button>
-                                </form>
-                                </FormProvider>
+                                        <FormProvider {...form} >
+                                            <form onSubmit={form.handleSubmit(joinWaitlist)} className='flex w-full gap-4'>
+                                                <FormField
+                                                control={form.control}
+                                                name="email"
+                                                render={({ field }) => (
+                                                    <FormItem className='w-full'>
+                                                    <FormControl>
+                                                        <Input
+                                                        {...field}
+                                                        startIcon={<Mail className="text-zinc-400" size={16} />}
+                                                        placeholder="johndoe@gmail.com"
+                                                        type="email"
+                                                        className="rounded-lg h-10 border-gray-400 placeholder:text-muted-foreground bg-white text-zinc-800"
+                                                        />
+                                                    </FormControl>
+                                                    </FormItem>
+                                                )}
+                                                />
+                                                <Button type="submit" className='hover:bg-primary/90 z-5 h-10'>
+                                                    Join the waitlist
+                                                </Button>
+                                            </form>
+                                        </FormProvider>
                                     </div>
+
+
+
+                                    <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+                                        <DialogContent className="sm:max-w-[425px]">
+                                            <DialogHeader>
+                                                <DialogTitle>You're on the waitlist 🎉</DialogTitle>
+                                                <DialogDescription>We'll let you know when it's your turn.</DialogDescription>
+                                            </DialogHeader>
+                                            <DialogFooter>
+                                                <Button onClick={() => setDialogOpen(false)}>Close</Button>
+                                            </DialogFooter>
+                                        </DialogContent>
+                                    </Dialog>
                                 </div>
                                 {/* <Button  onClick={(e) => joinWaitlist(e)} className='hover:bg-primary/90 z-5 h-10'>Join the waitlist</Button> */}
 
@@ -114,12 +143,12 @@ function Hero() {
                                 </div>
                             </div>
 
-
                         </div>
                         
                     </div>
                 </div>
             </div>
+
         </>
     );
 }

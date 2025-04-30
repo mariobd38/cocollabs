@@ -29,6 +29,12 @@ export function AuthForm({
   header,
   alt
 }: DotPatternProp) {
+
+  const googleAuth = (e: React.SyntheticEvent) => {
+    e.stopPropagation();
+    console.log('sdssd')
+  }
+
   return (
     <div className={cn("flex flex-col gap-6", className)} >
       {/* <Logo className="h-10 w-auto fill-[#020817] stroke-[#020817] dark:fill-primary dark:stroke-primary" /> */}
@@ -51,7 +57,7 @@ export function AuthForm({
                   required
                 />
               </div>
-              <div className="grid gap-2">
+              {/* <div className="grid gap-2">
                 <div className="flex items-center">
                   <Label htmlFor="password">Password</Label>
                   <a
@@ -62,11 +68,11 @@ export function AuthForm({
                   </a>
                 </div>
                 <Input id="password" type="password" required />
-              </div>
+              </div> */}
               <Button type="submit" className="w-full">
                 Login
               </Button>
-              <Button variant="outline" className="w-full gap-3">
+              <Button variant="outline" className="w-full gap-3" onClick={(e) => googleAuth(e)}>
                 <GoogleIcon /> Login with Google
               </Button>
             </div>

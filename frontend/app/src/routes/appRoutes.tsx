@@ -17,7 +17,7 @@ export function AppRoutes() {
                     path="/signup"
                     element={
                             // <ProtectedSignup>
-                                <Signup />
+                        <Signup />
                             // </ProtectedSignup>
                     }
                 />
