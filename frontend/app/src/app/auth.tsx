@@ -1,3 +1,5 @@
+"use client"
+
 import React from "react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -10,11 +12,11 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { GoogleIcon } from "./icons/google"
+import Image from "next/image"
 // import logo from '@/assets/logo.svg';
 
 
-interface DotPatternProp extends React.SVGProps<SVGSVGElement> {
+interface PageProps extends React.SVGProps<SVGSVGElement> {
   header: string;
   alt: {
     desc: string;
@@ -28,7 +30,7 @@ export function AuthForm({
   className,
   header,
   alt
-}: DotPatternProp) {
+}: PageProps) {
 
   const googleAuth = (e: React.SyntheticEvent) => {
     e.stopPropagation();
@@ -73,7 +75,9 @@ export function AuthForm({
                 Login
               </Button>
               <Button variant="outline" className="w-full gap-3" onClick={(e) => googleAuth(e)}>
-                <GoogleIcon /> Login with Google
+                {/* <GoogleIcon /> Login with Google */}
+                <Image src="/google.svg" alt="Google" width={20} height={20} />
+                Login with Google
               </Button>
             </div>
             <div className="mt-4 text-center text-sm">

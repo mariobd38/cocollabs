@@ -1,5 +1,5 @@
-import { AuthForm } from "@/components/auth-form";
-import { authText } from "@/utils/auth-text";
+import { AuthForm } from "@/app/auth";
+import { authText } from "@/utils/auth-text-";
 
 
 export default function Login() {

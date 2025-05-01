@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { FormProvider, useForm } from "react-hook-form";
@@ -15,7 +15,6 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { waitlistSchema } from "@/app/schemas/waitlist";
 import { Input } from "@/components/ui/input";
-import { useUser } from "@clerk/nextjs";
 
 // import home_screenshot from '/images/home_screenshot.png';
 
