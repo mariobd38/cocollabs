@@ -1,1 +1,3 @@
 # codereview
+
+Cocollabs is an AI-Powered Code Review Collaboration Platform designed to build an integrated code review tool that unifies pull requests, chat discussions, and AI-driven suggestions. Reviewing PRs is often a major bottleneck, so our platform would sync review comments across GitHub (or GitLab), Slack/MS Teams, and IDEs to reduce context-switching. AI agents would automatically tag likely reviewers, summarize diffs, and highlight potential issues or style fixes. The system could even auto-merge trivial changes after approval. By automating follow-ups and summarizing work-in-progress, this tool speeds up reviews. Unlike existing tools Cocollabs would emphasize predictive reviewer assignment and enterprise integration.
