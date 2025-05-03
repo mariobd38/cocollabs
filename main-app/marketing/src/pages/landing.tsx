@@ -114,8 +114,6 @@ function Hero() {
                                         </FormProvider>
                                     </div>
 
-
-
                                     <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
                                         <DialogContent className="sm:max-w-[425px]">
                                             <DialogHeader>
@@ -128,10 +126,7 @@ function Hero() {
                                         </DialogContent>
                                     </Dialog>
                                 </div>
-                                {/* <Button  onClick={(e) => joinWaitlist(e)} className='hover:bg-primary/90 z-5 h-10'>Join the waitlist</Button> */}
 
-
-                                {/* Image Block - spans 2 of 3 columns on large screens */}
                                 <div className="flex items-center justify-center w-full lg:col-span-2 xl:col-span-3 z-5">
                                     <div className="p-3 xl:p-5 bg-white border-4 rounded-3xl w-full">
                                     <img

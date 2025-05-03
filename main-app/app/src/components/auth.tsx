@@ -3,17 +3,12 @@
 import React from "react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import Image from "next/image"
-// import logo from '@/assets/logo.svg';
+import { useSignIn, useSignUp } from '@clerk/nextjs'
+
 
 
 interface PageProps extends React.SVGProps<SVGSVGElement> {
@@ -22,6 +17,8 @@ interface PageProps extends React.SVGProps<SVGSVGElement> {
     desc: string;
     link: string;
     text: string;
+    button: string;
+    subheader: string;
   }
 }
 
@@ -31,10 +28,26 @@ export function AuthForm({
   header,
   alt
 }: PageProps) {
+  const { signIn } = useSignIn()
+  const { signUp } = useSignUp()
 
-  const googleAuth = (e: React.SyntheticEvent) => {
-    e.stopPropagation();
-    console.log('sdssd')
+
+  
+  const handleGoogleRedirect = async () => {
+    try {
+      // await signIn?.authenticateWithRedirect({
+      //   strategy: 'oauth_google',
+      //   redirectUrl: '/sign-up/sso-callback', // where to send after successful login
+      //   redirectUrlComplete: '/', // where to send after successful login completion
+      // })
+      await signUp?.authenticateWithRedirect({
+        strategy: 'oauth_google',
+        redirectUrl: '/sign-up/sso-callback', // where to send after successful login
+        redirectUrlComplete: '/', // where to send after successful login completion
+      })
+    } catch (error) {
+      console.error('Google redirect error:', error)
+    }
   }
 
   return (
@@ -44,11 +57,11 @@ export function AuthForm({
         <CardHeader>
           <CardTitle className="text-2xl">{header}</CardTitle>
           <CardDescription>
-            Enter your email below to login to your account
+            Enter your email below to {alt.subheader}
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form>
+          {/* <form > */}
             <div className="flex flex-col gap-6">
               <div className="grid gap-2">
                 <Label htmlFor="email">Email</Label>
@@ -56,7 +69,6 @@ export function AuthForm({
                   id="email"
                   type="email"
                   placeholder="me@example.com"
-                  required
                 />
               </div>
               {/* <div className="grid gap-2">
@@ -72,13 +84,15 @@ export function AuthForm({
                 <Input id="password" type="password" required />
               </div> */}
               <Button type="submit" className="w-full">
-                Login
+                {alt.button}
               </Button>
-              <Button variant="outline" className="w-full gap-3" onClick={(e) => googleAuth(e)}>
-                {/* <GoogleIcon /> Login with Google */}
+              {/* https://wired-eft-39.clerk.accounts.dev/v1/oauth_callback */}
+              <Button variant="outline" className="w-full gap-3" onClick={handleGoogleRedirect} >
                 <Image src="/google.svg" alt="Google" width={20} height={20} />
-                Login with Google
+                {alt.button} with Google
               </Button>
+              {/* CAPTCHA Widget */}
+              <div id="clerk-captcha"></div>
             </div>
             <div className="mt-4 text-center text-sm">
               {/* Don&apos;t have an account?{" "} */}
@@ -87,7 +101,7 @@ export function AuthForm({
                 {alt.text}
               </a>
             </div>
-          </form>
+          {/* </form> */}
         </CardContent>
       </Card>
     </div>

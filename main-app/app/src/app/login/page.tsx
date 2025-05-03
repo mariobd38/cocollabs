@@ -1,4 +1,4 @@
-import { AuthForm } from "@/app/auth";
+import { AuthForm } from "@/components/auth";
 import { authText } from "@/utils/auth-text-";
 
 

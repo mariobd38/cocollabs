@@ -1,8 +1,17 @@
-import Image from "next/image";
+"use client"
+import { useClerk } from '@clerk/nextjs'
+import { Button } from "@/components/ui/button";
 
 export default function Home() {
+  const { signOut, user } = useClerk()
+  console.log(user?.emailAddresses[0].emailAddress);
   return (
+    <>
     <p>hello world</p>
+    <Button onClick={() => signOut({ redirectUrl: '/' })}>Sign out</Button>
+      {user?.emailAddresses[0].emailAddress} is all elite
+    </>
+
     // <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
     //   <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
     //     <Image
