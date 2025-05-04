@@ -1,5 +1,5 @@
 import { AuthForm } from "@/components/auth";
-import { authText } from "@/utils/auth-text-";
+import { authText } from "@/utils/auth-text";
 
 
 export default function Signup() {

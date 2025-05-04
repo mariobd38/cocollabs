@@ -4,13 +4,15 @@ export const authText = {
     link: "signup",
     text: "Sign up",
     button: "Login",
-    subheader: "login to your account"
+    subheader: "login to your account",
+    path: "/login"
   },
   signup: {
     desc: "Already have an account?",
     link: "login",
     text: "Log in",
     button: "Sign up",
-    subheader: "get started"
+    subheader: "get started",
+    path: "/signup"
   },
 };

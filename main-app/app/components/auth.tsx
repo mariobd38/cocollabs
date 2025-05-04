@@ -19,6 +19,7 @@ interface PageProps extends React.SVGProps<SVGSVGElement> {
     text: string;
     button: string;
     subheader: string;
+    path: string;
   }
 }
 
@@ -35,16 +36,19 @@ export function AuthForm({
   
   const handleGoogleRedirect = async () => {
     try {
-      // await signIn?.authenticateWithRedirect({
-      //   strategy: 'oauth_google',
-      //   redirectUrl: '/sign-up/sso-callback', // where to send after successful login
-      //   redirectUrlComplete: '/', // where to send after successful login completion
-      // })
-      await signUp?.authenticateWithRedirect({
-        strategy: 'oauth_google',
-        redirectUrl: '/sign-up/sso-callback', // where to send after successful login
-        redirectUrlComplete: '/', // where to send after successful login completion
-      })
+      if (alt.path === '/login') {
+        await signIn?.authenticateWithRedirect({
+            strategy: 'oauth_google',
+            redirectUrl: '/sign-in/sso-callback', // where to send after successful login
+            redirectUrlComplete: '/', // where to send after successful login completion
+          })
+      } else if (alt.path === '/signup') {
+        await signUp?.authenticateWithRedirect({
+          strategy: 'oauth_google',
+          redirectUrl: '/sign-up/sso-callback', // where to send after successful login
+          redirectUrlComplete: '/', // where to send after successful login completion
+        })
+      }
     } catch (error) {
       console.error('Google redirect error:', error)
     }
