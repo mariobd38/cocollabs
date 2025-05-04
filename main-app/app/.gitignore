@@ -13,8 +13,9 @@
 # testing
 /coverage
 
-# prisma
-/prisma/migrations/*
+# Ignore build artifacts but keep the migration structure
+!/prisma/migrations/
+!/prisma/migrations/**/
 
 
 # next.js
