@@ -4,7 +4,7 @@ import { APP_DOMAIN } from '@/config/index';
 import { Burger } from '@/components/ui/burger';
 import { Sheet,SheetContent,SheetDescription,SheetHeader,SheetTrigger } from "@/components/ui/sheet"
 
-import Logo from '@/assets/logo';
+import Logo from '@/components/logo';
 
 
 const navItems: string[] = ['Projects', 'Resources', 'Pricing'];

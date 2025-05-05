@@ -1,4 +1,4 @@
-import Logo from '@/assets/logo';
+import Logo from '@/components/logo';
 
 
 export default function Footer() {

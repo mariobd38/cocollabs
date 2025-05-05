@@ -1,15 +1,14 @@
 "use client"
+
+import { permanentRedirect, redirect } from 'next/navigation'
 import { useClerk, useUser } from '@clerk/nextjs'
 import { Button } from "@/components/ui/button";
 import React from 'react';
 import { AppSidebar } from '@/components/app-sidebar';
-import { PrismaClient } from '@prisma/client';
 import { User } from '@/types/user';
-import Image from 'next/image';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+
 
 export default function Home() {
-  const { signOut } = useClerk()
   const [openSidebarToggle, setOpenSidebarToggle] = React.useState<boolean>(false);
   
   const { user } = useUser();
@@ -25,23 +24,26 @@ export default function Home() {
   }, [user]);
 
 
+
   return (
     <>
-    <div className='flex'>
-      <div>
+      <div className='flex'>
+        <div>
+          <AppSidebar 
+            toggle={openSidebarToggle}
+            setToggle={setOpenSidebarToggle}
+            dbUser={dbUser}
+          />
+        </div>
+        <div className='p-5 w-full'>
+          <div className='flex justify-between'>
+            <h1 className='text-lg font-medium'>Repositories</h1>
+            <Button className='bg-blue-600' onClick={() =>  window.location.href = `https://github.com/apps/cocollabs-code-reviewer`}>Add repository</Button>
 
-        <AppSidebar 
-          toggle={openSidebarToggle}
-          setToggle={setOpenSidebarToggle}
-          dbUser={dbUser}
-        />
-      </div>
-      <div className='px-5'>
-        <h1 className='text-lg'>Integrations</h1>
-        <Button onClick={()  => signOut({ redirectUrl: '/login' })}>Sign out</Button>
-      </div>
+          </div>
+        </div>
 
-    </div>
+      </div>
     </>
   );
 }

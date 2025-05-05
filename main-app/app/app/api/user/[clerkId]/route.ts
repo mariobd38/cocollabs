@@ -14,6 +14,8 @@ export async function GET(req: NextRequest,{ params }: { params: { clerkId: stri
         clerk_id: true,
         email: true,
         full_name: true,
+        first_name: true,
+        last_name: true,
         profile_image_url: true,
         createdAt: true,
       },

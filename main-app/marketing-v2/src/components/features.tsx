@@ -217,10 +217,10 @@ export function Features() {
 
                     <div className="flex items-center justify-center p-6 bg-white rounded-lg shadow-sm border">
                       <div className="text-center">
-                        <div className="h-12 w-12 mx-auto mb-3 bg-gray-100 rounded-full flex items-center justify-center">
-                          <span className="text-xl">S</span>
+                        <div className="mx-auto mb-3 bg-gray-100 rounded-full flex items-center justify-center">
+                          <Image src="/gitlab.svg" alt="Github" width={80} height={80} />
                         </div>
-                        <p className="font-medium">Slack</p>
+                        <p className="font-medium">GitLab</p>
                       </div>
                     </div>
                   </div>

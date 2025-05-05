@@ -6,12 +6,13 @@ import React from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Building, Columns2, Home, Inbox, LucideIcon, MessageCircle, Users } from "lucide-react";
 import Logo from "@/components/logo";
-import { UserButton } from "@clerk/nextjs";
 import { User } from "@/types/user";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { Badge } from "./ui/badge";
+import { Badge } from "@/components/ui/badge";
+import UserMenu from '@/components/userMenu';
+import Coconut from '@/components/coconut';
 
 
 type AppSidebarProps = {
@@ -92,8 +93,8 @@ export function AppSidebar({ toggle, setToggle, dbUser }: AppSidebarProps) {
                     </div>
                 </Button>
             ) : (
-                <TooltipProvider delayDuration={100}>
-                    <Tooltip>
+                <TooltipProvider>
+                    <Tooltip delayDuration={100}>
                         <TooltipTrigger asChild>
                         <Button onClick={() =>option.redirect && redirect(option.redirect)}
                             className={`bg-transparent dark:hover:bg-zinc-800 h-auto hover:bg-zinc-200/50
@@ -125,8 +126,8 @@ export function AppSidebar({ toggle, setToggle, dbUser }: AppSidebarProps) {
 
   return (
     <SidebarProvider toggle={toggle} setToggle={setToggle} width={230} >
-      <Sidebar className='h-full dark:bg-zinc-900 bg-white py-3' ref={sidebarRef} >
-        <SidebarHeader className={`${toggle ? 'pb-2' : 'pb-4'}`}>
+      <Sidebar className='h-full dark:bg-zinc-900 py-3 bg-sidebar' ref={sidebarRef} >
+        <SidebarHeader className='pb-2'>
           <div className="flex justify-center">
             <AnimatePresence mode="wait" >
               {toggle ? (
@@ -160,7 +161,7 @@ export function AppSidebar({ toggle, setToggle, dbUser }: AppSidebarProps) {
                 transition={{ duration: 0.15 }}
                 //onClick={() => navigate('/')}
                 >
-                    {/* <Coconut className="size-5 cursor-pointer" /> */}
+                    <Coconut className="size-5 cursor-pointer" />
                 </motion.div>
               )}
             </AnimatePresence>
@@ -190,7 +191,7 @@ export function AppSidebar({ toggle, setToggle, dbUser }: AppSidebarProps) {
                 <div
                   ref={resizeHandleRef}
                   className={`absolute top-0 bottom-0 -right-1 w-2 ${toggle ? 'cursor-w-resize' : 'cursor-e-resize'}
-                  transition-all duration-700 ease-in-out dark:hover:bg-zinc-700 hover:bg-neutral-300 z-50`}
+                  transition-all duration-700 ease-in-out dark:hover:bg-zinc-700 hover:bg-neutral-200 z-50`}
                   onClick={() => setToggle(!toggle)}
                 />
           </SidebarContent>
@@ -205,10 +206,26 @@ export function AppSidebar({ toggle, setToggle, dbUser }: AppSidebarProps) {
                       setStoredUserInfo={setStoredUserInfo}
                       setOpenProfileDialog={setOpenProfileDialog}
                   /> */}
-                  <div className="flex flex-col px-3">
+                  <UserMenu 
+                    trigger={
+                      <div className='flex items-center'>
+                        {dbUser?.profile_image_url && (
+                          <Avatar>
+                            <AvatarImage src={dbUser.profile_image_url} />
+                            <AvatarFallback className='bg-teal-600 text-white'>{`${dbUser.first_name?.charAt(0) ?? ''}`}</AvatarFallback>
+                          </Avatar>
+                        )}
+                        <div className="flex flex-col px-3">
+                        <span className='whitespace-nowrap text-sm w-36 overflow-hidden text-ellipsis'>{dbUser?.full_name}</span>
+                        <span className='whitespace-nowrap text-xs w-36 text-muted-foreground overflow-hidden text-ellipsis'>{dbUser?.email}</span>
+                        </div>
+                        </div>
+                    }
+                  />
+                  {/* <div className="flex flex-col px-3">
                       <span className='whitespace-nowrap text-sm overflow-hidden text-ellipsis'>{dbUser?.full_name}</span>
                       <span className='whitespace-nowrap text-xs text-muted-foreground overflow-hidden text-ellipsis'>{dbUser?.email}</span>
-                  </div>
+                  </div> */}
               </div>
               // <></>
               :
@@ -221,12 +238,16 @@ export function AppSidebar({ toggle, setToggle, dbUser }: AppSidebarProps) {
                       </div>
                   </div>
                 </Button>
-                {dbUser?.profile_image_url && (
-                  <Avatar>
-                    <AvatarImage src={dbUser?.profile_image_url} />
-                    <AvatarFallback>CN</AvatarFallback>
-                  </Avatar>
-                )}
+                <UserMenu 
+                trigger={
+                  dbUser?.profile_image_url && (
+                    <Avatar>
+                      <AvatarImage src={dbUser.profile_image_url} />
+                      <AvatarFallback className='bg-teal-600 text-white'>{`${dbUser.first_name?.charAt(0) ?? ''}`}</AvatarFallback>
+                    </Avatar>
+                  )
+                }
+                />
                 {/* <UserButton /> */}
               {/* <HomeNavbarUserMenu 
                   userProfileDto={profileInfo.profileDto}
