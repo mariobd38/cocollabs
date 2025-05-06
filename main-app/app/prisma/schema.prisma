@@ -8,36 +8,48 @@ datasource db {
 }
 
 model User {
-  id                String      @id @default(uuid())
-  clerk_id          String      @unique
-  email             String      @unique
+  id                String              @id @default(uuid())
+  clerk_id          String              @unique
+  email             String              @unique
   full_name         String?
   first_name        String?
   last_name         String?
   password          String?
   profile_image_url String?
-  createdAt         DateTime    @default(now())
-  updatedAt         DateTime    @updatedAt
+  installations     UserInstallation[]
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
 }
 
 model Installation {
-  id             Int           @id
+  id             Int                    @id
   accountId      Int
   accountLogin   String
   accountType    String
-  createdAt      DateTime      @default(now())
-  updatedAt      DateTime      @updatedAt
-
   repositories   Repository[]
+  userLinks      UserInstallation[]
+  createdAt      DateTime               @default(now())
+  updatedAt      DateTime               @updatedAt
+}
+
+model UserInstallation {
+  userId         String
+  installationId Int
+  role           String?
+  assignedAt     DateTime               @default(now())
+  user           User                   @relation(fields: [userId], references: [id])
+  installation   Installation           @relation(fields: [installationId], references: [id])
+
+  @@id([userId, installationId])
 }
 
 model Repository {
-  id              Int           @id @default(autoincrement())
-  githubRepoId    Int           @unique
+  id              Int                   @id @default(autoincrement())
+  githubRepoId    Int                   @unique
   name            String
   fullName        String
   installationId  Int
-  createdAt       DateTime      @default(now())
-  installation    Installation  @relation(fields: [installationId], references: [id])
-  updatedAt       DateTime      @updatedAt
+  installation    Installation          @relation(fields: [installationId], references: [id])
+  createdAt       DateTime              @default(now())
+  updatedAt       DateTime              @updatedAt
 }
