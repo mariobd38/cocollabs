@@ -38,7 +38,7 @@ model UserInstallation {
   role           String?
   assignedAt     DateTime               @default(now())
   user           User                   @relation(fields: [userId], references: [id])
-  installation   Installation           @relation(fields: [installationId], references: [id])
+  installation   Installation           @relation(fields: [installationId], references: [id], onDelete: Cascade)
 
   @@id([userId, installationId])
 }
@@ -49,7 +49,7 @@ model Repository {
   name            String
   fullName        String
   installationId  Int
-  installation    Installation          @relation(fields: [installationId], references: [id])
+  installation    Installation          @relation(fields: [installationId], references: [id], onDelete: Cascade)
   createdAt       DateTime              @default(now())
   updatedAt       DateTime              @updatedAt
 }

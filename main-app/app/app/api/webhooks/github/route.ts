@@ -32,51 +32,58 @@ export async function POST(req: NextRequest) {
   const installation = payload.installation;
   const account = installation.account;
   const installationId = installation.id;
+  const action = payload.action; //added, removed, deleted
+
   switch (event) {
 
     case 'installation':
+      console.log(`🔔 PAYLOAD EVENT: ${action}`);
       console.log(`New installation ID: ${payload.installation?.id}`);
       console.log(`New repository:`,payload.repositories);
       console.log(`New installation:`,payload.installation);
-
-      // console.log(user);we
-
-      await prisma.installation.upsert({
-        where: { id: installationId },
-        update: {
-          accountId: account.id,
-          accountLogin: account.login,
-          accountType: account.type,
-        },
-        create: {
-          id: installationId,
-          accountId: account.id,
-          accountLogin: account.login,
-          accountType: account.type,
-        },
-      });
-
-      for (const repo of payload.repositories) {
-        await prisma.repository.upsert({
-          where: { githubRepoId: repo.id },
+      if (action === 'created') {
+        await prisma.installation.upsert({
+          where: { id: installationId },
           update: {
-            name: repo.name,
-            fullName: repo.full_name,
-            updatedAt: new Date(),
+            accountId: account.id,
+            accountLogin: account.login,
+            accountType: account.type,
           },
           create: {
-            githubRepoId: repo.id,
-            name: repo.name,
-            fullName: repo.full_name,
-            installationId: installationId,
+            id: installationId,
+            accountId: account.id,
+            accountLogin: account.login,
+            accountType: account.type,
           },
+        });
+  
+        for (const repo of payload.repositories) {
+          await prisma.repository.upsert({
+            where: { githubRepoId: repo.id },
+            update: {
+              name: repo.name,
+              fullName: repo.full_name,
+              updatedAt: new Date(),
+            },
+            create: {
+              githubRepoId: repo.id,
+              name: repo.name,
+              fullName: repo.full_name,
+              installationId: installationId,
+            },
+          });
+        }
+      }
+
+      if (action === 'deleted') {
+        //add deleted logic
+        await prisma.installation.deleteMany({
+          where: { id: installationId },
         });
       }
 
-
       break;
     case 'installation_repositories':
-      const action = payload.action; // 'added' or 'removed'
       const addedRepos = payload.repositories_added || [];
       const removedRepos = payload.repositories_removed || [];
       console.log(`New installation ID: ${payload.installation?.id}`);
@@ -118,7 +125,7 @@ export async function POST(req: NextRequest) {
       break;
 
     case 'pull_request':
-      console.log(`PR #${payload.pull_request?.number} ${payload.action}`);
+      console.log(`PR #${payload.pull_request?.number} ${action}`);
       break;
 
     case 'pull_request_review':
