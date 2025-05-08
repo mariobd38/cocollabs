@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
+import type { NextApiRequest, NextApiResponse } from 'next';
+
 import { PrismaClient } from '@prisma/client';
 import crypto from 'crypto';
-import { useUser } from '@clerk/nextjs';
-import React from 'react';
+import { getSummary } from '@/utils/getGeminiSummary';
 
 
 const GITHUB_WEBHOOK_SECRET = process.env.NEXT_GITHUB_WEBHOOK_SECRET!;
@@ -125,7 +126,20 @@ export async function POST(req: NextRequest) {
       break;
 
     case 'pull_request':
-      console.log(`PR #${payload.pull_request?.number} ${action}`);
+      const { pull_request, repository } = payload;
+      // console.log(pull_request)
+      // console.log(repository)
+      // console.log(`PR #${payload.pull_request?.number} ${action}`);
+
+      const prId = pull_request.id;
+      const title = pull_request.title;
+      const body = pull_request.body || '';
+      const compareUrl = pull_request.diff_url;
+
+      const diff = await fetch(compareUrl).then(res => res.text());
+      const summary = await getSummary(diff);
+      console.log(summary)
+
       break;
 
     case 'pull_request_review':
@@ -138,4 +152,3 @@ export async function POST(req: NextRequest) {
 
   return NextResponse.json({ message: 'OK' });
 }
-

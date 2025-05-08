@@ -8,7 +8,6 @@ export async function GET(req: NextRequest,{ params }: { params: { clerkId: stri
   try {
     params = await params
     const { clerkId } = params;
-    // console.log(clerkId)
     const user = await prisma.user.findUnique({
       where: { clerk_id: clerkId },
       include: {

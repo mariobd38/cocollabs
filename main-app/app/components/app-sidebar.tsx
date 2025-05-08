@@ -1,10 +1,10 @@
 
 import { redirect, usePathname } from 'next/navigation'
-import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarHeader, SidebarMenu, SidebarMenuItem, SidebarProvider } from "@/components/ui/sidebar";
+import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarHeader, SidebarMenu, SidebarMenuItem, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
 import React from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Building, Columns2, Home, Inbox, LucideIcon, MessageCircle, Users } from "lucide-react";
+import { Building, Columns2, Home, LayoutDashboard, Inbox, LucideIcon, MessageCircle, Users, Blocks, ChartNoAxesColumn, ChartNoAxesColumnIncreasing, ChartColumnIncreasing } from "lucide-react";
 import Logo from "@/components/logo";
 import { User } from "@/types/user";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -34,13 +34,15 @@ const links: {
   middle: Link[];
 } = {
   top: [
-    { icon: Home, label: 'Home', redirect: '/' },
+    { icon: LayoutDashboard, label: 'Dashboard', redirect: '/' },
     { icon: Inbox, label: 'Inbox' },
     { icon: MessageCircle, label: 'Chat' },
     { icon: Users, label: 'Developers', redirect: '/developers' },
+    { icon: ChartColumnIncreasing, label: 'Analytics', redirect: '/developers' },
   ],
   middle: [
-    { icon: Building, label: 'Organizations', collapsible: true },
+    // { icon: Building, label: 'Organizations', collapsible: true },
+    { icon: Blocks, label: 'Integrations' },
   ]
 };
 
@@ -48,7 +50,6 @@ export function AppSidebar({ toggle, setToggle, dbUser }: AppSidebarProps) {
   const pathname = usePathname()
   const sidebarRef = React.useRef(null);
   const resizeHandleRef = React.useRef(null);
-  const [openOrgSidebar, setOpenOrgSidebar] = React.useState<boolean>(false)
 
 
   const renderLinks = (linksArray: Link[]) => (
@@ -75,8 +76,8 @@ export function AppSidebar({ toggle, setToggle, dbUser }: AppSidebarProps) {
                     </SidebarGroupContent>
                   </SidebarGroup>
                    )
-                : <Button variant='ghost' className={`h-auto rounded px-3 py-1.5 flex items-center m-0 hover:bg-zinc-200/50 dark:hover:bg-sidebar-accent
-                    ${pathname === option?.redirect && 'dark:bg-sidebar-accent bg-zinc-200/50' }`}
+                : <Button variant='ghost' className={`h-auto px-3 py-1.5 flex items-center m-0 hover:bg-sidebar-accent dark:hover:bg-sidebar-accent
+                    ${pathname === option?.redirect && 'dark:bg-sidebar-accent bg-sidebar-accent' }`}
                     onClick={() => option.redirect && redirect(option.redirect)} >
                     <div className="flex justify-between w-full items-center">
                         <div className="flex items-center">
@@ -96,9 +97,9 @@ export function AppSidebar({ toggle, setToggle, dbUser }: AppSidebarProps) {
                 <TooltipProvider>
                     <Tooltip delayDuration={100}>
                         <TooltipTrigger asChild>
-                        <Button onClick={() =>option.redirect && redirect(option.redirect)}
-                            className={`bg-transparent dark:hover:bg-zinc-800 h-auto hover:bg-zinc-200/50
-                                ${pathname === option?.redirect && 'dark:bg-sidebar-accent bg-zinc-200/50' }`}
+                        <Button onClick={() => option.redirect && redirect(option.redirect)}
+                            className={`bg-transparent dark:hover:bg-zinc-800 h-auto hover:bg-sidebar-accent
+                                ${pathname === option?.redirect && 'dark:bg-sidebar-accent bg-sidebar-accent' }`}
                         >
                             <div className="flex items-center justify-center relative">
                                 <div>
@@ -241,7 +242,7 @@ export function AppSidebar({ toggle, setToggle, dbUser }: AppSidebarProps) {
                 <UserMenu 
                 trigger={
                   dbUser?.profile_image_url && (
-                    <Avatar>
+                    <Avatar className='w-7 h-7'>
                       <AvatarImage src={dbUser.profile_image_url} />
                       <AvatarFallback className='bg-teal-600 text-white'>{`${dbUser.first_name?.charAt(0) ?? ''}`}</AvatarFallback>
                     </Avatar>

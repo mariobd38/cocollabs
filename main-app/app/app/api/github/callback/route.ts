@@ -8,11 +8,11 @@ export async function GET(req: NextRequest) {
   const url = new URL(req.url);
   const installationId = Number(url.searchParams.get('installation_id'));
   const state = url.searchParams.get('state'); // This is the Clerk user ID from the state param
-  
 
   if (!installationId || !state) {
     return NextResponse.json({ error: 'Missing installation_id or userId' }, { status: 400 });
   }
+  
 
   let userId: string;
   try {

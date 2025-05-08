@@ -8,7 +8,6 @@ export async function POST(req: NextRequest) {
     const event = await req.json();
 
     if (event.type === 'user.created') {
-      console.log(event.data);
       const { id, email_addresses, first_name, last_name, external_accounts } = event.data;
 
       const email = email_addresses[0]?.email_address;

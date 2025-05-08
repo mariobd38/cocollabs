@@ -71,6 +71,7 @@ function DropdownMenuItem({
 }) {
   return (
     <DropdownMenuPrimitive.Item
+      onSelect={(e) => e.preventDefault()}
       data-slot="dropdown-menu-item"
       data-inset={inset}
       data-variant={variant}
