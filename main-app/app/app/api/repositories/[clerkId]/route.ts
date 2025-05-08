@@ -25,8 +25,8 @@ export async function GET(req: NextRequest,{ params }: { params: { clerkId: stri
 
     if (!user) return NextResponse.json({ error: 'User not found' }, { status: 404 });
 
-    const repositories = user.installations.flatMap((ui: InstallationWithRepositories) =>
-      ui.installation.repositories.map(repo => ({
+    const repositories = user.installations.flatMap((i: InstallationWithRepositories) =>
+      i.installation.repositories.map(repo => ({
         id: repo.id,
         githubRepoId: repo.githubRepoId,
         name: repo.name,

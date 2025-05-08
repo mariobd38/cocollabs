@@ -1,6 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import type { NextApiRequest, NextApiResponse } from 'next';
-
 import { PrismaClient } from '@prisma/client';
 import crypto from 'crypto';
 import { getSummary } from '@/utils/getGeminiSummary';
@@ -131,13 +129,13 @@ export async function POST(req: NextRequest) {
       // console.log(repository)
       // console.log(`PR #${payload.pull_request?.number} ${action}`);
 
-      const prId = pull_request.id;
-      const title = pull_request.title;
-      const body = pull_request.body || '';
-      const compareUrl = pull_request.diff_url;
+      const prId = pull_request.id
+      const title = pull_request.title
+      const body = pull_request.body || ''
+      const compareUrl = pull_request.diff_url
 
-      const diff = await fetch(compareUrl).then(res => res.text());
-      const summary = await getSummary(diff);
+      const diff = await fetch(compareUrl).then(res => res.text())
+      const summary = await getSummary(diff)
       console.log(summary)
 
       break;
