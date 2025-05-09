@@ -70,7 +70,8 @@ export async function POST(req: NextRequest) {
               name: repo.name,
               fullName: repo.full_name,
               installationId: installationId,
-              owner: owner
+              owner: owner,
+              private: repo.private
             },
           });
         }
@@ -88,7 +89,6 @@ export async function POST(req: NextRequest) {
       const addedRepos = payload.repositories_added || [];
       const removedRepos = payload.repositories_removed || [];
       console.log(`New installation ID: ${payload.installation?.id}`);
-      console.log(payload.installation)
       console.log(payload.repositories_added)
       
       if (action === 'added') {
@@ -107,7 +107,8 @@ export async function POST(req: NextRequest) {
               name: repo.name,
               fullName: repo.full_name,
               installationId: installationId,
-              owner: owner
+              owner: owner,
+              private: repo.private
             },
             select: {
               id: true
@@ -133,9 +134,6 @@ export async function POST(req: NextRequest) {
               },
             });
           }
-
-          console.log(repo.name, ': ', languages);
-          // Save to DB or take action
         }
       }
     

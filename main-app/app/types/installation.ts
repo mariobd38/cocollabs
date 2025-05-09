@@ -8,6 +8,7 @@ export type InstallationWithRepositories = {
       name: string;
       fullName: string;
       owner: string;
+      private: boolean;
       languages: RepoLanguage[];
     }[];
   };

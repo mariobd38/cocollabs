@@ -36,6 +36,7 @@ export async function GET(req: NextRequest, { params }: { params: { clerkId: str
         githubRepoId: repo.githubRepoId,
         name: repo.name,
         fullName: repo.fullName,
+        private: repo.private,
         languages: repo.languages.map(lang => ({
           name: lang.name,
           bytes: lang.bytes,

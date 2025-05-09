@@ -1,10 +1,10 @@
 "use client"
 
 import PageLayout from '@/components/page-layout';
-import { RepositoryLanguages } from '@/components/repo-languages';
 import { Button } from '@/components/ui/button';
 import { Repository } from '@/types/repository';
 import { useUser } from '@clerk/nextjs';
+import { Badge } from "@/components/ui/badge";
 import { useTheme } from 'next-themes';
 import Image from 'next/image';
 import React from 'react';
@@ -19,6 +19,7 @@ export default function Repositories() {
   React.useEffect(() => {
     setImageSrc(resolvedTheme==='light' ? '/github_light.svg' : '/github_dark.svg');
   },[resolvedTheme])
+  console.log(dbRepos)
 
 
   React.useEffect(() => {
@@ -50,8 +51,27 @@ export default function Repositories() {
           <div className='p-4 rounded-lg'>
             {dbRepos?.map((repo, index: number) => (
               <div key={index} className='flex flex-col border-b py-2'>
-                <p>{repo.name}</p>
-                <RepositoryLanguages languages={repo?.languages} />
+                <div className='flex flex-col gap-1'>
+                  <div className='flex gap-5'>
+                    <h1>{repo.name}</h1>
+                    <Badge variant="outline" className='bg-blue-200 dark:bg-blue-400/80'>
+                      {repo.private ? 'Private' : 'Public'}
+                    </Badge>
+                  </div>
+                  <div className="flex flex-wrap gap-3 mt-2">
+                    {repo.languages.slice(0, 2).map((lang) => (
+                      <Badge key={lang.name} variant="outline">
+                        {lang.name}
+                      </Badge>
+                    ))}
+
+                    {repo.languages.length > 2 && (
+                      <Badge variant="outline">
+                        +{repo.languages.length - 2}
+                      </Badge>
+                    )}
+                  </div>
+                </div>
               </div>
             ))}
         </div>}

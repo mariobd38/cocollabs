@@ -36,7 +36,7 @@ export function AppSidebar({ toggle, setToggle }: AppSidebarProps) {
 
   const items = [
     {
-      title: "Home",
+      title: "Dashboard",
       url: "/",
       icon: LayoutDashboard,
     },
@@ -109,7 +109,7 @@ export function AppSidebar({ toggle, setToggle }: AppSidebarProps) {
               {items.map((item) => (
                 toggle ? (
                   <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton asChild>
+                    <SidebarMenuButton asChild className={`${pathname === item.url && 'bg-sidebar-accent'}`}>
                       <Link href={item.url}>
                         <item.icon />
                         <span>{item.title}</span>
@@ -121,7 +121,7 @@ export function AppSidebar({ toggle, setToggle }: AppSidebarProps) {
                     <Tooltip delayDuration={100}>
                       <TooltipTrigger asChild>
                         <SidebarMenuItem>
-                          <SidebarMenuButton asChild>
+                          <SidebarMenuButton asChild className={`${pathname === item.url && 'bg-sidebar-accent'}`}>
                             <Link href={item.url}>
                               <item.icon />
                             </Link>

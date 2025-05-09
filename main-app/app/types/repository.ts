@@ -4,6 +4,7 @@ export type Repository = {
   fullName: string;
   owner: string;
   languages: RepoLanguage[];
+  private: boolean;
 }
 
 export type RepoLanguage = {
