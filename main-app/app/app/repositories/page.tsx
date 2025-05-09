@@ -1,15 +1,26 @@
 "use client"
 
 import PageLayout from '@/components/page-layout';
+import { RepositoryLanguages } from '@/components/repo-languages';
 import { Button } from '@/components/ui/button';
 import { Repository } from '@/types/repository';
 import { useUser } from '@clerk/nextjs';
-import { Divide, Plus } from 'lucide-react';
+import { useTheme } from 'next-themes';
+import Image from 'next/image';
 import React from 'react';
 
 export default function Repositories() {
   const [dbRepos, setDbRepos] = React.useState<Repository[] | null>(null);
   const { user } = useUser();
+  const { resolvedTheme } = useTheme();
+
+  const [imageSrc, setImageSrc] = React.useState('/github_dark.svg');
+  
+  React.useEffect(() => {
+    setImageSrc(resolvedTheme==='light' ? '/github_light.svg' : '/github_dark.svg');
+  },[resolvedTheme])
+
+
   React.useEffect(() => {
     if (user) {
       fetch(`/api/repositories/${user.id}`)
@@ -29,22 +40,21 @@ export default function Repositories() {
   return (
     <PageLayout header='Repositories' options={
       <div>
-        <Button className='h-8' onClick={handleInstall}><Plus /> Add repo</Button>
+        <Button className='h-8' onClick={handleInstall}>
+        <Image src={imageSrc} alt="Github" width={18} height={18} />
+           Manage</Button>
       </div>
     }>
       <div className="flex flex-col gap-4">
-        {(dbRepos ?? []).length > 0 && (
-          <div className="bg-neutral-200 dark:bg-neutral-900/80 p-4  rounded-lg">
-          {(dbRepos ?? []).length > 0 && 
-            <div className='bg-neutral-200 dark:bg-neutral-900/80 p-4 rounded-lg'>
+        {(dbRepos ?? []).length > 0 && 
+          <div className='p-4 rounded-lg'>
             {dbRepos?.map((repo, index: number) => (
-              <div key={index}>
+              <div key={index} className='flex flex-col border-b py-2'>
                 <p>{repo.name}</p>
+                <RepositoryLanguages languages={repo?.languages} />
               </div>
             ))}
-            </div>}
-          </div>
-        )}
+        </div>}
       </div>
     </PageLayout>
   );

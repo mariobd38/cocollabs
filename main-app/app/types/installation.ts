@@ -1,3 +1,5 @@
+import { RepoLanguage } from "@/types/repository";
+
 export type InstallationWithRepositories = {
   installation: {
     repositories: {
@@ -5,6 +7,8 @@ export type InstallationWithRepositories = {
       githubRepoId: number;
       name: string;
       fullName: string;
+      owner: string;
+      languages: RepoLanguage[];
     }[];
   };
 };

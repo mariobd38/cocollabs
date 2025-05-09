@@ -1,8 +1,6 @@
-import { PrismaClient } from '@prisma/client';
+import prisma from '@/lib/prisma';
 import { NextRequest, NextResponse } from 'next/server';
 
-
-const prisma = new PrismaClient();
 
 export async function GET(req: NextRequest) {
   const url = new URL(req.url);
@@ -66,5 +64,5 @@ export async function GET(req: NextRequest) {
     },
   });
 
-  return NextResponse.redirect(`${process.env.NEXT_PUBLIC_APP_DOMAIN}/?installed=true`);
+  return NextResponse.redirect(`${process.env.NEXT_PUBLIC_APP_DOMAIN}/repositories?installed=true`);
 }

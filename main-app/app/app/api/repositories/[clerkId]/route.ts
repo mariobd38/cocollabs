@@ -1,13 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { PrismaClient } from '@prisma/client';
+import prisma from '@/lib/prisma';
 import { InstallationWithRepositories } from '@/types/installation';
 
-const prisma = new PrismaClient();
-
-export async function GET(req: NextRequest,{ params }: { params: { clerkId: string } }) {
+export async function GET(req: NextRequest, { params }: { params: { clerkId: string } }) {
   try {
     params = await params
-    const { clerkId } = params;
+    const { clerkId } = params
+
     const user = await prisma.user.findUnique({
       where: { clerk_id: clerkId },
       include: {
@@ -15,7 +14,11 @@ export async function GET(req: NextRequest,{ params }: { params: { clerkId: stri
           include: {
             installation: {
               include: {
-                repositories: true,
+                repositories: {
+                  include: {
+                    languages: true,
+                  },
+                },
               },
             },
           },
@@ -23,7 +26,9 @@ export async function GET(req: NextRequest,{ params }: { params: { clerkId: stri
       },
     });
 
-    if (!user) return NextResponse.json({ error: 'User not found' }, { status: 404 });
+    if (!user) {
+      return NextResponse.json({ error: 'User not found' }, { status: 404 });
+    }
 
     const repositories = user.installations.flatMap((i: InstallationWithRepositories) =>
       i.installation.repositories.map(repo => ({
@@ -31,11 +36,14 @@ export async function GET(req: NextRequest,{ params }: { params: { clerkId: stri
         githubRepoId: repo.githubRepoId,
         name: repo.name,
         fullName: repo.fullName,
+        languages: repo.languages.map(lang => ({
+          name: lang.name,
+          bytes: lang.bytes,
+        })),
       }))
     );
-  
+
     return NextResponse.json({ repositories }, { status: 200 });
-    // return NextResponse.json({ message: 'OK' }, { status: 200 });
   } catch (error) {
     console.error('Error fetching user:', error);
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });

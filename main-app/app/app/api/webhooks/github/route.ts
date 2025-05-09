@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { PrismaClient } from '@prisma/client';
+import prisma from '@/lib/prisma';
 import crypto from 'crypto';
 import { getSummary } from '@/utils/getGeminiSummary';
+import { getRepositoryDetails } from '@/utils/get-installation-token';
 
 
 const GITHUB_WEBHOOK_SECRET = process.env.NEXT_GITHUB_WEBHOOK_SECRET!;
@@ -15,7 +16,6 @@ function verifySignature(req: NextRequest, body: string): boolean {
 
 export async function POST(req: NextRequest) {
   const rawBody = await req.text();
-  const prisma = new PrismaClient();
 
 
   if (!verifySignature(req, rawBody)) {
@@ -57,6 +57,7 @@ export async function POST(req: NextRequest) {
         });
   
         for (const repo of payload.repositories) {
+          const [owner] = repo.full_name.split('/');
           await prisma.repository.upsert({
             where: { githubRepoId: repo.id },
             update: {
@@ -69,6 +70,7 @@ export async function POST(req: NextRequest) {
               name: repo.name,
               fullName: repo.full_name,
               installationId: installationId,
+              owner: owner
             },
           });
         }
@@ -92,22 +94,47 @@ export async function POST(req: NextRequest) {
       if (action === 'added') {
         for (const repo of addedRepos) {
           console.log(`✅ Repo added: ${repo.full_name} (ID: ${repo.id})`);
-          for (const repo of addedRepos) {
-            await prisma.repository.upsert({
-              where: { githubRepoId: repo.id },
-              update: {
-                name: repo.name,
-                fullName: repo.full_name,
-                updatedAt: new Date(),
+          const [owner, repoName] = repo.full_name.split('/');
+          const repository = await prisma.repository.upsert({
+            where: { githubRepoId: repo.id },
+            update: {
+              name: repo.name,
+              fullName: repo.full_name,
+              updatedAt: new Date(),
+            },
+            create: {
+              githubRepoId: repo.id,
+              name: repo.name,
+              fullName: repo.full_name,
+              installationId: installationId,
+              owner: owner
+            },
+            select: {
+              id: true
+            }
+          });
+          const languages = await getRepositoryDetails({ owner, repo: repoName }, payload.installation.id);
+
+          //add languages
+          for (const [language, bytes] of Object.entries(languages)) {
+            await prisma.language.upsert({
+              where: {
+                // optional: use a compound unique index for repo+language if needed
+                name_repositoryId: {
+                  name: language,
+                  repositoryId: repository.id,
+                },
               },
+              update: { bytes },
               create: {
-                githubRepoId: repo.id,
-                name: repo.name,
-                fullName: repo.full_name,
-                installationId: installationId,
+                name: language,
+                bytes: bytes,
+                repositoryId: repository.id,
               },
             });
           }
+
+          console.log(repo.name, ': ', languages);
           // Save to DB or take action
         }
       }
